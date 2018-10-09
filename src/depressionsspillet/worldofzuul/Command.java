@@ -21,6 +21,7 @@ package depressionsspillet.worldofzuul;
 
 public class Command
 {
+    // Declare instance-variables / attribues for this commands CommandWord, as well as a variable for containing the "argument" for this command.
     private CommandWord commandWord;
     private String secondWord;
     
@@ -40,11 +41,13 @@ public class Command
         return secondWord;
     }
 
+    // Helper function to know if the input command was invalid.
     public boolean isUnknown()
     {
         return (commandWord == CommandWord.UNKNOWN);
     }
-
+    
+    // Also helper function to know if the command was given an argument.
     public boolean hasSecondWord()
     {
         return (secondWord != null);
