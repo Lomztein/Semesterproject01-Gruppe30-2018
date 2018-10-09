@@ -19,7 +19,7 @@
 
 package depressionsspillet.worldofzuul;
 
-public abstract class Command
+public class Command
 {
     private CommandWord commandWord;
     private String secondWord;
@@ -29,8 +29,6 @@ public abstract class Command
         this.commandWord = commandWord;
         this.secondWord = secondWord;
     }
-    
-    public abstract boolean execute (Game game, String secondWord);
 
     public CommandWord getCommandWord()
     {
