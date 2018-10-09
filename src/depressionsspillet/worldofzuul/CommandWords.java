@@ -10,7 +10,8 @@ public class CommandWords
     public CommandWords()
     {
         validCommands = new HashMap<String, CommandWord>();
-        // For each in the CommandWord enumerable, add it to the validCommands hashmap for easy indexing using the command identifier.
+        // For each in the CommandWord enum, add it to the validCommands hashmap for easy indexing using the command identifier.
+        // Check CommandWord.java for an explanantion of enums.
         for(CommandWord command : CommandWord.values()) {
             if(command != CommandWord.UNKNOWN) {
                 validCommands.put(command.toString(), command);
