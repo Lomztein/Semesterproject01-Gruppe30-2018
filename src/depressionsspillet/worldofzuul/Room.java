@@ -37,6 +37,7 @@ public class Room
     // Return the description + the possible exit routes.
     public String getLongDescription()
     {
+        // Poop.
         return "You are " + description + ".\n" + getExitString();
     }
 
