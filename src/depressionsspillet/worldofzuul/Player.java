@@ -12,8 +12,8 @@ public class Player extends Character {
 
     private int happinesslevel = 0;
 
-    public Player(String name, String description, int currentRoomIndex) {
-        super(name, description, currentRoomIndex);
+    public Player(String name, String description, Room startingRoom) {
+        super(name, description, startingRoom);
         
     }
     
