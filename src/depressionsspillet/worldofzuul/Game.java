@@ -18,35 +18,81 @@ public class Game
     private void createRooms()
     {
         // A few different rooms are quickly declared at once by giving a single Type identifier and a number of variable names afterwards, seperated by commas.
-        Room outside, theatre, pub, lab, office;
+        Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
       
         // The individual room variables are populated with their appropiate Room objects.
-        outside = new Room("outside the main entrance of the university");
-        theatre = new Room("in a lecture theatre");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        start = new Room("The intro room");
+        magicForrest = new Room("forrest");
+        vendor = new Room("forrest");
+        animals = new Room("forrest");
+        thaiHooker = new Room("forrest");
+        sleepover = new Room("forrest");
+        fridayBar = new Room("forrest");
+        stripClub = new Room("forrest");
+        kfc = new Room("forrest");
+        shrek = new Room("forrest");
+        allotment = new Room("forrest");
+        movie = new Room("forrest");
+        drugs = new Room("forrest");
+        gate = new Room("forrest");
+        boss = new Room("forrest");
+        suprise = new Room("forrest");
         
         // Exits for are declared.
-        outside.setExit("east", theatre);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        start.setExit("south", magicForrest);
+        
+        // Exits for magicForrest are declared.
+        magicForrest.setExit("west", thaiHooker);
+        magicForrest.setExit("south", sleepover);
+        magicForrest.setExit("east", vendor);
 
-        // Exits for the theatre are declared
-        theatre.setExit("west", outside);
-
-        // Exits for the pup are declared.
-        pub.setExit("east", outside);
+        // Exits for vendor are declared.
+        vendor.setExit("south", stripClub);
+        vendor.setExit("east", animals);
+        vendor.setExit("west", magicForrest);
 
         // You know the drill by now.
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        animals.setExit("west", vendor);
 
-        office.setExit("west", lab);
+        thaiHooker.setExit("north", movie);
+        thaiHooker.setExit("west", drugs);
+        thaiHooker.setExit("south", fridayBar);
+        thaiHooker.setExit("east", magicForrest);
+        
+        sleepover.setExit("north", magicForrest);
+        sleepover.setExit("south", gate);
+        sleepover.setExit("east", stripClub);
+        sleepover.setExit("west", fridayBar);
+        
+        fridayBar.setExit("north", thaiHooker);
+        fridayBar.setExit("east", sleepover);
+        
+        stripClub.setExit("north", vendor);
+        stripClub.setExit("east", kfc);
+        stripClub.setExit("west", sleepover);
+        
+        kfc.setExit("east", shrek);
+        kfc.setExit("west", stripClub);
+        
+        shrek.setExit("west", kfc);
+        
+        allotment.setExit("south", drugs);
+        allotment.setExit("east", movie);
+        
+        movie.setExit("south", thaiHooker);
+        movie.setExit("west", allotment);
+        
+        drugs.setExit("north", allotment);
+        drugs.setExit("east", thaiHooker);
+        
+        gate.setExit("north", sleepover);
+        gate.setExit("south", boss);
+        
+        boss.setExit("south", suprise);
 
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
-        currentRoom = outside;
+        currentRoom = start;
     }
 
     public void play() 
