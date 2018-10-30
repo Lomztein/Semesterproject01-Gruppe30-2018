@@ -9,6 +9,7 @@ package depressionsspillet.worldofzuul;
 /**
  * @author Joachim
  */
-public class NPC {
+public abstract class NPC extends Character{
+private boolean hostile;
 
 }
