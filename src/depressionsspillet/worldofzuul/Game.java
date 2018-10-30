@@ -1,5 +1,7 @@
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.characters.VendorNPC;
+
 public class Game {
 
     // Instance-variables / attributes for a command parser and a current room is declared for later use.
@@ -33,6 +35,7 @@ public class Game {
         gate = new Room("This is a big impenetrable, unavoidable, indomitable, completely daunting and locked gate. You will need some kind of key to get through.");
         boss = new Room("bossbattle");
         suprise = new Room("In a heroic and almost impossible turn of events you have defeated the despicable Erikthulu/Martin and entered through the last door, behind which all your friends have been watching your valiant fight with eagerness and solemn pride. They all congratulate you on completeing such a feat of strength and cheer you name all the while continually mentioning how proud of you the are, in addition to how much they value your friendship");
+
 
         // Exits for are declared.
         start.setExit("south", magicForrest);
@@ -146,6 +149,9 @@ public class Game {
                 case QUIT:
                     wantToQuit = quit(command);
                     break;
+                case INTERACT:
+                    interact (command);
+                    break;
                 default:
                     break;
             }
@@ -185,6 +191,35 @@ public class Game {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
+    }
+
+    private void interact(Command command) {
+
+        Interactable[] interactables = getInteractables(currentRoom);
+        Interactable correct = null;
+        for (Interactable i : interactables) {
+            if (i.getName().equals(command.getSecondWord())) {
+                correct = i;
+            }
+        }
+
+        if (correct != null) {
+            Interaction interaction = correct.findInteraction(command.getThirdWord());
+
+            if (interaction != null) {
+                interaction.execute();
+            } else {
+                System.out.println("You have no idea how to " + command.getSecondWord() + " " + correct.getName());
+            }
+        }else {
+            System.out.println (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, plaese see a psychologist.");
+        }
+    }
+
+    private Interactable[] getInteractables(Room room) {
+        return new Interactable[]{
+            new VendorNPC("Marius", "A big fat russian guy attempting to sell you something unplaesent.", room, false)
+        };
     }
 
     private boolean quit(Command command) {

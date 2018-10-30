@@ -22,13 +22,16 @@ package depressionsspillet.worldofzuul;
 public class Command
 {
     // Declare instance-variables / attribues for this commands CommandWord, as well as a variable for containing the "argument" for this command.
-    private CommandWord commandWord;
-    private String secondWord;
+    private final CommandWord commandWord;
     
-    public Command(CommandWord commandWord, String secondWord)
+    private final String secondWord;
+    private final String thirdWord; 
+    
+    public Command(CommandWord commandWord, String secondWord, String thirdWord)
     {
         this.commandWord = commandWord;
         this.secondWord = secondWord;
+        this.thirdWord = thirdWord;
     }
 
     public CommandWord getCommandWord()
@@ -52,5 +55,14 @@ public class Command
     {
         return (secondWord != null);
     }
+   
+    public boolean hasThirdWord () {
+        return (thirdWord != null);
+    }
+    
+    public String getThirdWord () {
+        return thirdWord;
+    }
+    
 }
 
