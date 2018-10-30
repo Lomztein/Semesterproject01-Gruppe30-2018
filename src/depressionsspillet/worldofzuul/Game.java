@@ -1,32 +1,30 @@
 package depressionsspillet.worldofzuul;
 
-public class Game 
-{
+import depressionsspillet.worldofzuul.characters.VendorNPC;
+
+public class Game {
+
     // Instance-variables / attributes for a command parser and a current room is declared for later use.
     private Parser parser;
     private Room currentRoom;
-        
 
-    public Game() 
-    {
+    public Game() {
         // The attributes are populated with their appropiate data.
         createRooms();
         parser = new Parser();
     }
 
-
-    private void createRooms()
-    {
+    private void createRooms() {
         // A few different rooms are quickly declared at once by giving a single Type identifier and a number of variable names afterwards, seperated by commas.
         Room outside, theatre, pub, lab, office;
-      
+
         // The individual room variables are populated with their appropiate Room objects.
         outside = new Room("outside the main entrance of the university");
         theatre = new Room("in a lecture theatre");
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
-        
+
         // Exits for are declared.
         outside.setExit("east", theatre);
         outside.setExit("south", lab);
@@ -49,71 +47,72 @@ public class Game
         currentRoom = outside;
     }
 
-    public void play() 
-    {            
+    public void play() {
         // Call the printWelcome function, which acts both as a welcome, as well as a simple guide.
         printWelcome();
-                
+
         // Construct a game loop, which is a simple while-loop that runs until the game is declared "finished".
         boolean finished = false;
-        while (! finished) {
+        while (!finished) {
             // Use the previously declared parser to find out what command is being input into console.
             Command command = parser.getCommand();
-            
+
             // If the processed command returns true, then the game ends.
             finished = processCommand(command);
         }
-        
+
         System.out.println("Thank you for playing.  Good bye.");
     }
 
-    private void printWelcome()
-    {
+    private void printWelcome() {
         // A simple, warm welcome.
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        
+
         // A basic guide on how to play this game.
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        
+
         // An introduction to our current room.
         System.out.println(currentRoom.getLongDescription());
     }
 
-    private boolean processCommand(Command command) 
-    {
+    private boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
         // Find out just which word was used to get this command.
         CommandWord commandWord = command.getCommandWord();
 
         // If the commmand word hasn't been declared in code..
-        if(commandWord == CommandWord.UNKNOWN) {
+        if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
             return false;
         }
 
         // A switch-case block the takes care of the diffirent possible command executions.
-        if (null != commandWord) switch (commandWord) {
-            case HELP:
-                printHelp();
-                break;
-            case GO:
-                goRoom(command);
-                break;
-            case QUIT:
-                wantToQuit = quit(command);
-                break;
-            default:
-                break;
+        if (null != commandWord) {
+            switch (commandWord) {
+                case HELP:
+                    printHelp();
+                    break;
+                case GO:
+                    goRoom(command);
+                    break;
+                case QUIT:
+                    wantToQuit = quit(command);
+                    break;
+                case INTERACT:
+                    interact (command);
+                    break;
+                default:
+                    break;
+            }
         }
         return wantToQuit;
     }
 
-    private void printHelp() 
-    {
+    private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
@@ -122,12 +121,11 @@ public class Game
         parser.showCommands();
     }
 
-    private void goRoom(Command command) 
-    {
+    private void goRoom(Command command) {
         // If no second word was given, then ask the player where they need to go.
-        if(command.getSecondWord () == null) {
+        if (command.getSecondWord() == null) {
             System.out.println("Go where?");
-            
+
             // If this happens, then exit out of this function using a return statement.
             return;
         }
@@ -141,22 +139,48 @@ public class Game
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door!");
-        }
-        else {
+        } else {
             // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
     }
 
-    private boolean quit(Command command) 
-    {
+    private void interact(Command command) {
+
+        Interactable[] interactables = getInteractables(currentRoom);
+        Interactable correct = null;
+        for (Interactable i : interactables) {
+            if (i.getName().equals(command.getSecondWord())) {
+                correct = i;
+            }
+        }
+
+        if (correct != null) {
+            Interaction interaction = correct.findInteraction(command.getThirdWord());
+
+            if (interaction != null) {
+                interaction.execute();
+            } else {
+                System.out.println("You have no idea how to " + command.getSecondWord() + " " + correct.getName());
+            }
+        }else {
+            System.out.println (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, plaese see a psychologist.");
+        }
+    }
+
+    private Interactable[] getInteractables(Room room) {
+        return new Interactable[]{
+            new VendorNPC("Marius", "A big fat russian guy attempting to sell you something unplaesent.", room, false)
+        };
+    }
+
+    private boolean quit(Command command) {
         // If the command has a second word, become confused.
-        if(command.hasSecondWord()) {
+        if (command.hasSecondWord()) {
             System.out.println("Quit what?");
             return false;
-        }
-        else {
+        } else {
             // If not, return true, which then quits the game through the previously mentioned "wantToQuit" boolean variable on line 87.
             return true;
         }

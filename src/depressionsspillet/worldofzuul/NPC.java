@@ -8,7 +8,7 @@ package depressionsspillet.worldofzuul;
 /**
  * @author Joachim
  */
-public abstract class NPC extends Character {
+public abstract class NPC extends Character implements Interactable {
 
     private boolean hostile;
 
