@@ -37,20 +37,20 @@ public class Room
     // Return the description + the possible exit routes.
     public String getLongDescription()
     {
-        // Poop.
-        return "You are " + description + ".\n" + getExitString();
+        
+        return description + ".\n" + getExitString();
     }
 
     private String getExitString()
     {
         // Declare a variable for containing the combined result of the upcoming loop.
-        String returnString = "Exits:";
+        String returnString = "You can now goes these ways:";
         
         // Get every single key in the HashMap, for looping through them.
         // This generic type given a string type argument is much like an array of Strings.
         Set<String> keys = exits.keySet();
         for(String exit : keys) {
-            returnString += " " + exit;
+            returnString += "  " + exit;
         }
         return returnString;
     }
