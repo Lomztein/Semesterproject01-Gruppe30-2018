@@ -9,13 +9,17 @@ package depressionsspillet.worldofzuul;
  * @author Joachim
  */
 public class Player extends Character {
-
+    
+    
+    //Attributes
+    Item[] inventory = new Item[4];
     private int happinesslevel = 0;
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
         
     }
+    
     
     
 }
