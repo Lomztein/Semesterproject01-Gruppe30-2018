@@ -12,11 +12,15 @@ import depressionsspillet.worldofzuul.Room;
  */
 public abstract class Character {
 
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
+    
     //private Inventory inventory;
     private Room currentRoom;
-    
+
+    public Room getCurrentRoom () {
+        return currentRoom;
+    }
     
     public void setCurrentRoom(Room room){
         this.currentRoom = room;

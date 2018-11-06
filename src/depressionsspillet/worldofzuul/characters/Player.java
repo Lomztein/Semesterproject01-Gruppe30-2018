@@ -16,6 +16,7 @@ import depressionsspillet.worldofzuul.combat.DamageType;
 public class Player extends Character implements HasHealth, Damagable {
 
     private double happinesslevel = 0;
+    private Damagable engagedWith;
     
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);

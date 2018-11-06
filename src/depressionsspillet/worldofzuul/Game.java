@@ -155,6 +155,9 @@ public class Game {
                 case INTERACT:
                     interact (command);
                     break;
+                case ATTACK:
+                    attack (command);
+                    break;
                 default:
                     break;
             }
@@ -217,6 +220,10 @@ public class Game {
         }else {
             System.out.println (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
         }
+    }
+    
+    private void attack (Command command) {
+        
     }
 
     private boolean quit(Command command) {

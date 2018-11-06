@@ -25,7 +25,7 @@ public class HostileNPC extends NPC implements Damagable, HasHealth {
     private static final double INEFFECTIVE_DAMAGE_MULTIPLIER = 0.2d;
 
     public HostileNPC(String name, String desc, Room startingRoom, double health, DamageType[] effectiveDamageTypes, Attack... availableAttacks) {
-        super(name, desc, startingRoom, true);
+        super(name, desc, startingRoom);
         this.health = health;
         this.effectiveDamageTypes = effectiveDamageTypes;
         this.availableAttacks = availableAttacks;
@@ -44,7 +44,7 @@ public class HostileNPC extends NPC implements Damagable, HasHealth {
         return availableAttacks [random.nextInt(availableAttacks.length)];
     }
     
-    public void Attack (Damagable damagable) {
+    public void attack (Damagable damagable) {
         Attack random = getRandomAttack ();
         random.doDamage(damagable);
     }

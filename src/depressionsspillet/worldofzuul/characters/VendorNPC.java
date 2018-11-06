@@ -15,7 +15,7 @@ import depressionsspillet.worldofzuul.*;
 public class VendorNPC extends NPC {
 
     public VendorNPC(String name, String desc, Room startingRoom, boolean hostile) {
-        super(name, desc, startingRoom, hostile);
+        super(name, desc, startingRoom);
     }
 
     @Override
