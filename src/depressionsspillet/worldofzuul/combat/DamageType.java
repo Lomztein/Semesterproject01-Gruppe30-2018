@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package depressionsspillet.worldofzuul;
+package depressionsspillet.worldofzuul.combat;
 
 /**
  *
@@ -11,7 +11,7 @@ package depressionsspillet.worldofzuul;
  */
 public enum DamageType {
 
-    BLUNT("a punch"), SLASH ("a strangely shaped sword"), FIRE ("an almost-out-of-fuel lighter"), WATER ("a weak spray of water vapor"), MENTAL ("an insult"), DAB("a particularily dank dab"), SUNONASTICK ("the Sun on a Stick");
+    BLUNT("blunt force"), SLASH ("sharp slash"), FIRE ("burning fire"), WATER ("moist water"), MENTAL ("hurtful insult"), DAB("dab"), SUNONASTICK ("Sun on a Stick");
 
     private final String description;
 

@@ -5,7 +5,9 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
-import depressionsspillet.worldofzuul.Damagable;
+import depressionsspillet.worldofzuul.combat.Damagable;
+import depressionsspillet.worldofzuul.combat.Damage;
+import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.HasHealth;
 import depressionsspillet.worldofzuul.Interaction;
 import depressionsspillet.worldofzuul.NPC;
@@ -18,15 +20,30 @@ import depressionsspillet.worldofzuul.Room;
 public class HostileNPC extends NPC implements Damagable, HasHealth {
 
     private double health;
+    private DamageType[] effectiveDamageTypes;
+    private static final double INEFFECTIVE_DAMAGE_MULTIPLIER = 0.2d;
 
-    public HostileNPC(String name, String desc, Room startingRoom, double health) {
+    public HostileNPC(String name, String desc, Room startingRoom, double health, DamageType... effectiveDamageTypes) {
         super(name, desc, startingRoom, true);
         this.health = health;
+        this.effectiveDamageTypes = effectiveDamageTypes;
+    }
+    
+    private boolean isEffectiveDamageType (DamageType damageType) {
+        for (DamageType type : effectiveDamageTypes) {
+            if (type == damageType)
+                return true;
+        }
+        return false;
     }
 
     @Override
-    public void takeDamage(double damage) {
-        health -= damage;
+    public void takeDamage(Damage damage) {
+        if (isEffectiveDamageType (damage.getDamageType ())) {
+            health -= damage.getDamageValue();
+        }else{
+            health -= damage.getDamageValue () * INEFFECTIVE_DAMAGE_MULTIPLIER;
+        }
     }
 
     @Override

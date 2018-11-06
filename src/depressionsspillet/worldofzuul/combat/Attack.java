@@ -3,23 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package depressionsspillet.worldofzuul;
+package depressionsspillet.worldofzuul.combat;
 
 /**
  *
  * @author Lomztein
  */
-public class Damage {
+public class Attack {
     
     private DamageType damageType;
-    private double damageValue;
-    
-    public DamageType getDamageType () {
-        return damageType;
-    }
-    
-    public double getDamageValue () {
-        return damageValue;
-    }
+    private String name;
+    private String description;
     
 }

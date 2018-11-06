@@ -5,13 +5,16 @@
  */
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.combat.Damage;
+import depressionsspillet.worldofzuul.combat.Damagable;
+import depressionsspillet.worldofzuul.combat.DamageType;
+
 /**
  * @author Joachim
  */
-public class Player extends Character implements HasHealth {
+public class Player extends Character implements HasHealth, Damagable {
 
     private double happinesslevel = 0;
-    
     
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
@@ -21,5 +24,11 @@ public class Player extends Character implements HasHealth {
     public double getHealth() {
         return happinesslevel;
     }
-    
+
+    @Override
+    public void takeDamage(Damage damage) {
+        if (damage.getDamageType() == DamageType.MENTAL) {
+            happinesslevel -= damage.getDamageValue();
+        }
+    }
 }
