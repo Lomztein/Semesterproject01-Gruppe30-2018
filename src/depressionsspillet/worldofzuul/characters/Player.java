@@ -32,16 +32,16 @@ public class Player extends Character implements HasHealth, Damagable {
     public double getHealth() {
         return happinesslevel;
     }
-    
-    public void engage (Damagable damagable) {
+
+    public void engage(Damagable damagable) {
         engagedWith = damagable;
     }
-    
-    public boolean isEngaged () {
+
+    public boolean isEngaged() {
         return engagedWith != null;
     }
-    
-    public Attack getAttack (String attackName) {
+
+    public Attack getAttack(String attackName) {
         Attack attack = null;
         for (Attack att : availableAttacks) {
             if (att.getName().toLowerCase().equals(attackName.toLowerCase())) {
@@ -77,24 +77,48 @@ public class Player extends Character implements HasHealth, Damagable {
         }
     }
 
-    public void addToInventory(Item item, int index) {
-        printInventoryList();
+    public boolean inventoryCheck() {
+        boolean isEmpty = true;
 
-        //For testing purposes, should run through parser in end-version
-        System.out.println("\n\nSelect a slot to insert " + item.getName() + " into: ");
-
-        while (index > 4 || index < 1) {
-            System.out.print("Wrong input, try again: \n> ");
+        for (Item item : inventory) {
+            isEmpty = false;
         }
 
+        return isEmpty;
+    }
+
+    public void addToInventory(Item item, int index) {
+        
+        //Prints inventory to show the player what choices they have.
+        printInventoryList();
+        System.out.println("\n\nSelect a slot to insert " + item.getName() + " into: ");
+
+        while (index > (inventory.length - 1)  || index < 1) {
+            System.out.print("Wrong input, try again: \n> ");
+        }
+        index -= 1;
+        
         inventory[index] = item;
+        getCurrentRoom().removeItem(inventory[index]);
+        
+        System.out.println("The item has been dropped on the ground.");
 
     }
 
     public void dropItem(int i) {
+        i -= 1;
         printInventoryList();
 
         System.out.println("\n\nSelect an item to drop: ");
 
+        if (inventory[i] == null) {
+            System.out.println("You attempt to drop an empty inventory slot on the ground. You check around to see \nif anyone saw that. Somehow, someone did. The shadows are laughing at you.");
+        } else {
+
+            getCurrentRoom().addItem(inventory[i]);
+            System.out.println("You drop the " + inventory[i].getName() + " on the ground before you.\n");
+            inventory[i] = null;
+            
+        }
     }
 }

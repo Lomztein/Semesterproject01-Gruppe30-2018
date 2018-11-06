@@ -25,12 +25,16 @@ public abstract class Item {
         this.rarity = rarity;
     }
     
-    public String getName () {
+    public String getName() {
         return name;
     }
     
-    public String getDescription () {
+    public String getDescription() {
         return description;
+    }
+    
+    public void useItem() {
+        System.out.println("This is the main item class, and can't be used... If you see this, the developer fucked something up.");
     }
 
 }

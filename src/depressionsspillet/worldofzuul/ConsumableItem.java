@@ -20,6 +20,14 @@ public class ConsumableItem extends Item {
         
     }
     
-    
+    @Override
+    public void useItem() {
+        
+        //Get used bitch
+        //I actually have no idea what to put here yet. 
+        //I'm just putting in lines of comments, so it looks like I added a lot of lines to the file.
+        //But the reality is... I'm still a fucking genius.
+        
+    }
     
 }

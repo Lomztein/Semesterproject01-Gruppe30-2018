@@ -5,12 +5,8 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 
+public class Room {
 
-public class Room 
-{
-   
-    
-    
     // This object is a HashMap, which functions much like an array by containing a list of elements.
     // Differently from an array however, these elements are indexed with a key instead of a number.
     // The types inside <> are known as Type arguments, and declare what types this HashMap deals with.
@@ -23,70 +19,97 @@ public class Room
     // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
     private String description;
     ArrayList<Item> itemsInRoom;
-    
+
     //Constructor
-    public Room(String description) 
-    {
+    public Room(String description) {
         this.itemsInRoom = new ArrayList<>();
         this.description = description;
         exits = new HashMap<>();
         interactables = new ArrayList<>();
     }
-    
-    public void setExit (String direction, Room neighbor) {
-        setExit (direction, neighbor, false);
+
+    public void addItem(Item item) {
+        itemsInRoom.add(item);
+    }
+
+    public void removeItem(Item item) {
+        itemsInRoom.remove(item);
+    }
+
+    public void printCurrentItems() {
+        int itemCounter = 0;
+        for (Item item : itemsInRoom) {
+            if (itemCounter == 0) {
+                System.out.print("On the ground before you lies: ");
+            } else {
+                System.out.println(", ");
+            }
+            System.out.print(item.getName());
+            itemCounter++;
+        }
+        if (itemCounter == 0) {
+            System.out.println("The room contains no visible items.");
+        }
+
+    }
+
+    public String getItemNames() {
+        String names = null;
+
+        for (Item item : itemsInRoom) {
+
+            names += (" " + item.getName() + ", ");
+        }
+        return names;
+    }
+
+    public void setExit(String direction, Room neighbor) {
+        setExit(direction, neighbor, false);
     }
 
     // Wrapper function for exits.put, since exits is private.
-    public void setExit(String direction, Room neighbor, boolean locked) 
-    {   
-        Door door = new Door (direction, neighbor, locked);
+    public void setExit(String direction, Room neighbor, boolean locked) {
+        Door door = new Door(direction, neighbor, locked);
         exits.put(direction, door);
     }
 
-    public String getShortDescription()
-    {
+    public String getShortDescription() {
         return description;
     }
-    
-    public void enterRoom (Interactable interactable) {
+
+    public void enterRoom(Interactable interactable) {
         interactables.add(interactable);
     }
-    
-    public void leaveRoom (Interactable interactable) {
+
+    public void leaveRoom(Interactable interactable) {
         interactables.remove(interactable);
     }
-    
-    public Interactable[] getInteractables () {
+
+    public Interactable[] getInteractables() {
         return interactables.toArray(new Interactable[interactables.size()]);
     }
 
     // Return the description + the possible exit routes.
-    public String getLongDescription()
-    {
-        
+    public String getLongDescription() {
+
         return description + ".\n" + getExitString();
     }
 
-    private String getExitString()
-    {
+    private String getExitString() {
         // Declare a variable for containing the combined result of the upcoming loop.
         String returnString = "You can now goes these ways:";
-        
+
         // Get every single key in the HashMap, for looping through them.
         // This generic type given a string type argument is much like an array of Strings.
         Set<String> keys = exits.keySet();
-        for(String exit : keys) {
+        for (String exit : keys) {
             returnString += "  " + exit;
         }
         return returnString;
     }
 
-    public Door getExit(String direction) 
-    {
+    public Door getExit(String direction) {
         return exits.get(direction);
     }
-    
-    
-}
 
+}
