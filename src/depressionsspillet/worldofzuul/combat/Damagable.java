@@ -5,11 +5,13 @@
  */
 package depressionsspillet.worldofzuul.combat;
 
+import depressionsspillet.worldofzuul.Named;
+
 /**
  *
  * @author Lomztein
  */
-public interface Damagable {
+public interface Damagable extends Named {
     
     void takeDamage (Damage damage);
     

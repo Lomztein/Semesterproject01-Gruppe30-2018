@@ -8,6 +8,7 @@ package depressionsspillet.worldofzuul.characters;
 import depressionsspillet.worldofzuul.Item;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
+import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.DamageType;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 /**
  * @author Joachim
  */
-public class Player extends Character implements HasHealth, Damagable {
+public class Player extends Character implements Attacker, HasHealth, Damagable {
 
     private double happinesslevel = 0;
     private Damagable engagedWith;
@@ -24,7 +25,7 @@ public class Player extends Character implements HasHealth, Damagable {
 
     Item[] inventory = new Item[4];
 
-    public Player(String name, String description, Room startingRoom) {
+    public Player(String name, String description, Room startingRoom, DamageResistance... resistances) {
         super(name, description, startingRoom);
     }
 
@@ -41,6 +42,10 @@ public class Player extends Character implements HasHealth, Damagable {
         return engagedWith != null;
     }
     
+    public void addAttack (Attack newAttack) {
+        availableAttacks.add(newAttack);
+    }
+    
     public Attack getAttack (String attackName) {
         Attack attack = null;
         for (Attack att : availableAttacks) {
@@ -53,14 +58,7 @@ public class Player extends Character implements HasHealth, Damagable {
 
     public void attackEngaged(Attack attack) {
         if (attack != null) {
-            attack.doDamage(engagedWith);
-        }
-    }
-
-    @Override
-    public void takeDamage(Damage damage) {
-        if (damage.getDamageType() == DamageType.MENTAL) {
-            happinesslevel -= damage.getDamageValue();
+            attack.doDamage(this, engagedWith);
         }
     }
 
@@ -96,5 +94,20 @@ public class Player extends Character implements HasHealth, Damagable {
 
         System.out.println("\n\nSelect an item to drop: ");
 
+    }
+
+    @Override
+    public void setHealth(double value) {
+        happinesslevel = value;
+    }
+
+    @Override
+    public void changeHealth(double value) {
+        happinesslevel += value;
+    }
+
+    @Override
+    public Attack[] getAttacks() {
+        return availableAttacks.toArray(new Attack[availableAttacks.size ()]);
     }
 }

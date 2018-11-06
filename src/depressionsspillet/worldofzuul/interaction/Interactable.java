@@ -20,7 +20,7 @@ public interface Interactable {
         Interaction[] interactions = this.getInteractions();
         Interaction correctOne = null;
         for (Interaction interaction : interactions) {
-            if (interaction.getName().equals(interactionName)) {
+            if (interaction.getName().toLowerCase().equals(interactionName.toLowerCase())) {
                 correctOne = interaction;
             }
         }

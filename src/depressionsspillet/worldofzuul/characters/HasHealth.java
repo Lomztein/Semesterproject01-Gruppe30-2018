@@ -12,5 +12,8 @@ package depressionsspillet.worldofzuul.characters;
 public interface HasHealth {
     
     double getHealth ();
+    void setHealth (double value);
+    
+    void changeHealth (double value);
     
 }
