@@ -8,9 +8,7 @@ package depressionsspillet.worldofzuul.characters;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageType;
-import depressionsspillet.worldofzuul.HasHealth;
 import depressionsspillet.worldofzuul.Interaction;
-import depressionsspillet.worldofzuul.NPC;
 import depressionsspillet.worldofzuul.Room;
 
 /**
