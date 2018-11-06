@@ -8,14 +8,18 @@ package depressionsspillet.worldofzuul;
 /**
  * @author Joachim
  */
-public class Player extends Character {
+public class Player extends Character implements HasHealth {
 
-    private int happinesslevel = 0;
-
+    private double happinesslevel = 0;
+    
+    
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
-        
     }
-    
+
+    @Override
+    public double getHealth() {
+        return happinesslevel;
+    }
     
 }
