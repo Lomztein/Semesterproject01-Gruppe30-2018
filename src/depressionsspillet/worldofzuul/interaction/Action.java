@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package depressionsspillet.worldofzuul;
+package depressionsspillet.worldofzuul.interaction;
 
 /**
  *
  * @author Lomztein
  */
-interface IHasHealth {
+public interface Action {
+    
+    void execute ();
     
 }

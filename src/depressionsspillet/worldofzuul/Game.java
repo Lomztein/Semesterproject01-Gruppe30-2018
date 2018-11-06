@@ -214,8 +214,6 @@ public class Game {
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door!");
-<<<<<<< HEAD
-<<<<<<< HEAD
         }
         else if (nextRoom.locked == true) {
                 System.out.println("Door is locked");
@@ -225,14 +223,8 @@ public class Game {
                     currentRoom = nextRoom.getRoom();
                     System.out.println(currentRoom.getLongDescription());
                 }
-=======
         } else if (nextRoom.locked == true) {
             System.out.println("This door is locked! It says you need to be happy to enter.");
->>>>>>> 2fc0f66195aa00badc964fbc10fc78c66c295cd2
-=======
-        } else if (nextRoom.locked == true) {
-            System.out.println("This door is locked! It says you need to be happy to enter.");
->>>>>>> 0870e639964971c8d00a25065b200dd35aa92b7f
         } else {
                 currentRoom = nextRoom.getRoom();
                 System.out.println(currentRoom.getLongDescription());

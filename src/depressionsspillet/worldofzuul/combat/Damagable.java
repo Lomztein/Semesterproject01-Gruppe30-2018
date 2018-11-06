@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package depressionsspillet.worldofzuul;
+package depressionsspillet.worldofzuul.combat;
 
 /**
  *
  * @author Lomztein
  */
-public interface HasHealth {
+public interface Damagable {
     
-    double getHealth ();
+    void takeDamage (Damage damage);
     
 }

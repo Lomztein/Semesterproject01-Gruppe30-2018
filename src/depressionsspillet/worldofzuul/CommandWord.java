@@ -5,15 +5,16 @@
 // These can then be used elsewhere as constants by referencing them using CommandWord.GO for example, and their attributes and methods can then be accessed.
 public enum CommandWord
 {
-    GO("go"), QUIT("quit"), HELP("help"), INTERACT ("interact"), UNKNOWN("?");
+    GO("go"), QUIT("quit"), HELP("help"), INTERACT ("interact"), ATTACK ("attack"), UNKNOWN("?");
     
-    private String commandString;
+    private final String commandString;
     
     CommandWord(String commandString)
     {
         this.commandString = commandString;
     }
     
+    @Override
     public String toString()
     {
         return commandString;
