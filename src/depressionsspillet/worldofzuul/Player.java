@@ -55,4 +55,12 @@ public class Player extends Character {
         
     }
 
+    public void dropItem(int i) {
+        printInventoryList();
+        
+        System.out.println("\n\nSelect an item to drop: ");
+        
+        
+    }
+    
 }

@@ -1,13 +1,14 @@
 package depressionsspillet.worldofzuul;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 
 
 public class Room 
 {
-    // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
-    private String description;
+   
+    
     
     // This object is a HashMap, which functions much like an array by containing a list of elements.
     // Differently from an array however, these elements are indexed with a key instead of a number.
@@ -16,9 +17,16 @@ public class Room
     // Types that take these "type arguments" are called generic types, meaining they can work with anything, provided there are no constraints.
     // Contraints in this sense are declarations on the generic that limit what types can be used.
     private HashMap<String, Room> exits;
+    
 
+    // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
+    private String description;
+    ArrayList<Item> itemsInRoom;
+    
+    //Constructor
     public Room(String description) 
     {
+        this.itemsInRoom = new ArrayList<Item>();
         this.description = description;
         exits = new HashMap<>();
     }

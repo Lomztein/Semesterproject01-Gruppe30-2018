@@ -14,6 +14,8 @@ public abstract class Item {
     //Attributes
     String name;
     String description;
+    
+    //Rarity determines the spawnrate.
     int rarity;
     
     
