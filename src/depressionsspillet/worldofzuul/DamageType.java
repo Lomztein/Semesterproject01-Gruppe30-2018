@@ -9,8 +9,14 @@ package depressionsspillet.worldofzuul;
  *
  * @author Lomztein
  */
-public interface Damagable {
-    
-    void takeDamage (double damage);
-    
+public enum DamageType {
+
+    PHYSICAL("Punch"), DAB("Dab");
+
+    private String name;
+
+    DamageType(String name) {
+        this.name = name;
+    }
+
 }

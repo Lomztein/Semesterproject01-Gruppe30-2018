@@ -9,8 +9,6 @@ package depressionsspillet.worldofzuul;
  *
  * @author Lomztein
  */
-public interface Damagable {
-    
-    void takeDamage (double damage);
+public class Damage {
     
 }
