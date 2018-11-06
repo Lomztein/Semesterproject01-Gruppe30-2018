@@ -5,7 +5,7 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
-import depressionsspillet.worldofzuul.Interactable;
+import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.Room;
 
 /**
