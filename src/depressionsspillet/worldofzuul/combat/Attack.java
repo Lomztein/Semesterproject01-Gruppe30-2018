@@ -25,4 +25,12 @@ public class Attack {
         this.description = description;
     }
     
+    public String getName () {
+        return name;
+    }
+    
+    public String getDescription () {
+        return description;
+    }
+    
 }

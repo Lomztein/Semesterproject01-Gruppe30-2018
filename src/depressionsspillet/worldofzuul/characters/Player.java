@@ -6,9 +6,11 @@
 package depressionsspillet.worldofzuul.characters;
 
 import depressionsspillet.worldofzuul.Room;
+import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.DamageType;
+import java.util.ArrayList;
 
 /**
  * @author Joachim
@@ -17,6 +19,7 @@ public class Player extends Character implements HasHealth, Damagable {
 
     private double happinesslevel = 0;
     private Damagable engagedWith;
+    private final ArrayList<Attack> availableAttacks = new ArrayList<>();
     
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
@@ -25,6 +28,19 @@ public class Player extends Character implements HasHealth, Damagable {
     @Override
     public double getHealth() {
         return happinesslevel;
+    }
+    
+    public void attackEngaged (String attackName) {
+        Attack attack = null;
+        for (Attack att : availableAttacks) {
+            if (att.getName().toLowerCase().equals(attackName.toLowerCase())) {
+                attack = att;
+            }
+        }
+        
+        if (attack != null) {
+            attack.doDamage(engagedWith);
+        }
     }
 
     @Override
