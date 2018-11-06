@@ -1,5 +1,6 @@
 package depressionsspillet.worldofzuul;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 
@@ -16,11 +17,13 @@ public class Room
     // Types that take these "type arguments" are called generic types, meaining they can work with anything, provided there are no constraints.
     // Contraints in this sense are declarations on the generic that limit what types can be used.
     private HashMap<String, Room> exits;
+    private ArrayList<Interactable> interactables;
 
     public Room(String description) 
     {
         this.description = description;
         exits = new HashMap<>();
+        interactables = new ArrayList<>();
     }
 
     // Wrapper function for exits.put, since exits is private.
@@ -32,6 +35,18 @@ public class Room
     public String getShortDescription()
     {
         return description;
+    }
+    
+    public void enterRoom (Interactable interactable) {
+        interactables.add(interactable);
+    }
+    
+    public void leaveRoom (Interactable interactable) {
+        interactables.remove(interactable);
+    }
+    
+    public Interactable[] getInteractables () {
+        return interactables.toArray(new Interactable[interactables.size()]);
     }
 
     // Return the description + the possible exit routes.

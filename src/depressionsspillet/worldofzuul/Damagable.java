@@ -6,15 +6,11 @@
 package depressionsspillet.worldofzuul;
 
 /**
- * @author Joachim
+ *
+ * @author Lomztein
  */
-public class Player extends Character {
-
-    private int happinesslevel = 0;
-
-    public Player(String name, String description, Room startingRoom) {
-        super(name, description, startingRoom);
-    }
+public interface Damagable {
     
+    void takeDamage ();
     
 }

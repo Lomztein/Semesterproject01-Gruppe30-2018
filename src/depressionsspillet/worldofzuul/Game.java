@@ -36,7 +36,6 @@ public class Game {
         boss = new Room("bossbattle");
         suprise = new Room("In a heroic and almost impossible turn of events you have defeated the despicable Erikthulu/Martin and entered through the last door, behind which all your friends have been watching your valiant fight with eagerness and solemn pride. They all congratulate you on completeing such a feat of strength and cheer you name all the while continually mentioning how proud of you the are, in addition to how much they value your friendship");
 
-
         // Exits for are declared.
         start.setExit("south", magicForrest);
 
@@ -49,6 +48,8 @@ public class Game {
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
+        
+        vendor.enterRoom(new VendorNPC ("Boris", "A slightly smelly old russian man with a key around his neck.", vendor, false));
 
         // You know the drill by now.
         animals.setExit("west", vendor);
@@ -195,7 +196,7 @@ public class Game {
 
     private void interact(Command command) {
 
-        Interactable[] interactables = getInteractables(currentRoom);
+        Interactable[] interactables = currentRoom.getInteractables();
         Interactable correct = null;
         for (Interactable i : interactables) {
             if (i.getName().equals(command.getSecondWord())) {
@@ -212,14 +213,8 @@ public class Game {
                 System.out.println("You have no idea how to " + command.getSecondWord() + " " + correct.getName());
             }
         }else {
-            System.out.println (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, plaese see a psychologist.");
+            System.out.println (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
         }
-    }
-
-    private Interactable[] getInteractables(Room room) {
-        return new Interactable[]{
-            new VendorNPC("Marius", "A big fat russian guy attempting to sell you something unplaesent.", room, false)
-        };
     }
 
     private boolean quit(Command command) {
