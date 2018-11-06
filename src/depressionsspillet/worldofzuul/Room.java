@@ -1,5 +1,6 @@
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.interaction.Interactable;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;

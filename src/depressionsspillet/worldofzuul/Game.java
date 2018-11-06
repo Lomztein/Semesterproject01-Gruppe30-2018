@@ -1,22 +1,28 @@
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.characters.Player;
+import depressionsspillet.worldofzuul.interaction.Interaction;
+import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.characters.VendorNPC;
+
 
 public class Game {
 
     // Instance-variables / attributes for a command parser and a current room is declared for later use.
     private Parser parser;
-    private Room currentRoom;
+    private Player player;
+    
+    // A few different rooms are quickly declared at once by giving a single Type identifier and a number of variable names afterwards, seperated by commas.
+    Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
     public Game() {
         // The attributes are populated with their appropiate data.
         createRooms();
+        player = new Player("Johannes", "Døberen", start);
         parser = new Parser();
     }
 
     private void createRooms() {
-        // A few different rooms are quickly declared at once by giving a single Type identifier and a number of variable names afterwards, seperated by commas.
-        Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
         // The individual room variables are populated with their appropiate Room objects.
         start = new Room("You are standing on a field, under a lonesome tree you see spilmester Martin greeting you with a smile.");
@@ -27,7 +33,7 @@ public class Game {
         sleepover = new Room("You find yourself at your best friends house in your pajamas with icecream. Your best friends invites you inside for a sleepover.");
         fridayBar = new Room("Wuhuu it is friday on SDU and you suddenly feel your spirite soaring and you feel like getting smashed and so you do... You feel great.");
         stripClub = new Room("As you continued through the forrest you notices a couple of flikering light as you move closer you see a sign saying: 'Gentleman's club. Free tonight' You enter, look around, start smiling slyly and have a great time. Your mum would be disappointed");
-        kfc = new Room("Suddenly in your path you see a formiliar red sign with tree white letters. It reads: KFC, and you are overjoyed. You enter and when you tell the cashier about your amazing journey. She decides to give you free food for your trip and warns you about continuing east becuase a dangerous and mysterious creature lurks in the swamp.");
+        kfc = new Room("Suddenly in your path you see a familiar red sign with tree white letters. It reads: KFC, and you are overjoyed. You enter and when you tell the cashier about your amazing journey. She decides to give you free food for your trip and warns you about continuing east becuase a dangerous and mysterious creature lurks in the swamp.");
         shrek = new Room("You defied the warnings of the nice KFC lady and walked onwards to the east. The forest soon ends and a dank swamp emerges. Carefully you explore the area and come across a small wooden shack. As you are about to enter, a rumbling voice appears behinds you ' ' After turning around you realise you have entered the domain of the one and only Shrek. In an adrenaline induced panic you try to escape, but you are easily caught, and as you are dragged inside the raggedy shack, Shreks whispers softly 'it's all ogre now'. The rest of this encounter is best described as a deep scar on your soul, and should never again be spoken off.");
         allotment = new Room("As you continue walking the forest gets brighter as more and more light slips through the treetops. Flowers start to appear and as you follow them you find a small cosy cabin. When you are just about to knock on the door to ask for directions, when you a familiar eerie sound. *heavy forced inhaling* *heavy forced exhaling* you decide to scout out the house for inhabitants, before trying to enter. Walking around to the backyard, you spot a figure dressed in black armor, wearing a black mask and cape, holding a watering can. It is the retired Darth Vader!");
         movie = new Room("You discover a room with a big couch, floffy teddybears and a couple of friends to snuggle. So you dive into the pillows on the couch and rest for a while.");
@@ -48,8 +54,8 @@ public class Game {
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
-        
-        vendor.enterRoom(new VendorNPC ("Boris", "A slightly smelly old russian man with a key around his neck.", vendor, false));
+
+        vendor.enterRoom(new VendorNPC("Boris", "A slightly smelly old russian man with a key around his neck.", vendor, false));
 
         // You know the drill by now.
         animals.setExit("west", vendor);
@@ -87,6 +93,7 @@ public class Game {
 
         gate.setExit("north", sleepover);
         gate.setExit("south", boss);
+        gate.setLock(true);
 
         boss.setExit("south", suprise);
 
@@ -151,11 +158,17 @@ public class Game {
                     wantToQuit = quit(command);
                     break;
                 case INTERACT:
-                    interact (command);
+                    interact(command);
+                    break;
+                case ATTACK:
+                    attack (command);
                     break;
                 default:
                     break;
             }
+        }
+        if (player.getHappiness = 100) {
+            gate.setLock(false);
         }
         return wantToQuit;
     }
@@ -187,6 +200,8 @@ public class Game {
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door!");
+        } else if (nextRoom.locked == true) {
+            System.out.println("This door is locked! It says you need to be happy to enter.");
         } else {
             // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
             currentRoom = nextRoom;
@@ -212,9 +227,13 @@ public class Game {
             } else {
                 System.out.println("You have no idea how to " + command.getSecondWord() + " " + correct.getName());
             }
-        }else {
-            System.out.println (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
+        } else {
+            System.out.println(command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
         }
+    }
+    
+    private void attack (Command command) {
+        
     }
 
     private boolean quit(Command command) {

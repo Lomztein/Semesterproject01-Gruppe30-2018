@@ -3,18 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package depressionsspillet.worldofzuul;
+package depressionsspillet.worldofzuul.characters;
+
+import depressionsspillet.worldofzuul.Room;
 
 /**
  * @author Joachim
  */
 public abstract class Character {
 
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
+    
     //private Inventory inventory;
     private Room currentRoom;
-    
+
+    public Room getCurrentRoom () {
+        return currentRoom;
+    }
     
     public void setCurrentRoom(Room room){
         this.currentRoom = room;
