@@ -175,8 +175,7 @@ public class Game {
 
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("You are lost. You are alone. You absolute looser.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
@@ -185,7 +184,7 @@ public class Game {
     private void goRoom(Command command) {
         // If no second word was given, then ask the player where they need to go.
         if (command.getSecondWord() == null) {
-            System.out.println("Go where?");
+            System.out.println("Go? Go where..?");
 
             // If this happens, then exit out of this function using a return statement.
             return;

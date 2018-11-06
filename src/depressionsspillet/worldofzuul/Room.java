@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 public class Room 
 {
-    // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
-    private String description;
+   
+    
     
     // This object is a HashMap, which functions much like an array by containing a list of elements.
     // Differently from an array however, these elements are indexed with a key instead of a number.
@@ -20,8 +20,14 @@ public class Room
     private HashMap<String, Room> exits;
     private ArrayList<Interactable> interactables;
 
+    // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
+    private String description;
+    ArrayList<Item> itemsInRoom;
+    
+    //Constructor
     public Room(String description) 
     {
+        this.itemsInRoom = new ArrayList<>();
         this.description = description;
         exits = new HashMap<>();
         interactables = new ArrayList<>();
@@ -75,5 +81,7 @@ public class Room
     {
         return exits.get(direction);
     }
+    
+    
 }
 
