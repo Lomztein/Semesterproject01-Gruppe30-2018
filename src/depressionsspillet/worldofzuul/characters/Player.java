@@ -5,6 +5,7 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
+import depressionsspillet.worldofzuul.Item;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Damage;
@@ -20,7 +21,9 @@ public class Player extends Character implements HasHealth, Damagable {
     private double happinesslevel = 0;
     private Damagable engagedWith;
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
-    
+
+    Item[] inventory = new Item[4];
+
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
     }
@@ -30,14 +33,25 @@ public class Player extends Character implements HasHealth, Damagable {
         return happinesslevel;
     }
     
-    public void attackEngaged (String attackName) {
+    public void engage (Damagable damagable) {
+        engagedWith = damagable;
+    }
+    
+    public boolean isEngaged () {
+        return engagedWith != null;
+    }
+    
+    public Attack getAttack (String attackName) {
         Attack attack = null;
         for (Attack att : availableAttacks) {
             if (att.getName().toLowerCase().equals(attackName.toLowerCase())) {
                 attack = att;
             }
         }
-        
+        return attack;
+    }
+
+    public void attackEngaged(Attack attack) {
         if (attack != null) {
             attack.doDamage(engagedWith);
         }
@@ -48,5 +62,39 @@ public class Player extends Character implements HasHealth, Damagable {
         if (damage.getDamageType() == DamageType.MENTAL) {
             happinesslevel -= damage.getDamageValue();
         }
+    }
+
+    //Methods
+    public void printInventoryList() {
+        int i = 1;
+        for (Item item : inventory) {
+
+            if (item != null) {
+                System.out.println(i + ",  " + item.getName());
+            } else {
+                System.out.println(i + ",  Empty");
+            }
+        }
+    }
+
+    public void addToInventory(Item item, int index) {
+        printInventoryList();
+
+        //For testing purposes, should run through parser in end-version
+        System.out.println("\n\nSelect a slot to insert " + item.getName() + " into: ");
+
+        while (index > 4 || index < 1) {
+            System.out.print("Wrong input, try again: \n> ");
+        }
+
+        inventory[index] = item;
+
+    }
+
+    public void dropItem(int i) {
+        printInventoryList();
+
+        System.out.println("\n\nSelect an item to drop: ");
+
     }
 }

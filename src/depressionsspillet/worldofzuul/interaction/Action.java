@@ -5,12 +5,14 @@
  */
 package depressionsspillet.worldofzuul.interaction;
 
+import depressionsspillet.worldofzuul.characters.Player;
+
 /**
  *
  * @author Lomztein
  */
 public interface Action {
     
-    void execute ();
+    void execute (Player player);
     
 }

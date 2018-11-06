@@ -21,8 +21,8 @@ public class VendorNPC extends NPC {
     @Override
     public Interaction[] getInteractions() {
         return new Interaction [] {
-            new Interaction ("annoy", "", () -> System.out.println ("You have been murdered.")),
-            new Interaction ("kick", "", () -> System.out.println ("You kick " + getName () + " square in the balls, he is visibly upset."))
+            new Interaction ("annoy", "", (x) -> System.out.println ("You have been murdered.")),
+            new Interaction ("kick", "", (x) -> System.out.println ("You kick " + getName () + " square in the balls, he is visibly upset."))
         };
     }
     
