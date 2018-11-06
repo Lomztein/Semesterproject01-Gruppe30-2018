@@ -34,7 +34,7 @@ public class Room
     }
     
     public void setExit (String direction, Room neighbor) {
-        setExit (direction, neighbor, false);
+        setExit (direction, neighbor, false, false);
     }
 
     // Wrapper function for exits.put, since exits is private.
@@ -43,7 +43,13 @@ public class Room
         Door door = new Door (direction, neighbor, locked);
         exits.put(direction, door);
     }
-
+    
+    public void setExit(String direction, Room neighbor, boolean locked, boolean bossdoorLocked) 
+    {   
+        Door door = new Door (direction, neighbor, locked);
+        exits.put(direction, door);
+    }
+    
     public String getShortDescription()
     {
         return description;
@@ -71,7 +77,7 @@ public class Room
     private String getExitString()
     {
         // Declare a variable for containing the combined result of the upcoming loop.
-        String returnString = "You can now goes these ways:";
+        String returnString = "You can now go these ways:";
         
         // Get every single key in the HashMap, for looping through them.
         // This generic type given a string type argument is much like an array of Strings.

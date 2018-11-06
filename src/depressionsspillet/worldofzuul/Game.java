@@ -27,20 +27,20 @@ public class Game {
         // The individual room variables are populated with their appropiate Room objects.
         start = new Room("You are standing on a field, under a lonesome tree you see spilmester Martin greeting you with a smile.");
         magicForrest = new Room("You are now in the magicforrest, who knows what will happen.");
-        vendor = new Room("You have visited the blackboard vendor, a replacement of blackboard is currently in the works in the meantime please feel free to browse the vendor's wares.");
+        vendor = new Room("You have visited the blackboard vendor, a replacement of blackboard is currently in the works \nin the meantime please feel free to browse the vendor's wares.");
         animals = new Room("You go deeper into the forrest and find yourself in a completely white room filled with puppies and kittens.");
-        thaiHooker = new Room("A beuatiful asian woman approached you and asks what you are doing tonight. She seems interresting but a beautiful woman has never approached you before could it be a trap?");
-        sleepover = new Room("You find yourself at your best friends house in your pajamas with icecream. Your best friends invites you inside for a sleepover.");
-        fridayBar = new Room("Wuhuu it is friday on SDU and you suddenly feel your spirite soaring and you feel like getting smashed and so you do... You feel great.");
-        stripClub = new Room("As you continued through the forrest you notices a couple of flikering light as you move closer you see a sign saying: 'Gentleman's club. Free tonight' You enter, look around, start smiling slyly and have a great time. Your mum would be disappointed");
-        kfc = new Room("Suddenly in your path you see a familiar red sign with tree white letters. It reads: KFC, and you are overjoyed. You enter and when you tell the cashier about your amazing journey. She decides to give you free food for your trip and warns you about continuing east becuase a dangerous and mysterious creature lurks in the swamp.");
-        shrek = new Room("You defied the warnings of the nice KFC lady and walked onwards to the east. The forest soon ends and a dank swamp emerges. Carefully you explore the area and come across a small wooden shack. As you are about to enter, a rumbling voice appears behinds you ' ' After turning around you realise you have entered the domain of the one and only Shrek. In an adrenaline induced panic you try to escape, but you are easily caught, and as you are dragged inside the raggedy shack, Shreks whispers softly 'it's all ogre now'. The rest of this encounter is best described as a deep scar on your soul, and should never again be spoken off.");
-        allotment = new Room("As you continue walking the forest gets brighter as more and more light slips through the treetops. Flowers start to appear and as you follow them you find a small cosy cabin. When you are just about to knock on the door to ask for directions, when you a familiar eerie sound. *heavy forced inhaling* *heavy forced exhaling* you decide to scout out the house for inhabitants, before trying to enter. Walking around to the backyard, you spot a figure dressed in black armor, wearing a black mask and cape, holding a watering can. It is the retired Darth Vader!");
+        thaiHooker = new Room("A beuatiful asian woman approached you and asks what you are doing tonight.\nShe seems interresting but a beautiful woman has never approached you before - could it be a trap?");
+        sleepover = new Room("You find yourself at your best friends house in your pajamas with icecream. \nYour best friends invites you inside for a sleepover.");
+        fridayBar = new Room("Woohooo it is friday at SDU and you suddenly feel your spirite soaring and you feel like getting smashed and so you do... You're feeling better.");
+        stripClub = new Room("As you continued through the forrest you notices a couple of flikering lights. \nAs you move closer you see a sign saying: 'Gentleman's club. Free tonight' You enter, look around, start smiling slyly and have a great time. \nYour mum would be disappointed");
+        kfc = new Room("Suddenly in your path you see a familiar red sign with tree white letters. \nIt reads: KFC, and you are overjoyed. You enter and when you tell the cashier about your amazing journey. \nShe decides to give you free food for your trip and warns you about continuing east becuase a dangerous and mysterious creature lurks in the swamp.");
+        shrek = new Room("You defied the warnings of the nice KFC lady and walked onwards to the east. The forest soon ends and a dank swamp emerges. \nCarefully you explore the area and come across a small wooden shack. As you are about to enter, a rumbling voice appears behinds you \n' ' \nAfter turning around you realise you have entered the domain of the one and only Shrek. \nIn an adrenaline induced panic you try to escape, but you are easily caught, and as you are dragged inside the raggedy shack, Shreks whispers softly 'it's all ogre now'. \nThe rest of this encounter is best described as a deep scar on your soul, and should never again be spoken off.");
+        allotment = new Room("As you continue walking the forest gets brighter as more and more light slips through the treetops. \nFlowers start to appear and as you follow them you find a small cosy cabin. When you are just about to knock on the door to ask for directions, when you a familiar eerie sound. \n*heavy forced inhaling* *heavy forced exhaling* you decide to scout out the house for inhabitants, before trying to enter. \nWalking around to the backyard, you spot a figure dressed in black armor, wearing a black mask and cape, holding a watering can. \nIt is the retired Darth Vader!");
         movie = new Room("You discover a room with a big couch, floffy teddybears and a couple of friends to snuggle. So you dive into the pillows on the couch and rest for a while.");
-        drugs = new Room("In a twisted turn of events, you stumble upon a bald russian man selling some sort of homemade white powder. You assume this is heroin, and it is verified by the man with a deep, emotionless 'Da. Krokodil'. You feel slightly eerie and disturbed. ");
+        drugs = new Room("In a twisted turn of events, you stumble upon a bald russian man selling some sort of homemade white powder. \nYou assume this is heroin, and it is verified by the man with a deep, emotionless 'Da. Krokodil'. You feel slightly eerie and disturbed. ");
         gate = new Room("This is a big impenetrable, unavoidable, indomitable, completely daunting and locked gate. You will need some kind of key to get through.");
-        boss = new Room("bossbattle");
-        suprise = new Room("In a heroic and almost impossible turn of events you have defeated the despicable Erikthulu/Martin and entered through the last door, behind which all your friends have been watching your valiant fight with eagerness and solemn pride. They all congratulate you on completeing such a feat of strength and cheer you name all the while continually mentioning how proud of you the are, in addition to how much they value your friendship");
+        boss = new Room("Whoa! The mighty Erikthulu has appeared before you and tries to suppress your newfound happiness with his vile toungue and his despicable behaviour. \nYou quickly try to search for a way to escape, but the humongous door behind you has already shut tight. \nYou reluctantly come to terms with your fate - you must fight to preserve your newfound value in life, or perish meaninglessly.");
+        suprise = new Room("In a heroic and near impossible turn of events you have defeated the despicable Erikthulu/Martin and entered through the last door. \nBehind it all your friends have been watching your valiant fight with eagerness and solemn pride. \nThey all congratulate you on completeing such an insurmountable task and cheer you name \nall the while continually mentioning how proud of you the are, in addition to how much they value your friendship");
 
         // Exits for are declared.
         start.setExit("south", magicForrest);
@@ -94,7 +94,7 @@ public class Game {
         gate.setExit("north", sleepover);
         gate.setExit("south", boss, true);
 
-        boss.setExit("south", suprise);
+        boss.setExit("south", suprise, true);
 
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
@@ -114,7 +114,7 @@ public class Game {
             finished = processCommand(command);
         }
 
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Thank you for playing. Good bye.");
     }
 
     private void printWelcome() {
@@ -170,7 +170,7 @@ public class Game {
 
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
-        System.out.println("You are lost. You are alone. You absolute looser.");
+        System.out.println("You are lost. You are alone. You absolute loser.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
