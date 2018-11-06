@@ -13,15 +13,8 @@ import depressionsspillet.worldofzuul.Room;
  */
 public abstract class NPC extends Character implements Interactable {
 
-    private boolean hostile;
-
-    public NPC (String name, String desc, Room startingRoom, boolean hostile) {
+    public NPC (String name, String desc, Room startingRoom) {
         super (name, desc, startingRoom);
-        this.hostile = hostile;
-    }
-    
-    public boolean isHostile () {
-        return hostile;
     }
 
 }
