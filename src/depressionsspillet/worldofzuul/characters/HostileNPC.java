@@ -10,6 +10,8 @@ import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.Interaction;
 import depressionsspillet.worldofzuul.Room;
+import depressionsspillet.worldofzuul.combat.Attack;
+import java.util.Random;
 
 /**
  *
@@ -18,13 +20,15 @@ import depressionsspillet.worldofzuul.Room;
 public class HostileNPC extends NPC implements Damagable, HasHealth {
 
     private double health;
-    private DamageType[] effectiveDamageTypes;
+    private final DamageType[] effectiveDamageTypes;
+    private final Attack[] availableAttacks;
     private static final double INEFFECTIVE_DAMAGE_MULTIPLIER = 0.2d;
 
-    public HostileNPC(String name, String desc, Room startingRoom, double health, DamageType... effectiveDamageTypes) {
+    public HostileNPC(String name, String desc, Room startingRoom, double health, DamageType[] effectiveDamageTypes, Attack... availableAttacks) {
         super(name, desc, startingRoom, true);
         this.health = health;
         this.effectiveDamageTypes = effectiveDamageTypes;
+        this.availableAttacks = availableAttacks;
     }
     
     private boolean isEffectiveDamageType (DamageType damageType) {
@@ -34,12 +38,22 @@ public class HostileNPC extends NPC implements Damagable, HasHealth {
         }
         return false;
     }
+    
+    private Attack getRandomAttack () {
+        Random random = new Random ();
+        return availableAttacks [random.nextInt(availableAttacks.length)];
+    }
+    
+    public void Attack (Damagable damagable) {
+        Attack random = getRandomAttack ();
+        random.doDamage(damagable);
+    }
 
     @Override
     public void takeDamage(Damage damage) {
         if (isEffectiveDamageType (damage.getDamageType ())) {
             health -= damage.getDamageValue();
-        }else{
+        }else{  
             health -= damage.getDamageValue () * INEFFECTIVE_DAMAGE_MULTIPLIER;
         }
     }

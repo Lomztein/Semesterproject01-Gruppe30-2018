@@ -11,8 +11,18 @@ package depressionsspillet.worldofzuul.combat;
  */
 public class Attack {
     
-    private DamageType damageType;
-    private String name;
-    private String description;
+    private final Damage damage;
+    private final String name;
+    private final String description;
+    
+    public void doDamage (Damagable damagable) {
+        damagable.takeDamage(damage);
+    }
+    
+    public Attack (Damage damage, String name, String description) {
+        this.damage = damage;
+        this.name = name;
+        this.description = description;
+    }
     
 }
