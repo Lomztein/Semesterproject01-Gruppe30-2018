@@ -5,6 +5,7 @@ import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.characters.VendorNPC;
 import depressionsspillet.worldofzuul.combat.Attack;
+import java.util.Scanner;
 
 public class Game {
 
@@ -25,7 +26,7 @@ public class Game {
     private void createRooms() {
 
         // The individual room variables are populated with their appropiate Room objects.
-        start = new Room("You are standing on a field, under a lonesome tree you see spilmester Martin greeting you with a smile.");
+        start = new Room("You leave Spilmester Martin, and enter the huge magical forrest, with trees seemingly extending into the skies.");
         magicForrest = new Room("You are now in the magicforrest, who knows what will happen.");
         vendor = new Room("You have visited the blackboard vendor, a replacement of blackboard is currently in the works in the meantime please feel free to browse the vendor's wares.");
         animals = new Room("You go deeper into the forrest and find yourself in a completely white room filled with puppies and kittens.");
@@ -120,14 +121,28 @@ public class Game {
     private void printWelcome() {
         // A simple, warm welcome.
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-
+        System.out.println("Welcome to Depressionsspillet!");
+        System.out.println("Depressionsspillet is a positive and uplifting game, designed to make the player remember the positives of a student's life!");
+        System.out.println();
         // A basic guide on how to play this game.
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-
-        // An introduction to our current room.
+        
+        //Trolling the player
+        System.out.println("Your adventure starts near the barn of the famous Spilmester Martin.");
+        System.out.println();
+        System.out.println("- Greetings, youngling!");
+        System.out.println("- My name is Spilmester Martin, and I am the leader of the Warriors against Erikthulu!");
+        System.out.println("- Please state your desired character style!");
+        System.out.println("Options include: Wizard, warrior, monk, witch hunter and berserker.");
+        System.out.print(">");
+        Scanner input = new Scanner(System.in);
+        String someStyle = input.next();
+        System.out.println("- Please state your desired name!");
+        System.out.print(">");
+        String someName = input.next();
+        System.out.println("- Alright! You are now Janus the Magic Midget.");
+        System.out.println("");
         System.out.println(player.getCurrentRoom().getLongDescription());
     }
 
