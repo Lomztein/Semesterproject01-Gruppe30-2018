@@ -1,5 +1,7 @@
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.interaction.Interaction;
+import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.characters.VendorNPC;
 
 public class Game {

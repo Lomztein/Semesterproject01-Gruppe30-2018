@@ -5,6 +5,7 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
+import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.*;
 
 /**
