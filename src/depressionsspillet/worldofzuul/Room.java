@@ -17,7 +17,7 @@ public class Room
     // In this case, the "keys" for this hashmap is of type String, and the "values" is of type Room.
     // Types that take these "type arguments" are called generic types, meaining they can work with anything, provided there are no constraints.
     // Contraints in this sense are declarations on the generic that limit what types can be used.
-    private HashMap<String, Room> exits;
+    private HashMap<String, Door> exits;
     private ArrayList<Interactable> interactables;
 
     // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
@@ -32,11 +32,16 @@ public class Room
         exits = new HashMap<>();
         interactables = new ArrayList<>();
     }
+    
+    public void setExit (String direction, Room neighbor) {
+        setExit (direction, neighbor, false);
+    }
 
     // Wrapper function for exits.put, since exits is private.
-    public void setExit(String direction, Room neighbor) 
-    {
-        exits.put(direction, neighbor);
+    public void setExit(String direction, Room neighbor, boolean locked) 
+    {   
+        Door door = new Door (direction, neighbor, locked);
+        exits.put(direction, door);
     }
 
     public String getShortDescription()
@@ -77,7 +82,7 @@ public class Room
         return returnString;
     }
 
-    public Room getExit(String direction) 
+    public Door getExit(String direction) 
     {
         return exits.get(direction);
     }

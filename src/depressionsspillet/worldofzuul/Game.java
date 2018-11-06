@@ -92,15 +92,15 @@ public class Game {
         drugs.setExit("east", thaiHooker);
 
         gate.setExit("north", sleepover);
-        gate.setExit("south", boss);
-        gate.setLock(true);
+        gate.setExit("south", boss, true);
 
         boss.setExit("south", suprise);
 
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
-        currentRoom = start;
     }
+    
+    
 
     public void play() {
         // Call the printWelcome function, which acts both as a welcome, as well as a simple guide.
@@ -163,6 +163,14 @@ public class Game {
                 case ATTACK:
                     attack (command);
                     break;
+                case OPEN:
+                    /*
+                    if(
+                    
+                    
+                    
+                    
+                    */
                 default:
                     break;
             }
@@ -194,19 +202,40 @@ public class Game {
         String direction = command.getSecondWord();
 
         // Find the next room by finding the appropiate exit in our current room.
-        Room nextRoom = currentRoom.getExit(direction);
-
+        Door nextRoom = currentRoom.getExit(direction);
+        
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door!");
+        }
+        else if (nextRoom.locked == true) {
+                System.out.println("Door is locked");
+                if (happinesslevel > 99){
+                    System.out.println("Happiness is high enough");
+                    nextRoom.locked = false;
+                    currentRoom = nextRoom.getRoom();
+                    System.out.println(currentRoom.getLongDescription());
+                }
         } else if (nextRoom.locked == true) {
             System.out.println("This door is locked! It says you need to be happy to enter.");
         } else {
+                currentRoom = nextRoom.getRoom();
+                System.out.println(currentRoom.getLongDescription());
+            }
             // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+            
+            /*
+                    if(h > 99){
+            currentRoom = nextRoom.getRoom();
+                System.out.println(currentRoom.getLongDescription());
+            } else {
+                currentRoom = nextRoom.getRoom();
+                System.out.println(currentRoom.getLongDescription());
+            }
+                    */
+        
         }
-    }
+  
 
     private void interact(Command command) {
 
