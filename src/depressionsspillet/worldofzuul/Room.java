@@ -26,7 +26,7 @@ public class Room
     //Constructor
     public Room(String description) 
     {
-        this.itemsInRoom = new ArrayList<Item>();
+        this.itemsInRoom = new ArrayList<>();
         this.description = description;
         exits = new HashMap<>();
     }
@@ -67,5 +67,7 @@ public class Room
     {
         return exits.get(direction);
     }
+    
+    
 }
 
