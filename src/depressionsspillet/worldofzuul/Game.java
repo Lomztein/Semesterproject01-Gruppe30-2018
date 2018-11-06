@@ -1,24 +1,28 @@
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.characters.VendorNPC;
+
 
 public class Game {
 
     // Instance-variables / attributes for a command parser and a current room is declared for later use.
     private Parser parser;
-    private Room currentRoom;
+    private Player player;
+    
+    // A few different rooms are quickly declared at once by giving a single Type identifier and a number of variable names afterwards, seperated by commas.
+    Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
     public Game() {
         // The attributes are populated with their appropiate data.
         createRooms();
+        player = new Player("Johannes", "Døberen", start);
         parser = new Parser();
     }
 
     private void createRooms() {
-        // A few different rooms are quickly declared at once by giving a single Type identifier and a number of variable names afterwards, seperated by commas.
-        Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
         // The individual room variables are populated with their appropiate Room objects.
         start = new Room("You are standing on a field, under a lonesome tree you see spilmester Martin greeting you with a smile.");
@@ -50,8 +54,8 @@ public class Game {
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
-        
-        vendor.enterRoom(new VendorNPC ("Boris", "A slightly smelly old russian man with a key around his neck.", vendor, false));
+
+        vendor.enterRoom(new VendorNPC("Boris", "A slightly smelly old russian man with a key around his neck.", vendor, false));
 
         // You know the drill by now.
         animals.setExit("west", vendor);
@@ -89,6 +93,7 @@ public class Game {
 
         gate.setExit("north", sleepover);
         gate.setExit("south", boss);
+        gate.setLock(true);
 
         boss.setExit("south", suprise);
 
@@ -153,11 +158,14 @@ public class Game {
                     wantToQuit = quit(command);
                     break;
                 case INTERACT:
-                    interact (command);
+                    interact(command);
                     break;
                 default:
                     break;
             }
+        }
+        if (player.getHappiness = 100) {
+            gate.setLock(false);
         }
         return wantToQuit;
     }
@@ -189,6 +197,8 @@ public class Game {
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door!");
+        } else if (nextRoom.locked == true) {
+            System.out.println("This door is locked! It says you need to be happy to enter.");
         } else {
             // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
             currentRoom = nextRoom;
@@ -214,8 +224,8 @@ public class Game {
             } else {
                 System.out.println("You have no idea how to " + command.getSecondWord() + " " + correct.getName());
             }
-        }else {
-            System.out.println (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
+        } else {
+            System.out.println(command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
         }
     }
 
