@@ -92,19 +92,12 @@ public class Game {
         drugs.setExit("east", thaiHooker);
 
         gate.setExit("north", sleepover);
-<<<<<<< HEAD
         gate.setExit("south", boss, true);
-        
-=======
-        gate.setExit("south", boss);
-        gate.setLock(true);
 
->>>>>>> 2fc0f66195aa00badc964fbc10fc78c66c295cd2
         boss.setExit("south", suprise);
 
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
-        currentRoom = start;
     }
     
     
