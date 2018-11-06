@@ -9,17 +9,6 @@ package depressionsspillet.worldofzuul;
  *
  * @author Lomztein
  */
-public class Damage {
-    
-    private DamageType damageType;
-    private double damageValue;
-    
-    public DamageType getDamageType () {
-        return damageType;
-    }
-    
-    public double getDamageValue () {
-        return damageValue;
-    }
+interface IHasHealth {
     
 }

@@ -11,12 +11,12 @@ package depressionsspillet.worldofzuul;
  */
 public enum DamageType {
 
-    PHYSICAL("Punch"), DAB("Dab");
+    BLUNT("a punch"), SLASH ("a strangely shaped sword"), FIRE ("an almost-out-of-fuel lighter"), WATER ("a weak spray of water vapor"), MENTAL ("an insult"), DAB("a particularily dank dab"), SUNONASTICK ("the Sun on a Stick");
 
-    private String name;
+    private final String description;
 
-    DamageType(String name) {
-        this.name = name;
+    DamageType(String description) {
+        this.description = description;
     }
 
 }

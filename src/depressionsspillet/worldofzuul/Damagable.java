@@ -11,6 +11,6 @@ package depressionsspillet.worldofzuul;
  */
 public interface Damagable {
     
-    void takeDamage (double damage);
+    void takeDamage (Damage damage);
     
 }
