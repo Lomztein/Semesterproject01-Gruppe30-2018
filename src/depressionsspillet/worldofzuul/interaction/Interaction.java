@@ -5,6 +5,8 @@
  */
 package depressionsspillet.worldofzuul.interaction;
 
+import depressionsspillet.worldofzuul.characters.Player;
+
 /**
  *
  * @author Lomztein
@@ -30,8 +32,8 @@ public class Interaction {
         return this.description;
     }
 
-    public void execute () {
-        action.execute ();
+    public void execute (Player player) {
+        action.execute (player);
     }
     
 }

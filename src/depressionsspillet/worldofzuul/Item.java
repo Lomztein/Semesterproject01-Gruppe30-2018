@@ -10,24 +10,27 @@ package depressionsspillet.worldofzuul;
  * @author Ryge
  */
 public abstract class Item {
-    
+
     //Attributes
-    String name;
-    String description;
-    
+    private String name;
+    private String description;
+
     //Rarity determines the spawnrate.
-    int rarity;
-    
-    
+    private int rarity;
+
     //constructor
-    public Item (String name, String description, int rarity) {
+    public Item(String name, String description, int rarity) {
         this.name = name;
         this.description = description;
         this.rarity = rarity;
-        
     }
     
+    public String getName () {
+        return name;
+    }
     
-    
-    
+    public String getDescription () {
+        return description;
+    }
+
 }

@@ -4,14 +4,14 @@ import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.characters.VendorNPC;
-
+import depressionsspillet.worldofzuul.combat.Attack;
 
 public class Game {
 
     // Instance-variables / attributes for a command parser and a current room is declared for later use.
     private Parser parser;
     private Player player;
-    
+
     // A few different rooms are quickly declared at once by giving a single Type identifier and a number of variable names afterwards, seperated by commas.
     Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
@@ -99,8 +99,6 @@ public class Game {
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
     }
-    
-    
 
     public void play() {
         // Call the printWelcome function, which acts both as a welcome, as well as a simple guide.
@@ -130,7 +128,7 @@ public class Game {
         System.out.println();
 
         // An introduction to our current room.
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(player.getCurrentRoom().getLongDescription());
     }
 
     private boolean processCommand(Command command) {
@@ -161,22 +159,11 @@ public class Game {
                     interact(command);
                     break;
                 case ATTACK:
-                    attack (command);
+                    attack(command);
                     break;
-                case OPEN:
-                    /*
-                    if(
-                    
-                    
-                    
-                    
-                    */
                 default:
                     break;
             }
-        }
-        if (player.getHappiness = 100) {
-            gate.setLock(false);
         }
         return wantToQuit;
     }
@@ -202,29 +189,24 @@ public class Game {
         String direction = command.getSecondWord();
 
         // Find the next room by finding the appropiate exit in our current room.
-        Door nextRoom = currentRoom.getExit(direction);
-        
+        Door nextRoom = player.getCurrentRoom().getExit(direction);
+
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door!");
-        }
-        else if (nextRoom.locked == true) {
-                System.out.println("Door is locked");
-                if (happinesslevel > 99){
-                    System.out.println("Happiness is high enough");
-                    nextRoom.locked = false;
-                    currentRoom = nextRoom.getRoom();
-                    System.out.println(currentRoom.getLongDescription());
-                }
+        } else if (nextRoom.locked == true) {
+            nextRoom.locked = false;
+            player.setCurrentRoom(nextRoom.getRoom());
+            System.out.println(player.getCurrentRoom().getLongDescription());
         } else if (nextRoom.locked == true) {
             System.out.println("This door is locked! It says you need to be happy to enter.");
         } else {
-                currentRoom = nextRoom.getRoom();
-                System.out.println(currentRoom.getLongDescription());
-            }
-            // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
-            
-            /*
+            player.setCurrentRoom(nextRoom.getRoom());
+            System.out.println(player.getCurrentRoom().getLongDescription());
+        }
+        // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
+
+        /*
                     if(h > 99){
             currentRoom = nextRoom.getRoom();
                 System.out.println(currentRoom.getLongDescription());
@@ -232,14 +214,12 @@ public class Game {
                 currentRoom = nextRoom.getRoom();
                 System.out.println(currentRoom.getLongDescription());
             }
-                    */
-        
-        }
-  
+         */
+    }
 
     private void interact(Command command) {
 
-        Interactable[] interactables = currentRoom.getInteractables();
+        Interactable[] interactables = player.getCurrentRoom().getInteractables();
         Interactable correct = null;
         for (Interactable i : interactables) {
             if (i.getName().equals(command.getSecondWord())) {
@@ -251,7 +231,7 @@ public class Game {
             Interaction interaction = correct.findInteraction(command.getThirdWord());
 
             if (interaction != null) {
-                interaction.execute();
+                interaction.execute(player);
             } else {
                 System.out.println("You have no idea how to " + command.getSecondWord() + " " + correct.getName());
             }
@@ -259,9 +239,14 @@ public class Game {
             System.out.println(command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
         }
     }
-    
-    private void attack (Command command) {
-        
+
+    private void attack(Command command) {
+        if (player.isEngaged()) {
+            Attack playerAttack = player.getAttack(command.getSecondWord());
+            player.attackEngaged(playerAttack);
+        }else {
+            System.out.println ("You aren't currently engaged in combat, therefore you cannot attack anything.");
+        }
     }
 
     private boolean quit(Command command) {

@@ -66,7 +66,7 @@ public class HostileNPC extends NPC implements Damagable, HasHealth {
     @Override
     public Interaction[] getInteractions() {
         return new Interaction[]{
-            new Interaction("Engage", "Attack " + this.getName() + " with spirit and vigor!", () -> {}),
+            new Interaction("Engage", "Attack " + this.getName() + " with spirit and vigor!", (x) -> {x.engage(this);}),
         };
     }
 
