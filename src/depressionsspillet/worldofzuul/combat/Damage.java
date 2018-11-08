@@ -13,8 +13,19 @@ import depressionsspillet.worldofzuul.combat.DamageType;
  */
 public class Damage {
     
-    private DamageType damageType;
-    private double damageValue;
+    private final Attacker attacker;
+    private final DamageType damageType;
+    private final double damageValue;
+    
+    public Damage (Attacker attacker, DamageType damageType, double damageValue) {
+        this.attacker = attacker;
+        this.damageType = damageType;
+        this.damageValue = damageValue;
+    }
+    
+    public Attacker getAttacker () {
+        return attacker;
+    }
     
     public DamageType getDamageType () {
         return damageType;

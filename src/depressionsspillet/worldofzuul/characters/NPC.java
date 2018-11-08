@@ -13,8 +13,8 @@ import depressionsspillet.worldofzuul.Room;
  */
 public abstract class NPC extends Character implements Interactable {
 
-    public NPC (String name, String desc, Room startingRoom) {
-        super (name, desc, startingRoom);
+    public NPC (String name, String desc, Room startingRoom, DamageResistance... resistances) {
+        super (name, desc, startingRoom, resistances);
     }
 
 }
