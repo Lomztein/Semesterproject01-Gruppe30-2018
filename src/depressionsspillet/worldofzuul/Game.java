@@ -1,5 +1,6 @@
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.characters.HostileNPC;
 import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.interaction.Interactable;
@@ -54,8 +55,6 @@ public class Game {
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
-
-        vendor.enterRoom(new VendorNPC("Boris", "A slightly smelly old russian man with a key around his neck.", vendor, false));
 
         // You know the drill by now.
         animals.setExit("west", vendor);
