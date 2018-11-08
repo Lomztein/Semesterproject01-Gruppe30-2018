@@ -1,10 +1,13 @@
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.characters.DamageResistance;
 import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.characters.VendorNPC;
 import depressionsspillet.worldofzuul.combat.Attack;
+import depressionsspillet.worldofzuul.combat.Damagable;
+import depressionsspillet.worldofzuul.combat.DamageType;
 import java.util.Scanner;
 
 public class Game {
@@ -20,6 +23,8 @@ public class Game {
         // The attributes are populated with their appropiate data.
         createRooms();
         player = new Player("Johannes", "Døberen", start);
+        player.addAttack(new Attack(DamageType.DAB, 5, "dab", "profound dab."));
+        player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "weak, yet beautifully spirited punch."));
         parser = new Parser();
     }
 
@@ -44,7 +49,7 @@ public class Game {
         suprise = new Room("In a heroic and almost impossible turn of events you have defeated the despicable Erikthulu/Martin and entered through the last door, behind which all your friends have been watching your valiant fight with eagerness and solemn pride. They all congratulate you on completeing such a feat of strength and cheer you name all the while continually mentioning how proud of you the are, in addition to how much they value your friendship");
 
         // Exits for are declared.
-        start.setExit("south", magicForrest);
+        start.setExit("south", magicForrest, true);
 
         // Exits for magicForrest are declared.
         magicForrest.setExit("south", sleepover);
@@ -56,7 +61,8 @@ public class Game {
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
 
-        vendor.enterRoom(new VendorNPC("Boris", "A slightly smelly old russian man with a key around his neck.", vendor, false));
+        vendor.addToRoom(new VendorNPC("Boris", "A slightly smelly old russian man with a key around his neck.", vendor, new DamageResistance(DamageType.ANY, "takes no damage, it just bounces off his fat ass.", 0)));
+        vendor.addToRoom(new VendorNPC("Putin", "A menacing looking russian man possibly plotting a nuclear war.", vendor, new DamageResistance(DamageType.MENTAL, "Takes a reduced %f damage due to his wicked good looks.", 0.2d)));
 
         // You know the drill by now.
         animals.setExit("west", vendor);
@@ -173,6 +179,12 @@ public class Game {
                 case INTERACT:
                     interact(command);
                     break;
+                case ENGAGE:
+                    engage(command);
+                    break;
+                case DISENGAGE:
+                    disengage(command);
+                    break;
                 case ATTACK:
                     attack(command);
                     break;
@@ -236,33 +248,89 @@ public class Game {
 
     private void interact(Command command) {
 
-        Interactable[] interactables = player.getCurrentRoom().getInteractables();
-        Interactable correct = null;
-        for (Interactable i : interactables) {
-            if (i.getName().equals(command.getSecondWord())) {
-                correct = i;
+        if (command.hasSecondWord()) {
+
+            System.out.println("You have the option to interact with the following: ");
+            System.out.println(player.getCurrentRoom().listEntities(Interactable.class));
+
+        } else {
+
+            Interactable[] interactables = player.getCurrentRoom().getEntities(Interactable.class);
+            Interactable correct = null;
+            for (Interactable i : interactables) {
+                if (i.getName().toLowerCase().equals(command.getSecondWord().toLowerCase())) {
+                    correct = i;
+                }
             }
+
+            if (correct != null) {
+
+                if (command.hasThirdWord()) {
+
+                    Interaction interaction = correct.findInteraction(command.getThirdWord());
+
+                    if (interaction != null) {
+                        interaction.execute(player);
+                        System.out.println(interaction.getDescription());
+                    } else {
+                        System.out.println("You have no idea how to " + command.getThirdWord() + " " + correct.getName());
+                    }
+
+                } else {
+                    System.out.println("You have the option of the following interactions: ");
+                    System.out.println(correct.listInteractions());
+                }
+
+            } else {
+                System.out.println(command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
+            }
+
         }
 
-        if (correct != null) {
-            Interaction interaction = correct.findInteraction(command.getThirdWord());
+    }
 
-            if (interaction != null) {
-                interaction.execute(player);
+    private void engage(Command command) {
+
+        if (player.isEngaged()) {
+            System.out.println("You are already engaged in combat with " + player.getEngaged().getName() + ".");
+        }
+
+        if (command.hasSecondWord()) {
+            Damagable toEngage = player.getCurrentRoom().getEntity(Damagable.class, command.getSecondWord());
+            if (toEngage != null) {
+                player.engage(toEngage);
+                System.out.println("You engage " + toEngage.getName() + " with spirit and vigor!");
             } else {
-                System.out.println("You have no idea how to " + command.getSecondWord() + " " + correct.getName());
+                System.out.println("There is no " + command.hasSecondWord() + " that you can engage.");
             }
         } else {
-            System.out.println(command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
+            System.out.println("You have the option to engage: ");
+            System.out.println(player.getCurrentRoom().listEntities(Damagable.class));
+        }
+    }
+
+    private void disengage(Command command) {
+        if (player.isEngaged()) {
+            System.out.println("You poop yourself a little before disengaging " + player.getEngaged().getName() + " before running to a safe distance.");
+            player.disengage();
+        } else {
+            System.out.println("You aren't currently engaged in combat.");
         }
     }
 
     private void attack(Command command) {
-        if (player.isEngaged()) {
+        if (!command.hasSecondWord()) {
+            System.out.println("You have the option of the following attacks:");
+            System.out.println(player.getAttackList());
+        } else if (player.isEngaged()) {
             Attack playerAttack = player.getAttack(command.getSecondWord());
-            player.attackEngaged(playerAttack);
-        }else {
-            System.out.println ("You aren't currently engaged in combat, therefore you cannot attack anything.");
+            if (playerAttack != null) {
+                player.attackEngaged(playerAttack);
+            } else {
+                System.out.println("You don't have the ability to attack using " + command.getSecondWord());
+            }
+        } else {
+            System.out.println("You aren't currently engaged in combat, therefore you cannot attack anything.");
         }
     }
 
