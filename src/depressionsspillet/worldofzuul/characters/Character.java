@@ -5,6 +5,7 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
+import depressionsspillet.worldofzuul.Entity;
 import depressionsspillet.worldofzuul.Named;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Damagable;
@@ -14,7 +15,7 @@ import depressionsspillet.worldofzuul.combat.DamageType;
 /**
  * @author Joachim
  */
-public abstract class Character implements Named, Damagable, HasHealth {
+public abstract class Character implements Entity, Damagable, HasHealth {
 
     private final String name;
     private final String description;
@@ -28,12 +29,12 @@ public abstract class Character implements Named, Damagable, HasHealth {
     public Room getCurrentRoom() {
         return currentRoom;
     }
-    
-    public boolean isDead () {
+
+    public boolean isDead() {
         return dead;
     }
-    
-    public void kill () {
+
+    public void kill() {
         dead = true;
     }
 
@@ -50,7 +51,7 @@ public abstract class Character implements Named, Damagable, HasHealth {
         return this.description;
     }
 
-    private DamageResistance getResistanceForType (DamageType damageType) {
+    private DamageResistance getResistanceForType(DamageType damageType) {
         for (DamageResistance resistance : resistances) {
             if (resistance.getDamageType() == DamageType.ANY || resistance.getDamageType() == damageType) {
                 return resistance;
@@ -61,17 +62,26 @@ public abstract class Character implements Named, Damagable, HasHealth {
 
     @Override
     public void takeDamage(Damage damage) {
-        DamageResistance resistance = getResistanceForType (damage.getDamageType());
-        if (resistance == null) {
-            changeHealth (-damage.getDamageValue());
-            System.out.println (name + " takes full damage from attack.");
+        DamageResistance resistance = getResistanceForType(damage.getDamageType());
+
+        double resistanceMul = resistance != null ? resistance.getMultiplier() : 1d;
+        double damageValue = damage.getDamageValue() * resistanceMul;
+
+        if (isDead()) {
+            System.out.printf ("Stop! Stop! " + name + " is already dead!");
         } else {
-            changeHealth (damage.getDamageValue() * resistance.getMultiplier());
-            System.out.println (name + " " + resistance.getResponse());
-        }          
-        if (this.getHealth() >= 0) {
-            kill ();
-            System.out.println (name + " dies.");
+            if (resistance == null) {
+                System.out.println(String.format (name + " takes a full %.1f damage from attack.", damageValue));
+            } else {
+                System.out.println(String.format (name + " " + resistance.getResponse(), damageValue));
+            }
+        }
+
+        changeHealth(-damageValue);
+        System.out.println (String.format (getName () + " has %.1f health left.", getHealth ()));
+        if (this.getHealth() <= 0) {
+            kill();
+            System.out.println(name + " dies in agony.");
         }
     }
 

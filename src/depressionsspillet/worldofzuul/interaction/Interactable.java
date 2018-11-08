@@ -5,11 +5,13 @@
  */
 package depressionsspillet.worldofzuul.interaction;
 
+import depressionsspillet.worldofzuul.Entity;
+
 /**
  *
  * @author Lomztein
  */
-public interface Interactable {
+public interface Interactable extends Entity {
     
     String getName ();
     
@@ -27,6 +29,14 @@ public interface Interactable {
         
         return correctOne;
         
+    }
+    
+    public default String listInteractions () {
+        String list = "";
+        for (Interaction interaction : getInteractions()) {
+            list += interaction.getName () + " - " + interaction.getDescription() + "\n";
+        }
+        return list;
     }
     
 }

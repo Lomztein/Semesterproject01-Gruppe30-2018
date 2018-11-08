@@ -38,6 +38,14 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
         engagedWith = damagable;
     }
     
+    public void disengage () {
+        engagedWith = null;
+    }
+    
+    public Damagable getEngaged () {
+        return engagedWith;
+    }
+    
     public boolean isEngaged () {
         return engagedWith != null;
     }

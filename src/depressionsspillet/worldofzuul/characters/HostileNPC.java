@@ -64,8 +64,8 @@ public class HostileNPC extends NPC implements Attacker {
 
     @Override
     public Interaction[] getInteractions() {
-        return new Interaction[]{
-            new Interaction("Engage", "You attack " + this.getName() + " with spirit and vigor!", (x) -> {x.engage(this);}),
+        return new Interaction[] {
+            
         };
     }
 

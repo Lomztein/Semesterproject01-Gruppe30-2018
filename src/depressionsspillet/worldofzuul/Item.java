@@ -9,7 +9,7 @@ package depressionsspillet.worldofzuul;
  *
  * @author Ryge
  */
-public abstract class Item {
+public abstract class Item implements Entity {
 
     //Attributes
     private String name;
@@ -25,6 +25,7 @@ public abstract class Item {
         this.rarity = rarity;
     }
     
+    @Override
     public String getName () {
         return name;
     }

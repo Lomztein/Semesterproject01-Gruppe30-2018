@@ -5,13 +5,14 @@
  */
 package depressionsspillet.worldofzuul.combat;
 
+import depressionsspillet.worldofzuul.Entity;
 import depressionsspillet.worldofzuul.Named;
 
 /**
  *
  * @author Lomztein
  */
-public interface Damagable extends Named {
+public interface Damagable extends Entity {
     
     void takeDamage (Damage damage);
     
