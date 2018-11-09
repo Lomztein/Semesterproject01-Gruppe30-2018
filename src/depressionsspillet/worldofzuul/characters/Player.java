@@ -12,6 +12,7 @@ import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.DamageType;
+import depressionsspillet.worldofzuul.observables.Observable;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +23,9 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
     private double happinesslevel = 0;
     private Damagable engagedWith;
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
+    
+    public Observable onEngaged = new Observable (); 
+    public Observable onDamaged = new Observable (); 
 
     Item[] inventory = new Item[4];
 
@@ -35,6 +39,7 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
     }
     
     public void engage (Damagable damagable) {
+        onEngaged.execute (damagable);
         engagedWith = damagable;
     }
     
@@ -66,7 +71,18 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
 
     public void attackEngaged(Attack attack) {
         if (attack != null) {
+
+            attack.doDamage(engagedWith);
+        }
+    }
+
+    @Override
+    public void takeDamage(Damage damage) {
+        onDamaged.execute(damage);
+        if (damage.getDamageType() == DamageType.MENTAL) {
+            happinesslevel -= damage.getDamageValue();
             attack.doDamage(this, engagedWith);
+
         }
     }
 

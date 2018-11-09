@@ -1,3 +1,4 @@
+
 package depressionsspillet.worldofzuul;
 
 import depressionsspillet.worldofzuul.characters.DamageResistance;
