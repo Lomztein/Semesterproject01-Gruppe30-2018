@@ -31,6 +31,10 @@ public class Room {
     public void addItem(Item item) {
         itemsInRoom.add(item);
     }
+    
+    public void addRandomItem() {
+        
+    }
 
     public void removeItem(Item item) {
         itemsInRoom.remove(item);

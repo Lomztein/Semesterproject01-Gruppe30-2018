@@ -22,6 +22,8 @@ public abstract class Item {
     public Item(String name, String description, int rarity) {
         this.name = name;
         this.description = description;
+        
+        //Rarity is currently not used, but will be used to determine spawnn rates of certain items.
         this.rarity = rarity;
     }
     

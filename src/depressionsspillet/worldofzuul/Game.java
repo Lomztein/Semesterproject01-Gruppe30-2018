@@ -114,7 +114,7 @@ public class Game {
             finished = processCommand(command);
         }
 
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("You walk away to cry in the corner. Spilmester Martin will not forget this.");
     }
 
     private void printWelcome() {
@@ -161,6 +161,9 @@ public class Game {
                 case ATTACK:
                     attack(command);
                     break;
+                case INVENTORY:
+                    inventory(command);
+                    break;
                 default:
                     break;
             }
@@ -170,9 +173,9 @@ public class Game {
 
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
-        System.out.println("You are lost. You are alone. You absolute looser.");
+        System.out.println("You are lost. You are alone. Again... - Really? For God sakes...");
         System.out.println();
-        System.out.println("Your command words are:");
+        System.out.println("Right. Your options are:");
         parser.showCommands();
     }
 
@@ -193,7 +196,7 @@ public class Game {
 
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("There is no door there!");
         } else if (nextRoom.locked == true) {
             nextRoom.locked = false;
             player.setCurrentRoom(nextRoom.getRoom());
@@ -207,13 +210,13 @@ public class Game {
         // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
 
         /*
-                    if(h > 99){
-            currentRoom = nextRoom.getRoom();
-                System.out.println(currentRoom.getLongDescription());
-            } else {
-                currentRoom = nextRoom.getRoom();
-                System.out.println(currentRoom.getLongDescription());
-            }
+         if(h > 99){
+         currentRoom = nextRoom.getRoom();
+         System.out.println(currentRoom.getLongDescription());
+         } else {
+         currentRoom = nextRoom.getRoom();
+         System.out.println(currentRoom.getLongDescription());
+         }
          */
     }
 
@@ -236,7 +239,7 @@ public class Game {
                 System.out.println("You have no idea how to " + command.getSecondWord() + " " + correct.getName());
             }
         } else {
-            System.out.println(command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
+            System.out.println(command.getSecondWord() + " doesn't exist, therefore you cannot interact with it. If this issue persists, seek medical attention.");
         }
     }
 
@@ -244,15 +247,38 @@ public class Game {
         if (player.isEngaged()) {
             Attack playerAttack = player.getAttack(command.getSecondWord());
             player.attackEngaged(playerAttack);
-        }else {
-            System.out.println ("You aren't currently engaged in combat, therefore you cannot attack anything.");
+        } else {
+            System.out.println("You aren't currently engaged in combat, therefore you cannot attack anything.");
+        }
+    }
+
+    private void inventory(Command command) {
+
+        if (command.hasSecondWord()) {
+            if ("drop".equals(command.getSecondWord())) {
+                if (command.hasThirdWord()) {
+                    player.dropItem(Integer.parseInt(command.getThirdWord()));
+                } else {
+                    System.out.println("You attempt to drop nothing. You're worried if you looked stupid. \n\nYou did.\n");
+                }
+            } else if ("use".equals(command.getSecondWord())) {
+                if (command.hasThirdWord()) {
+                    player.useItem(Integer.parseInt(command.getThirdWord()));
+                } else {
+                    System.out.println("You stuff a handfull of nothing in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
+                }
+            }
+            
+        } else {
+            System.out.println("You check your pockets: ");
+            player.printInventoryList();
         }
     }
 
     private boolean quit(Command command) {
         // If the command has a second word, become confused.
         if (command.hasSecondWord()) {
-            System.out.println("Quit what?");
+            System.out.println("Quit... What..?");
             return false;
         } else {
             // If not, return true, which then quits the game through the previously mentioned "wantToQuit" boolean variable on line 87.
