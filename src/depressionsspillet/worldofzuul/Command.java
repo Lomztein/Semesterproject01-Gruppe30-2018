@@ -66,5 +66,13 @@ public class Command
         return thirdWord;
     }
     
+     public boolean hasFourthWord () {
+        return (fourthWord != null);
+    }
+    
+    public String getFourthWord () {
+        return fourthWord;
+    }
+    
 }
 

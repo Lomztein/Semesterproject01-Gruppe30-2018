@@ -135,7 +135,7 @@ public class Game {
         // A basic guide on how to play this game.
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        
+
         //Trolling the player
         System.out.println("Your adventure starts near the barn of the famous Spilmester Martin.");
         System.out.println();
@@ -226,10 +226,12 @@ public class Game {
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door there!");
-    }
+        }
+
+    
 
     private void interact(Command command) {
-      
+
         if (command.hasSecondWord()) {
 
             System.out.println("You have the option to interact with the following: ");
@@ -319,7 +321,6 @@ public class Game {
     private void inventory(Command command) {
 
         //Inventory commands
-        
         if (command.hasSecondWord()) {
             if ("drop".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
@@ -335,9 +336,16 @@ public class Game {
                 }
             } else if ("pickup".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
+                    if (command.hasFourthWord()) {
+                        player.addItem(command.getThirdWord(), command.getFourthWord());
+                    }
+                    
                     //Check the room for the item.name
-                    
-                    
+                    if (player.addItem(command.getThirdWord()) != null) {
+                        System.out.println("You pick up the " + command.getThirdWord() + " and then promptly put it back down.");
+                    } else {
+                        player.noItemFound(command.getThirdWord());
+                    }
                 }
             } else {
                 //Obligatory player insult if the command is unknown.
@@ -347,6 +355,8 @@ public class Game {
         } else {
             System.out.println("You check your pockets: ");
             player.printInventoryList();
+        }
+    }
 
     private boolean quit(Command command) {
         // If the command has a second word, become confused.

@@ -140,18 +140,25 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
         return null;
     }
 
-    public boolean addItem(String name, int i) {
+    public void addItem(String name, String integer) {
         Item item = addItem(name);
+        int i = Integer.parseInt(integer) - 1;
+        
         if (item != null) {
-            
-            if (inventory[i] != null) {
+            if (inventory[i] == null) {
                 inventory[i] = item;
                 getCurrentRoom().removeItem(inventory[i]);
+                System.out.println("You pick up the " + item.getName() + " and stuff it in pocket " + i + ".");
+            } else {
+                System.out.println("You attempt to pry " + item.getName() + "into pocket " + i + ",\nbut it's already full of " + inventory[i].getName() + ". \n\nMaybe you should empty it first.\n");
             }
         } else {
-            
+            noItemFound(item.getName());
         }
-        return false;
+    }
+    
+    public void noItemFound(String name) {
+        System.out.println("You grab at what you thought was the " + name + ", but there's nothing there.\n\nIt might be best to see a pshycologist if this issue persists.");
     }
 
     public void dropItem(int i) {
@@ -167,7 +174,7 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
 
             }
         } catch (ArrayIndexOutOfBoundsException error) {
-            emptyPockets(i + 1);
+            emptyPockets(i);
         }
     }
 
