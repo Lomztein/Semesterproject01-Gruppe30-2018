@@ -390,6 +390,8 @@ public class Game {
         } else {
             System.out.println("You check your pockets: ");
             player.printInventoryList();
+        }
+    }
 
     private boolean quit(Command command) {
         // If the command has a second word, become confused.
@@ -402,3 +404,4 @@ public class Game {
         }
     }
 }
+
