@@ -6,7 +6,6 @@
 package depressionsspillet.worldofzuul.characters;
 
 import depressionsspillet.worldofzuul.Entity;
-import depressionsspillet.worldofzuul.Named;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.Damage;
@@ -21,7 +20,7 @@ public abstract class Character implements Entity, Damagable, HasHealth {
     private final String description;
     private boolean dead;
 
-    private final DamageResistance[] resistances;
+    DamageResistance[] resistances;
 
     //private Inventory inventory;
     private Room currentRoom;

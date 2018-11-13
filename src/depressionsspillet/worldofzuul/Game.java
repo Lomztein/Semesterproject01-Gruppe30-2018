@@ -50,7 +50,7 @@ public class Game {
         suprise = new Room("In a heroic and almost impossible turn of events you have defeated the despicable Erikthulu/Martin and entered through the last door, behind which all your friends have been watching your valiant fight with eagerness and solemn pride. They all congratulate you on completeing such a feat of strength and cheer you name all the while continually mentioning how proud of you the are, in addition to how much they value your friendship");
 
         // Exits for are declared.
-        start.setExit("south", magicForrest, true);
+        start.setExit("south", magicForrest);
 
         // Exits for magicForrest are declared.
         magicForrest.setExit("south", sleepover);
