@@ -335,7 +335,8 @@ public class Game {
                 }
             } else if ("pickup".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
-                    //Check the room for the item.name, and add it to inventory
+                    //Check the room for the item.name
+                    
                     
                 }
             } else {

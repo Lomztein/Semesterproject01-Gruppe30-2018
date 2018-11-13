@@ -26,12 +26,14 @@ public class Command
     
     private final String secondWord;
     private final String thirdWord; 
+    private final String fourthWord;
     
-    public Command(CommandWord commandWord, String secondWord, String thirdWord)
+    public Command(CommandWord commandWord, String secondWord, String thirdWord, String fourthWord)
     {
         this.commandWord = commandWord;
         this.secondWord = secondWord;
         this.thirdWord = thirdWord;
+        this.fourthWord = fourthWord;
     }
 
     public CommandWord getCommandWord()

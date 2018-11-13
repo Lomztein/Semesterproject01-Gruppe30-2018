@@ -18,14 +18,14 @@ public class Room {
     // Contraints in this sense are declarations on the generic that limit what types can be used.
     private HashMap<String, Door> exits;
     private ArrayList<Entity> allEntities;
+    private ArrayList<Item> currentItems;
 
     // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
     private String description;
-    ArrayList<Item> itemsInRoom;
 
     //Constructor
     public Room(String description) {
-        this.itemsInRoom = new ArrayList<>();
+        currentItems = new ArrayList<>();
         this.description = description;
         exits = new HashMap<>();
         allEntities = new ArrayList<>();
@@ -48,11 +48,15 @@ public class Room {
         }
 
     }
+    
+    public ArrayList<Item> getItemArray() {
+        return currentItems;
+    }
 
     public String getItemNames() {
         String names = null;
 
-        for (Item item : itemsInRoom) {
+        for (Item item : currentItems) {
 
             names += (" " + item.getName() + ", ");
         }
@@ -72,8 +76,20 @@ public class Room {
     public String getShortDescription() {
         return description;
     }
-
-    public void addToRoom(Entity entity) {
+    
+    public void addItem(Item item) {
+        currentItems.add(item);
+    }
+    
+    public void addRandomItem() {
+        
+    }
+    
+    public void removeItem(Item item) {
+        currentItems.remove(item);
+    }
+    
+    public void addEntityToRoom(Entity entity) {
         allEntities.add(entity);
     }
 
@@ -85,22 +101,23 @@ public class Room {
         return allEntities.stream()
                 .filter(clazz::isInstance)
                 .map(clazz::cast)
-                .collect(Collectors.toList()).toArray((T[])Array.newInstance(clazz, 0));
+                .collect(Collectors.toList()).toArray((T[]) Array.newInstance(clazz, 0));
     }
-    
-    public <T extends Entity> String listEntities (Class<T> clazz) {
+
+    public <T extends Entity> String listEntities(Class<T> clazz) {
         String list = "";
-        T[] entities = getEntities (clazz);
+        T[] entities = getEntities(clazz);
         for (T entity : entities) {
             list += entity.getName() + "\n";
         }
         return list;
     }
-    
-    public <T extends Entity> T getEntity (Class<T> clazz, String name) {
+
+    public <T extends Entity> T getEntity(Class<T> clazz, String name) {
         for (T entity : getEntities(clazz)) {
-            if (entity.getName ().toLowerCase().equals(name.toLowerCase()))
+            if (entity.getName().toLowerCase().equals(name.toLowerCase())) {
                 return entity;
+            }
         }
         return null;
     }

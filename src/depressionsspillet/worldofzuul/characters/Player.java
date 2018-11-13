@@ -38,7 +38,7 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
                 playerResistances.add(new DamageResistance(type, "takes a massive %.2f damage due to their crippling insecurities being exposed.", 2d));
             }
         }
-        
+
         this.resistances = playerResistances.toArray(new DamageResistance[0]);
     }
 
@@ -67,7 +67,7 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
         availableAttacks.add(newAttack);
     }
 
-  public Attack getAttack(String attackName) {
+    public Attack getAttack(String attackName) {
         Attack attack = null;
         for (Attack att : availableAttacks) {
             if (att.getName().toLowerCase().equals(attackName.toLowerCase())) {
@@ -84,12 +84,12 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
     }
 
     /*@Override
-    public void takeDamage(Damage damage) {
-        onDamaged.execute(damage);
-        if (damage.getDamageType() == DamageType.MENTAL) {
-            happinesslevel -= damage.getDamageValue();
-        }
-    }*/
+     public void takeDamage(Damage damage) {
+     onDamaged.execute(damage);
+     if (damage.getDamageType() == DamageType.MENTAL) {
+     happinesslevel -= damage.getDamageValue();
+     }
+     }*/
     //Methods
     public void printInventoryList() {
         int i = 1;
@@ -129,17 +129,33 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
         }
     }
 
-    public void addToInventory(Item item, int i) {
-        i -= 1;
-
-        if (inventory[i] != null) {
-            inventory[i] = item;
-            getCurrentRoom().removeItem(inventory[i]);
+    public Item addItem(String name) {
+        for (Item item : super.getCurrentRoom().getItemArray()) {
+            if (name != null && name.equals(item.getName())) {
+                return item;
+            } else {
+                return null;
+            }
         }
+        return null;
+    }
+
+    public boolean addItem(String name, int i) {
+        Item item = addItem(name);
+        if (item != null) {
+            
+            if (inventory[i] != null) {
+                inventory[i] = item;
+                getCurrentRoom().removeItem(inventory[i]);
+            }
+        } else {
+            
+        }
+        return false;
     }
 
     public void dropItem(int i) {
-        i = i - 1;
+        i -= 1;
         try {
             if (inventory[i] == null) {
                 System.out.println("You attempt to drop an empty inventory slot on the ground. You check around to see \nif anyone saw that. Somehow, someone did. The shadows are laughing at you.");
