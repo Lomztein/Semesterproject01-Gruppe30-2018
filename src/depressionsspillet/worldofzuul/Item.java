@@ -5,6 +5,8 @@
  */
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.characters.Player;
+
 /**
  *
  * @author Ryge
@@ -22,6 +24,8 @@ public abstract class Item implements Entity {
     public Item(String name, String description, int rarity) {
         this.name = name;
         this.description = description;
+        
+        //Rarity is currently not used, but will be used to determine spawnn rates of certain items.
         this.rarity = rarity;
     }
     
@@ -30,8 +34,11 @@ public abstract class Item implements Entity {
         return name;
     }
     
-    public String getDescription () {
+    public String getDescription() {
         return description;
+    }
+    
+    public void useItem(Player player) {
     }
 
 }

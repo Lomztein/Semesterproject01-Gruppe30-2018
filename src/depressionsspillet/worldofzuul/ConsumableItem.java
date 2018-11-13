@@ -5,6 +5,8 @@
  */
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.characters.Player;
+
 /**
  *
  * @author Ryge
@@ -20,6 +22,17 @@ public class ConsumableItem extends Item {
         
     }
     
+    @Override
+    public void useItem(Player player) {
+        //This applies whatever stats the item may have to the player.
+        
+        
+        
+    }
+
+    public int getHealthIncrease() {
+        return healthIncrease;
+    }
     
     
 }

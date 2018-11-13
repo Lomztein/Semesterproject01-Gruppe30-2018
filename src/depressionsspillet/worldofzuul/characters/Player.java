@@ -5,6 +5,7 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
+import depressionsspillet.worldofzuul.ConsumableItem;
 import depressionsspillet.worldofzuul.Item;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
@@ -66,7 +67,7 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
         availableAttacks.add(newAttack);
     }
 
-    public Attack getAttack(String attackName) {
+  public Attack getAttack(String attackName) {
         Attack attack = null;
         for (Attack att : availableAttacks) {
             if (att.getName().toLowerCase().equals(attackName.toLowerCase())) {
@@ -99,28 +100,63 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
             } else {
                 System.out.println(i + ",  Empty");
             }
+            i++;
         }
     }
 
-    public void addToInventory(Item item, int index) {
-        printInventoryList();
+    //Useless method to check whether the inventory is empty or not. 
+    public boolean inventoryCheck() {
+        boolean isEmpty = true;
 
-        //For testing purposes, should run through parser in end-version
-        System.out.println("\n\nSelect a slot to insert " + item.getName() + " into: ");
-
-        while (index > 4 || index < 1) {
-            System.out.print("Wrong input, try again: \n> ");
+        for (Item item : inventory) {
+            isEmpty = false;
         }
 
-        inventory[index] = item;
+        return isEmpty;
+    }
 
+    public void useItem(int i) {
+        i -= 1;
+        try {
+            if (inventory[i] instanceof ConsumableItem && inventory[i] != null) {
+                ConsumableItem item = (ConsumableItem) inventory[i];
+                happinesslevel += item.getHealthIncrease();
+            } else { //Temporary solution, more conditions will be added later, as more items are added.
+                System.out.println("You stuff a handfull of nothing from pocket " + (i + 1) + " in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
+            }
+        } catch (ArrayIndexOutOfBoundsException error) {
+            emptyPockets(i + 1);
+        }
+    }
+
+    public void addToInventory(Item item, int i) {
+        i -= 1;
+
+        if (inventory[i] != null) {
+            inventory[i] = item;
+            getCurrentRoom().removeItem(inventory[i]);
+        }
     }
 
     public void dropItem(int i) {
-        printInventoryList();
+        i = i - 1;
+        try {
+            if (inventory[i] == null) {
+                System.out.println("You attempt to drop an empty inventory slot on the ground. You check around to see \nif anyone saw that. Somehow, someone did. The shadows are laughing at you.");
+            } else {
 
-        System.out.println("\n\nSelect an item to drop: ");
+                getCurrentRoom().addItem(inventory[i]);
+                System.out.println("You drop the " + inventory[i].getName() + " on the ground before you.\n");
+                inventory[i] = null;
 
+            }
+        } catch (ArrayIndexOutOfBoundsException error) {
+            emptyPockets(i + 1);
+        }
+    }
+
+    private void emptyPockets(int i) {
+        System.out.println("You reach towards pocket " + (i + 1) + ", but for some reason,\nyou can't find it. Perhaps you should check how many pockets you have first.");
     }
 
     @Override

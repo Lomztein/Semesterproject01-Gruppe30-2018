@@ -31,6 +31,34 @@ public class Room {
         allEntities = new ArrayList<>();
     }
 
+    public void printCurrentItems() {
+        Item[] itemsInRoom = getEntities(Item.class);
+        int itemCounter = 0;
+        for (Item item : itemsInRoom) {
+            if (itemCounter == 0) {
+                System.out.print("On the ground before you lies: ");
+            } else {
+                System.out.println(", ");
+            }
+            System.out.print(item.getName());
+            itemCounter++;
+        }
+        if (itemCounter == 0) {
+            System.out.println("The room contains no visible items.");
+        }
+
+    }
+
+    public String getItemNames() {
+        String names = null;
+
+        for (Item item : itemsInRoom) {
+
+            names += (" " + item.getName() + ", ");
+        }
+        return names;
+    }
+
     public void setExit(String direction, Room neighbor) {
         setExit(direction, neighbor, false);
     }
