@@ -2,6 +2,7 @@ package depressionsspillet.worldofzuul;
 
 import depressionsspillet.worldofzuul.characters.DamageResistance;
 import depressionsspillet.worldofzuul.characters.HostileNPC;
+import depressionsspillet.worldofzuul.characters.NPC;
 import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.interaction.Interactable;
@@ -24,7 +25,7 @@ public class Game {
     public Game() {
         // The attributes are populated with their appropiate data.
         createRooms();
-        player = new Player("Johannes", "Døberen", start);
+        player = new Player("Janus the Magic Midget", "A fucking loser amirite", start);
         player.addAttack(new Attack(DamageType.DAB, 5, "dab", "A profound dab."));
         player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "A rather weak, yet beautifully spirited punch."));
         parser = new Parser();
@@ -98,7 +99,7 @@ public class Game {
         drugs.setExit("east", thaiHooker);
 
         gate.setExit("north", sleepover);
-        gate.setExit("south", boss, true);
+        gate.setExit("south", boss, false);
 
         boss.setExit("south", suprise);
         
@@ -265,14 +266,14 @@ public class Game {
             System.out.println(" ");
             System.out.println(player.getCurrentRoom().getLongDescription());
             System.out.println("In this place, you find the following items to be of potential significance: ");
-            if ((player.getCurrentRoom().listEntities(Item.class)) != ""){
+            if (!"".equals(player.getCurrentRoom().listEntities(Item.class))){
                 System.out.println(player.getCurrentRoom().listEntities(Item.class));
             }
             else{
                 System.out.println("Nothing.");
             }
             System.out.println("The following NPCs are present: ");
-            if ((player.getCurrentRoom().listEntities(NPC.class)) != ""){
+            if (!"".equals(player.getCurrentRoom().listEntities(NPC.class))){
                 System.out.println(player.getCurrentRoom().listEntities(Item.class));
             }
             else{
