@@ -6,7 +6,6 @@
 package depressionsspillet.worldofzuul.combat;
 
 import depressionsspillet.worldofzuul.Entity;
-import depressionsspillet.worldofzuul.Named;
 
 /**
  *

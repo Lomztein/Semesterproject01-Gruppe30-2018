@@ -10,10 +10,8 @@ import depressionsspillet.worldofzuul.Item;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Attacker;
-import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.DamageType;
-import depressionsspillet.worldofzuul.observables.Observable;
 import java.util.ArrayList;
 
 /**
