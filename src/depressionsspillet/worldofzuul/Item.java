@@ -5,6 +5,8 @@
  */
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.characters.Player;
+
 /**
  *
  * @author Ryge
@@ -35,8 +37,7 @@ public abstract class Item {
         return description;
     }
     
-    public void useItem() {
-        System.out.println("This is the main item class, and can't be used... If you see this, the developer fucked something up.");
+    public void useItem(Player player) {
     }
 
 }

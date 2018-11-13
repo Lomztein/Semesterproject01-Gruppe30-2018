@@ -254,6 +254,8 @@ public class Game {
 
     private void inventory(Command command) {
 
+        //Inventory commands
+        
         if (command.hasSecondWord()) {
             if ("drop".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
@@ -267,8 +269,16 @@ public class Game {
                 } else {
                     System.out.println("You stuff a handfull of nothing in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
                 }
+            } else if ("pickup".equals(command.getSecondWord())) {
+                if (command.hasThirdWord()) {
+                    //Check the room for the item.name, and add it to inventory
+                    
+                }
+            } else {
+                //Obligatory player insult if the command is unknown.
+                System.out.println("I don't speak depression. Try rephrasing that, without all the sobbing.");
             }
-            
+            //If there's no second input, just check your pockets.
         } else {
             System.out.println("You check your pockets: ");
             player.printInventoryList();
