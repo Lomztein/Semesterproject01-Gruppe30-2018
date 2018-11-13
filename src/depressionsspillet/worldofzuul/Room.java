@@ -77,6 +77,12 @@ public class Room {
         return description;
     }
     
+    //It is preffered for this method to be used instead of instanciating an item, and THEN adding it.
+    //This ensures that you don't have floating items that don't exist in any list. 
+    public void createItem(String name) {
+        
+    }
+    
     public void addItem(Item item) {
         currentItems.add(item);
     }
