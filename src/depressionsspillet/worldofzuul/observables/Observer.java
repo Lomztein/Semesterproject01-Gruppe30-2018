@@ -11,6 +11,6 @@ package depressionsspillet.worldofzuul.observables;
  */
 public interface Observer {
     
-    void action (Event event);
+    void onNotify (Event event);
     
 }

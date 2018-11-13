@@ -58,6 +58,8 @@ public class Game {
         magicForrest.setExit("south", sleepover);
         magicForrest.setExit("east", vendor);
         magicForrest.setExit("west", thaiHooker);
+        
+        magicForrest.addItem(new ConsumableItem ("Apple", "An apple of particularly moist texture.", 100, 42));
 
         // Exits for vendor are declared.
         vendor.setExit("south", stripClub);
@@ -266,10 +268,11 @@ public class Game {
             System.out.println(" ");
             System.out.println(player.getCurrentRoom().getLongDescription());
             System.out.println("In this place, you find the following items to be of potential significance: ");
-            if (!"".equals(player.getCurrentRoom().listEntities(Item.class))){
-                System.out.println(player.getCurrentRoom().listEntities(Item.class));
-            }
-            else{
+            if (player.getCurrentRoom().itemsInRoom.size () != 0) {
+                for (Item item : player.getCurrentRoom ().itemsInRoom) {
+                    System.out.println (item.getName() + " - " + item.getDescription());
+                }
+            }else{
                 System.out.println("Nothing.");
             }
             System.out.println("The following NPCs are present: ");
@@ -390,8 +393,15 @@ public class Game {
                 }
             } else if ("pickup".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
-                    //Check the room for the item.name, and add it to inventory
-
+                    Item correctItem = null;
+                    for (Item item : player.getCurrentRoom().itemsInRoom) {
+                        if (item.getName().equals(command.getThirdWord())) {
+                            correctItem = item;
+                            break;
+                        }
+                    }
+                    
+                    player.addToInventory (correctItem, 1);
                 }
             } else {
                 //Obligatory player insult if the command is unknown.
