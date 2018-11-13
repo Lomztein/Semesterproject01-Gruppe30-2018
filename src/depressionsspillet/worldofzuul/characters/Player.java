@@ -32,13 +32,18 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
 
         ArrayList<DamageResistance> playerResistances = new ArrayList<>();
         for (DamageType type : DamageType.values()) {
-            if (type != DamageType.MENTAL || type != DamageType.ANY) {
-                playerResistances.add(new DamageResistance(type, "takes no damage, since they are already dead inside.", 0d));
-            } else {
-                playerResistances.add(new DamageResistance(type, "takes a massive %.2f damage due to their crippling insecurities being exposed.", 2d));
+            if (type != DamageType.ANY) {
+
+                // Player is invulnerable to any damage but mental damage, which they take an unnatural amount of damage from.
+                if (type != DamageType.MENTAL) {
+                    playerResistances.add(new DamageResistance(type, "takes no damage, since they are already dead inside.", 0d));
+                } else {
+                    playerResistances.add(new DamageResistance(type, "takes a massive %.2f damage due to their crippling insecurities being exposed.", 2d));
+                }
             }
+
         }
-        
+
         this.resistances = playerResistances.toArray(new DamageResistance[0]);
     }
 
