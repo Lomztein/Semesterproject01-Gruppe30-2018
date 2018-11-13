@@ -11,32 +11,22 @@ import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
+import depressionsspillet.worldofzuul.combat.Attacker;
 import java.util.Random;
 
 /**
  *
  * @author Lomztein
  */
-public class HostileNPC extends NPC implements Damagable, HasHealth {
+public class HostileNPC extends NPC implements Attacker {
 
     private double health;
-    private final DamageType[] effectiveDamageTypes;
     private final Attack[] availableAttacks;
-    private static final double INEFFECTIVE_DAMAGE_MULTIPLIER = 0.2d;
 
-    public HostileNPC(String name, String desc, Room startingRoom, double health, DamageType[] effectiveDamageTypes, Attack... availableAttacks) {
-        super(name, desc, startingRoom);
+    public HostileNPC(String name, String desc, Room startingRoom, double health, DamageResistance[] resistances, Attack[] availableAttacks) {
+        super(name, desc, startingRoom, resistances);
         this.health = health;
-        this.effectiveDamageTypes = effectiveDamageTypes;
         this.availableAttacks = availableAttacks;
-    }
-    
-    private boolean isEffectiveDamageType (DamageType damageType) {
-        for (DamageType type : effectiveDamageTypes) {
-            if (type == damageType)
-                return true;
-        }
-        return false;
     }
     
     private Attack getRandomAttack () {
@@ -46,15 +36,14 @@ public class HostileNPC extends NPC implements Damagable, HasHealth {
     
     public void attack (Damagable damagable) {
         Attack random = getRandomAttack ();
-        random.doDamage(damagable);
+        random.doDamage(this, damagable);
     }
-
+    
     @Override
-    public void takeDamage(Damage damage) {
-        if (isEffectiveDamageType (damage.getDamageType ())) {
-            health -= damage.getDamageValue();
-        }else{  
-            health -= damage.getDamageValue () * INEFFECTIVE_DAMAGE_MULTIPLIER;
+    public void takeDamage (Damage damage) {
+        super.takeDamage(damage);
+        if (damage.getAttacker() instanceof Damagable) {
+            attack ((Damagable)damage.getAttacker());
         }
     }
 
@@ -62,12 +51,27 @@ public class HostileNPC extends NPC implements Damagable, HasHealth {
     public double getHealth() {
         return health;
     }
+    
+    @Override
+    public void setHealth (double value) {
+        health = value;
+    }
+    
+    @Override
+    public void changeHealth (double value) {
+        health += value;
+    }
 
     @Override
     public Interaction[] getInteractions() {
-        return new Interaction[]{
-            new Interaction("Engage", "Attack " + this.getName() + " with spirit and vigor!", (x) -> {x.engage(this);}),
+        return new Interaction[] {
+            
         };
+    }
+
+    @Override
+    public Attack[] getAttacks() {
+        return availableAttacks;
     }
 
 }

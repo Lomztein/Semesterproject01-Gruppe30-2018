@@ -9,15 +9,17 @@ import depressionsspillet.worldofzuul.ConsumableItem;
 import depressionsspillet.worldofzuul.Item;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
+import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.DamageType;
+import depressionsspillet.worldofzuul.observables.Observable;
 import java.util.ArrayList;
 
 /**
  * @author Joachim
  */
-public class Player extends Character implements HasHealth, Damagable {
+public class Player extends Character implements Attacker, HasHealth, Damagable {
 
     private double happinesslevel = 0;
     private Damagable engagedWith;
@@ -27,6 +29,17 @@ public class Player extends Character implements HasHealth, Damagable {
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
+
+        ArrayList<DamageResistance> playerResistances = new ArrayList<>();
+        for (DamageType type : DamageType.values()) {
+            if (type != DamageType.MENTAL || type != DamageType.ANY) {
+                playerResistances.add(new DamageResistance(type, "takes no damage, since they are already dead inside.", 0d));
+            } else {
+                playerResistances.add(new DamageResistance(type, "takes a massive %.2f damage due to their crippling insecurities being exposed.", 2d));
+            }
+        }
+        
+        this.resistances = playerResistances.toArray(new DamageResistance[0]);
     }
 
     @Override
@@ -38,11 +51,23 @@ public class Player extends Character implements HasHealth, Damagable {
         engagedWith = damagable;
     }
 
+    public void disengage() {
+        engagedWith = null;
+    }
+
+    public Damagable getEngaged() {
+        return engagedWith;
+    }
+
     public boolean isEngaged() {
         return engagedWith != null;
     }
 
-    public Attack getAttack(String attackName) {
+    public void addAttack(Attack newAttack) {
+        availableAttacks.add(newAttack);
+    }
+
+  public Attack getAttack(String attackName) {
         Attack attack = null;
         for (Attack att : availableAttacks) {
             if (att.getName().toLowerCase().equals(attackName.toLowerCase())) {
@@ -54,17 +79,17 @@ public class Player extends Character implements HasHealth, Damagable {
 
     public void attackEngaged(Attack attack) {
         if (attack != null) {
-            attack.doDamage(engagedWith);
+            attack.doDamage(this, engagedWith);
         }
     }
 
-    @Override
+    /*@Override
     public void takeDamage(Damage damage) {
+        onDamaged.execute(damage);
         if (damage.getDamageType() == DamageType.MENTAL) {
             happinesslevel -= damage.getDamageValue();
         }
-    }
-
+    }*/
     //Methods
     public void printInventoryList() {
         int i = 1;
@@ -132,5 +157,20 @@ public class Player extends Character implements HasHealth, Damagable {
 
     private void emptyPockets(int i) {
         System.out.println("You reach towards pocket " + (i + 1) + ", but for some reason,\nyou can't find it. Perhaps you should check how many pockets you have first.");
+    }
+
+    @Override
+    public void setHealth(double value) {
+        happinesslevel = value;
+    }
+
+    @Override
+    public void changeHealth(double value) {
+        happinesslevel += value;
+    }
+
+    @Override
+    public Attack[] getAttacks() {
+        return availableAttacks.toArray(new Attack[availableAttacks.size()]);
     }
 }

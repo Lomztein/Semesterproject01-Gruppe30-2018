@@ -1,9 +1,12 @@
 package depressionsspillet.worldofzuul;
 
 import depressionsspillet.worldofzuul.interaction.Interactable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class Room {
 
@@ -14,7 +17,7 @@ public class Room {
     // Types that take these "type arguments" are called generic types, meaining they can work with anything, provided there are no constraints.
     // Contraints in this sense are declarations on the generic that limit what types can be used.
     private HashMap<String, Door> exits;
-    private ArrayList<Interactable> interactables;
+    private ArrayList<Entity> allEntities;
 
     // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
     private String description;
@@ -25,22 +28,11 @@ public class Room {
         this.itemsInRoom = new ArrayList<>();
         this.description = description;
         exits = new HashMap<>();
-        interactables = new ArrayList<>();
-    }
-
-    public void addItem(Item item) {
-        itemsInRoom.add(item);
-    }
-    
-    public void addRandomItem() {
-        
-    }
-
-    public void removeItem(Item item) {
-        itemsInRoom.remove(item);
+        allEntities = new ArrayList<>();
     }
 
     public void printCurrentItems() {
+        Item[] itemsInRoom = getEntities(Item.class);
         int itemCounter = 0;
         for (Item item : itemsInRoom) {
             if (itemCounter == 0) {
@@ -81,16 +73,36 @@ public class Room {
         return description;
     }
 
-    public void enterRoom(Interactable interactable) {
-        interactables.add(interactable);
+    public void addToRoom(Entity entity) {
+        allEntities.add(entity);
     }
 
-    public void leaveRoom(Interactable interactable) {
-        interactables.remove(interactable);
+    public void leaveRoom(Entity entity) {
+        allEntities.remove(entity);
     }
 
-    public Interactable[] getInteractables() {
-        return interactables.toArray(new Interactable[interactables.size()]);
+    public <T extends Entity> T[] getEntities(Class<T> clazz) {
+        return allEntities.stream()
+                .filter(clazz::isInstance)
+                .map(clazz::cast)
+                .collect(Collectors.toList()).toArray((T[])Array.newInstance(clazz, 0));
+    }
+    
+    public <T extends Entity> String listEntities (Class<T> clazz) {
+        String list = "";
+        T[] entities = getEntities (clazz);
+        for (T entity : entities) {
+            list += entity.getName() + "\n";
+        }
+        return list;
+    }
+    
+    public <T extends Entity> T getEntity (Class<T> clazz, String name) {
+        for (T entity : getEntities(clazz)) {
+            if (entity.getName ().toLowerCase().equals(name.toLowerCase()))
+                return entity;
+        }
+        return null;
     }
 
     // Return the description + the possible exit routes.

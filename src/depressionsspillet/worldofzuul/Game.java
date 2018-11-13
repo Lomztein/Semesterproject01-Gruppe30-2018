@@ -1,10 +1,14 @@
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.worldofzuul.characters.DamageResistance;
 import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.characters.VendorNPC;
 import depressionsspillet.worldofzuul.combat.Attack;
+import depressionsspillet.worldofzuul.combat.Damagable;
+import depressionsspillet.worldofzuul.combat.DamageType;
+import java.util.Scanner;
 
 public class Game {
 
@@ -19,6 +23,8 @@ public class Game {
         // The attributes are populated with their appropiate data.
         createRooms();
         player = new Player("Johannes", "Døberen", start);
+        player.addAttack(new Attack(DamageType.DAB, 5, "dab", "profound dab."));
+        player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "weak, yet beautifully spirited punch."));
         parser = new Parser();
     }
 
@@ -54,8 +60,6 @@ public class Game {
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
-
-        vendor.enterRoom(new VendorNPC("Boris", "A slightly smelly old russian man with a key around his neck.", vendor, false));
 
         // You know the drill by now.
         animals.setExit("west", vendor);
@@ -115,19 +119,38 @@ public class Game {
         }
 
         System.out.println("You walk away to cry in the corner. Spilmester Martin will not forget this.");
+        System.out.println("Thank you for playing.  Good bye.");
     }
 
     private void printWelcome() {
         // A simple, warm welcome.
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-
-        // A basic guide on how to play this game.
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
 
         // An introduction to our current room.
+        System.out.println("Welcome to Depressionsspillet!");
+        System.out.println("Depressionsspillet is a positive and uplifting game, designed to make the player remember the positives of a student's life!");
+        System.out.println();
+        // A basic guide on how to play this game.
+        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
+        System.out.println();
+        
+        //Trolling the player
+        System.out.println("Your adventure starts near the barn of the famous Spilmester Martin.");
+        System.out.println();
+        System.out.println("- Greetings, youngling!");
+        System.out.println("- My name is Spilmester Martin, and I am the leader of the Warriors against Erikthulu!");
+        System.out.println("- Please state your desired character style!");
+        System.out.println("Options include: Wizard, warrior, monk, witch hunter and berserker.");
+        System.out.print(">");
+        Scanner input = new Scanner(System.in);
+        String someStyle = input.next();
+        System.out.println("- Please state your desired name!");
+        System.out.print(">");
+        String someName = input.next();
+        System.out.println("- Alright! You are now Janus the Magic Midget.");
+        System.out.println("");
         System.out.println(player.getCurrentRoom().getLongDescription());
     }
 
@@ -161,6 +184,12 @@ public class Game {
                 case ATTACK:
                     attack(command);
                     break;
+                case ENGAGE:
+                    engage(command);
+                    break;
+                case DISENGAGE:
+                    disengage(command);
+                    break;
                 case INVENTORY:
                     inventory(command);
                     break;
@@ -173,7 +202,7 @@ public class Game {
 
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
-        System.out.println("You are lost. You are alone. Again... - Really? For God sakes...");
+        System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
         System.out.println();
         System.out.println("Right. Your options are:");
         parser.showCommands();
@@ -197,56 +226,91 @@ public class Game {
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door there!");
-        } else if (nextRoom.locked == true) {
-            nextRoom.locked = false;
-            player.setCurrentRoom(nextRoom.getRoom());
-            System.out.println(player.getCurrentRoom().getLongDescription());
-        } else if (nextRoom.locked == true) {
-            System.out.println("This door is locked! It says you need to be happy to enter.");
-        } else {
-            player.setCurrentRoom(nextRoom.getRoom());
-            System.out.println(player.getCurrentRoom().getLongDescription());
-        }
-        // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
-
-        /*
-         if(h > 99){
-         currentRoom = nextRoom.getRoom();
-         System.out.println(currentRoom.getLongDescription());
-         } else {
-         currentRoom = nextRoom.getRoom();
-         System.out.println(currentRoom.getLongDescription());
-         }
-         */
     }
 
     private void interact(Command command) {
+      
+        if (command.hasSecondWord()) {
 
-        Interactable[] interactables = player.getCurrentRoom().getInteractables();
-        Interactable correct = null;
-        for (Interactable i : interactables) {
-            if (i.getName().equals(command.getSecondWord())) {
-                correct = i;
+            System.out.println("You have the option to interact with the following: ");
+            System.out.println(player.getCurrentRoom().listEntities(Interactable.class));
+
+        } else {
+
+            Interactable[] interactables = player.getCurrentRoom().getEntities(Interactable.class);
+            Interactable correct = null;
+            for (Interactable i : interactables) {
+                if (i.getName().toLowerCase().equals(command.getSecondWord().toLowerCase())) {
+                    correct = i;
+                }
             }
+
+            if (correct != null) {
+
+                if (command.hasThirdWord()) {
+
+                    Interaction interaction = correct.findInteraction(command.getThirdWord());
+
+                    if (interaction != null) {
+                        interaction.execute(player);
+                        System.out.println(interaction.getDescription());
+                    } else {
+                        System.out.println("You have no idea how to " + command.getThirdWord() + " " + correct.getName());
+                    }
+
+                } else {
+                    System.out.println("You have the option of the following interactions: ");
+                    System.out.println(correct.listInteractions());
+                }
+
+            } else {
+                System.out.println(command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
+            }
+
         }
 
-        if (correct != null) {
-            Interaction interaction = correct.findInteraction(command.getThirdWord());
+    }
 
-            if (interaction != null) {
-                interaction.execute(player);
+    private void engage(Command command) {
+
+        if (player.isEngaged()) {
+            System.out.println("You are already engaged in combat with " + player.getEngaged().getName() + ".");
+        }
+
+        if (command.hasSecondWord()) {
+            Damagable toEngage = player.getCurrentRoom().getEntity(Damagable.class, command.getSecondWord());
+            if (toEngage != null) {
+                player.engage(toEngage);
+                System.out.println("You engage " + toEngage.getName() + " with spirit and vigor!");
             } else {
-                System.out.println("You have no idea how to " + command.getSecondWord() + " " + correct.getName());
+                System.out.println("There is no " + command.hasSecondWord() + " that you can engage.");
             }
         } else {
-            System.out.println(command.getSecondWord() + " doesn't exist, therefore you cannot interact with it. If this issue persists, seek medical attention.");
+            System.out.println("You have the option to engage: ");
+            System.out.println(player.getCurrentRoom().listEntities(Damagable.class));
+        }
+    }
+
+    private void disengage(Command command) {
+        if (player.isEngaged()) {
+            System.out.println("You poop yourself a little before disengaging " + player.getEngaged().getName() + " before running to a safe distance.");
+            player.disengage();
+        } else {
+            System.out.println("You aren't currently engaged in combat.");
         }
     }
 
     private void attack(Command command) {
-        if (player.isEngaged()) {
+        if (!command.hasSecondWord()) {
+            System.out.println("You have the option of the following attacks:");
+            System.out.println(player.getAttackList());
+        } else if (player.isEngaged()) {
             Attack playerAttack = player.getAttack(command.getSecondWord());
-            player.attackEngaged(playerAttack);
+            if (playerAttack != null) {
+                player.attackEngaged(playerAttack);
+            } else {
+                System.out.println("You don't have the ability to attack using " + command.getSecondWord());
+            }
         } else {
             System.out.println("You aren't currently engaged in combat, therefore you cannot attack anything.");
         }
@@ -282,13 +346,11 @@ public class Game {
         } else {
             System.out.println("You check your pockets: ");
             player.printInventoryList();
-        }
-    }
 
     private boolean quit(Command command) {
         // If the command has a second word, become confused.
         if (command.hasSecondWord()) {
-            System.out.println("Quit... What..?");
+            System.out.println("Quit what?");
             return false;
         } else {
             // If not, return true, which then quits the game through the previously mentioned "wantToQuit" boolean variable on line 87.
