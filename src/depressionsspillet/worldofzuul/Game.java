@@ -10,6 +10,7 @@ import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Game {
 
@@ -102,7 +103,7 @@ public class Game {
         gate.setExit("north", sleepover);
         gate.setExit("south", boss, true);
 
-        boss.setExit("south", suprise);
+        boss.setExit("south", suprise, true);
 
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
@@ -212,7 +213,6 @@ public class Game {
             // If this happens, then exit out of this function using a return statement.
             return;
         }
-
         // If a second word was given, then save that as another variable "direction".
         String direction = command.getSecondWord();
 
@@ -222,29 +222,24 @@ public class Game {
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door!");
-        /*
         } else if (nextRoom.locked == true) {
-            nextRoom.locked = false;
-            player.setCurrentRoom(nextRoom.getRoom());
-            System.out.println(player.getCurrentRoom().getLongDescription());
-        */
-        } else if (nextRoom.locked == true) {
-            System.out.println("This door is locked! It says you need to be happy to enter.");
+            if(player.getHealth() > 99){
+                if (player.getCurrentRoom() == gate){
+                    System.out.println("You have through countless struggles and hardship conquered these lands and regained your complete happiness. \nThe way before you has opened.");
+                    player.setCurrentRoom(boss);
+                    System.out.println(boss.getLongDescription());
+                } else {
+                    System.out.println("You have defeated the despicable Erikthulu \nand banished his evil from these lands bringing along a serene sense of peace and prosperity.\n But there is yet one door remaining before your journey comes to an end.");
+                    player.setCurrentRoom(suprise);
+                    System.out.println(suprise.getLongDescription());
+                }
+            } else {
+            System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways: north");
+            }
         } else {
             player.setCurrentRoom(nextRoom.getRoom());
             System.out.println(player.getCurrentRoom().getLongDescription());
         }
-        // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
-
-        /*
-                    if(h > 99){
-            currentRoom = nextRoom.getRoom();
-                System.out.println(currentRoom.getLongDescription());
-            } else {
-                currentRoom = nextRoom.getRoom();
-                System.out.println(currentRoom.getLongDescription());
-            }
-         */
     }
 
     private void interact(Command command) {

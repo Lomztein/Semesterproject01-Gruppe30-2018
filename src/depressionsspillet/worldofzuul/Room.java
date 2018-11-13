@@ -57,22 +57,23 @@ public class Room {
         return allEntities.stream()
                 .filter(clazz::isInstance)
                 .map(clazz::cast)
-                .collect(Collectors.toList()).toArray((T[])Array.newInstance(clazz, 0));
+                .collect(Collectors.toList()).toArray((T[]) Array.newInstance(clazz, 0));
     }
-    
-    public <T extends Entity> String listEntities (Class<T> clazz) {
+
+    public <T extends Entity> String listEntities(Class<T> clazz) {
         String list = "";
-        T[] entities = getEntities (clazz);
+        T[] entities = getEntities(clazz);
         for (T entity : entities) {
             list += entity.getName() + "\n";
         }
         return list;
     }
-    
-    public <T extends Entity> T getEntity (Class<T> clazz, String name) {
+
+    public <T extends Entity> T getEntity(Class<T> clazz, String name) {
         for (T entity : getEntities(clazz)) {
-            if (entity.getName ().toLowerCase().equals(name.toLowerCase()))
+            if (entity.getName().toLowerCase().equals(name.toLowerCase())) {
                 return entity;
+            }
         }
         return null;
     }
@@ -85,13 +86,13 @@ public class Room {
 
     private String getExitString() {
         // Declare a variable for containing the combined result of the upcoming loop.
-        String returnString = "You can now goes these ways:";
+        String returnString = "You can now go these ways:";
 
-        // Get every single key in the HashMap, for looping through them.
+        // Get every single key in the HashMap, for-looping through them.
         // This generic type given a string type argument is much like an array of Strings.
         Set<String> keys = exits.keySet();
         for (String exit : keys) {
-            returnString += "  " + exit;
+            returnString += " " + exit;
         }
         return returnString;
     }
