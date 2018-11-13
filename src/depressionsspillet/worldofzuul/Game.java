@@ -1,4 +1,3 @@
-
 package depressionsspillet.worldofzuul;
 
 import depressionsspillet.worldofzuul.characters.DamageResistance;
@@ -32,7 +31,7 @@ public class Game {
     private void createRooms() {
 
         // The individual room variables are populated with their appropiate Room objects.
-        start = new Room("You leave Spilmester Martin, and enter the huge magical forrest, with trees seemingly extending into the skies.");
+        start = new Room("You are standing on a field, under a lonesome tree you see spilmester Martin greeting you with a smile.");
         magicForrest = new Room("You are now in the magicforrest, who knows what will happen.");
         vendor = new Room("You have visited the blackboard vendor, a replacement of blackboard is currently in the works in the meantime please feel free to browse the vendor's wares.");
         animals = new Room("You go deeper into the forrest and find yourself in a completely white room filled with puppies and kittens.");
@@ -61,9 +60,6 @@ public class Game {
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
-
-        vendor.addToRoom(new VendorNPC("Boris", "A slightly smelly old russian man with a key around his neck.", vendor, new DamageResistance(DamageType.ANY, "takes no damage, it just bounces off his fat ass.", 0)));
-        vendor.addToRoom(new VendorNPC("Putin", "A menacing looking russian man possibly plotting a nuclear war.", vendor, new DamageResistance(DamageType.MENTAL, "Takes a reduced %f damage due to his wicked good looks.", 0.2d)));
 
         // You know the drill by now.
         animals.setExit("west", vendor);
@@ -122,12 +118,17 @@ public class Game {
             finished = processCommand(command);
         }
 
+        System.out.println("You walk away to cry in the corner. Spilmester Martin will not forget this.");
         System.out.println("Thank you for playing.  Good bye.");
     }
 
     private void printWelcome() {
         // A simple, warm welcome.
         System.out.println();
+        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
+        System.out.println();
+
+        // An introduction to our current room.
         System.out.println("Welcome to Depressionsspillet!");
         System.out.println("Depressionsspillet is a positive and uplifting game, designed to make the player remember the positives of a student's life!");
         System.out.println();
@@ -180,14 +181,17 @@ public class Game {
                 case INTERACT:
                     interact(command);
                     break;
+                case ATTACK:
+                    attack(command);
+                    break;
                 case ENGAGE:
                     engage(command);
                     break;
                 case DISENGAGE:
                     disengage(command);
                     break;
-                case ATTACK:
-                    attack(command);
+                case INVENTORY:
+                    inventory(command);
                     break;
                 default:
                     break;
@@ -198,9 +202,9 @@ public class Game {
 
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
-        System.out.println("You are lost. You are alone. You absolute looser.");
+        System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
         System.out.println();
-        System.out.println("Your command words are:");
+        System.out.println("Right. Your options are:");
         parser.showCommands();
     }
 
@@ -221,34 +225,11 @@ public class Game {
 
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
-            System.out.println("There is no door!");
-        /*
-        } else if (nextRoom.locked == true) {
-            nextRoom.locked = false;
-            player.setCurrentRoom(nextRoom.getRoom());
-            System.out.println(player.getCurrentRoom().getLongDescription());
-        */
-        } else if (nextRoom.locked == true) {
-            System.out.println("This door is locked! It says you need to be happy to enter.");
-        } else {
-            player.setCurrentRoom(nextRoom.getRoom());
-            System.out.println(player.getCurrentRoom().getLongDescription());
-        }
-        // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
-
-        /*
-                    if(h > 99){
-            currentRoom = nextRoom.getRoom();
-                System.out.println(currentRoom.getLongDescription());
-            } else {
-                currentRoom = nextRoom.getRoom();
-                System.out.println(currentRoom.getLongDescription());
-            }
-         */
+            System.out.println("There is no door there!");
     }
 
     private void interact(Command command) {
-
+      
         if (command.hasSecondWord()) {
 
             System.out.println("You have the option to interact with the following: ");
@@ -334,6 +315,37 @@ public class Game {
             System.out.println("You aren't currently engaged in combat, therefore you cannot attack anything.");
         }
     }
+
+    private void inventory(Command command) {
+
+        //Inventory commands
+        
+        if (command.hasSecondWord()) {
+            if ("drop".equals(command.getSecondWord())) {
+                if (command.hasThirdWord()) {
+                    player.dropItem(Integer.parseInt(command.getThirdWord()));
+                } else {
+                    System.out.println("You attempt to drop nothing. You're worried if you looked stupid. \n\nYou did.\n");
+                }
+            } else if ("use".equals(command.getSecondWord())) {
+                if (command.hasThirdWord()) {
+                    player.useItem(Integer.parseInt(command.getThirdWord()));
+                } else {
+                    System.out.println("You stuff a handfull of nothing in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
+                }
+            } else if ("pickup".equals(command.getSecondWord())) {
+                if (command.hasThirdWord()) {
+                    //Check the room for the item.name, and add it to inventory
+                    
+                }
+            } else {
+                //Obligatory player insult if the command is unknown.
+                System.out.println("I don't speak depression. Try rephrasing that, without all the sobbing.");
+            }
+            //If there's no second input, just check your pockets.
+        } else {
+            System.out.println("You check your pockets: ");
+            player.printInventoryList();
 
     private boolean quit(Command command) {
         // If the command has a second word, become confused.
