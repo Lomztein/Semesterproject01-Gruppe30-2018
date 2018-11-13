@@ -52,6 +52,18 @@ public class Room {
     public ArrayList<Item> getItemArray() {
         return currentItems;
     }
+  
+      public void addItem(Item item) {
+        itemsInRoom.add(item);
+    }
+    
+    public void addRandomItem() {
+        
+    }
+
+    public void removeItem(Item item) {
+        itemsInRoom.remove(item);
+    }
 
     public String getItemNames() {
         String names = null;
@@ -131,18 +143,18 @@ public class Room {
     // Return the description + the possible exit routes.
     public String getLongDescription() {
 
-        return description + ".\n" + getExitString();
+        return description;
     }
 
-    private String getExitString() {
+    public String getExitString() {
         // Declare a variable for containing the combined result of the upcoming loop.
-        String returnString = "You can now goes these ways:";
+        String returnString = "You can now go these ways:";
 
-        // Get every single key in the HashMap, for looping through them.
+        // Get every single key in the HashMap, for-looping through them.
         // This generic type given a string type argument is much like an array of Strings.
         Set<String> keys = exits.keySet();
         for (String exit : keys) {
-            returnString += "  " + exit;
+            returnString += " " + exit;
         }
         return returnString;
     }
