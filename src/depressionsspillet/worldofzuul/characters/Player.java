@@ -70,7 +70,7 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
         availableAttacks.add(newAttack);
     }
 
-  public Attack getAttack(String attackName) {
+    public Attack getAttack(String attackName) {
         Attack attack = null;
         for (Attack att : availableAttacks) {
             if (att.getName().toLowerCase().equals(attackName.toLowerCase())) {
@@ -87,12 +87,12 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
     }
 
     /*@Override
-    public void takeDamage(Damage damage) {
-        onDamaged.execute(damage);
-        if (damage.getDamageType() == DamageType.MENTAL) {
-            happinesslevel -= damage.getDamageValue();
-        }
-    }*/
+     public void takeDamage(Damage damage) {
+     onDamaged.execute(damage);
+     if (damage.getDamageType() == DamageType.MENTAL) {
+     happinesslevel -= damage.getDamageValue();
+     }
+     }*/
     //Methods
     public void printInventoryList() {
         int i = 1;
@@ -132,17 +132,40 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
         }
     }
 
-    public void addToInventory(Item item, int i) {
-        i -= 1;
-
-        if (inventory[i] != null) {
-            inventory[i] = item;
-            getCurrentRoom().removeItem(inventory[i]);
+    public Item addItem(String name) {
+        for (Item item : super.getCurrentRoom().getItemArray()) {
+            if (name != null && name.equals(item.getName())) {
+                return item;
+            } else {
+                return null;
+            }
         }
+        return null;
+    }
+
+    public void addItem(String name, String integer) {
+        Item item = addItem(name);
+        int i = Integer.parseInt(integer) - 1;
+        
+        if (item != null) {
+            if (inventory[i] == null) {
+                inventory[i] = item;
+                getCurrentRoom().removeItem(inventory[i]);
+                System.out.println("You pick up the " + item.getName() + " and stuff it in pocket " + i + ".");
+            } else {
+                System.out.println("You attempt to pry " + item.getName() + "into pocket " + i + ",\nbut it's already full of " + inventory[i].getName() + ". \n\nMaybe you should empty it first.\n");
+            }
+        } else {
+            noItemFound(item.getName());
+        }
+    }
+    
+    public void noItemFound(String name) {
+        System.out.println("You grab at what you thought was the " + name + ", but there's nothing there.\n\nIt might be best to see a pshycologist if this issue persists.");
     }
 
     public void dropItem(int i) {
-        i = i - 1;
+        i -= 1;
         try {
             if (inventory[i] == null) {
                 System.out.println("You attempt to drop an empty inventory slot on the ground. You check around to see \nif anyone saw that. Somehow, someone did. The shadows are laughing at you.");
@@ -154,7 +177,7 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
 
             }
         } catch (ArrayIndexOutOfBoundsException error) {
-            emptyPockets(i + 1);
+            emptyPockets(i);
         }
     }
 

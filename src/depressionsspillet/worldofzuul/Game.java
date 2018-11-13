@@ -393,15 +393,16 @@ public class Game {
                 }
             } else if ("pickup".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
-                    Item correctItem = null;
-                    for (Item item : player.getCurrentRoom().itemsInRoom) {
-                        if (item.getName().equals(command.getThirdWord())) {
-                            correctItem = item;
-                            break;
-                        }
+                    if (command.hasFourthWord()) {
+                        player.addItem(command.getThirdWord(), command.getFourthWord());
                     }
                     
-                    player.addToInventory (correctItem, 1);
+                    //Check the room for the item.name
+                    if (player.addItem(command.getThirdWord()) != null) {
+                        System.out.println("You pick up the " + command.getThirdWord() + " and then promptly put it back down.");
+                    } else {
+                        player.noItemFound(command.getThirdWord());
+                    }
                 }
             } else {
                 //Obligatory player insult if the command is unknown.
