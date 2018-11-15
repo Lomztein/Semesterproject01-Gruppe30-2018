@@ -20,7 +20,8 @@ public class Parser
         String word1 = null;
         String word2 = null;
         String word3 = null;
-
+        String word4 = null;
+        
         System.out.print("> "); 
 
         inputLine = reader.nextLine();
@@ -34,15 +35,18 @@ public class Parser
                 word2 = tokenizer.next();
                 if (tokenizer.hasNext ()) {
                     word3 = tokenizer.next();
+                    if (tokenizer.hasNext()) {
+                        word4 = tokenizer.next();
+                    }
                 }
             }
         }
 
         // Return the result as a new command.
-        return new Command(commands.getCommandWord(word1), word2, word3);
+        return new Command(commands.getCommandWord(word1), word2, word3, word4);
     }
 
-    public void showCommands()
+    public void showCommands()  
     {
         commands.showAll();
     }
