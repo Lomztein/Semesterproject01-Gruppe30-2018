@@ -5,28 +5,40 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
-import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Attacker;
+import depressionsspillet.worldofzuul.combat.DamagedEvent;
+import depressionsspillet.worldofzuul.combat.HasHealth;
+import depressionsspillet.worldofzuul.combat.Health;
+import depressionsspillet.worldofzuul.observables.Event;
 import java.util.Random;
 
 /**
  *
  * @author Lomztein
  */
-public class HostileNPC extends NPC implements Attacker {
+public class HostileNPC extends NPC implements HasHealth, Attacker {
 
-    private double health;
+    private final Health health;
     private final Attack[] availableAttacks;
 
-    public HostileNPC(String name, String desc, Room startingRoom, double health, DamageResistance[] resistances, Attack[] availableAttacks) {
-        super(name, desc, startingRoom, resistances);
+    public HostileNPC(String name, String desc, Room startingRoom, Health health, Attack... availableAttacks) {
+        super(name, desc, startingRoom);
         this.health = health;
         this.availableAttacks = availableAttacks;
+        health.onTakeDamage.add(e
+                -> {
+            System.out.println(this.getName() + " " + e.getResistance().getResponse());
+            if (!health.isDead()) {
+                if (e.getDamage().getAttacker() instanceof Damagable) {
+                    attack((Damagable) e.getDamage().getAttacker());
+                }
+            }
+        });
     }
 
     private Attack getRandomAttack() {
@@ -39,32 +51,21 @@ public class HostileNPC extends NPC implements Attacker {
         random.doDamage(this, damagable);
     }
 
-    @Override
-    public void takeDamage(Damage damage) {
-        super.takeDamage(damage);
-        if (!isDead()) {
-            if (damage.getAttacker() instanceof Damagable) {
-                attack((Damagable) damage.getAttacker());
+    public void onTakeDamage(Event event) {
+        Damage lastTaken = health.getLastDamage();
+        if (health.isDead()) {
+            if (lastTaken.getAttacker() instanceof Damagable) {
+                attack((Damagable) lastTaken.getAttacker());
             }
-        }else {
-            System.out.println (getName () + " they would retaliate with glee, but they've already been murdered in cold blood.");
+        } else {
+            System.out.println(getName() + " they would retaliate with glee, but they've already been murdered in cold blood.");
         }
 
     }
 
     @Override
-    public double getHealth() {
+    public Health getHealth() {
         return health;
-    }
-
-    @Override
-    public void setHealth(double value) {
-        health = value;
-    }
-
-    @Override
-    public void changeHealth(double value) {
-        health += value;
     }
 
     @Override
