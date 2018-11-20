@@ -65,37 +65,46 @@ public class Game {
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
+        vendor.setHappiness(0);
 
         // You know the drill by now.
         animals.setExit("west", vendor);
+        animals.setHappiness(15);
 
         thaiHooker.setExit("north", movie);
         thaiHooker.setExit("south", fridayBar);
         thaiHooker.setExit("east", magicForrest);
         thaiHooker.setExit("west", drugs);
+        thaiHooker.setHappiness(15);
 
         sleepover.setExit("north", magicForrest);
         sleepover.setExit("south", gate);
         sleepover.setExit("east", stripClub);
         sleepover.setExit("west", fridayBar);
+        sleepover.setHappiness(15);
 
         fridayBar.setExit("north", thaiHooker);
         fridayBar.setExit("east", sleepover);
+        fridayBar.setHappiness(10);
 
         stripClub.setExit("north", vendor);
         stripClub.setExit("east", kfc);
         stripClub.setExit("west", sleepover);
+        stripClub.setHappiness(10);
 
         kfc.setExit("east", shrek);
         kfc.setExit("west", stripClub);
+        kfc.setHappiness(15);
 
         shrek.setExit("west", kfc);
 
         allotment.setExit("south", drugs);
         allotment.setExit("east", movie);
+        allotment.setHappiness(10);
 
         movie.setExit("south", thaiHooker);
         movie.setExit("west", allotment);
+        movie.setHappiness(10);
 
         drugs.setExit("north", allotment);
         drugs.setExit("east", thaiHooker);
@@ -225,7 +234,7 @@ public class Game {
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
         System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
-        System.out.println();
+        System.out.println("You're currently this happy: " + player.getHealth());
         System.out.println("Right. Your options are:");
         parser.showCommands();
     }
@@ -263,10 +272,14 @@ public class Game {
             }
         } else {
             player.setCurrentRoom(nextRoom.getRoom());
-            
+
             //The following is printing the room's items and NPC's to tell the user what they can do.
-            System.out.println(" ");
+            System.out.println("-------------------------");
             System.out.println(player.getCurrentRoom().getLongDescription());
+            //Adds the rooms happiness to yours and sets the room happiness to 0.
+            System.out.println("You feel your happiness rising by: " + player.getCurrentRoom().getHappiness());
+            player.addHappiness(player.getCurrentRoom().getHappiness());
+            player.getCurrentRoom().setHappiness(0);
             System.out.println("In this place, you find the following items to be of potential significance: ");
             if (player.getCurrentRoom().getItemArray().size () != 0) {
                 for (Item item : player.getCurrentRoom ().getItemArray()) {
@@ -282,10 +295,8 @@ public class Game {
             else{
                 System.out.println("Noone.");
             }
-            System.out.println("Type HELP for help.");
-             System.out.println(player.getCurrentRoom().getExitString());
-        }
-    }
+            System.out.println("Type HELP for help and information.");
+            System.out.println(player.getCurrentRoom().getExitString());
 
     private void interact(Command command) {
 
@@ -393,6 +404,8 @@ public class Game {
                 }
             } else if ("pickup".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
+                    //Check the room for the item.name, and add it to inventory
+
                     if (command.hasFourthWord()) {
                         player.addItem(command.getThirdWord(), command.getFourthWord());
                     }
@@ -401,6 +414,7 @@ public class Game {
                     if (player.addItem(command.getThirdWord()) != null) {
                         System.out.println("You pick up the " + command.getThirdWord() + " and then promptly put it back down.");
                     }
+
                 }
             } else {
                 //Obligatory player insult if the command is unknown.
@@ -424,4 +438,3 @@ public class Game {
         }
     }
 }
-
