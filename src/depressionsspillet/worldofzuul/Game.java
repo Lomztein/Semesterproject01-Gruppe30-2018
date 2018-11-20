@@ -1,6 +1,6 @@
 package depressionsspillet.worldofzuul;
 
-import depressionsspillet.worldofzuul.characters.DamageResistance;
+import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.characters.HostileNPC;
 import depressionsspillet.worldofzuul.characters.NPC;
 import depressionsspillet.worldofzuul.characters.Player;
@@ -105,12 +105,12 @@ public class Game {
 
         boss.setExit("south", suprise);
         
-        boss.addToRoom(new HostileNPC ("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, 666d,
+        boss.addEntityToRoom(new HostileNPC ("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, 666d,
                 new DamageResistance[] {
-                    new DamageResistance (DamageType.BLUNT, "Erikthulhu is impervious to blunt force trauma, he is simply too great.", 0),
-                    new DamageResistance (DamageType.SLASH, "Erikthulhu's skin is too thick to penetrate, your slash simply glances off with a small papercut-like wound left, doing %.2f damage.", 0.1),
-                    new DamageResistance (DamageType.DAB, "You cannot merely dab upon all your problems. Please actually try to solve your problems.", 0),
-                    new DamageResistance (DamageType.MENTAL, "Erikthulhu is distraught by your comfidence and self-worth, and so he takes an impressive %.2f damage.", 2),
+                    new DamageResistance (DamageType.BLUNT, "is impervious to blunt force trauma, he is simply too great.", 0),
+                    new DamageResistance (DamageType.SLASH, "has too thick skin to penetrate, your slash simply glances off with a small papercut-like wound left, doing %.2f damage.", 0.1),
+                    new DamageResistance (DamageType.DAB, "doesn't care. You cannot merely dab upon all your problems. Please actually try to solve your problems.", 0),
+                    new DamageResistance (DamageType.MENTAL, "is distraught by your comfidence and self-worth, and so he takes an impressive %.2f damage.", 2),
                 },
                 new Attack [] {
                     new Attack (DamageType.DAB, 10d, "Intense Dab", "Erikthulhu uses your own tactics against you. You cannot keep fighting yourself like this."),
@@ -268,8 +268,8 @@ public class Game {
             System.out.println(" ");
             System.out.println(player.getCurrentRoom().getLongDescription());
             System.out.println("In this place, you find the following items to be of potential significance: ");
-            if (player.getCurrentRoom().itemsInRoom.size () != 0) {
-                for (Item item : player.getCurrentRoom ().itemsInRoom) {
+            if (player.getCurrentRoom().getItemArray().size () != 0) {
+                for (Item item : player.getCurrentRoom ().getItemArray()) {
                     System.out.println (item.getName() + " - " + item.getDescription());
                 }
             }else{
@@ -277,7 +277,7 @@ public class Game {
             }
             System.out.println("The following NPCs are present: ");
             if (!"".equals(player.getCurrentRoom().listEntities(NPC.class))){
-                System.out.println(player.getCurrentRoom().listEntities(Item.class));
+                System.out.println(player.getCurrentRoom().listEntities(NPC.class));
             }
             else{
                 System.out.println("Noone.");
@@ -400,8 +400,6 @@ public class Game {
                     //Check the room for the item.name
                     if (player.addItem(command.getThirdWord()) != null) {
                         System.out.println("You pick up the " + command.getThirdWord() + " and then promptly put it back down.");
-                    } else {
-                        player.noItemFound(command.getThirdWord());
                     }
                 }
             } else {

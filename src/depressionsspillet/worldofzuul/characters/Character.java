@@ -5,6 +5,7 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
+import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.Entity;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Damagable;
