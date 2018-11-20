@@ -12,18 +12,21 @@ import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Attacker;
+import depressionsspillet.worldofzuul.combat.HasHealth;
+import depressionsspillet.worldofzuul.combat.Health;
+import depressionsspillet.worldofzuul.observables.Event;
 import java.util.Random;
 
 /**
  *
  * @author Lomztein
  */
-public class HostileNPC extends NPC implements Attacker {
+public class HostileNPC extends NPC implements HasHealth, Attacker {
 
-    private double health;
+    private Health health;
     private final Attack[] availableAttacks;
 
-    public HostileNPC(String name, String desc, Room startingRoom, double health, Attack[] availableAttacks, Health health) {
+    public HostileNPC(String name, String desc, Room startingRoom, Health health, Attack... availableAttacks) {
         super(name, desc, startingRoom);
         this.health = health;
         this.availableAttacks = availableAttacks;
@@ -39,12 +42,11 @@ public class HostileNPC extends NPC implements Attacker {
         random.doDamage(this, damagable);
     }
 
-    @Override
-    public void takeDamage(Damage damage) {
-        super.takeDamage(damage);
-        if (!isDead()) {
-            if (damage.getAttacker() instanceof Damagable) {
-                attack((Damagable) damage.getAttacker());
+    public void onTakeDamage(Event event) {
+        Damage lastTaken = health.getLastDamage();
+        if (health.isDead()) {
+            if (lastTaken.getAttacker() instanceof Damagable) {
+                attack((Damagable) lastTaken.getAttacker());
             }
         }else {
             System.out.println (getName () + " they would retaliate with glee, but they've already been murdered in cold blood.");
@@ -53,18 +55,8 @@ public class HostileNPC extends NPC implements Attacker {
     }
 
     @Override
-    public double getHealth() {
+    public Health getHealth() {
         return health;
-    }
-
-    @Override
-    public void setHealth(double value) {
-        health = value;
-    }
-
-    @Override
-    public void changeHealth(double value) {
-        health += value;
     }
 
     @Override

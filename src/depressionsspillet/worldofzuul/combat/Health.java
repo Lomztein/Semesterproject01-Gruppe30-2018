@@ -7,6 +7,7 @@ package depressionsspillet.worldofzuul.combat;
 
 import depressionsspillet.worldofzuul.observables.Observable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,19 +26,29 @@ public class Health {
 
     public List<Damage> damageTaken = new ArrayList<>();
     
-    // BUILDER-PATTERN METHODS
-    public Health withMaxHealth (double value) {
-        setMaxHealth (value);
+    public Health (double health) {
+        currentHealth = health;
+        maxHealth = health;
+    }
+
+    // BUILDER-PATTERN-ESQUE METHODS
+    public Health withMaxHealth(double value) {
+        setMaxHealth(value);
         return this;
     }
-    
-    public Health withResistances (DamageResistance... newResistances) {
+
+    public Health withResistances(DamageResistance... newResistances) {
         for (DamageResistance resistance : newResistances) {
-            resistances.add (resistance);
+            resistances.add(resistance);
         }
         return this;
     }
-    // BUILDER-PATTERN METHODS END
+
+    public Health withResistances(Collection<DamageResistance> newResistances) {
+        resistances.addAll(newResistances);
+        return this;
+    }
+    // BUILDER-PATTERN-ESQUE METHODS END
 
     public double getCurrentHealth() {
         return currentHealth;
@@ -93,8 +104,8 @@ public class Health {
             return null;
         }
     }
-    
-    public Damage[] getDamageTaken () {
+
+    public Damage[] getDamageTaken() {
         return damageTaken.toArray(new Damage[0]);
     }
 

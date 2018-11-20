@@ -30,7 +30,10 @@ public class Player extends Character implements Attacker, HasHealth {
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
+        playerHealth = new Health (100);
+    }
 
+    public void generatePlayerResistances() {
         ArrayList<DamageResistance> playerResistances = new ArrayList<>();
         for (DamageType type : DamageType.values()) {
             if (type != DamageType.ANY) {
@@ -45,7 +48,19 @@ public class Player extends Character implements Attacker, HasHealth {
 
         }
 
-         = playerResistances.toArray(new DamageResistance[0]);
+        getHealth().withResistances(playerResistances);
+    }
+    
+    public double getHappiness () {
+        return getHealth ().getCurrentHealth();
+    }
+    
+    public void setHappiness (double value) {
+        getHealth ().setCurrentHealth (value);
+    }
+    
+    public void changeHappiness (double value) {
+        getHealth ().changeHealth(value);
     }
 
     @Override
@@ -126,7 +141,7 @@ public class Player extends Character implements Attacker, HasHealth {
         try {
             if (inventory[i] instanceof ConsumableItem && inventory[i] != null) {
                 ConsumableItem item = (ConsumableItem) inventory[i];
-                happinesslevel += item.getHealthIncrease();
+                changeHappiness (item.getHealthIncrease());
             } else { //Temporary solution, more conditions will be added later, as more items are added.
                 System.out.println("You stuff a handfull of nothing from pocket " + (i + 1) + " in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
             }
@@ -149,7 +164,7 @@ public class Player extends Character implements Attacker, HasHealth {
     public void addItem(String name, String integer) {
         Item item = addItem(name);
         int i = Integer.parseInt(integer) - 1;
-        
+
         if (item != null) {
             if (inventory[i] == null) {
                 inventory[i] = item;
@@ -162,7 +177,7 @@ public class Player extends Character implements Attacker, HasHealth {
             noItemFound(item.getName());
         }
     }
-    
+
     public void noItemFound(String name) {
         System.out.println("You grab at what you thought was the " + name + ", but there's nothing there.\n\nIt might be best to see a pshycologist if this issue persists.");
     }
@@ -186,16 +201,6 @@ public class Player extends Character implements Attacker, HasHealth {
 
     private void emptyPockets(int i) {
         System.out.println("You reach towards pocket " + (i + 1) + ", but for some reason,\nyou can't find it. Perhaps you should check how many pockets you have first.");
-    }
-
-    @Override
-    public void setHealth(double value) {
-        happinesslevel = value;
-    }
-
-    @Override
-    public void changeHealth(double value) {
-        happinesslevel += value;
     }
 
     @Override
