@@ -297,8 +297,7 @@ public class Game {
             }
             System.out.println("Type HELP for help and information.");
             System.out.println(player.getCurrentRoom().getExitString());
-        }
-    }
+
     private void interact(Command command) {
 
         if (command.hasSecondWord()) {
