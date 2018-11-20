@@ -68,6 +68,10 @@ public class Player extends Character implements Attacker, HasHealth {
     public Health getHealth() {
         return playerHealth;
     }
+    
+    public void addHappiness(int amount){
+        this.happinesslevel += amount;
+    }
 
     public void engage(Damagable damagable) {
         engagedWith = damagable;
