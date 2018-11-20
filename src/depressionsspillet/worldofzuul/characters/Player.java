@@ -25,6 +25,7 @@ public class Player extends Character implements Attacker, HasHealth {
     private Damagable engagedWith;
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
     private final Health playerHealth;
+    private int happiness;
 
     Item[] inventory = new Item[4];
 
@@ -52,16 +53,16 @@ public class Player extends Character implements Attacker, HasHealth {
         getHealth().withResistances(playerResistances);
     }
     
-    public double getHappiness () {
-        return getHealth ().getCurrentHealth();
+    public int getHappiness () {
+        return this.happiness;
     }
     
-    public void setHappiness (double value) {
-        getHealth ().setCurrentHealth (value);
+    public void setHappiness (int value) {
+        this.happiness = value;
     }
     
-    public void addHappiness (double value) {
-        getHealth ().changeHealth(value);
+    public void addHappiness (int value) {
+        this.happiness += value;
     }
 
     @Override
@@ -69,9 +70,8 @@ public class Player extends Character implements Attacker, HasHealth {
         return playerHealth;
     }
     
-    public void addHappiness(int amount){
-        this.happinesslevel += amount;
-    }
+    
+    
 
     public void engage(Damagable damagable) {
         engagedWith = damagable;

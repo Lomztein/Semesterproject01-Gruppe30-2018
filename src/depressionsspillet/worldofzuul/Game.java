@@ -234,7 +234,7 @@ public class Game {
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
         System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
-        System.out.println("You're currently this happy: " + player.getHealth());
+        System.out.println("You're currently this happy: " + player.getHappiness());
         System.out.println("Right. Your options are:");
         parser.showCommands();
     }
@@ -271,23 +271,25 @@ public class Game {
                 System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways: north");
             }
         } else {
+            
+            //This is the main method for switching rooms
             player.setCurrentRoom(nextRoom.getRoom());
-
-            //The following is printing the room's items and NPC's to tell the user what they can do.
             System.out.println("-------------------------");
             System.out.println(player.getCurrentRoom().getLongDescription());
-            //Adds the rooms happiness to yours and sets the room happiness to 0.
+            //Adds the room's happiness to yours and sets the room happiness to 0.
             System.out.println("You feel your happiness rising by: " + player.getCurrentRoom().getHappiness());
             player.addHappiness(player.getCurrentRoom().getHappiness());
             player.getCurrentRoom().setHappiness(0);
+            //Printing items
             System.out.println("In this place, you find the following items to be of potential significance: ");
-            if (player.getCurrentRoom().getItemArray().isEmpty()) {
+            if (player.getCurrentRoom().getItemArray().isEmpty() == false) {
                 for (Item item : player.getCurrentRoom().getItemArray()) {
                     System.out.println(item.getName() + " - " + item.getDescription());
                 }
             } else {
                 System.out.println("Nothing.");
             }
+            //Printing NPC's
             System.out.println("The following NPCs are present: ");
             if (!"".equals(player.getCurrentRoom().listEntities(NPC.class))) {
                 System.out.println(player.getCurrentRoom().listEntities(NPC.class));
