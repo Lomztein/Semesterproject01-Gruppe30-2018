@@ -60,7 +60,7 @@ public class Player extends Character implements Attacker, HasHealth {
         getHealth ().setCurrentHealth (value);
     }
     
-    public void changeHappiness (double value) {
+    public void addHappiness (double value) {
         getHealth ().changeHealth(value);
     }
 
@@ -142,7 +142,7 @@ public class Player extends Character implements Attacker, HasHealth {
         try {
             if (inventory[i] instanceof ConsumableItem && inventory[i] != null) {
                 ConsumableItem item = (ConsumableItem) inventory[i];
-                changeHappiness (item.getHealthIncrease());
+                addHappiness (item.getHealthIncrease());
             } else { //Temporary solution, more conditions will be added later, as more items are added.
                 System.out.println("You stuff a handfull of nothing from pocket " + (i + 1) + " in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
             }

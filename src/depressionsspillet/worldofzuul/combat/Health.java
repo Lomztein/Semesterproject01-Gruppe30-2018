@@ -5,6 +5,7 @@
  */
 package depressionsspillet.worldofzuul.combat;
 
+import depressionsspillet.worldofzuul.observables.Event;
 import depressionsspillet.worldofzuul.observables.Observable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,12 +22,12 @@ public class Health {
 
     private final List<DamageResistance> resistances = new ArrayList<>();
 
-    public final Observable onTakeDamage = new Observable();
+    public final Observable<DamagedEvent> onTakeDamage = new Observable();
     public final Observable onHealthChanged = new Observable();
 
     public final List<Damage> damageTaken = new ArrayList<>();
-    
-    public Health (double health) {
+
+    public Health(double health) {
         currentHealth = health;
         maxHealth = health;
     }
@@ -60,6 +61,7 @@ public class Health {
 
     public void changeHealth(double value) {
         currentHealth += value;
+        onHealthChanged.notifyObservables(new Event (this));
     }
 
     public double getMaxHealth() {
@@ -95,6 +97,7 @@ public class Health {
 
         damageTaken.add(damage);
         changeHealth(-damageValue);
+        onTakeDamage.notifyObservables(new DamagedEvent (this, damage, resistance, damageValue));
     }
 
     public Damage getLastDamage() {

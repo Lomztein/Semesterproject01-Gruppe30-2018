@@ -11,6 +11,7 @@ import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Attacker;
+import depressionsspillet.worldofzuul.combat.DamagedEvent;
 import depressionsspillet.worldofzuul.combat.HasHealth;
 import depressionsspillet.worldofzuul.combat.Health;
 import depressionsspillet.worldofzuul.observables.Event;
@@ -22,14 +23,22 @@ import java.util.Random;
  */
 public class HostileNPC extends NPC implements HasHealth, Attacker {
 
-    private Health health;
+    private final Health health;
     private final Attack[] availableAttacks;
 
     public HostileNPC(String name, String desc, Room startingRoom, Health health, Attack... availableAttacks) {
         super(name, desc, startingRoom);
         this.health = health;
         this.availableAttacks = availableAttacks;
-        health.onTakeDamage.add(x -> System.out.println (name + " takes a bunch of damage."));
+        health.onTakeDamage.add(e
+                -> {
+            System.out.println(this.getName() + " " + e.getResistance().getResponse());
+            if (!health.isDead()) {
+                if (e.getDamage().getAttacker() instanceof Damagable) {
+                    attack((Damagable) e.getDamage().getAttacker());
+                }
+            }
+        });
     }
 
     private Attack getRandomAttack() {
@@ -48,8 +57,8 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
             if (lastTaken.getAttacker() instanceof Damagable) {
                 attack((Damagable) lastTaken.getAttacker());
             }
-        }else {
-            System.out.println (getName () + " they would retaliate with glee, but they've already been murdered in cold blood.");
+        } else {
+            System.out.println(getName() + " they would retaliate with glee, but they've already been murdered in cold blood.");
         }
 
     }

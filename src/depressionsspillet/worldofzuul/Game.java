@@ -6,7 +6,6 @@ import depressionsspillet.worldofzuul.characters.NPC;
 import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.interaction.Interactable;
-import depressionsspillet.worldofzuul.characters.VendorNPC;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.DamageType;
@@ -29,6 +28,7 @@ public class Game {
         player = new Player("Janus the Magic Midget", "A fucking loser amirite", start);
         player.addAttack(new Attack(DamageType.DAB, 5, "dab", "A profound dab."));
         player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "A rather weak, yet beautifully spirited punch."));
+        player.getHealth().onTakeDamage.add (x -> System.out.println ("You take damage."));
         parser = new Parser();
     }
 
