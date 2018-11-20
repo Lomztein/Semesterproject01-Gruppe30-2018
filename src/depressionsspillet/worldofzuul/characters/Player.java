@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class Player extends Character implements Attacker, HasHealth, Damagable {
 
-    private double happinesslevel = 0;
+    private double happinesslevel = 10;
     private Damagable engagedWith;
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
 
@@ -45,6 +45,10 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
     @Override
     public double getHealth() {
         return happinesslevel;
+    }
+    
+    public void addHappiness(int amount){
+        this.happinesslevel += amount;
     }
 
     public void engage(Damagable damagable) {

@@ -21,6 +21,7 @@ public class Room {
 
     // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
     private String description;
+    private int happiness;
     ArrayList<Item> itemsInRoom;
 
     //Constructor
@@ -126,6 +127,14 @@ public class Room {
 
     public Door getExit(String direction) {
         return exits.get(direction);
+    }
+    
+    //Happiness getter and setters
+    public int getHappiness() {
+        return happiness;
+    }
+    public void setHappiness(int happiness) {
+        this.happiness = happiness;
     }
 
 }

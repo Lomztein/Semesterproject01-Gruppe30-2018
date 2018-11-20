@@ -61,37 +61,46 @@ public class Game {
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
+        vendor.setHappiness(0);
 
         // You know the drill by now.
         animals.setExit("west", vendor);
+        animals.setHappiness(15);
 
         thaiHooker.setExit("north", movie);
         thaiHooker.setExit("south", fridayBar);
         thaiHooker.setExit("east", magicForrest);
         thaiHooker.setExit("west", drugs);
+        thaiHooker.setHappiness(15);
 
         sleepover.setExit("north", magicForrest);
         sleepover.setExit("south", gate);
         sleepover.setExit("east", stripClub);
         sleepover.setExit("west", fridayBar);
+        sleepover.setHappiness(15);
 
         fridayBar.setExit("north", thaiHooker);
         fridayBar.setExit("east", sleepover);
+        fridayBar.setHappiness(10);
 
         stripClub.setExit("north", vendor);
         stripClub.setExit("east", kfc);
         stripClub.setExit("west", sleepover);
+        stripClub.setHappiness(10);
 
         kfc.setExit("east", shrek);
         kfc.setExit("west", stripClub);
+        kfc.setHappiness(15);
 
         shrek.setExit("west", kfc);
 
         allotment.setExit("south", drugs);
         allotment.setExit("east", movie);
+        allotment.setHappiness(10);
 
         movie.setExit("south", thaiHooker);
         movie.setExit("west", allotment);
+        movie.setHappiness(10);
 
         drugs.setExit("north", allotment);
         drugs.setExit("east", thaiHooker);
@@ -136,7 +145,7 @@ public class Game {
         // A basic guide on how to play this game.
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        
+
         //Trolling the player
         System.out.println("Your adventure starts near the barn of the famous Spilmester Martin.");
         System.out.println();
@@ -205,7 +214,7 @@ public class Game {
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
         System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
-        System.out.println();
+        System.out.println("You're currently this happy: " + player.getHealth());
         System.out.println("Right. Your options are:");
         parser.showCommands();
     }
@@ -228,52 +237,54 @@ public class Game {
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door!");
-        /*
-        } else if (nextRoom.locked == true) {
-            nextRoom.locked = false;
-            player.setCurrentRoom(nextRoom.getRoom());
-            System.out.println(player.getCurrentRoom().getLongDescription());
-        */
+            /*
+             } else if (nextRoom.locked == true) {
+             nextRoom.locked = false;
+             player.setCurrentRoom(nextRoom.getRoom());
+             System.out.println(player.getCurrentRoom().getLongDescription());
+             */
         } else if (nextRoom.locked == true) {
             System.out.println("This door is locked! It says you need to be happy to enter.");
         } else {
             player.setCurrentRoom(nextRoom.getRoom());
-            
+
             //The following is printing the room's items and NPC's to tell the user what they can do.
-            System.out.println(" ");
+            System.out.println("-------------------------");
             System.out.println(player.getCurrentRoom().getLongDescription());
+            //Adds the rooms happiness to yours and sets the room happiness to 0.
+            System.out.println("You feel your happiness rising by: " + player.getCurrentRoom().getHappiness());
+            player.addHappiness(player.getCurrentRoom().getHappiness());
+            player.getCurrentRoom().setHappiness(0);
             System.out.println("In this place, you find the following items to be of potential significance: ");
-            if ((player.getCurrentRoom().listEntities(Item.class)) != ""){
+            if ((player.getCurrentRoom().listEntities(Item.class)) != "") {
                 System.out.println(player.getCurrentRoom().listEntities(Item.class));
-            }
-            else{
+            } else {
                 System.out.println("Nothing.");
             }
             System.out.println("The following NPCs are present: ");
-            if ((player.getCurrentRoom().listEntities(NPC.class)) != ""){
+            if ((player.getCurrentRoom().listEntities(NPC.class)) != "") {
                 System.out.println(player.getCurrentRoom().listEntities(Item.class));
-            }
-            else{
+            } else {
                 System.out.println("Noone.");
             }
-            System.out.println("Type HELP for help.");
-             System.out.println(player.getCurrentRoom().getExitString());
+            System.out.println("Type HELP for help and information.");
+            System.out.println(player.getCurrentRoom().getExitString());
         }
         // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
 
         /*
-                    if(h > 99){
-            currentRoom = nextRoom.getRoom();
-                System.out.println(currentRoom.getLongDescription());
-            } else {
-                currentRoom = nextRoom.getRoom();
-                System.out.println(currentRoom.getLongDescription());
-            }
+         if(h > 99){
+         currentRoom = nextRoom.getRoom();
+         System.out.println(currentRoom.getLongDescription());
+         } else {
+         currentRoom = nextRoom.getRoom();
+         System.out.println(currentRoom.getLongDescription());
+         }
          */
     }
 
     private void interact(Command command) {
-      
+
         if (command.hasSecondWord()) {
 
             System.out.println("You have the option to interact with the following: ");
@@ -363,7 +374,6 @@ public class Game {
     private void inventory(Command command) {
 
         //Inventory commands
-        
         if (command.hasSecondWord()) {
             if ("drop".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
@@ -380,7 +390,7 @@ public class Game {
             } else if ("pickup".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
                     //Check the room for the item.name, and add it to inventory
-                    
+
                 }
             } else {
                 //Obligatory player insult if the command is unknown.
@@ -404,4 +414,3 @@ public class Game {
         }
     }
 }
-
