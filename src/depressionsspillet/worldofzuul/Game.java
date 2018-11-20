@@ -6,10 +6,10 @@ import depressionsspillet.worldofzuul.characters.NPC;
 import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.interaction.Interactable;
-import depressionsspillet.worldofzuul.characters.VendorNPC;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.DamageType;
+import depressionsspillet.worldofzuul.combat.Health;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -28,6 +28,7 @@ public class Game {
         player = new Player("Janus the Magic Midget", "A fucking loser amirite", start);
         player.addAttack(new Attack(DamageType.DAB, 5, "dab", "A profound dab."));
         player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "A rather weak, yet beautifully spirited punch."));
+        player.getHealth().onTakeDamage.add (x -> System.out.println ("You take damage."));
         parser = new Parser();
     }
 
@@ -58,8 +59,8 @@ public class Game {
         magicForrest.setExit("south", sleepover);
         magicForrest.setExit("east", vendor);
         magicForrest.setExit("west", thaiHooker);
-        
-        magicForrest.addItem(new ConsumableItem ("Apple", "An apple of particularly moist texture.", 100, 42));
+
+        magicForrest.addItem(new ConsumableItem("Apple", "An apple of particularly moist texture.", 100, 42));
 
         // Exits for vendor are declared.
         vendor.setExit("south", stripClub);
@@ -113,23 +114,22 @@ public class Game {
         gate.setExit("south", boss, false);
 
         boss.setExit("south", suprise);
-        
-        boss.addEntityToRoom(new HostileNPC ("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, 666d,
-                new DamageResistance[] {
-                    new DamageResistance (DamageType.BLUNT, "is impervious to blunt force trauma, he is simply too great.", 0),
-                    new DamageResistance (DamageType.SLASH, "has too thick skin to penetrate, your slash simply glances off with a small papercut-like wound left, doing %.2f damage.", 0.1),
-                    new DamageResistance (DamageType.DAB, "doesn't care. You cannot merely dab upon all your problems. Please actually try to solve your problems.", 0),
-                    new DamageResistance (DamageType.MENTAL, "is distraught by your comfidence and self-worth, and so he takes an impressive %.2f damage.", 2),
-                },
-                new Attack [] {
-                    new Attack (DamageType.DAB, 10d, "Intense Dab", "Erikthulhu uses your own tactics against you. You cannot keep fighting yourself like this."),
-                    new Attack (DamageType.FIRE, 15d, "Firebreath", "A massive storm of fire. Bricks will be shat."),
-                    new Attack (DamageType.SUNONASTICK, 0, "Sun on a Stick", "Arguably the most useful of all weapons."),
-                    new Attack (DamageType.WATER, 2d, "Water Gun", "A soft, rather refreshing spray of water originating from a toy gun."),
-                    new Attack (DamageType.BLUNT, 10d, "Vigerous Punch", "An intense punch, using raw strength alone."),
-                    new Attack (DamageType.MENTAL, 10d, "Insult", "An insult upon your appearance, talents and skills all wowen together in a beautiful euphony of wordsmithing."),
-                }));
-               
+
+        boss.addEntityToRoom(new HostileNPC("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, new Health(666d).withResistances(
+                new DamageResistance[]{
+                    new DamageResistance(DamageType.BLUNT, "is impervious to blunt force trauma, he is simply too great.", 0),
+                    new DamageResistance(DamageType.SLASH, "has too thick skin to penetrate, your slash simply glances off with a small papercut-like wound left, doing %.2f damage.", 0.1),
+                    new DamageResistance(DamageType.DAB, "doesn't care. You cannot merely dab upon all your problems. Please actually try to solve your problems.", 0),
+                    new DamageResistance(DamageType.MENTAL, "is distraught by your comfidence and self-worth, and so he takes an impressive %.2f damage.", 2),
+                }),
+                new Attack(DamageType.DAB, 10d, "Intense Dab", "Erikthulhu uses your own tactics against you. You cannot keep fighting yourself like this."),
+                new Attack(DamageType.FIRE, 15d, "Firebreath", "A massive storm of fire. Bricks will be shat."),
+                new Attack(DamageType.SUNONASTICK, 0, "Sun on a Stick", "Arguably the most useful of all weapons."),
+                new Attack(DamageType.WATER, 2d, "Water Gun", "A soft, rather refreshing spray of water originating from a toy gun."),
+                new Attack(DamageType.BLUNT, 10d, "Vigerous Punch", "An intense punch, using raw strength alone."),
+                new Attack(DamageType.MENTAL, 10d, "Insult", "An insult upon your appearance, talents and skills all wowen together in a beautiful euphony of wordsmithing.")
+        ));
+
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
     }
@@ -257,8 +257,8 @@ public class Game {
         if (nextRoom == null) {
             System.out.println("There is no door!");
         } else if (nextRoom.locked) {
-            if(player.getHealth() > 99){
-                if (player.getCurrentRoom() == gate){
+            if (player.getHealth().getCurrentHealth() > 99) {
+                if (player.getCurrentRoom() == gate) {
                     System.out.println("You have through countless struggles and hardship conquered these lands and regained your complete happiness. \nThe way before you has opened.");
                     player.setCurrentRoom(boss);
                     System.out.println(boss.getLongDescription());
@@ -268,7 +268,7 @@ public class Game {
                     System.out.println(suprise.getLongDescription());
                 }
             } else {
-            System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways: north");
+                System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways: north");
             }
         } else {
             player.setCurrentRoom(nextRoom.getRoom());
@@ -281,22 +281,24 @@ public class Game {
             player.addHappiness(player.getCurrentRoom().getHappiness());
             player.getCurrentRoom().setHappiness(0);
             System.out.println("In this place, you find the following items to be of potential significance: ");
-            if (player.getCurrentRoom().getItemArray().size () != 0) {
-                for (Item item : player.getCurrentRoom ().getItemArray()) {
-                    System.out.println (item.getName() + " - " + item.getDescription());
+            if (player.getCurrentRoom().getItemArray().isEmpty()) {
+                for (Item item : player.getCurrentRoom().getItemArray()) {
+                    System.out.println(item.getName() + " - " + item.getDescription());
                 }
-            }else{
+            } else {
                 System.out.println("Nothing.");
             }
             System.out.println("The following NPCs are present: ");
-            if (!"".equals(player.getCurrentRoom().listEntities(NPC.class))){
+            if (!"".equals(player.getCurrentRoom().listEntities(NPC.class))) {
                 System.out.println(player.getCurrentRoom().listEntities(NPC.class));
-            }
-            else{
+            } else {
                 System.out.println("Noone.");
             }
-            System.out.println("Type HELP for help and information.");
+            System.out.println("Type HELP for help.");
             System.out.println(player.getCurrentRoom().getExitString());
+        }
+    }
+
 
     private void interact(Command command) {
 
@@ -409,7 +411,7 @@ public class Game {
                     if (command.hasFourthWord()) {
                         player.addItem(command.getThirdWord(), command.getFourthWord());
                     }
-                    
+
                     //Check the room for the item.name
                     if (player.addItem(command.getThirdWord()) != null) {
                         System.out.println("You pick up the " + command.getThirdWord() + " and then promptly put it back down.");
