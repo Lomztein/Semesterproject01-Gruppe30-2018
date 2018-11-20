@@ -54,7 +54,7 @@ public class Room {
     }
   
       public void addItem(Item item) {
-        itemsInRoom.add(item);
+        currentItems.add(item);
     }
     
     public void addRandomItem() {
@@ -62,7 +62,7 @@ public class Room {
     }
 
     public void removeItem(Item item) {
-        itemsInRoom.remove(item);
+        currentItems.remove(item);
     }
 
     public String getItemNames() {
@@ -93,18 +93,6 @@ public class Room {
     //This ensures that you don't have floating items that don't exist in any list. 
     public void createItem(String name) {
         
-    }
-    
-    public void addItem(Item item) {
-        currentItems.add(item);
-    }
-    
-    public void addRandomItem() {
-        
-    }
-    
-    public void removeItem(Item item) {
-        currentItems.remove(item);
     }
     
     public void addEntityToRoom(Entity entity) {
