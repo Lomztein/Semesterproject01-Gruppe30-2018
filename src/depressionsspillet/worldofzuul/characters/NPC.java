@@ -5,7 +5,6 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
-import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.Room;
 
@@ -14,8 +13,8 @@ import depressionsspillet.worldofzuul.Room;
  */
 public abstract class NPC extends Character implements Interactable {
 
-    public NPC (String name, String desc, Room startingRoom, DamageResistance... resistances) {
-        super (name, desc, startingRoom, resistances);
+    public NPC (String name, String desc, Room startingRoom) {
+        super (name, desc, startingRoom);
     }
 
 }

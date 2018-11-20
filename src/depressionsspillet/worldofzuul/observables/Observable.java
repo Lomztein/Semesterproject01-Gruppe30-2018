@@ -24,7 +24,7 @@ public class Observable {
     }
     
     
-    public void notify (Object source) {
+    public void notifyAll (Object source) {
         for (Observer observer : observers) {
             observer.onNotify (new Event (source, this));
         }

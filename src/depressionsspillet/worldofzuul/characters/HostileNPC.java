@@ -23,8 +23,8 @@ public class HostileNPC extends NPC implements Attacker {
     private double health;
     private final Attack[] availableAttacks;
 
-    public HostileNPC(String name, String desc, Room startingRoom, double health, DamageResistance[] resistances, Attack[] availableAttacks) {
-        super(name, desc, startingRoom, resistances);
+    public HostileNPC(String name, String desc, Room startingRoom, double health, Attack[] availableAttacks, Health health) {
+        super(name, desc, startingRoom);
         this.health = health;
         this.availableAttacks = availableAttacks;
     }

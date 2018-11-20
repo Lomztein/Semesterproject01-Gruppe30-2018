@@ -5,23 +5,26 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
+import depressionsspillet.worldofzuul.combat.HasHealth;
 import depressionsspillet.worldofzuul.ConsumableItem;
 import depressionsspillet.worldofzuul.Item;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damagable;
+import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
+import depressionsspillet.worldofzuul.combat.Health;
 import java.util.ArrayList;
 
 /**
  * @author Joachim
  */
-public class Player extends Character implements Attacker, HasHealth, Damagable {
+public class Player extends Character implements Attacker, HasHealth {
 
-    private double happinesslevel = 0;
     private Damagable engagedWith;
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
+    private Health playerHealth;
 
     Item[] inventory = new Item[4];
 
@@ -42,12 +45,12 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
 
         }
 
-        this.resistances = playerResistances.toArray(new DamageResistance[0]);
+         = playerResistances.toArray(new DamageResistance[0]);
     }
 
     @Override
-    public double getHealth() {
-        return happinesslevel;
+    public Health getHealth() {
+        return playerHealth;
     }
 
     public void engage(Damagable damagable) {

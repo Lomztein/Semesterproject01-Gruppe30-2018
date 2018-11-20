@@ -11,8 +11,8 @@ package depressionsspillet.worldofzuul.observables;
  */
 public class Event {
     
-    private Object source;
-    private Object target;
+    private final Object source;
+    private final Object target;
     
     public Event (Object source, Object target) {
         this.source = source;
