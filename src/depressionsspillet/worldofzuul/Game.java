@@ -1,6 +1,7 @@
 package depressionsspillet.worldofzuul;
 
-import depressionsspillet.worldofzuul.characters.DamageResistance;
+import depressionsspillet.worldofzuul.combat.DamageResistance;
+import depressionsspillet.worldofzuul.characters.HostileNPC;
 import depressionsspillet.worldofzuul.characters.NPC;
 import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.interaction.Interaction;
@@ -10,6 +11,7 @@ import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Game {
 
@@ -23,9 +25,9 @@ public class Game {
     public Game() {
         // The attributes are populated with their appropiate data.
         createRooms();
-        player = new Player("Johannes", "Døberen", start);
-        player.addAttack(new Attack(DamageType.DAB, 5, "dab", "profound dab."));
-        player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "weak, yet beautifully spirited punch."));
+        player = new Player("Janus the Magic Midget", "A fucking loser amirite", start);
+        player.addAttack(new Attack(DamageType.DAB, 5, "dab", "A profound dab."));
+        player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "A rather weak, yet beautifully spirited punch."));
         parser = new Parser();
     }
 
@@ -56,6 +58,8 @@ public class Game {
         magicForrest.setExit("south", sleepover);
         magicForrest.setExit("east", vendor);
         magicForrest.setExit("west", thaiHooker);
+        
+        magicForrest.addItem(new ConsumableItem ("Apple", "An apple of particularly moist texture.", 100, 42));
 
         // Exits for vendor are declared.
         vendor.setExit("south", stripClub);
@@ -106,10 +110,26 @@ public class Game {
         drugs.setExit("east", thaiHooker);
 
         gate.setExit("north", sleepover);
-        gate.setExit("south", boss, true);
+        gate.setExit("south", boss, false);
 
         boss.setExit("south", suprise);
-
+        
+        boss.addEntityToRoom(new HostileNPC ("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, 666d,
+                new DamageResistance[] {
+                    new DamageResistance (DamageType.BLUNT, "is impervious to blunt force trauma, he is simply too great.", 0),
+                    new DamageResistance (DamageType.SLASH, "has too thick skin to penetrate, your slash simply glances off with a small papercut-like wound left, doing %.2f damage.", 0.1),
+                    new DamageResistance (DamageType.DAB, "doesn't care. You cannot merely dab upon all your problems. Please actually try to solve your problems.", 0),
+                    new DamageResistance (DamageType.MENTAL, "is distraught by your comfidence and self-worth, and so he takes an impressive %.2f damage.", 2),
+                },
+                new Attack [] {
+                    new Attack (DamageType.DAB, 10d, "Intense Dab", "Erikthulhu uses your own tactics against you. You cannot keep fighting yourself like this."),
+                    new Attack (DamageType.FIRE, 15d, "Firebreath", "A massive storm of fire. Bricks will be shat."),
+                    new Attack (DamageType.SUNONASTICK, 0, "Sun on a Stick", "Arguably the most useful of all weapons."),
+                    new Attack (DamageType.WATER, 2d, "Water Gun", "A soft, rather refreshing spray of water originating from a toy gun."),
+                    new Attack (DamageType.BLUNT, 10d, "Vigerous Punch", "An intense punch, using raw strength alone."),
+                    new Attack (DamageType.MENTAL, 10d, "Insult", "An insult upon your appearance, talents and skills all wowen together in a beautiful euphony of wordsmithing."),
+                }));
+               
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
     }
@@ -227,7 +247,6 @@ public class Game {
             // If this happens, then exit out of this function using a return statement.
             return;
         }
-
         // If a second word was given, then save that as another variable "direction".
         String direction = command.getSecondWord();
 
@@ -237,14 +256,20 @@ public class Game {
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
         if (nextRoom == null) {
             System.out.println("There is no door!");
-            /*
-             } else if (nextRoom.locked == true) {
-             nextRoom.locked = false;
-             player.setCurrentRoom(nextRoom.getRoom());
-             System.out.println(player.getCurrentRoom().getLongDescription());
-             */
-        } else if (nextRoom.locked == true) {
-            System.out.println("This door is locked! It says you need to be happy to enter.");
+        } else if (nextRoom.locked) {
+            if(player.getHealth() > 99){
+                if (player.getCurrentRoom() == gate){
+                    System.out.println("You have through countless struggles and hardship conquered these lands and regained your complete happiness. \nThe way before you has opened.");
+                    player.setCurrentRoom(boss);
+                    System.out.println(boss.getLongDescription());
+                } else {
+                    System.out.println("You have defeated the despicable Erikthulu \nand banished his evil from these lands bringing along a serene sense of peace and prosperity.\n But there is yet one door remaining before your journey comes to an end.");
+                    player.setCurrentRoom(suprise);
+                    System.out.println(suprise.getLongDescription());
+                }
+            } else {
+            System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways: north");
+            }
         } else {
             player.setCurrentRoom(nextRoom.getRoom());
 
@@ -256,32 +281,22 @@ public class Game {
             player.addHappiness(player.getCurrentRoom().getHappiness());
             player.getCurrentRoom().setHappiness(0);
             System.out.println("In this place, you find the following items to be of potential significance: ");
-            if ((player.getCurrentRoom().listEntities(Item.class)) != "") {
-                System.out.println(player.getCurrentRoom().listEntities(Item.class));
-            } else {
+            if (player.getCurrentRoom().getItemArray().size () != 0) {
+                for (Item item : player.getCurrentRoom ().getItemArray()) {
+                    System.out.println (item.getName() + " - " + item.getDescription());
+                }
+            }else{
                 System.out.println("Nothing.");
             }
             System.out.println("The following NPCs are present: ");
-            if ((player.getCurrentRoom().listEntities(NPC.class)) != "") {
-                System.out.println(player.getCurrentRoom().listEntities(Item.class));
-            } else {
+            if (!"".equals(player.getCurrentRoom().listEntities(NPC.class))){
+                System.out.println(player.getCurrentRoom().listEntities(NPC.class));
+            }
+            else{
                 System.out.println("Noone.");
             }
             System.out.println("Type HELP for help and information.");
             System.out.println(player.getCurrentRoom().getExitString());
-        }
-        // Otherwise, move to next room and print out the rooms description, so that the player knows where they are.
-
-        /*
-         if(h > 99){
-         currentRoom = nextRoom.getRoom();
-         System.out.println(currentRoom.getLongDescription());
-         } else {
-         currentRoom = nextRoom.getRoom();
-         System.out.println(currentRoom.getLongDescription());
-         }
-         */
-    }
 
     private void interact(Command command) {
 
@@ -390,6 +405,15 @@ public class Game {
             } else if ("pickup".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
                     //Check the room for the item.name, and add it to inventory
+
+                    if (command.hasFourthWord()) {
+                        player.addItem(command.getThirdWord(), command.getFourthWord());
+                    }
+                    
+                    //Check the room for the item.name
+                    if (player.addItem(command.getThirdWord()) != null) {
+                        System.out.println("You pick up the " + command.getThirdWord() + " and then promptly put it back down.");
+                    }
 
                 }
             } else {
