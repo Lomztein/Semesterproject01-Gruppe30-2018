@@ -5,7 +5,6 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
-import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.interaction.Interaction;
@@ -30,6 +29,7 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
         super(name, desc, startingRoom);
         this.health = health;
         this.availableAttacks = availableAttacks;
+        health.onTakeDamage.add(x -> System.out.println (name + " takes a bunch of damage."));
     }
 
     private Attack getRandomAttack() {

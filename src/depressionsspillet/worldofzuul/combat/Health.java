@@ -19,12 +19,12 @@ public class Health {
     private double currentHealth;
     private double maxHealth;
 
-    private List<DamageResistance> resistances;
+    private final List<DamageResistance> resistances = new ArrayList<>();
 
-    public Observable onTakeDamage = new Observable();
-    public Observable onHealthChanged = new Observable();
+    public final Observable onTakeDamage = new Observable();
+    public final Observable onHealthChanged = new Observable();
 
-    public List<Damage> damageTaken = new ArrayList<>();
+    public final List<Damage> damageTaken = new ArrayList<>();
     
     public Health (double health) {
         currentHealth = health;

@@ -268,7 +268,7 @@ public class Game {
             System.out.println(" ");
             System.out.println(player.getCurrentRoom().getLongDescription());
             System.out.println("In this place, you find the following items to be of potential significance: ");
-            if (player.getCurrentRoom().getItemArray().size() != 0) {
+            if (player.getCurrentRoom().getItemArray().isEmpty()) {
                 for (Item item : player.getCurrentRoom().getItemArray()) {
                     System.out.println(item.getName() + " - " + item.getDescription());
                 }

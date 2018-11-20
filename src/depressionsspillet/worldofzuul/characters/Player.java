@@ -24,13 +24,14 @@ public class Player extends Character implements Attacker, HasHealth {
 
     private Damagable engagedWith;
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
-    private Health playerHealth;
+    private final Health playerHealth;
 
     Item[] inventory = new Item[4];
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
         playerHealth = new Health (100);
+        playerHealth.onTakeDamage.add((x) -> System.out.println ("You take a serious hit to your self comfidence."));
     }
 
     public void generatePlayerResistances() {
