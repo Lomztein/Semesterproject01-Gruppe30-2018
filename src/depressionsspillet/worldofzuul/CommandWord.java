@@ -5,7 +5,7 @@
 // These can then be used elsewhere as constants by referencing them using CommandWord.GO for example, and their attributes and methods can then be accessed.
 public enum CommandWord
 {
-    GO("go"), QUIT("quit"), HELP("help"), INTERACT ("interact"), ENGAGE ("engage"), DISENGAGE ("disengage"), ATTACK ("attack"), INVENTORY("inventory"), UNKNOWN("?");
+    GO("go"), QUIT("quit"), HELP("help"), INTERACT ("interact"), ENGAGE ("engage"), DISENGAGE ("disengage"), ATTACK ("attack"), INVENTORY("inventory"), NO ("no"), UNKNOWN("?");
     
     private final String commandString;
     

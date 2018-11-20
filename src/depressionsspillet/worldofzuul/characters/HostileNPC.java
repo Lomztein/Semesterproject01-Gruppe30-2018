@@ -25,15 +25,17 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
 
     private final Health health;
     private final Attack[] availableAttacks;
+    private final boolean retaliate;
 
-    public HostileNPC(String name, String desc, Room startingRoom, Health health, Attack... availableAttacks) {
+    public HostileNPC(String name, String desc, Room startingRoom, boolean retaliate, Health health, Attack... availableAttacks) {
         super(name, desc, startingRoom);
         this.health = health;
         this.availableAttacks = availableAttacks;
+        this.retaliate = retaliate;
         health.onTakeDamage.add(e
                 -> {
-            System.out.println(this.getName() + " " + e.getResistance().getResponse());
-            if (!health.isDead()) {
+            System.out.println(String.format (this.getName() + " " + e.getResistance().getResponse(), e.getDamageTaken()));
+            if (!health.isDead() && retaliate) {
                 if (e.getDamage().getAttacker() instanceof Damagable) {
                     attack((Damagable) e.getDamage().getAttacker());
                 }
@@ -48,7 +50,7 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
 
     public void attack(Damagable damagable) {
         Attack random = getRandomAttack();
-        random.doDamage(this, damagable);
+        random.attack(this, damagable);
     }
 
     public void onTakeDamage(Event event) {
