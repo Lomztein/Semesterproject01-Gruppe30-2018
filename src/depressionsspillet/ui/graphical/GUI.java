@@ -5,7 +5,6 @@
  */
 package depressionsspillet.ui.graphical;
 
-import depressionsspillet.ui.IInterface;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,7 +30,7 @@ public class GUI extends Application implements IInterface{
         primaryStage.setTitle("Depressionsspillet!");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+
     }
 
     /**
@@ -41,4 +40,7 @@ public class GUI extends Application implements IInterface{
         launch(args);
     }
     
+    public void onDirectionalArrowClicked (String direction) {
+        game.enterCommand("GO " + direction);
+    }
 }
