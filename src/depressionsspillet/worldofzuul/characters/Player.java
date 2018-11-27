@@ -5,6 +5,7 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
+import depressionsspillet.worldofzuul.combat.HasHealth;
 import depressionsspillet.worldofzuul.ConsumableItem;
 import depressionsspillet.worldofzuul.Item;
 import depressionsspillet.worldofzuul.Room;
@@ -13,22 +14,27 @@ import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
+import depressionsspillet.worldofzuul.combat.Health;
 import java.util.ArrayList;
 
 /**
  * @author Joachim
  */
-public class Player extends Character implements Attacker, HasHealth, Damagable {
+public class Player extends Character implements Attacker, HasHealth {
 
-    private double happinesslevel = 10;
     private Damagable engagedWith;
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
+    private final Health playerHealth;
 
     Item[] inventory = new Item[4];
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
+        playerHealth = new Health (100);
+        playerHealth.onTakeDamage.add((x) -> System.out.println ("You take a serious hit to your self comfidence."));
+    }
 
+    public void generatePlayerResistances() {
         ArrayList<DamageResistance> playerResistances = new ArrayList<>();
         for (DamageType type : DamageType.values()) {
             if (type != DamageType.ANY) {
@@ -43,12 +49,24 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
 
         }
 
-        this.resistances = playerResistances.toArray(new DamageResistance[0]);
+        getHealth().withResistances(playerResistances);
+    }
+    
+    public double getHappiness () {
+        return getHealth ().getCurrentHealth();
+    }
+    
+    public void setHappiness (double value) {
+        getHealth ().setCurrentHealth (value);
+    }
+    
+    public void addHappiness (double value) {
+        getHealth ().changeHealth(value);
     }
 
     @Override
-    public double getHealth() {
-        return happinesslevel;
+    public Health getHealth() {
+        return playerHealth;
     }
     
     public void addHappiness(int amount){
@@ -128,7 +146,7 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
         try {
             if (inventory[i] instanceof ConsumableItem && inventory[i] != null) {
                 ConsumableItem item = (ConsumableItem) inventory[i];
-                happinesslevel += item.getHealthIncrease();
+                addHappiness (item.getHealthIncrease());
             } else { //Temporary solution, more conditions will be added later, as more items are added.
                 System.out.println("You stuff a handfull of nothing from pocket " + (i + 1) + " in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
             }
@@ -151,7 +169,7 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
     public void addItem(String name, String integer) {
         Item item = addItem(name);
         int i = Integer.parseInt(integer) - 1;
-        
+
         if (item != null) {
             if (inventory[i] == null) {
                 inventory[i] = item;
@@ -164,7 +182,7 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
             noItemFound(item.getName());
         }
     }
-    
+
     public void noItemFound(String name) {
         System.out.println("You grab at what you thought was the " + name + ", but there's nothing there.\n\nIt might be best to see a pshycologist if this issue persists.");
     }
@@ -188,16 +206,6 @@ public class Player extends Character implements Attacker, HasHealth, Damagable 
 
     private void emptyPockets(int i) {
         System.out.println("You reach towards pocket " + (i + 1) + ", but for some reason,\nyou can't find it. Perhaps you should check how many pockets you have first.");
-    }
-
-    @Override
-    public void setHealth(double value) {
-        happinesslevel = value;
-    }
-
-    @Override
-    public void changeHealth(double value) {
-        happinesslevel += value;
     }
 
     @Override
