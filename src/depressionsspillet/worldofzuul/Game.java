@@ -162,15 +162,16 @@ public class Game {
         // Construct a game loop, which is a simple while-loop that runs until the game is declared "finished".
         boolean finished = false;
         while (!finished) {
+            if (player.getCurrentRoom() == suprise){
+                System.out.println("Thank you for playing. Good bye.");
+                finished = true;
+            } else {
             // Use the previously declared parser to find out what command is being input into console.
             Command command = parser.getCommand();
-
             // If the processed command returns true, then the game ends.
             finished = processCommand(command);
+            }
         }
-
-        System.out.println("You walk away to cry in the corner. Spilmester Martin will not forget this.");
-        System.out.println("Thank you for playing.  Good bye.");
     }
 
     private void printWelcome() {
@@ -287,12 +288,16 @@ public class Game {
                     player.setCurrentRoom(boss);
                     System.out.println(boss.getLongDescription());
                 } else {
+                    System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways: north");
+                }
+            } else if (player.getCurrentRoom() == boss) {
+                if(erikthulu.getHealth().isDead() == true) {
                     System.out.println("You have defeated the despicable Erikthulu \nand banished his evil from these lands bringing along a serene sense of peace and prosperity.\n But there is yet one door remaining before your journey comes to an end.");
                     player.setCurrentRoom(suprise);
                     System.out.println(suprise.getLongDescription());
+                } else {
+                    System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways: north");
                 }
-            } else {
-                System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways: north");
             }
         } else {
             player.setCurrentRoom(nextRoom.getRoom());
@@ -322,6 +327,7 @@ public class Game {
             System.out.println(player.getCurrentRoom().getExitString());
         }
     }
+  
     private void interact(Command command) {
 
         if (command.hasSecondWord()) {
