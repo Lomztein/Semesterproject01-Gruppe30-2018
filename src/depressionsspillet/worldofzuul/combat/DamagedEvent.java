@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -33,3 +34,40 @@ public class DamagedEvent extends Event {
     }
     
 }
+=======
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package depressionsspillet.worldofzuul.combat;
+
+import depressionsspillet.worldofzuul.observables.Event;
+
+/**
+ *
+ * @author Lomztein
+ */
+public class DamagedEvent extends Event {
+    
+    private final Damage damage;
+    private final DamageResistance resistance;
+    private final double damageTaken;
+    
+    public DamagedEvent(Object source, Damage damage, DamageResistance resistance, double damageTaken) {
+        super(source);
+        this.damage = damage;
+        this.resistance = resistance;
+        this.damageTaken = damageTaken;
+    }
+    
+    public Damage getDamage () {
+        return damage;
+    }
+    
+    public DamageResistance getResistance () {
+        return resistance;
+    }
+    
+}
+>>>>>>> 66c3cf9712757193b768254bbcabaa045929cac3
