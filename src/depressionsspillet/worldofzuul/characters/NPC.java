@@ -7,14 +7,23 @@ package depressionsspillet.worldofzuul.characters;
 
 import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.Room;
+import depressionsspillet.worldofzuul.interaction.Interaction;
 
 /**
  * @author Joachim
  */
-public abstract class NPC extends Character implements Interactable {
+public class NPC extends Character implements Interactable {
+    
+    private Interaction[] interactions;
 
-    public NPC (String name, String desc, Room startingRoom, DamageResistance... resistances) {
-        super (name, desc, startingRoom, resistances);
+    public NPC (String name, String desc, Room startingRoom, Interaction... interactions) { // new NPC ("John Hitler", "Hvad hed Hitler til fornavn", startingRoom, new Interaction (), new Interaction (), new Interaction ())
+        super (name, desc, startingRoom);
+        this.interactions = interactions;
+    }
+
+    @Override
+    public Interaction[] getInteractions() {
+        return interactions;
     }
 
 }

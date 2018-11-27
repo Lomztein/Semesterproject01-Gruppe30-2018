@@ -5,14 +5,17 @@
  */
 package depressionsspillet.worldofzuul.combat;
 
-import depressionsspillet.worldofzuul.Entity;
-
 /**
  *
  * @author Lomztein
  */
-public interface Damagable extends Entity {
+public interface HasHealth extends Damagable {
     
-    void takeDamage (Damage damage);
+    public Health getHealth ();
+    
+    @Override
+    public default void takeDamage (Damage damage) {
+        getHealth ().takeDamage(damage);
+    }
     
 }

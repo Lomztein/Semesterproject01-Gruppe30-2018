@@ -18,9 +18,10 @@ public class Attack {
     private final String name;
     private final String description;
     
-    public void doDamage (Attacker attacker, Damagable damagable) {
-        System.out.println (attacker.getName() + " attacks " + damagable.getName() + " using " + getName () + ", doing " + damageType.name() + " damage.");
-        damagable.takeDamage(new Damage (attacker, damageType, damageValue));
+    public void attack (Attacker attacker, Damagable damagable) {
+        System.out.println (attacker.getName() + " attacks " + damagable.getName() + " using " + getName () + " - " + getDescription () + ", doing " + damageType.name() + " damage.");
+        Damage damage = new Damage (attacker, damagable, damageType, damageValue);
+        damage.doDamage();
     }
     
     public Attack (DamageType damageType, double damageValue, String name, String description) {

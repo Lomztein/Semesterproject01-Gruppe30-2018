@@ -5,8 +5,6 @@
  */
 package depressionsspillet.worldofzuul.combat;
 
-import depressionsspillet.worldofzuul.combat.DamageType;
-
 /**
  *
  * @author Lomztein
@@ -14,13 +12,20 @@ import depressionsspillet.worldofzuul.combat.DamageType;
 public class Damage {
     
     private final Attacker attacker;
+    private final Damagable reciever;
+    
     private final DamageType damageType;
     private final double damageValue;
     
-    public Damage (Attacker attacker, DamageType damageType, double damageValue) {
+    public Damage (Attacker attacker, Damagable reciever, DamageType damageType, double damageValue) {
         this.attacker = attacker;
+        this.reciever = reciever;
         this.damageType = damageType;
         this.damageValue = damageValue;
+    }
+
+    public void doDamage () {
+        reciever.takeDamage(this);
     }
     
     public Attacker getAttacker () {
@@ -33,6 +38,10 @@ public class Damage {
     
     public double getDamageValue () {
         return damageValue;
+    }
+    
+    public Damagable getReciever () {
+        return reciever;
     }
     
 }

@@ -8,9 +8,10 @@ package depressionsspillet.worldofzuul.observables;
 /**
  *
  * @author Lomztein
+ * @param <T>
  */
-public interface Observer {
+public interface Observer<T extends Event> {
     
-    void action (Event event);
+    void onNotify (T event);
     
 }

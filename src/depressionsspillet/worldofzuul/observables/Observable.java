@@ -10,23 +10,23 @@ import java.util.ArrayList;
 /**
  *
  * @author Lomztein
+ * @param <T>
  */
-public class Observable {
+public class Observable<T extends Event> {
     
-    private ArrayList<Observer> observers = new ArrayList<>();
+    private final ArrayList<Observer<T>> observers = new ArrayList<>();
         
-    public void add (Observer observer) {
+    public void add (Observer<T> observer) {
         observers.add (observer);
     }
     
-    public void remove (Observer observer) {
+    public void remove (Observer<T> observer) {
         observers.remove (observer);
     }
     
-    
-    public void execute (Object source) {
+    public void notifyObservables (T event) {
         for (Observer observer : observers) {
-            observer.action (new Event (source, this));
+            observer.onNotify (event.withTarget(this));
         }
     }
     

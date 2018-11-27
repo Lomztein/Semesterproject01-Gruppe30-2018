@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 package depressionsspillet.worldofzuul.combat;
-import depressionsspillet.worldofzuul.Named;
+import depressionsspillet.worldofzuul.Entity;
 
 /**
  *
  * @author Lomztein
  */
-public interface Attacker extends Named {
+public interface Attacker extends Entity {
     
     Attack[] getAttacks ();
     

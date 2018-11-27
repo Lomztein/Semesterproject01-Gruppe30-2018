@@ -18,17 +18,63 @@ public class Room {
     // Contraints in this sense are declarations on the generic that limit what types can be used.
     private HashMap<String, Door> exits;
     private ArrayList<Entity> allEntities;
+    private ArrayList<Item> currentItems;
 
     // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
     private String description;
+    private int happiness;
     ArrayList<Item> itemsInRoom;
 
     //Constructor
     public Room(String description) {
-        this.itemsInRoom = new ArrayList<>();
+        currentItems = new ArrayList<>();
         this.description = description;
         exits = new HashMap<>();
         allEntities = new ArrayList<>();
+    }
+
+    public void printCurrentItems() {
+        Item[] itemsInRoom = getEntities(Item.class);
+        int itemCounter = 0;
+        for (Item item : itemsInRoom) {
+            if (itemCounter == 0) {
+                System.out.print("On the ground before you lies: ");
+            } else {
+                System.out.println(", ");
+            }
+            System.out.print(item.getName());
+            itemCounter++;
+        }
+        if (itemCounter == 0) {
+            System.out.println("The room contains no visible items.");
+        }
+
+    }
+    
+    public ArrayList<Item> getItemArray() {
+        return currentItems;
+    }
+  
+      public void addItem(Item item) {
+        currentItems.add(item);
+    }
+    
+    public void addRandomItem() {
+        
+    }
+
+    public void removeItem(Item item) {
+        currentItems.remove(item);
+    }
+
+    public String getItemNames() {
+        String names = null;
+
+        for (Item item : currentItems) {
+
+            names += (" " + item.getName() + ", ");
+        }
+        return names;
     }
 
     public void setExit(String direction, Room neighbor) {
@@ -44,8 +90,14 @@ public class Room {
     public String getShortDescription() {
         return description;
     }
-
-    public void addToRoom(Entity entity) {
+    
+    //It is preffered for this method to be used instead of instanciating an item, and THEN adding it.
+    //This ensures that you don't have floating items that don't exist in any list. 
+    public void createItem(String name) {
+        
+    }
+    
+    public void addEntityToRoom(Entity entity) {
         allEntities.add(entity);
     }
 
@@ -81,10 +133,10 @@ public class Room {
     // Return the description + the possible exit routes.
     public String getLongDescription() {
 
-        return description + ".\n" + getExitString();
+        return description;
     }
 
-    private String getExitString() {
+    public String getExitString() {
         // Declare a variable for containing the combined result of the upcoming loop.
         String returnString = "You can now go these ways:";
 
@@ -99,6 +151,14 @@ public class Room {
 
     public Door getExit(String direction) {
         return exits.get(direction);
+    }
+    
+    //Happiness getter and setters
+    public int getHappiness() {
+        return happiness;
+    }
+    public void setHappiness(int happiness) {
+        this.happiness = happiness;
     }
 
 }
