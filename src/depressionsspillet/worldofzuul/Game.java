@@ -1,5 +1,6 @@
 package depressionsspillet.worldofzuul;
 
+import depressionsspillet.ui.IInterface;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.characters.HostileNPC;
 import depressionsspillet.worldofzuul.characters.NPC;
@@ -14,7 +15,7 @@ import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
 import java.util.Scanner;
 
-public class Game {
+public class Game implements IGame {
 
     // Instance-variables / attributes for a command parser and a current room is declared for later use.
     private Parser parser;
@@ -131,7 +132,7 @@ public class Game {
         erikthulhu.getHealth().onTakeDamage.add(x -> {
             if (x.getDamage().getDamageType() == DamageType.DAB) {
                 System.out.println("Erikthulhu will not allow you to outdab him, he retaliates with a furious dab in addition to his regular counter-attack.");
-                Damage retaliation = new Damage((Attacker)x.getDamage().getReciever(), (Damagable)x.getDamage().getAttacker(), DamageType.DAB, 100);
+                Damage retaliation = new Damage((Attacker) x.getDamage().getReciever(), (Damagable) x.getDamage().getAttacker(), DamageType.DAB, 100);
                 retaliation.doDamage();
             }
         });
@@ -143,53 +144,8 @@ public class Game {
 
     public void play() {
         // Call the printWelcome function, which acts both as a welcome, as well as a simple guide.
-        printWelcome();
-
         // Construct a game loop, which is a simple while-loop that runs until the game is declared "finished".
-        boolean finished = false;
-        while (!finished) {
-            // Use the previously declared parser to find out what command is being input into console.
-            Command command = parser.getCommand();
 
-            // If the processed command returns true, then the game ends.
-            finished = processCommand(command);
-        }
-
-        System.out.println("You walk away to cry in the corner. Spilmester Martin will not forget this.");
-        System.out.println("Thank you for playing.  Good bye.");
-    }
-
-    private void printWelcome() {
-        // A simple, warm welcome.
-        System.out.println();
-        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
-        System.out.println();
-
-        // An introduction to our current room.
-        System.out.println("Welcome to Depressionsspillet!");
-        System.out.println("Depressionsspillet is a positive and uplifting game, designed to make the player remember the positives of a student's life!");
-        System.out.println();
-        // A basic guide on how to play this game.
-        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
-        System.out.println();
-
-        //Trolling the player
-        System.out.println("Your adventure starts near the barn of the famous Spilmester Martin.");
-        System.out.println();
-        System.out.println("- Greetings, youngling!");
-        System.out.println("- My name is Spilmester Martin, and I am the leader of the Warriors against Erikthulu!");
-        System.out.println("- Please state your desired character style!");
-        System.out.println("Options include: Wizard, warrior, monk, witch hunter and berserker.");
-        System.out.print(">");
-        Scanner input = new Scanner(System.in);
-        String someStyle = input.next();
-        System.out.println("- Please state your desired name!");
-        System.out.print(">");
-        String someName = input.next();
-        System.out.println("- Alright! You are now Janus the Magic Midget.");
-        System.out.println("");
-        System.out.println(player.getCurrentRoom().getLongDescription());
-        System.out.println(player.getCurrentRoom().getExitString());
     }
 
     private boolean processCommand(Command command) {
@@ -308,7 +264,7 @@ public class Game {
             System.out.println(player.getCurrentRoom().getExitString());
         }
     }
-    
+
     private void interact(Command command) {
 
         if (command.hasSecondWord()) {
@@ -455,10 +411,10 @@ public class Game {
                 Damage selfsplode = new Damage(player, player, DamageType.FIRE, 1337);
                 selfsplode.doDamage();
                 break;
-                
+
             case "us":
-                System.out.println ("From within you feel an intense burning, as if The Socialist Manifesto spontaniously materializes in your chest cavity. You have become Lenin himself.");
-                player.addAttack(new Attack (DamageType.FIRE, 100, "manifesto", "The physical manifastation of socialst pride."));
+                System.out.println("From within you feel an intense burning, as if The Socialist Manifesto spontaniously materializes in your chest cavity. You have become Lenin himself.");
+                player.addAttack(new Attack(DamageType.FIRE, 100, "manifesto", "The physical manifastation of socialst pride."));
                 break;
         }
     }
@@ -472,5 +428,26 @@ public class Game {
             // If not, return true, which then quits the game through the previously mentioned "wantToQuit" boolean variable on line 87.
             return true;
         }
+    }
+
+    @Override
+    public boolean enterCommand(String input) {
+        Command cmd = parser.getCommand(input);
+        return processCommand(cmd);
+    }
+
+    @Override
+    public String[] getCurrentExits() {
+        return player.getCurrentRoom().getExitNames();
+    }
+
+    @Override
+    public String getCurrentRoomName() {
+        return player.getCurrentRoom().getShortDescription();
+    }
+
+    @Override
+    public String getCurrentRoomLongDesc() {
+        return player.getCurrentRoom().getLongDescription();
     }
 }

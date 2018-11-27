@@ -153,6 +153,10 @@ public class Room {
         return exits.get(direction);
     }
     
+    public String[] getExitNames () {
+        return exits.keySet().toArray(new String[0]);
+    }
+    
     //Happiness getter and setters
     public int getHappiness() {
         return happiness;

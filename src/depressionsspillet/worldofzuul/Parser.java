@@ -6,15 +6,13 @@ public class Parser
 {
     // Declare instance-variables / attribute for the command words available, as well as a scanner for user input.
     private CommandWords commands;
-    private Scanner reader;
 
     public Parser() 
     {
         commands = new CommandWords();
-        reader = new Scanner(System.in);
     }
 
-    public Command getCommand() 
+    public Command getCommand(String input) 
     {
         String inputLine;
         String word1 = null;
@@ -24,9 +22,7 @@ public class Parser
         
         System.out.print("> "); 
 
-        inputLine = reader.nextLine();
-
-        Scanner tokenizer = new Scanner(inputLine);
+        Scanner tokenizer = new Scanner(input);
         // If the scanner has been given an input, then take it and save it as word1.
         if(tokenizer.hasNext()) {
             word1 = tokenizer.next();
