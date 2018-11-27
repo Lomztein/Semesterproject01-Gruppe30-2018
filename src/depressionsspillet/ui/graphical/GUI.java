@@ -5,6 +5,8 @@
  */
 package depressionsspillet.ui.graphical;
 
+import depressionsspillet.worldofzuul.Game;
+import depressionsspillet.worldofzuul.IGame;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author Lomztein
  */
-public class GUI extends Application implements IInterface{
+public class GUI extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -40,7 +42,4 @@ public class GUI extends Application implements IInterface{
         launch(args);
     }
     
-    public void onDirectionalArrowClicked (String direction) {
-        game.enterCommand("GO " + direction);
-    }
 }

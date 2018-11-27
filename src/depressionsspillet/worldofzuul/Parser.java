@@ -14,7 +14,6 @@ public class Parser
 
     public Command getCommand(String input) 
     {
-        String inputLine;
         String word1 = null;
         String word2 = null;
         String word3 = null;

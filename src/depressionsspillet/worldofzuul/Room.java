@@ -50,24 +50,42 @@ public class Room {
         }
 
     }
-    
+
     public ArrayList<Item> getItemArray() {
         return currentItems;
     }
-  
-      public void addItem(Item item) {
+
+    public String[] getItemNames() {
+        ArrayList<Item> items = getItemArray();
+        String[] names = new String[items.size()];
+        for (int i = 0; i < items.size(); i++) {
+            names[i] = items.get(i).getName();
+        }
+        return names;
+    }
+
+    public String[] getItemDescriptions() {
+        ArrayList<Item> items = getItemArray();
+        String[] descriptions = new String[items.size()];
+        for (int i = 0; i < items.size(); i++) {
+            descriptions[i] = items.get(i).getDescription();
+        }
+        return descriptions;
+    }
+
+    public void addItem(Item item) {
         currentItems.add(item);
     }
-    
+
     public void addRandomItem() {
-        
+
     }
 
     public void removeItem(Item item) {
         currentItems.remove(item);
     }
 
-    public String getItemNames() {
+    public String listItemNames() {
         String names = null;
 
         for (Item item : currentItems) {
@@ -90,13 +108,13 @@ public class Room {
     public String getShortDescription() {
         return description;
     }
-    
+
     //It is preffered for this method to be used instead of instanciating an item, and THEN adding it.
     //This ensures that you don't have floating items that don't exist in any list. 
     public void createItem(String name) {
-        
+
     }
-    
+
     public void addEntityToRoom(Entity entity) {
         allEntities.add(entity);
     }
@@ -119,6 +137,24 @@ public class Room {
             list += entity.getName() + "\n";
         }
         return list;
+    }
+
+    public <T extends Entity> String[] getEntityNames(Class<T> clazz) {
+        T[] entities = getEntities(clazz);
+        String[] names = new String[entities.length];
+        for (int i = 0; i < entities.length; i++) {
+            names[i] = entities[i].getName();
+        }
+        return names;
+    }
+    
+    public <T extends Entity> String[] getEntityDescriptions (Class<T> clazz) {
+        T[] entities = getEntities(clazz);
+        String[] descriptions = new String[entities.length];
+        for (int i = 0; i < entities.length; i++) {
+            descriptions[i] = entities[i].getDescription();
+        }
+        return descriptions;
     }
 
     public <T extends Entity> T getEntity(Class<T> clazz, String name) {
@@ -152,15 +188,16 @@ public class Room {
     public Door getExit(String direction) {
         return exits.get(direction);
     }
-    
-    public String[] getExitNames () {
+
+    public String[] getExitNames() {
         return exits.keySet().toArray(new String[0]);
     }
-    
+
     //Happiness getter and setters
     public int getHappiness() {
         return happiness;
     }
+
     public void setHappiness(int happiness) {
         this.happiness = happiness;
     }

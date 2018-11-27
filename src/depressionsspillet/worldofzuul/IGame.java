@@ -15,14 +15,30 @@ import java.util.List;
  */
 public interface IGame {
     
+    // COMMAND STUFFINGS
     boolean enterCommand (String input);
+    
+    String getLastCommand ();
+    String[] getCommandWords ();
+    // COMMAND STUFFINGS END
     
     // ROOM STUFFINGS
     String[] getCurrentExits ();
     
     String getCurrentRoomName ();
     String getCurrentRoomLongDesc ();
+    
+    boolean triedEnteringLockedRooom ();
+    
+    String[] getItemNames ();
+    String[] getItemDescriptions ();
+    
+    String[] getNPCNames ();
+    String[] getNPCDescriptions ();
     // ROOM STUFFINGS END
     
+    // PLAYER STUFFINGS
+    double getPlayerHealth ();
+    // PLAYER STUFFINGS END
     
 }

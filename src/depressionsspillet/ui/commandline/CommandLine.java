@@ -20,24 +20,76 @@ public class CommandLine {
     private Scanner scanner;
 
     public static void main(String[] args) {
-        new CommandLine ().init();
+        new CommandLine().init();
     }
 
     private void init() {
         game = new Game();
 
         scanner = new Scanner(System.in);
-        boolean wantToQuit = true;
+        boolean wantToQuit = false;
 
         printWelcome();
 
         while (!wantToQuit) {
             String input = scanner.nextLine();
             wantToQuit = game.enterCommand(input);
+
+            String last = game.getLastCommand();
+            switch (last) {
+                case "GO":
+                    printRoom();
+                    break;
+
+                default:
+                    System.out.println("This command hasn't been implemented into the CLI. Please scream at the developers.");
+            }
         }
 
         System.out.println("You walk away to cry in the corner. Spilmester Martin will not forget this.");
         System.out.println("Thank you for playing.  Good bye.");
+    }
+
+    private void printRoom() {
+        if (game.getCommandWords()[0] == null) {
+            System.out.println("Go? Go where..?");
+            // If this happens, then exit out of this function using a return statement.
+            return;
+        } else if (game.triedEnteringLockedRooom()) {
+            System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways. Try returning when you are happier");
+        }
+
+        System.out.println("-------------------------");
+        System.out.println("You are now in " + game.getCurrentRoomLongDesc());
+        //The following is printing the room's items and NPC's to tell the user what they can do.
+        //Adds the rooms happiness to yours and sets the room happiness to 0.
+        System.out.println("You feel your happiness rising to: " + game.getPlayerHealth());
+
+        System.out.println("In this place, you find the following items to be of potential significance: ");
+        String[] itemNames = game.getItemNames();
+        String[] itemDescription = game.getItemDescriptions();
+
+        if (itemNames.length != 0) {
+            for (int i = 0; i < itemNames.length; i++) {
+                System.out.println(itemNames[i] + " - " + itemDescription[i]);
+            }
+        } else {
+            System.out.println("Nothing.");
+        }
+
+        String[] npcNames = game.getNPCNames();
+        String[] npcDescriptions = game.getItemDescriptions();
+        System.out.println("The following NPCs are present: ");
+        if (npcNames.length != 0) {
+            for (int i = 0; i < npcNames.length; i++) {
+                System.out.println(npcNames[i] + " - " + npcDescriptions[i]);
+            }
+        } else {
+            System.out.println("Nothing.");
+        }
+
+        System.out.println("Type HELP for help.");
+        System.out.println(singlify(game.getCurrentExits(), ", "));
     }
 
     private void printWelcome() {
