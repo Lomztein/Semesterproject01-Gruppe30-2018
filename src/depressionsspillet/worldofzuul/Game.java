@@ -7,11 +7,12 @@ import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.combat.Attack;
+import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damagable;
+import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Game {
 
@@ -26,9 +27,8 @@ public class Game {
         // The attributes are populated with their appropiate data.
         createRooms();
         player = new Player("Janus the Magic Midget", "A fucking loser amirite", start);
-        player.addAttack(new Attack(DamageType.DAB, 5, "dab", "A profound dab."));
-        player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "A rather weak, yet beautifully spirited punch."));
-        player.getHealth().onTakeDamage.add (x -> System.out.println ("You take damage."));
+        player.addAttack(new Attack(DamageType.DAB, 5, "dab", "a profound dab"));
+        player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "a rather weak, yet beautifully spirited punch"));
         parser = new Parser();
     }
 
@@ -115,20 +115,27 @@ public class Game {
 
         boss.setExit("south", suprise);
 
-        boss.addEntityToRoom(new HostileNPC("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, new Health(666d).withResistances(
+        HostileNPC erikthulhu = new HostileNPC("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, true, new Health(666d).withResistances(
                 new DamageResistance[]{
                     new DamageResistance(DamageType.BLUNT, "is impervious to blunt force trauma, he is simply too great.", 0),
                     new DamageResistance(DamageType.SLASH, "has too thick skin to penetrate, your slash simply glances off with a small papercut-like wound left, doing %.2f damage.", 0.1),
                     new DamageResistance(DamageType.DAB, "doesn't care. You cannot merely dab upon all your problems. Please actually try to solve your problems.", 0),
-                    new DamageResistance(DamageType.MENTAL, "is distraught by your comfidence and self-worth, and so he takes an impressive %.2f damage.", 2),
-                }),
+                    new DamageResistance(DamageType.MENTAL, "is distraught by your comfidence and self-worth, and so he takes an impressive %.2f damage.", 2),}),
                 new Attack(DamageType.DAB, 10d, "Intense Dab", "Erikthulhu uses your own tactics against you. You cannot keep fighting yourself like this."),
                 new Attack(DamageType.FIRE, 15d, "Firebreath", "A massive storm of fire. Bricks will be shat."),
                 new Attack(DamageType.SUNONASTICK, 0, "Sun on a Stick", "Arguably the most useful of all weapons."),
                 new Attack(DamageType.WATER, 2d, "Water Gun", "A soft, rather refreshing spray of water originating from a toy gun."),
                 new Attack(DamageType.BLUNT, 10d, "Vigerous Punch", "An intense punch, using raw strength alone."),
                 new Attack(DamageType.MENTAL, 10d, "Insult", "An insult upon your appearance, talents and skills all wowen together in a beautiful euphony of wordsmithing.")
-        ));
+        );
+        erikthulhu.getHealth().onTakeDamage.add(x -> {
+            if (x.getDamage().getDamageType() == DamageType.DAB) {
+                System.out.println("Erikthulhu will not allow you to outdab him, he retaliates with a furious dab in addition to his regular counter-attack.");
+                Damage retaliation = new Damage((Attacker)x.getDamage().getReciever(), (Damagable)x.getDamage().getAttacker(), DamageType.DAB, 100);
+                retaliation.doDamage();
+            }
+        });
+        boss.addEntityToRoom(erikthulhu);
 
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
@@ -223,6 +230,9 @@ public class Game {
                     break;
                 case INVENTORY:
                     inventory(command);
+                    break;
+                case NO:
+                    no(command);
                     break;
                 default:
                     break;
@@ -433,6 +443,31 @@ public class Game {
         } else {
             System.out.println("You check your pockets: ");
             player.printInventoryList();
+        }
+    }
+
+    private void no(Command command) {
+        Damage last = player.getHealth().getLastDamage();
+        switch (command.getSecondWord()) {
+
+            case "u":
+                if (last != null && player.isEngaged() && last.getAttacker() == player.getEngaged() && last.getDamageType() == DamageType.MENTAL) {
+                    System.out.println("With raw confidence and sexual provess you \"no u\" " + player.getEngaged().getName() + "'s last attack straight back at them with magnitudes more strength.");
+                    Damage retaliation = new Damage(player, player.getEngaged(), DamageType.MENTAL, last.getDamageValue() * 100);
+                    retaliation.doDamage();
+                }
+                break;
+
+            case "me":
+                System.out.println("You realize the loathsome futility of it all, and decide to finally end it right at the spot. You inhale enough air to explode in a majestic display of viscera.");
+                Damage selfsplode = new Damage(player, player, DamageType.FIRE, 1337);
+                selfsplode.doDamage();
+                break;
+                
+            case "us":
+                System.out.println ("From within you feel an intense burning, as if The Socialist Manifesto spontaniously materializes in your chest cavity. You have become Lenin himself.");
+                player.addAttack(new Attack (DamageType.FIRE, 100, "manifesto", "The physical manifastation of socialst pride."));
+                break;
         }
     }
 

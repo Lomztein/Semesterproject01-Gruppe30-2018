@@ -7,7 +7,6 @@ package depressionsspillet.worldofzuul.characters;
 
 import depressionsspillet.worldofzuul.Entity;
 import depressionsspillet.worldofzuul.Room;
-import depressionsspillet.worldofzuul.combat.Damagable;
 /**
  * @author Joachim
  */
