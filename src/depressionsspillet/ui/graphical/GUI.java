@@ -5,6 +5,7 @@
  */
 package depressionsspillet.ui.graphical;
 
+import depressionsspillet.ui.IInterface;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,7 +18,7 @@ import javafx.stage.Stage;
  *
  * @author Lomztein
  */
-public class GUI extends Application implements {
+public class GUI extends Application implements IInterface {
     
     @Override
     public void start(Stage primaryStage) {

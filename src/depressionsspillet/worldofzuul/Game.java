@@ -308,15 +308,7 @@ public class Game {
             System.out.println(player.getCurrentRoom().getExitString());
         }
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-
->>>>>>> 66c3cf9712757193b768254bbcabaa045929cac3
-
-
->>>>>>> 66c3cf9712757193b768254bbcabaa045929cac3
+    
     private void interact(Command command) {
 
         if (command.hasSecondWord()) {
