@@ -115,6 +115,20 @@ public class Game {
 
         boss.setExit("south", suprise);
 
+        //Friendly NPCs
+        allotment.addEntityToRoom(new NPC("Darh Vader", "Janus, I am... your father", allotment));
+        thaiHooker.addEntityToRoom(new NPC("Ching Chong Ding Dong Fried Rice", "It's a trap", thaiHooker));
+        stripClub.addEntityToRoom(new NPC("Diamond Amber", "Ph.D. in psychology on the grounds of a long career listening to men's problems.", stripClub));
+        fridayBar.addEntityToRoom(new NPC("Joe", "The pure incarnation of a bartender-ish characteristics.", fridayBar));
+        kfc.addEntityToRoom(new NPC("Jimmy \"little willy\" Williams", "Love me some KFC", kfc));
+        //Hostile NPCs
+        shrek.addEntityToRoom(new HostileNPC("Shrek", "Shrek is love, Shrek is life", shrek, true, new Health(420d).withResistances(
+                new DamageResistance[] {
+                    new DamageResistance(DamageType.DAB, "dodges. You cannot dab upon the ultimate meme-lord", 0)
+                }),
+                new Attack(DamageType.DAB, 15d, "Colussus dab", "ME DAB, YOU DIE!")
+        ));
+
         HostileNPC erikthulhu = new HostileNPC("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, true, new Health(666d).withResistances(
                 new DamageResistance[]{
                     new DamageResistance(DamageType.BLUNT, "is impervious to blunt force trauma, he is simply too great.", 0),
@@ -308,15 +322,6 @@ public class Game {
             System.out.println(player.getCurrentRoom().getExitString());
         }
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-
->>>>>>> 66c3cf9712757193b768254bbcabaa045929cac3
-
-
->>>>>>> 66c3cf9712757193b768254bbcabaa045929cac3
     private void interact(Command command) {
 
         if (command.hasSecondWord()) {
