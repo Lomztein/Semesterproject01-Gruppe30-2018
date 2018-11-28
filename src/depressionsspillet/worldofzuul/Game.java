@@ -25,7 +25,7 @@ public class Game implements IGame {
     // A few different rooms are quickly declared at once by giving a single Type identifier and a number of variable names afterwards, seperated by commas.
     Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
     // Keep track of whether or not you tried to enter a locked room.
-    private boolean triedEnteringLockedRoom;
+    private String triedEnteringLockedRoomResponse;
 
     // Keep track of which command was last input.
     private String lastCommand;
@@ -225,10 +225,11 @@ public class Game implements IGame {
         Door nextRoom = player.getCurrentRoom().getExit(direction);
 
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
+        triedEnteringLockedRoomResponse = null;
         if (nextRoom != null) {
             if (nextRoom.isLocked()) {
                 if (player.getHappiness() < 99d) {
-                    triedEnteringLockedRoom = true;
+                    triedEnteringLockedRoomResponse = "You quiver in fear at the sight of this mighty gate, as you lack the self-comfidence to enter. Return when you are happier.";
                 } else {
                     player.setCurrentRoom (nextRoom.getRoom ());
                 }
@@ -415,7 +416,7 @@ public class Game implements IGame {
     }
 
     @Override
-    public String getCurrentRoomName() {
+    public String getCurrentRoomShortDesc() {
         return player.getCurrentRoom().getShortDescription();
     }
 
@@ -435,8 +436,8 @@ public class Game implements IGame {
     }
 
     @Override
-    public boolean triedEnteringLockedRooom() {
-        return this.triedEnteringLockedRoom;
+    public String getPlayerTriedEnteringLockedDoorResponse () {
+        return this.triedEnteringLockedRoomResponse;
     }
 
     @Override
@@ -457,10 +458,67 @@ public class Game implements IGame {
     @Override
     public String[] getNPCNames() {
         return player.getCurrentRoom ().getEntityNames(NPC.class);
+        // In hindsight I realize that this is contains a reference to NPC, therefore an association.
+        // We should reconsider this generic approach. Perhaps implement it differently.
     }
 
     @Override
     public String[] getNPCDescriptions() {
         return player.getCurrentRoom().getEntityDescriptions(NPC.class);
+    }
+
+    @Override
+    public boolean[] getLockedExitsFlags() {
+        return player.getCurrentRoom().getIsExitLockedFlags();
+    }
+
+    @Override
+    public boolean getPlayerTriedEnteringLockedDoor() {
+        return getPlayerTriedEnteringLockedDoorResponse () != null;
+    }
+
+    @Override
+    public double[] getNPCHealth() {
+        return player.getCurrentRoom()
+    }
+
+    @Override
+    public double getPlayerHappiness() {
+        return player.getHappiness();
+    }
+
+    @Override
+    public String[] getPlayerInventoryNames() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String[] getPlayerInventoryDescriptions() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String[] getAvailableAttackNames() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String[] getAvailableAttackDescriptions() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double getLastAttackDamage() {
+        return player.getLastAttackDamageValue();
+    }
+
+    @Override
+    public String getLastAttackResponse() {
+        return player.getLastAttackDamageResponse ();
+    }
+
+    @Override
+    public double getLastAttackedHealth() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

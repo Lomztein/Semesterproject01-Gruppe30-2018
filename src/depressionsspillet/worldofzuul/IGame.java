@@ -24,18 +24,39 @@ public interface IGame {
     
     // ROOM STUFFINGS
     String[] getCurrentExits ();
+    boolean[] getLockedExitsFlags ();
     
-    String getCurrentRoomName ();
+    String getCurrentRoomShortDesc ();
     String getCurrentRoomLongDesc ();
     
-    boolean triedEnteringLockedRooom ();
+    // TODO: See if it's possible to improve how locked rooms are handled across layers.
+    boolean getPlayerTriedEnteringLockedDoor ();
+    String getPlayerTriedEnteringLockedDoorResponse ();
     
     String[] getItemNames ();
     String[] getItemDescriptions ();
     
     String[] getNPCNames ();
     String[] getNPCDescriptions ();
+    double[] getNPCHealth ();
     // ROOM STUFFINGS END
+    
+    // PLAYER STUFFINGS
+    double getPlayerHappiness ();
+    
+    String[] getPlayerInventoryNames ();
+    String[] getPlayerInventoryDescriptions ();
+    // PLAYER STUFFINGS END
+    
+    // COMBAT STUFFINGS
+    String[] getAvailableAttackNames ();
+    String[] getAvailableAttackDescriptions ();
+    
+    double getLastAttackDamage ();
+    String getLastAttackResponse ();
+    
+    double getLastAttackedHealth ();
+    // COMBAT STUFFINGS DONE
     
     // PLAYER STUFFINGS
     double getPlayerHealth ();

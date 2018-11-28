@@ -40,9 +40,14 @@ public class CommandLine {
                 case "GO":
                     printRoom();
                     break;
+                    
+                case "?":
+                    System.out.println ("Command \"" + input + "\" not recognized. Type \"help\" for help.");
+                    break;
 
                 default:
                     System.out.println("This command hasn't been implemented into the CLI. Please scream at the developers.");
+                    break;
             }
         }
 
@@ -121,7 +126,7 @@ public class CommandLine {
         String someName = input.next();
         System.out.println("- Alright! You are now Janus the Magic Midget.");
         System.out.println("");
-        System.out.println(game.getCurrentRoomName());
+        System.out.println(game.getCurrentRoomShortDesc());
         System.out.println(singlify(game.getCurrentExits(), ", "));
     }
 

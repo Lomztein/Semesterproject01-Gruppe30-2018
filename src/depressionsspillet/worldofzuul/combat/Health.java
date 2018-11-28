@@ -80,7 +80,7 @@ public class Health {
         return currentHealth <= 0;
     }
 
-    private DamageResistance getResistanceForType(DamageType damageType) {
+    public DamageResistance getResistanceForType(DamageType damageType) {
         for (DamageResistance resistance : resistances) {
             if (resistance.getDamageType() == DamageType.ANY || resistance.getDamageType() == damageType) {
                 return resistance;

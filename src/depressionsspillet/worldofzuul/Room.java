@@ -184,6 +184,15 @@ public class Room {
         }
         return returnString;
     }
+    
+    public boolean[] getIsExitLockedFlags () {
+        boolean[] result = new boolean[exits.size()];
+        Door[] doors = exits.values().toArray(new Door[0]);
+        for (int i = 0; i < exits.size (); i++) {
+            result[i] = doors[i].isLocked();
+        }
+        return result;
+    }
 
     public Door getExit(String direction) {
         return exits.get(direction);

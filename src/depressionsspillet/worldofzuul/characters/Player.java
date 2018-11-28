@@ -52,6 +52,28 @@ public class Player extends Character implements Attacker, HasHealth {
         getHealth().withResistances(playerResistances);
     }
     
+    public double getLastAttackDamageValue () {
+        if (engagedWith != null && engagedWith instanceof HasHealth) {
+            return ((HasHealth)engagedWith).getHealth().getLastDamage().getDamageValue();
+        }
+        return 0; // Perhaps having different layers of "Damagable" was overcomplicating things. Consider merging Damagable and HasHealth.
+    }
+    
+    public String getLastAttackDamageResponse () {
+        if (engagedWith != null && engagedWith instanceof HasHealth) {
+            HasHealth engagedWithHealth = ((HasHealth)engagedWith);
+            return engagedWithHealth.getHealth ().getResistanceForType (engagedWithHealth.getHealth().getLastDamage().getDamageType()).getResponse();
+        }
+        return "";
+    }
+    
+    public double getLastAttackedHealth () {
+        if (engagedWith != null && engagedWith instanceof HasHealth) {
+            return ((HasHealth)engagedWith).getHealth().getCurrentHealth();
+        }
+        return -1;
+    }
+    
     public double getHappiness () {
         return getHealth ().getCurrentHealth();
     }
