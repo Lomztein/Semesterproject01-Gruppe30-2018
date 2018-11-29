@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  *
  * @author Lomztein
  */
-public class GUI extends Application implements IInterface{
+public class GUI extends Application{
     
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -39,8 +39,5 @@ public class GUI extends Application implements IInterface{
     public static void main(String[] args) {
         launch(args);
     }
-    
-    public void onDirectionalArrowClicked (String direction) {
-        game.enterCommand("GO " + direction);
     }
-}
+
