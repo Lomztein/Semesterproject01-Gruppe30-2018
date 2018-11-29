@@ -13,6 +13,7 @@ import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game implements IGame {
@@ -23,6 +24,12 @@ public class Game implements IGame {
 
     // A few different rooms are quickly declared at once by giving a single Type identifier and a number of variable names afterwards, seperated by commas.
     Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
+    // Keep track of whether or not you tried to enter a locked room.
+    private boolean triedEnteringLockedRoom;
+
+    // Keep track of which command was last input.
+    private String lastCommand;
+    private String[] lastCommandWords;
 
     public Game() {
         // The attributes are populated with their appropiate data.
@@ -142,13 +149,14 @@ public class Game implements IGame {
         // In other words, the game begins with us outside.
     }
 
-    public void play() {
-        // Call the printWelcome function, which acts both as a welcome, as well as a simple guide.
-        // Construct a game loop, which is a simple while-loop that runs until the game is declared "finished".
-
-    }
-
     private boolean processCommand(Command command) {
+
+        lastCommand = command.getCommandWord().name();
+        lastCommandWords = new String[]{
+            command.getSecondWord(),
+            command.getThirdWord(),
+            command.getFourthWord(),};
+
         boolean wantToQuit = false;
 
         // Find out just which word was used to get this command.
@@ -206,13 +214,10 @@ public class Game implements IGame {
     }
 
     private void goRoom(Command command) {
-        // If no second word was given, then ask the player where they need to go.
         if (command.getSecondWord() == null) {
-            System.out.println("Go? Go where..?");
-
-            // If this happens, then exit out of this function using a return statement.
             return;
         }
+
         // If a second word was given, then save that as another variable "direction".
         String direction = command.getSecondWord();
 
@@ -220,48 +225,16 @@ public class Game implements IGame {
         Door nextRoom = player.getCurrentRoom().getExit(direction);
 
         // If the next room doesn't exist, as in an invalid direction was given, then tell the player that "There is no door!"
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        } else if (nextRoom.locked) {
-            if (player.getHealth().getCurrentHealth() > 99) {
-                if (player.getCurrentRoom() == gate) {
-                    System.out.println("You have through countless struggles and hardship conquered these lands and regained your complete happiness. \nThe way before you has opened.");
-                    player.setCurrentRoom(boss);
-                    System.out.println(boss.getLongDescription());
+        if (nextRoom != null) {
+            if (nextRoom.isLocked()) {
+                if (player.getHappiness() < 99d) {
+                    triedEnteringLockedRoom = true;
                 } else {
-                    System.out.println("You have defeated the despicable Erikthulu \nand banished his evil from these lands bringing along a serene sense of peace and prosperity.\n But there is yet one door remaining before your journey comes to an end.");
-                    player.setCurrentRoom(suprise);
-                    System.out.println(suprise.getLongDescription());
+                    player.setCurrentRoom (nextRoom.getRoom ());
                 }
             } else {
-                System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways: north");
+                player.setCurrentRoom(nextRoom.getRoom());
             }
-        } else {
-            player.setCurrentRoom(nextRoom.getRoom());
-
-            //The following is printing the room's items and NPC's to tell the user what they can do.
-            System.out.println("-------------------------");
-            System.out.println(player.getCurrentRoom().getLongDescription());
-            //Adds the rooms happiness to yours and sets the room happiness to 0.
-            System.out.println("You feel your happiness rising by: " + player.getCurrentRoom().getHappiness());
-            player.addHappiness(player.getCurrentRoom().getHappiness());
-            player.getCurrentRoom().setHappiness(0);
-            System.out.println("In this place, you find the following items to be of potential significance: ");
-            if (player.getCurrentRoom().getItemArray().isEmpty()) {
-                for (Item item : player.getCurrentRoom().getItemArray()) {
-                    System.out.println(item.getName() + " - " + item.getDescription());
-                }
-            } else {
-                System.out.println("Nothing.");
-            }
-            System.out.println("The following NPCs are present: ");
-            if (!"".equals(player.getCurrentRoom().listEntities(NPC.class))) {
-                System.out.println(player.getCurrentRoom().listEntities(NPC.class));
-            } else {
-                System.out.println("Noone.");
-            }
-            System.out.println("Type HELP for help.");
-            System.out.println(player.getCurrentRoom().getExitString());
         }
     }
 
@@ -449,5 +422,45 @@ public class Game implements IGame {
     @Override
     public String getCurrentRoomLongDesc() {
         return player.getCurrentRoom().getLongDescription();
+    }
+
+    @Override
+    public String getLastCommand() {
+        return lastCommand;
+    }
+
+    @Override
+    public String[] getCommandWords() {
+        return lastCommandWords;
+    }
+
+    @Override
+    public boolean triedEnteringLockedRooom() {
+        return this.triedEnteringLockedRoom;
+    }
+
+    @Override
+    public double getPlayerHealth() {
+        return player.getHealth().getCurrentHealth();
+    }
+
+    @Override
+    public String[] getItemNames() {
+        return player.getCurrentRoom().getItemNames();
+    }
+
+    @Override
+    public String[] getItemDescriptions() {
+        return player.getCurrentRoom().getItemDescriptions();
+    }
+
+    @Override
+    public String[] getNPCNames() {
+        return player.getCurrentRoom ().getEntityNames(NPC.class);
+    }
+
+    @Override
+    public String[] getNPCDescriptions() {
+        return player.getCurrentRoom().getEntityDescriptions(NPC.class);
     }
 }

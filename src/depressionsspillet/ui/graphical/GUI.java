@@ -5,6 +5,8 @@
  */
 package depressionsspillet.ui.graphical;
 
+import depressionsspillet.worldofzuul.Game;
+import depressionsspillet.worldofzuul.IGame;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,5 +41,5 @@ public class GUI extends Application{
     public static void main(String[] args) {
         launch(args);
     }
-    }
+}
 
