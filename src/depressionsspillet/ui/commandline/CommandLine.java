@@ -41,6 +41,10 @@ public class CommandLine {
                     printRoom();
                     break;
                     
+                case "HELP":
+                    printHelp ();
+                    break;
+                    
                 case "?":
                     System.out.println ("Command \"" + input + "\" not recognized. Type \"help\" for help.");
                     break;
@@ -60,8 +64,8 @@ public class CommandLine {
             System.out.println("Go? Go where..?");
             // If this happens, then exit out of this function using a return statement.
             return;
-        } else if (game.triedEnteringLockedRooom()) {
-            System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways. Try returning when you are happier");
+        } else if (game.getPlayerTriedEnteringLockedDoor()) {
+            System.out.println(game.getPlayerTriedEnteringLockedDoorResponse());
         }
 
         System.out.println("-------------------------");
@@ -128,6 +132,16 @@ public class CommandLine {
         System.out.println("");
         System.out.println(game.getCurrentRoomShortDesc());
         System.out.println(singlify(game.getCurrentExits(), ", "));
+    }
+    
+        private void printHelp() {
+        // A desturbingly omnious function for printing out a short guide.
+        System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
+        System.out.println("You're currently this happy: " + game.getCurrentHappiness());
+        System.out.println("Right. Your options are:");
+        for (String str : game.getCommandWords()) {
+            System.out.println (str + ", ");
+        }
     }
 
     private String singlify(String[] strings, String seperator) {

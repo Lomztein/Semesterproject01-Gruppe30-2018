@@ -17,6 +17,7 @@ public interface IGame {
     boolean enterCommand(String input);
     String getLastCommand();
     String[] getCommandWords();
+    String getCommandResponse ();
     // COMMAND STUFFINGS END
 
     // ROOM STUFFINGS
@@ -27,13 +28,10 @@ public interface IGame {
     String getCurrentRoomShortDesc ();
     String getCurrentRoomLongDesc();
 
-    boolean triedEnteringLockedRooom();
-
     String[] getItemNames();
     String[] getItemDescriptions();
     String[] getNPCNames();
     String[] getNPCDescriptions();
-    double[] getNPCHealth ();
 
     int getRoomHappiness();
     // ROOM STUFFINGS END
@@ -56,6 +54,9 @@ public interface IGame {
     
     double getLastAttackDamage ();
     String getLastAttackResponse ();
+    
+    double getRetaliationAttackDamage ();
+    String getRetaliationAttackResponse ();
     
     double getLastAttackedHealth ();
     // COMBAT STUFFINGS DONE

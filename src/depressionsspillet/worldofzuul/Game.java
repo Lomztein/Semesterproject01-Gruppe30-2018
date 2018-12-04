@@ -26,6 +26,9 @@ public class Game implements IGame {
     // Keep track of which command was last input.
     private String lastCommand;
     private String[] lastCommandWords;
+    
+    // Track otherwise unavailable textual responses to commands.
+    private String lastCommandResponse;
 
     public Game() {
         // The attributes are populated with their appropiate data.
@@ -73,7 +76,7 @@ public class Game implements IGame {
                     wantToQuit = quit(command);
                     break;
                 case INTERACT:
-                    interact(command);
+                    //interact(command);
                     break;
                 case ATTACK:
                     attack(command);
@@ -132,7 +135,7 @@ public class Game implements IGame {
         }
     }
 
-    private void interact(Command command) {
+    /*private void interact(Command command) {
 
         if (command.hasSecondWord()) {
 
@@ -173,7 +176,7 @@ public class Game implements IGame {
 
         }
 
-    }
+    }*/
 
     private void engage(Command command) {
 
@@ -185,11 +188,12 @@ public class Game implements IGame {
             Damagable toEngage = player.getCurrentRoom().getEntity(Damagable.class, command.getSecondWord());
             if (toEngage != null) {
                 player.engage(toEngage);
-                System.out.println("You engage " + toEngage.getName() + " with spirit and vigor!");
+                lastCommandResponse = "You engage " + toEngage.getName() + " with spirit and vigor!";
             } else {
-                System.out.println("There is no " + command.hasSecondWord() + " that you can engage.");
+                lastCommandResponse = "There is no " + command.hasSecondWord() + " that you can engage.";
             }
         } else {
+            // TODO: Reimplement in CommandLine.java
             System.out.println("You have the option to engage: ");
             System.out.println(player.getCurrentRoom().listEntities(Damagable.class));
         }
@@ -197,10 +201,10 @@ public class Game implements IGame {
 
     private void disengage(Command command) {
         if (player.isEngaged()) {
-            System.out.println("You poop yourself a little before disengaging " + player.getEngaged().getName() + " before running to a safe distance.");
+            lastCommandResponse = "You poop yourself a little before disengaging " + player.getEngaged().getName() + " before running to a safe distance.";
             player.disengage();
         } else {
-            System.out.println("You aren't currently engaged in combat.");
+            lastCommandResponse = "You aren't currently engaged in combat.";
         }
     }
 
@@ -267,20 +271,20 @@ public class Game implements IGame {
 
             case "u":
                 if (last != null && player.isEngaged() && last.getAttacker() == player.getEngaged() && last.getDamageType() == DamageType.MENTAL) {
-                    System.out.println("With raw confidence and sexual provess you \"no u\" " + player.getEngaged().getName() + "'s last attack straight back at them with magnitudes more strength.");
+                    lastCommandResponse = "With raw confidence and sexual provess you \"no u\" " + player.getEngaged().getName() + "'s last attack straight back at them with magnitudes more strength.";
                     Damage retaliation = new Damage(player, player.getEngaged(), DamageType.MENTAL, last.getDamageValue() * 100);
                     retaliation.doDamage();
                 }
                 break;
 
             case "me":
-                System.out.println("You realize the loathsome futility of it all, and decide to finally end it right at the spot. You inhale enough air to explode in a majestic display of viscera.");
+                lastCommandResponse = "You realize the loathsome futility of it all, and decide to finally end it right at the spot. You inhale enough air to explode in a majestic display of viscera.";
                 Damage selfsplode = new Damage(player, player, DamageType.FIRE, 1337);
                 selfsplode.doDamage();
                 break;
 
             case "us":
-                System.out.println("From within you feel an intense burning, as if The Socialist Manifesto spontaniously materializes in your chest cavity. You have become Lenin himself.");
+                lastCommandResponse = "From within you feel an intense burning, as if The Socialist Manifesto spontaniously materializes in your chest cavity. You have become Lenin himself.";
                 player.addAttack(new Attack(DamageType.FIRE, 100, "manifesto", "The physical manifastation of socialst pride."));
                 break;
         }
@@ -364,7 +368,6 @@ public class Game implements IGame {
     @Override
     public void playGame() {
         createRooms();
-        
     }
 
     @Override
@@ -388,28 +391,23 @@ public class Game implements IGame {
     }
 
     @Override
-    public double[] getNPCHealth() {
-        return null;
-    }
-
-    @Override
     public String[] getPlayerInventoryNames() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return player.getInventoryItemNames();
     }
 
     @Override
     public String[] getPlayerInventoryDescriptions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return player.getInventoryItemDescriptions();
     }
 
     @Override
     public String[] getAvailableAttackNames() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return player.getAttackNames();
     }
 
     @Override
     public String[] getAvailableAttackDescriptions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return player.getAttackDescriptions();
     }
 
     @Override
@@ -424,7 +422,7 @@ public class Game implements IGame {
 
     @Override
     public double getLastAttackedHealth() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return player.getLastAttackedHealth();
     }
 
     @Override
@@ -433,7 +431,17 @@ public class Game implements IGame {
     }
 
     @Override
-    public boolean triedEnteringLockedRooom() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public double getRetaliationAttackDamage() {
+        return player.getHealth().getLastDamage().getDamageValue();
+    }
+
+    @Override
+    public String getRetaliationAttackResponse() {
+        return player.getHealth().getResistanceForType(player.getHealth ().getLastDamage().getDamageType()).getResponse();
+    }
+
+    @Override
+    public String getCommandResponse() {
+        return lastCommandResponse;
     }
 }

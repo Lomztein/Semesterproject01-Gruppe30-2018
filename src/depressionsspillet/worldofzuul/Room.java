@@ -25,7 +25,7 @@ public class Room {
     private String description;
     private int happiness;
     ArrayList<Item> itemsInRoom;
-    
+
     //Constructor
     public Room(String description, String name) {
         currentItems = new ArrayList<>();
@@ -149,8 +149,8 @@ public class Room {
         }
         return names;
     }
-    
-    public <T extends Entity> String[] getEntityDescriptions (Class<T> clazz) {
+
+    public <T extends Entity> String[] getEntityDescriptions(Class<T> clazz) {
         T[] entities = getEntities(clazz);
         String[] descriptions = new String[entities.length];
         for (int i = 0; i < entities.length; i++) {
@@ -186,11 +186,11 @@ public class Room {
         }
         return returnString;
     }
-    
-    public boolean[] getIsExitLockedFlags () {
+
+    public boolean[] getIsExitLockedFlags() {
         boolean[] result = new boolean[exits.size()];
         Door[] doors = exits.values().toArray(new Door[0]);
-        for (int i = 0; i < exits.size (); i++) {
+        for (int i = 0; i < exits.size(); i++) {
             result[i] = doors[i].isLocked();
         }
         return result;
