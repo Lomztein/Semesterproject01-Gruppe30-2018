@@ -74,6 +74,38 @@ public class Player extends Character implements Attacker, HasHealth {
         }
         return -1;
     }
+    
+    public String[] getInventoryItemNames () {
+        ArrayList<String> names = new ArrayList<>();
+        for (Item item : inventory) {
+            names.add(item.getName());
+        }
+        return names.toArray (new String[0]);
+    }
+    
+    public String[] getInventoryItemDescriptions () {
+        ArrayList<String> descriptions = new ArrayList<>();
+        for (Item item : inventory) {
+            descriptions.add(item.getDescription());
+        }
+        return descriptions.toArray (new String[0]);
+    }
+    
+    public String[] getAttackNames () {
+        ArrayList<String> names = new ArrayList<>();
+        for (Attack attack : this.getAttacks()) {
+            names.add(attack.getName());
+        }
+        return names.toArray (new String[0]);
+    }
+    
+    public String[] getAttackDescriptions () {
+        ArrayList<String> descriptions = new ArrayList<>();
+        for (Attack attack : this.getAttacks()) {
+            descriptions.add(attack.getDescription());
+        }
+        return descriptions.toArray (new String[0]);
+    }
 
     public int getHappiness () {
         return this.happiness;
