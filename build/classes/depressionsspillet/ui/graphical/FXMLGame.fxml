@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="depressionsspillet.ui.graphical.FXMLGameController">
    <children>
       <ImageView fx:id="backgroundImageView" fitHeight="601.0" fitWidth="804.0" layoutX="-1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
-      <Canvas height="600.0" width="800.0" />
+      <Canvas height="600.0" layoutX="13.0" layoutY="-5.0" width="800.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></Canvas>
       <Button fx:id="goWestButton" layoutX="7.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleGoWestButtonEvent" prefHeight="55.0" prefWidth="77.0" text="Go west" />
       <Button fx:id="northButton" layoutX="358.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleGoNorthButtonEvent" prefHeight="26.0" prefWidth="75.0" text="Go north" />
       <Button fx:id="goEastButton" layoutX="728.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleGoEastButtonEvent" prefHeight="55.0" prefWidth="63.0" text="Go east" />
-      <Button fx:id="goSouthButton" layoutX="354.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleGoSouthButtonEvent" prefHeight="26.0" prefWidth="74.0" text="Go south" />
-      <TextArea fx:id="txtAreaOutput" editable="false" layoutX="47.0" layoutY="461.0" prefHeight="87.0" prefWidth="720.0">
+      <Button fx:id="goSouthButton" layoutX="361.0" layoutY="572.0" mnemonicParsing="false" onAction="#handleGoSouthButtonEvent" prefHeight="26.0" prefWidth="74.0" text="Go south" />
+      <TextArea fx:id="txtAreaOutput" editable="false" layoutX="46.0" layoutY="478.0" prefHeight="88.0" prefWidth="720.0">
          <font>
             <Font name="Bookman Old Style" size="11.0" />
          </font></TextArea>
@@ -38,5 +48,33 @@
             <Font size="19.0" />
          </font>
       </Text>
+      <HBox layoutX="120.0" layoutY="430.0" prefHeight="41.0" prefWidth="554.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <RadioButton mnemonicParsing="false" text="Dab">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="attackToggleGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="Manifesto" toggleGroup="$attackToggleGroup" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <RadioButton mnemonicParsing="false" text="Punch" toggleGroup="$attackToggleGroup" />
+                  <RadioButton mnemonicParsing="false" text="SomeAttack" toggleGroup="$attackToggleGroup" />
+               </children>
+            </VBox>
+            <Button fx:id="attackButton" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack" />
+            <Button fx:id="pickUpButton" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" />
+            <Button fx:id="dropButton" mnemonicParsing="false" onAction="#handleDropButtonEvent" text="Drop" />
+            <Button fx:id="useButton" mnemonicParsing="false" onAction="#handleUseButtonEvent" text="Use" />
+         </children>
+      </HBox>
+      <Label layoutX="125.0" layoutY="399.0" text="Selected:" />
+      <Label fx:id="selectedLabel" layoutX="178.0" layoutY="399.0" text="Character/entity" />
+      <Hyperlink fx:id="NPCButton" layoutX="426.0" layoutY="146.0" onAction="#handleNPCButtonEvent" prefHeight="122.0" prefWidth="118.0" />
+      <Hyperlink fx:id="itemButton" layoutX="168.0" layoutY="164.0" onAction="#handleItemButtonEvent" prefHeight="92.0" prefWidth="109.0" />
    </children>
 </AnchorPane>
