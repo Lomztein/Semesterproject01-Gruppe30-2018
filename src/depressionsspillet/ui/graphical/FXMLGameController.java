@@ -5,6 +5,7 @@
  */
 package depressionsspillet.ui.graphical;
 
+import depressionsspillet.worldofzuul.Game;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,7 +16,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -24,48 +27,41 @@ import javafx.stage.Stage;
  * @author Joachim
  */
 public class FXMLGameController implements Initializable {
+
     @FXML
-    private Button southButton;
+    private ImageView backgroundImageView;
     @FXML
-    private Button westButton;
-    @FXML
-    private Button eastButton;
-    @FXML
-    private Button northButton;
+    private TextArea txtAreaOutput;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        //Setting starting image
+        try{
+        Image imageMagicalForest = new Image("images\\magicalForestImage.jpg");
+        backgroundImageView.setImage(imageMagicalForest);
+        }
+        catch(Exception e){
+            System.out.println("Magical forest image not found");
+        }
+        
+        //Starting the game
+        Game worldOfZuul = new Game ();
+        worldOfZuul.play ();
+        
+    }
 
     @FXML
-    private void handleQuitButtonEvent(ActionEvent event) throws IOException{
+    private void handleQuitButtonEvent(ActionEvent event) throws IOException {
         Parent quitParent = FXMLLoader.load(getClass().getResource("FXML.fxml"));
         Scene quitScene = new Scene(quitParent);
-        
+
         //Setting this scene to stage
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(quitScene);
         window.show();
     }
 
-    @FXML
-    private void handleSouthActionEvent(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleWestActionEvent(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleEastActionEvent(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleNorthButtonEvent(ActionEvent event) {
-    }
-    
 }
