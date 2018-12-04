@@ -1,18 +1,12 @@
 package depressionsspillet.worldofzuul;
 
 import static depressionsspillet.worldofzuul.RoomList.*;
-import depressionsspillet.worldofzuul.combat.DamageResistance;
-import depressionsspillet.worldofzuul.characters.HostileNPC;
 import depressionsspillet.worldofzuul.characters.NPC;
 import depressionsspillet.worldofzuul.characters.Player;
-import depressionsspillet.worldofzuul.interaction.Interaction;
-import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.combat.Attack;
-import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageType;
-import depressionsspillet.worldofzuul.combat.Health;
 
 public class Game implements IGame {
 
@@ -134,7 +128,8 @@ public class Game implements IGame {
             }
         }
     }
-
+    
+    //   > Not currently in use <
     /*private void interact(Command command) {
 
         if (command.hasSecondWord()) {
