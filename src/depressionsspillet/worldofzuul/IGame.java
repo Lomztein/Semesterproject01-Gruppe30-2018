@@ -14,34 +14,59 @@ import java.util.List;
  * @author Lomztein
  */
 public interface IGame {
+    //To start the game we need the rooms created
+    void playGame();
     
     // COMMAND STUFFINGS
-    boolean enterCommand (String input);
-    
-    String getLastCommand ();
-    String[] getCommandWords ();
+    boolean enterCommand(String input);
+
+    String getLastCommand();
+
+    String[] getCommandWords();
     // COMMAND STUFFINGS END
-    
+
     // ROOM STUFFINGS
     String[] getCurrentExits ();
     boolean[] getLockedExitsFlags ();
+    String[] getCurrentExits();
+
+    String getCurrentRoomName();
+
+    String getCurrentRoomLongDesc();
+
+    boolean triedEnteringLockedRooom();
+
+    String[] getItemNames();
+
+    String[] getItemDescriptions();
+
+    String[] getNPCNames();
+
+    String[] getNPCDescriptions();
     
+    int getRoomHappiness();
     String getCurrentRoomShortDesc ();
     String getCurrentRoomLongDesc ();
     
+    int getCurrentHappiness();
     // TODO: See if it's possible to improve how locked rooms are handled across layers.
     boolean getPlayerTriedEnteringLockedDoor ();
     String getPlayerTriedEnteringLockedDoorResponse ();
     
-    String[] getItemNames ();
-    String[] getItemDescriptions ();
+    void setHappiness(int amount);
+    
+    void setCurrentRoomsHappiness(int amount);
+    
+    
     
     String[] getNPCNames ();
     String[] getNPCDescriptions ();
     double[] getNPCHealth ();
     // ROOM STUFFINGS END
-    
+
     // PLAYER STUFFINGS
+    double getPlayerHealth();
+
     double getPlayerHappiness ();
     
     String[] getPlayerInventoryNames ();
@@ -61,5 +86,4 @@ public interface IGame {
     // PLAYER STUFFINGS
     double getPlayerHealth ();
     // PLAYER STUFFINGS END
-    
 }

@@ -21,14 +21,16 @@ public class Room {
     private ArrayList<Item> currentItems;
 
     // Declare instance-variables / attributes for the desciption of the room as well as the connections to other rooms.
+    private String name;
     private String description;
     private int happiness;
     ArrayList<Item> itemsInRoom;
-
+    
     //Constructor
-    public Room(String description) {
+    public Room(String description, String name) {
         currentItems = new ArrayList<>();
         this.description = description;
+        this.name = name;
         exits = new HashMap<>();
         allEntities = new ArrayList<>();
     }
@@ -106,7 +108,7 @@ public class Room {
     }
 
     public String getShortDescription() {
-        return description;
+        return name;
     }
 
     //It is preffered for this method to be used instead of instanciating an item, and THEN adding it.

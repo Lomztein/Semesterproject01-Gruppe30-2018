@@ -5,17 +5,36 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="depressionsspillet.ui.graphical.FXMLGameController">
    <children>
       <ImageView fx:id="backgroundImageView" fitHeight="601.0" fitWidth="804.0" layoutX="-1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
       <Canvas height="600.0" width="800.0" />
-      <Button fx:id="goWestButton" layoutX="7.0" layoutY="239.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="77.0" text="Go west" />
-      <Button fx:id="northButton" layoutX="358.0" layoutY="9.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" text="Go north" />
-      <Button fx:id="goEastButton" layoutX="728.0" layoutY="244.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="63.0" text="Go east" />
-      <Button fx:id="goSouthButton" layoutX="354.0" layoutY="560.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Go south" />
-      <TextArea fx:id="txtAreaOutput" layoutX="192.0" layoutY="461.0" prefHeight="87.0" prefWidth="415.0" />
-      <Button layoutX="731.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleQuitButtonEvent" prefHeight="19.0" prefWidth="49.0" text="Quit" />
-      <Button layoutX="733.0" layoutY="32.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" text="Help" />
+      <Button fx:id="goWestButton" layoutX="7.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleGoWestButtonEvent" prefHeight="55.0" prefWidth="77.0" text="Go west" />
+      <Button fx:id="northButton" layoutX="358.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleGoNorthButtonEvent" prefHeight="26.0" prefWidth="75.0" text="Go north" />
+      <Button fx:id="goEastButton" layoutX="728.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleGoEastButtonEvent" prefHeight="55.0" prefWidth="63.0" text="Go east" />
+      <Button fx:id="goSouthButton" layoutX="354.0" layoutY="560.0" mnemonicParsing="false" onAction="#handleGoSouthButtonEvent" prefHeight="26.0" prefWidth="74.0" text="Go south" />
+      <TextArea fx:id="txtAreaOutput" editable="false" layoutX="47.0" layoutY="461.0" prefHeight="87.0" prefWidth="720.0">
+         <font>
+            <Font name="Bookman Old Style" size="11.0" />
+         </font></TextArea>
+      <Button layoutX="742.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleQuitButtonEvent" prefHeight="19.0" prefWidth="49.0" text="Quit" />
+      <Button layoutX="743.0" layoutY="23.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" text="Help" />
+      <AnchorPane layoutX="559.0" layoutY="9.0" prefHeight="41.0" prefWidth="159.0">
+         <children>
+            <Text fill="RED" layoutX="37.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fx:id="txfFieldHappiness" fill="RED" layoutX="70.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---" wrappingWidth="57.99998554587364">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

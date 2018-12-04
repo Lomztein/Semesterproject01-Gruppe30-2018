@@ -30,8 +30,6 @@ public class FXMLController implements Initializable {
     private Button playGameButton;
     @FXML
     private Button creditsButton;
-    @FXML
-    private GridPane creditRoot;
 
     /**
      * Initializes the controller class.

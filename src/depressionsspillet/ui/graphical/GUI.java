@@ -26,7 +26,6 @@ public class GUI extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
         
-        
         Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setTitle("Depressionsspillet!");

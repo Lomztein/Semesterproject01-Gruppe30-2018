@@ -25,12 +25,13 @@ public class Player extends Character implements Attacker, HasHealth {
     private Damagable engagedWith;
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
     private final Health playerHealth;
+    private int happiness = 10;
 
     Item[] inventory = new Item[4];
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
-        playerHealth = new Health (100);
+        playerHealth = new Health (1);
         playerHealth.onTakeDamage.add((x) -> System.out.println (String.format("The player " + x.getResistance().getResponse(), x.getDamageTaken())));
     }
 
@@ -73,16 +74,16 @@ public class Player extends Character implements Attacker, HasHealth {
         }
         return -1;
     }
-    
-    public double getHappiness () {
-        return getHealth ().getCurrentHealth();
+
+    public int getHappiness () {
+        return this.happiness;
     }
     
-    public void setHappiness (double value) {
-        getHealth ().setCurrentHealth (value);
+    public void setHappiness (int value) {
+        this.happiness = value;
     }
     
-    public void addHappiness (double value) {
+    public void addHealth (double value) {
         getHealth ().changeHealth(value);
     }
 
@@ -164,7 +165,7 @@ public class Player extends Character implements Attacker, HasHealth {
         try {
             if (inventory[i] instanceof ConsumableItem && inventory[i] != null) {
                 ConsumableItem item = (ConsumableItem) inventory[i];
-                addHappiness (item.getHealthIncrease());
+                addHealth (item.getHealthIncrease());
             } else { //Temporary solution, more conditions will be added later, as more items are added.
                 System.out.println("You stuff a handfull of nothing from pocket " + (i + 1) + " in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
             }
