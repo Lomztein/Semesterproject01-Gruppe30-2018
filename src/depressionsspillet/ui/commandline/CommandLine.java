@@ -5,6 +5,7 @@
  */
 package depressionsspillet.ui.commandline;
 
+import depressionsspillet.worldofzuul.Command;
 import depressionsspillet.worldofzuul.CommandWord;
 import depressionsspillet.worldofzuul.Game;
 import depressionsspillet.worldofzuul.IGame;
@@ -40,13 +41,17 @@ public class CommandLine {
                 case "GO":
                     printRoom();
                     break;
-                    
+
                 case "HELP":
-                    printHelp ();
+                    printHelp();
                     break;
-                    
+
+                case "QUIT":
+                    wantToQuit = quit ();
+                    break;
+
                 case "?":
-                    System.out.println ("Command \"" + input + "\" not recognized. Type \"help\" for help.");
+                    System.out.println("Command \"" + input + "\" not recognized. Type \"help\" for help.");
                     break;
 
                 default:
@@ -133,14 +138,14 @@ public class CommandLine {
         System.out.println(game.getCurrentRoomShortDesc());
         System.out.println(singlify(game.getCurrentExits(), ", "));
     }
-    
-        private void printHelp() {
+
+    private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
         System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
         System.out.println("You're currently this happy: " + game.getCurrentHappiness());
         System.out.println("Right. Your options are:");
         for (String str : game.getCommandWords()) {
-            System.out.println (str + ", ");
+            System.out.println(str + ", ");
         }
     }
 
@@ -156,5 +161,16 @@ public class CommandLine {
 
         return result;
 
+    }
+
+    private boolean quit() {
+        // If the command has a second word, become confused.
+        if (game.getCommandWords()[1] != null) {
+            System.out.println("Quit what?");
+            return false;
+        } else {
+            // If not, return true, which then quits the game through the previously mentioned "wantToQuit" boolean variable on line 87.
+            return true;
+        }
     }
 }

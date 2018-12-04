@@ -51,7 +51,8 @@ public class Game implements IGame {
             command.getSecondWord(),
             command.getThirdWord(),
             command.getFourthWord(),};
-
+        lastCommandResponse = null;
+        
         boolean wantToQuit = false;
 
         // Find out just which word was used to get this command.
@@ -66,14 +67,8 @@ public class Game implements IGame {
         // A switch-case block the takes care of the diffirent possible command executions.
         if (null != commandWord) {
             switch (commandWord) {
-                case HELP:
-                    printHelp();
-                    break;
                 case GO:
                     goRoom(command);
-                    break;
-                case QUIT:
-                    wantToQuit = quit(command);
                     break;
                 case INTERACT:
                     //interact(command);
@@ -98,14 +93,6 @@ public class Game implements IGame {
             }
         }
         return wantToQuit;
-    }
-
-    private void printHelp() {
-        // A desturbingly omnious function for printing out a short guide.
-        System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
-        System.out.println("You're currently this happy: " + player.getHealth());
-        System.out.println("Right. Your options are:");
-        parser.showCommands();
     }
 
     private void goRoom(Command command) {
@@ -232,13 +219,13 @@ public class Game implements IGame {
                 if (command.hasThirdWord()) {
                     player.dropItem(Integer.parseInt(command.getThirdWord()));
                 } else {
-                    System.out.println("You attempt to drop nothing. You're worried if you looked stupid. \n\nYou did.\n");
+                    lastCommandResponse = ("You attempt to drop nothing. You're worried if you looked stupid. \n\nYou did.\n");
                 }
             } else if ("use".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
                     player.useItem(Integer.parseInt(command.getThirdWord()));
                 } else {
-                    System.out.println("You stuff a handfull of nothing in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
+                    lastCommandResponse = ("You stuff a handfull of nothing in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
                 }
             } else if ("pickup".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
@@ -250,16 +237,17 @@ public class Game implements IGame {
 
                     //Check the room for the item.name
                     if (player.addItem(command.getThirdWord()) != null) {
-                        System.out.println("You pick up the " + command.getThirdWord() + " and then promptly put it back down.");
+                        lastCommandResponse = ("You pick up the " + command.getThirdWord() + " and then promptly put it back down.");
                     }
 
                 }
             } else {
                 //Obligatory player insult if the command is unknown.
-                System.out.println("I don't speak depression. Try rephrasing that, without all the sobbing.");
+                lastCommandResponse = ("I don't speak depression. Try rephrasing that, without all the sobbing.");
             }
             //If there's no second input, just check your pockets.
         } else {
+            // TODO Reimplement this in CommandLine.
             System.out.println("You check your pockets: ");
             player.printInventoryList();
         }
@@ -287,17 +275,6 @@ public class Game implements IGame {
                 lastCommandResponse = "From within you feel an intense burning, as if The Socialist Manifesto spontaniously materializes in your chest cavity. You have become Lenin himself.";
                 player.addAttack(new Attack(DamageType.FIRE, 100, "manifesto", "The physical manifastation of socialst pride."));
                 break;
-        }
-    }
-
-    private boolean quit(Command command) {
-        // If the command has a second word, become confused.
-        if (command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        } else {
-            // If not, return true, which then quits the game through the previously mentioned "wantToQuit" boolean variable on line 87.
-            return true;
         }
     }
 
