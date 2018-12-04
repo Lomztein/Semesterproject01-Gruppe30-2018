@@ -161,17 +161,23 @@ public class Game {
 
         // Construct a game loop, which is a simple while-loop that runs until the game is declared "finished".
         boolean finished = false;
-        while (!finished) {
-            if (player.getCurrentRoom() == suprise){
-                System.out.println("Thank you for playing. Good bye.");
-                finished = true;
-            } else {
-            // Use the previously declared parser to find out what command is being input into console.
-            Command command = parser.getCommand();
-            // If the processed command returns true, then the game ends.
-            finished = processCommand(command);
+        boolean isAlive = true;
+            while (isAlive && !finished){
+                if (player.getCurrentRoom() == suprise){
+                    System.out.println("Thank you for playing. Good bye.");
+                    finished = true;
+                    
+                } else if (player.getHealth().getCurrentHealth() <= 0){
+                    System.out.println("you've diead");
+                    isAlive = false;
+
+                } else {
+                    // Use the previously declared parser to find out what command is being input into console.
+                    Command command = parser.getCommand();
+                    // If the processed command returns true, then the game ends.
+                    finished = processCommand(command);
+                }
             }
-        }
     }
 
     private void printWelcome() {
@@ -291,7 +297,7 @@ public class Game {
                     System.out.println("This door is locked! It says you need to be happy to enter.\n You can now go these ways: north");
                 }
             } else if (player.getCurrentRoom() == boss) {
-                if(erikthulu.getHealth().isDead() == true) {
+                if(erikthulhu.getHealth().isDead() == true) {
                     System.out.println("You have defeated the despicable Erikthulu \nand banished his evil from these lands bringing along a serene sense of peace and prosperity.\n But there is yet one door remaining before your journey comes to an end.");
                     player.setCurrentRoom(suprise);
                     System.out.println(suprise.getLongDescription());
