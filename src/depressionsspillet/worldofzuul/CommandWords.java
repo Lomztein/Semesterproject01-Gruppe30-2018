@@ -1,4 +1,5 @@
 package depressionsspillet.worldofzuul;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -47,5 +48,13 @@ public class CommandWords
             System.out.print(command + "  ");
         }
         System.out.println();
+    }
+    
+    public String[] getAll () {
+        ArrayList<String> all = new ArrayList<>();
+        for (CommandWord word : CommandWord.values()) {
+            all.add (word.name());
+        }
+        return all.toArray (new String[0]);
     }
 }

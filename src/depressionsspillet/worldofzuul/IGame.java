@@ -15,6 +15,8 @@ public interface IGame {
     
     // COMMAND STUFFINGS
     boolean enterCommand(String input);
+    String[] getAvailableCommands ();
+    
     String getLastCommand();
     String[] getCommandWords();
     String getCommandResponse ();

@@ -1,18 +1,11 @@
 package depressionsspillet.worldofzuul;
 
-import static depressionsspillet.worldofzuul.RoomList.*;
-import depressionsspillet.worldofzuul.combat.DamageResistance;
-import depressionsspillet.worldofzuul.characters.HostileNPC;
 import depressionsspillet.worldofzuul.characters.NPC;
 import depressionsspillet.worldofzuul.characters.Player;
-import depressionsspillet.worldofzuul.interaction.Interaction;
-import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.combat.Attack;
-import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageType;
-import depressionsspillet.worldofzuul.combat.Health;
 
 public class Game implements IGame {
 
@@ -33,14 +26,13 @@ public class Game implements IGame {
     public Game() {
         // The attributes are populated with their appropiate data.
         createRooms();
-        player = new Player("Janus the Magic Midget", "A fucking loser amirite", start);
+        player = new Player("Janus the Magic Midget", "A fucking loser amirite", RoomList.start);
         player.addAttack(new Attack(DamageType.DAB, 5, "dab", "a profound dab"));
         player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "a rather weak, yet beautifully spirited punch"));
         parser = new Parser();
     }
 
     private void createRooms() {
-
         RoomList.listRooms();
     }
 
@@ -168,7 +160,7 @@ public class Game implements IGame {
     private void engage(Command command) {
 
         if (player.isEngaged()) {
-            System.out.println("You are already engaged in combat with " + player.getEngaged().getName() + ".");
+            lastCommandResponse = ("You are already engaged in combat with " + player.getEngaged().getName() + ".");
         }
 
         if (command.hasSecondWord()) {
@@ -204,10 +196,10 @@ public class Game implements IGame {
             if (playerAttack != null) {
                 player.attackEngaged(playerAttack);
             } else {
-                System.out.println("You don't have the ability to attack using " + command.getSecondWord());
+                lastCommandResponse = ("You don't have the ability to attack using " + command.getSecondWord());
             }
         } else {
-            System.out.println("You aren't currently engaged in combat, therefore you cannot attack anything.");
+            lastCommandResponse = ("You aren't currently engaged in combat, therefore you cannot attack anything.");
         }
     }
 
@@ -420,5 +412,10 @@ public class Game implements IGame {
     @Override
     public String getCommandResponse() {
         return lastCommandResponse;
+    }
+
+    @Override
+    public String[] getAvailableCommands() {
+        return parser.getCommands();
     }
 }

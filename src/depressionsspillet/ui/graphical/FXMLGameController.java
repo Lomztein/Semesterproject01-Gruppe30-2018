@@ -86,8 +86,6 @@ public class FXMLGameController implements Initializable {
                 backgroundImageView.setImage(image);
                 txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
                 //Adding the rooms happiness to the player and resetting it
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
                 txfFieldHappiness.setText(""+game.getCurrentHappiness());
                 break;
                 
@@ -95,8 +93,6 @@ public class FXMLGameController implements Initializable {
                 Image image2 = new Image("images\\vendorImage.jpg");
                 backgroundImageView.setImage(image2);
                 txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
                 txfFieldHappiness.setText(""+game.getCurrentHappiness());
                 break;
                 

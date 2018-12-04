@@ -9,6 +9,7 @@ import depressionsspillet.worldofzuul.Command;
 import depressionsspillet.worldofzuul.CommandWord;
 import depressionsspillet.worldofzuul.Game;
 import depressionsspillet.worldofzuul.IGame;
+import depressionsspillet.worldofzuul.combat.Damagable;
 import java.util.Scanner;
 
 /**
@@ -47,7 +48,21 @@ public class CommandLine {
                     break;
 
                 case "QUIT":
-                    wantToQuit = quit ();
+                    wantToQuit = quit();
+                    break;
+
+                case "ATTACK":
+                    attack();
+                    break;
+
+                case "ENGAGE":
+                    break;
+
+                case "DISENGAGE":
+                    break;
+
+                case "INVENTORY":
+                    inventory();
                     break;
 
                 case "?":
@@ -57,6 +72,10 @@ public class CommandLine {
                 default:
                     System.out.println("This command hasn't been implemented into the CLI. Please scream at the developers.");
                     break;
+            }
+
+            if (game.getCommandResponse() != null) {
+                System.out.println(game.getCommandResponse());
             }
         }
 
@@ -92,14 +111,14 @@ public class CommandLine {
         }
 
         String[] npcNames = game.getNPCNames();
-        String[] npcDescriptions = game.getItemDescriptions();
+        String[] npcDescriptions = game.getNPCDescriptions();
         System.out.println("The following NPCs are present: ");
         if (npcNames.length != 0) {
             for (int i = 0; i < npcNames.length; i++) {
                 System.out.println(npcNames[i] + " - " + npcDescriptions[i]);
             }
         } else {
-            System.out.println("Nothing.");
+            System.out.println("No one.");
         }
 
         System.out.println("Type HELP for help.");
@@ -144,9 +163,7 @@ public class CommandLine {
         System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
         System.out.println("You're currently this happy: " + game.getCurrentHappiness());
         System.out.println("Right. Your options are:");
-        for (String str : game.getCommandWords()) {
-            System.out.println(str + ", ");
-        }
+        System.out.println (singlify (game.getAvailableCommands(), ", "));
     }
 
     private String singlify(String[] strings, String seperator) {
@@ -165,7 +182,7 @@ public class CommandLine {
 
     private boolean quit() {
         // If the command has a second word, become confused.
-        if (game.getCommandWords()[1] != null) {
+        if (game.getCommandWords()[0] != null) {
             System.out.println("Quit what?");
             return false;
         } else {
@@ -173,4 +190,28 @@ public class CommandLine {
             return true;
         }
     }
+
+    private void attack() {
+        if (game.getCommandWords()[0] == null) {
+            System.out.println("You have the option of the following attacks: ");
+            String[] names = game.getAvailableAttackNames();
+            String[] descriptions = game.getAvailableAttackDescriptions();
+            for (int i = 0; i < names.length; i++) {
+                System.out.println(names[i] + " - " + descriptions[i]);
+            }
+        }
+    }
+
+    private void inventory() {
+        if (game.getCommandWords()[0] == null) {
+            System.out.println("You are carrying the following: ");
+            String[] names = game.getPlayerInventoryNames();
+            String[] descriptions = game.getPlayerInventoryDescriptions();
+
+            for (int i = 0; i < names.length; i++) {
+                System.out.println(i + " - " + names[i] + " - " + descriptions[i]);
+            }
+        }
+    }
+
 }

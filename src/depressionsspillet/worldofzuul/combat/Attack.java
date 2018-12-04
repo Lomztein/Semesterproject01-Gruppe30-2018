@@ -19,7 +19,6 @@ public class Attack {
     private final String description;
     
     public void attack (Attacker attacker, Damagable damagable) {
-        System.out.println (attacker.getName() + " attacks " + damagable.getName() + " using " + getName () + " - " + getDescription () + ", doing " + damageType.name() + " damage.");
         Damage damage = new Damage (attacker, damagable, damageType, damageValue);
         damage.doDamage();
     }
