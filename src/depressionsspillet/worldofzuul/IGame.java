@@ -5,10 +5,6 @@
  */
 package depressionsspillet.worldofzuul;
 
-import depressionsspillet.worldofzuul.characters.Player;
-import java.util.HashMap;
-import java.util.List;
-
 /**
  *
  * @author Lomztein
@@ -19,58 +15,39 @@ public interface IGame {
     
     // COMMAND STUFFINGS
     boolean enterCommand(String input);
-
     String getLastCommand();
-
     String[] getCommandWords();
     // COMMAND STUFFINGS END
 
     // ROOM STUFFINGS
     String[] getCurrentExits ();
     boolean[] getLockedExitsFlags ();
-    String[] getCurrentExits();
 
     String getCurrentRoomName();
-
+    String getCurrentRoomShortDesc ();
     String getCurrentRoomLongDesc();
 
     boolean triedEnteringLockedRooom();
 
     String[] getItemNames();
-
     String[] getItemDescriptions();
-
     String[] getNPCNames();
-
     String[] getNPCDescriptions();
-    
-    int getRoomHappiness();
-    String getCurrentRoomShortDesc ();
-    String getCurrentRoomLongDesc ();
-    
-    int getCurrentHappiness();
-    // TODO: See if it's possible to improve how locked rooms are handled across layers.
-    boolean getPlayerTriedEnteringLockedDoor ();
-    String getPlayerTriedEnteringLockedDoorResponse ();
-    
-    void setHappiness(int amount);
-    
-    void setCurrentRoomsHappiness(int amount);
-    
-    
-    
-    String[] getNPCNames ();
-    String[] getNPCDescriptions ();
     double[] getNPCHealth ();
+
+    int getRoomHappiness();
     // ROOM STUFFINGS END
 
     // PLAYER STUFFINGS
     double getPlayerHealth();
-
-    double getPlayerHappiness ();
+    int getCurrentHappiness();
     
     String[] getPlayerInventoryNames ();
     String[] getPlayerInventoryDescriptions ();
+    
+    // TODO: See if it's possible to improve how locked rooms are handled across layers.
+    boolean getPlayerTriedEnteringLockedDoor ();
+    String getPlayerTriedEnteringLockedDoorResponse ();
     // PLAYER STUFFINGS END
     
     // COMBAT STUFFINGS
@@ -82,8 +59,5 @@ public interface IGame {
     
     double getLastAttackedHealth ();
     // COMBAT STUFFINGS DONE
-    
-    // PLAYER STUFFINGS
-    double getPlayerHealth ();
-    // PLAYER STUFFINGS END
+  
 }

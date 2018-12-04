@@ -235,6 +235,7 @@ public class Game implements IGame {
                 }
             } else {
                 player.setCurrentRoom(nextRoom.getRoom());
+                player.getCurrentRoom().setHappiness(0);
             }
         }
     }
@@ -480,20 +481,9 @@ public class Game implements IGame {
     }
 
     @Override
-    public void setCurrentRoomsHappiness(int amount) {
-        player.getCurrentRoom().setHappiness(amount);
-    }
-
-    @Override
     public int getCurrentHappiness() {
         return player.getHappiness();
     }
-
-    @Override
-    public void setHappiness(int amount) {
-        player.setHappiness(amount);
-    }
-
 
     @Override
     public boolean[] getLockedExitsFlags() {
@@ -507,12 +497,7 @@ public class Game implements IGame {
 
     @Override
     public double[] getNPCHealth() {
-        return player.getCurrentRoom()
-    }
-
-    @Override
-    public double getPlayerHappiness() {
-        return player.getHappiness();
+        return null;
     }
 
     @Override
@@ -547,6 +532,16 @@ public class Game implements IGame {
 
     @Override
     public double getLastAttackedHealth() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getCurrentRoomName() {
+        return player.getCurrentRoom().getShortDescription();
+    }
+
+    @Override
+    public boolean triedEnteringLockedRooom() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
