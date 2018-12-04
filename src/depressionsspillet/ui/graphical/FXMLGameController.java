@@ -84,131 +84,89 @@ public class FXMLGameController implements Initializable {
                 //Setting new image
                 Image image = new Image("images\\magicalForestImage.jpg");
                 backgroundImageView.setImage(image);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                //Adding the rooms happiness to the player and resetting it
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
                 
             case "vendor":
                 Image image2 = new Image("images\\vendorImage.jpg");
                 backgroundImageView.setImage(image2);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
                 
             case "animals":
                 Image image3 = new Image("images\\animalsImage.jpg");
                 backgroundImageView.setImage(image3);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
                 
             case "thaiHooker":
                 Image image4 = new Image("images\\thaiHookerImage.jpg");
                 backgroundImageView.setImage(image4);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
                 
             case "sleepover":
                 Image image5 = new Image("images\\sleepOverImage2.jpg");
                 backgroundImageView.setImage(image5);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             case "fridayBar":
                 Image image6 = new Image("images\\fridayBarImage.jpg");
                 backgroundImageView.setImage(image6);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             case "stripClub":
                 Image image7 = new Image("images\\stripClubImage.jpg");
                 backgroundImageView.setImage(image7);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             case "kfc":
                 Image image8 = new Image("images\\kfcImage.jpg");
                 backgroundImageView.setImage(image8);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             case "shrek":
                 Image image9 = new Image("images\\shrekImage.jpg");
                 backgroundImageView.setImage(image9);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             case "allotment":
                 Image image10 = new Image("images\\allotmentImage.jpg");
                 backgroundImageView.setImage(image10);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-              game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             case "movie":
                 Image image11 = new Image("images\\movieImage.jpg");
                 backgroundImageView.setImage(image11);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-              game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             case "drugs":
                 Image image12 = new Image("images\\drugsImage.jpg");
                 backgroundImageView.setImage(image12);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc()+ "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             case "gate":
                 Image image13 = new Image("images\\gateImage.jpg");
                 backgroundImageView.setImage(image13);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             case "boss":
                 Image image14 = new Image("images\\bossImage.jpg");
                 backgroundImageView.setImage(image14);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises by: "+game.getRoomHappiness());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             case "suprise":
                 Image image15 = new Image("images\\surpriseImage.jpg");
                 backgroundImageView.setImage(image15);
-                txtAreaOutput.setText(game.getCurrentRoomLongDesc());
-                game.setHappiness((game.getCurrentHappiness() + game.getRoomHappiness()));
-                game.setCurrentRoomsHappiness(0);
-                txfFieldHappiness.setText(""+game.getCurrentHappiness());
+                updateTxtArea();
                 break;
             default:
                 txtAreaOutput.setText("You cannot go this way. Try another :)");
         }
+    }
+    private void updateTxtArea(){
+        txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises by: "+game.getRoomHappiness());
+        txfFieldHappiness.setText(""+game.getCurrentHappiness());
     }
 
     @FXML
