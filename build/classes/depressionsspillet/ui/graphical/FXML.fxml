@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="depressionsspillet.ui.graphical.FXMLController">
    <children>
-      <ImageView pickOnBounds="true" preserveRatio="true">
+      <ImageView nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/mainMenuImage.png" />
          </image>

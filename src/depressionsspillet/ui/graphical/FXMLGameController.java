@@ -18,7 +18,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -48,6 +51,22 @@ public class FXMLGameController implements Initializable {
     private Button goSouthButton;
     @FXML
     private Text txfFieldHappiness;
+    @FXML
+    private Label selectedLabel;
+    @FXML
+    private Button attackButton;
+    @FXML
+    private Button useButton;
+    @FXML
+    private Button dropButton;
+    @FXML
+    private Button pickUpButton;
+    @FXML
+    private ToggleGroup attackToggleGroup;
+    @FXML
+    private Hyperlink NPCButton;
+    @FXML
+    private Hyperlink itemButton;
 
     /**
      * Initializes the controller class.
@@ -191,6 +210,30 @@ public class FXMLGameController implements Initializable {
     private void handleGoSouthButtonEvent(ActionEvent event) {
         game.enterCommand("go south");
         updateRoom();
+    }
+
+    @FXML
+    private void handleAttackButtonEvent(ActionEvent event) {
+    }
+
+    @FXML
+    private void handleUseButtonEvent(ActionEvent event) {
+    }
+
+    @FXML
+    private void handleDropButtonEvent(ActionEvent event) {
+    }
+
+    @FXML
+    private void handlePickUpButtonEvent(ActionEvent event) {
+    }
+
+    @FXML
+    private void handleNPCButtonEvent(ActionEvent event) {
+    }
+
+    @FXML
+    private void handleItemButtonEvent(ActionEvent event) {
     }
 
 }
