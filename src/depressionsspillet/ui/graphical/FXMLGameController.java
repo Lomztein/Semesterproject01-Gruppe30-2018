@@ -33,10 +33,10 @@ import javafx.stage.Stage;
  * @author Joachim
  */
 public class FXMLGameController implements Initializable {
-    
+
     //Interface
     IGame game = new Game();
-    
+
     @FXML
     private ImageView backgroundImageView;
     @FXML
@@ -74,13 +74,12 @@ public class FXMLGameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Setting starting image
-        try{
-        Image imageMagicalForest = new Image("images\\spilMesterMartinImage.jpg");
-        backgroundImageView.setImage(imageMagicalForest);
-        }
-        catch(Exception e){
+        try {
+            Image imageMagicalForest = new Image("images\\spilMesterMartinImage.jpg");
+            backgroundImageView.setImage(imageMagicalForest);
+        } catch (Exception e) {
             System.out.println("Start image not found");
-        }   
+        }
         game.playGame();
         txtAreaOutput.setText(game.getCurrentRoomLongDesc());
     }
@@ -95,9 +94,9 @@ public class FXMLGameController implements Initializable {
         window.setScene(quitScene);
         window.show();
     }
-    
+
     //Update of items and NPC's to be added here
-    private void updateRoom(){
+    private void updateRoom() {
         switch (game.getCurrentRoomName()) {
             case "magicForrest":
                 //Setting new image
@@ -105,25 +104,25 @@ public class FXMLGameController implements Initializable {
                 backgroundImageView.setImage(image);
                 updateTxtArea();
                 break;
-                
+
             case "vendor":
                 Image image2 = new Image("images\\vendorImage.jpg");
                 backgroundImageView.setImage(image2);
                 updateTxtArea();
                 break;
-                
+
             case "animals":
                 Image image3 = new Image("images\\animalsImage.jpg");
                 backgroundImageView.setImage(image3);
                 updateTxtArea();
                 break;
-                
+
             case "thaiHooker":
                 Image image4 = new Image("images\\thaiHookerImage.jpg");
                 backgroundImageView.setImage(image4);
                 updateTxtArea();
                 break;
-                
+
             case "sleepover":
                 Image image5 = new Image("images\\sleepOverImage2.jpg");
                 backgroundImageView.setImage(image5);
@@ -183,9 +182,10 @@ public class FXMLGameController implements Initializable {
                 txtAreaOutput.setText("You cannot go this way. Try another :)");
         }
     }
-    private void updateTxtArea(){
-        txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises by: "+game.getRoomHappiness());
-        txfFieldHappiness.setText(""+game.getCurrentHappiness());
+
+    private void updateTxtArea() {
+        txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises by: " + game.getRoomHappiness());
+        txfFieldHappiness.setText("" + game.getCurrentHappiness());
     }
 
     @FXML

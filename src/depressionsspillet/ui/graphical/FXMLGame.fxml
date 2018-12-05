@@ -18,187 +18,187 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="depressionsspillet.ui.graphical.FXMLGameController">
-   <children>
-      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="262.0" minWidth="10.0" prefWidth="99.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="456.0" minWidth="10.0" prefWidth="435.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="195.0" minHeight="0.0" prefHeight="78.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="400.0" minHeight="10.0" prefHeight="285.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="125.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <ImageView fx:id="backgroundImageView" fitHeight="285.0" fitWidth="802.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-            <Button fx:id="northButton" mnemonicParsing="false" onAction="#handleGoNorthButtonEvent" text="Go north" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <GridPane.margin>
-                  <Insets top="8.0" />
-               </GridPane.margin>
-            </Button>
-            <Button fx:id="goWestButton" mnemonicParsing="false" onAction="#handleGoWestButtonEvent" text="Go west" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <GridPane.margin>
-                  <Insets left="8.0" />
-               </GridPane.margin>
-            </Button>
-            <Button fx:id="goEastButton" mnemonicParsing="false" onAction="#handleGoEastButtonEvent" text="Go east" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <GridPane.margin>
-                  <Insets right="8.0" />
-               </GridPane.margin>
-            </Button>
-            <Button fx:id="goSouthButton" mnemonicParsing="false" onAction="#handleGoSouthButtonEvent" prefHeight="26.0" prefWidth="74.0" text="Go south" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets bottom="8.0" />
-               </GridPane.margin>
-            </Button>
-            <TextArea fx:id="txtAreaOutput" editable="false" GridPane.columnSpan="3" GridPane.rowIndex="3">
-               <font>
-                  <Font name="Bookman Old Style" size="11.0" />
-               </font>
-               <padding>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </padding>
-               <GridPane.margin>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </GridPane.margin>
-            </TextArea>
-            <GridPane GridPane.columnSpan="3">
-              <columnConstraints>
+    <children>
+        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="262.0" minWidth="10.0" prefWidth="99.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="456.0" minWidth="10.0" prefWidth="435.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="457.0" minWidth="10.0" prefWidth="434.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="99.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Text fx:id="txfFieldHappiness" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" textAlignment="CENTER" wrappingWidth="57.99998554587364" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <font>
-                        <Font size="19.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets bottom="8.0" />
-                     </GridPane.margin>
-                  </Text>
-                  <Button mnemonicParsing="false" text="Help" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" right="8.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#handleQuitButtonEvent" text="Quit" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-                     <GridPane.margin>
-                        <Insets right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness:" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <font>
-                        <Font name="Blackadder ITC" size="25.0" />
-                     </font>
-                     <GridPane.margin>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="195.0" minHeight="0.0" prefHeight="78.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="400.0" minHeight="10.0" prefHeight="285.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="125.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="114.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <ImageView fx:id="backgroundImageView" fitHeight="285.0" fitWidth="802.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                <Button fx:id="northButton" mnemonicParsing="false" onAction="#handleGoNorthButtonEvent" text="Go north" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                    <GridPane.margin>
                         <Insets top="8.0" />
-                     </GridPane.margin>
-                  </Text>
-               </children>
-            </GridPane>
-            <GridPane GridPane.columnSpan="3" GridPane.rowIndex="2">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="209.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="231.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="454.0" minWidth="10.0" prefWidth="313.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <padding>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-               </padding>
-               <children>
-                  <Label fx:id="selectedLabel" prefHeight="17.0" prefWidth="221.0" text="Character/entity Selected:" textAlignment="RIGHT" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-                  <HBox prefHeight="35.0" prefWidth="334.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <children>
-                        <Button fx:id="attackButton" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack">
-                           <HBox.margin>
-                              <Insets left="8.0" right="8.0" />
-                           </HBox.margin>
+                    </GridPane.margin>
+                </Button>
+                <Button fx:id="goWestButton" mnemonicParsing="false" onAction="#handleGoWestButtonEvent" text="Go west" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                    <GridPane.margin>
+                        <Insets left="8.0" />
+                    </GridPane.margin>
+                </Button>
+                <Button fx:id="goEastButton" mnemonicParsing="false" onAction="#handleGoEastButtonEvent" text="Go east" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                    <GridPane.margin>
+                        <Insets right="8.0" />
+                    </GridPane.margin>
+                </Button>
+                <Button fx:id="goSouthButton" mnemonicParsing="false" onAction="#handleGoSouthButtonEvent" prefHeight="26.0" prefWidth="74.0" text="Go south" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                    <GridPane.margin>
+                        <Insets bottom="8.0" />
+                    </GridPane.margin>
+                </Button>
+                <TextArea fx:id="txtAreaOutput" editable="false" GridPane.columnSpan="3" GridPane.rowIndex="3">
+                    <font>
+                        <Font name="Bookman Old Style" size="11.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </padding>
+                    <GridPane.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                    </GridPane.margin>
+                </TextArea>
+                <GridPane GridPane.columnSpan="3">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="457.0" minWidth="10.0" prefWidth="434.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="99.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Text fx:id="txfFieldHappiness" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" textAlignment="CENTER" wrappingWidth="57.99998554587364" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                            <GridPane.margin>
+                                <Insets bottom="8.0" />
+                            </GridPane.margin>
+                        </Text>
+                        <Button mnemonicParsing="false" text="Help" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="8.0" right="8.0" />
+                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="useButton" mnemonicParsing="false" onAction="#handleUseButtonEvent" text="Use">
-                           <HBox.margin>
-                              <Insets left="8.0" right="8.0" />
-                           </HBox.margin>
+                        <Button mnemonicParsing="false" onAction="#handleQuitButtonEvent" text="Quit" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets right="8.0" top="8.0" />
+                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="dropButton" mnemonicParsing="false" onAction="#handleDropButtonEvent" text="Drop">
-                           <HBox.margin>
-                              <Insets left="8.0" right="8.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button fx:id="pickUpButton" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" textAlignment="CENTER" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets left="8.0" right="8.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                     <padding>
+                        <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness:" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <font>
+                                <Font name="Blackadder ITC" size="25.0" />
+                            </font>
+                            <GridPane.margin>
+                                <Insets top="8.0" />
+                            </GridPane.margin>
+                        </Text>
+                    </children>
+                </GridPane>
+                <GridPane GridPane.columnSpan="3" GridPane.rowIndex="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="209.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="231.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="454.0" minWidth="10.0" prefWidth="313.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <padding>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </padding>
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                     <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </padding>
-                  </HBox>
-                  <VBox prefHeight="68.0" prefWidth="127.0" GridPane.rowIndex="1" GridPane.rowSpan="2">
-                     <children>
-                        <RadioButton mnemonicParsing="false" text="Punch">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="attackToggleGroup" />
-                           </toggleGroup>
-                           <VBox.margin>
-                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                           </VBox.margin>
-                        </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="SomeAttack" toggleGroup="$attackToggleGroup">
-                           <VBox.margin>
-                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                           </VBox.margin>
-                        </RadioButton>
-                     </children>
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
-                     <children>
-                        <RadioButton mnemonicParsing="false" text="Dab" toggleGroup="$attackToggleGroup">
-                           <VBox.margin>
-                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                           </VBox.margin>
-                        </RadioButton>
-                        <RadioButton mnemonicParsing="false" text="Manifesto" toggleGroup="$attackToggleGroup">
-                           <VBox.margin>
-                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                           </VBox.margin>
-                        </RadioButton>
-                     </children>
-                     <GridPane.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                     </GridPane.margin>
-                  </VBox>
-               </children>
-            </GridPane>
-         </children>
-      </GridPane>
-      <Hyperlink fx:id="NPCButton" layoutX="426.0" layoutY="146.0" onAction="#handleNPCButtonEvent" prefHeight="122.0" prefWidth="118.0" />
-      <Hyperlink fx:id="itemButton" layoutX="168.0" layoutY="164.0" onAction="#handleItemButtonEvent" prefHeight="92.0" prefWidth="109.0" />
-   </children>
+                    </padding>
+                    <children>
+                        <Label fx:id="selectedLabel" prefHeight="17.0" prefWidth="221.0" text="Character/entity Selected:" textAlignment="RIGHT" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
+                        <HBox prefHeight="35.0" prefWidth="334.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                            <children>
+                                <Button fx:id="attackButton" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack">
+                                    <HBox.margin>
+                                        <Insets left="8.0" right="8.0" />
+                                    </HBox.margin>
+                                </Button>
+                                <Button fx:id="useButton" mnemonicParsing="false" onAction="#handleUseButtonEvent" text="Use">
+                                    <HBox.margin>
+                                        <Insets left="8.0" right="8.0" />
+                                    </HBox.margin>
+                                </Button>
+                                <Button fx:id="dropButton" mnemonicParsing="false" onAction="#handleDropButtonEvent" text="Drop">
+                                    <HBox.margin>
+                                        <Insets left="8.0" right="8.0" />
+                                    </HBox.margin>
+                                </Button>
+                                <Button fx:id="pickUpButton" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets left="8.0" right="8.0" />
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                            <padding>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                            </padding>
+                            <GridPane.margin>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                            </GridPane.margin>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                            <GridPane.margin>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                            </GridPane.margin>
+                            <padding>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                            </padding>
+                        </HBox>
+                        <VBox prefHeight="68.0" prefWidth="127.0" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                            <children>
+                                <RadioButton mnemonicParsing="false" text="Punch">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="attackToggleGroup" />
+                                    </toggleGroup>
+                                    <VBox.margin>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                    </VBox.margin>
+                                </RadioButton>
+                                <RadioButton mnemonicParsing="false" text="SomeAttack" toggleGroup="$attackToggleGroup">
+                                    <VBox.margin>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                    </VBox.margin>
+                                </RadioButton>
+                            </children>
+                            <GridPane.margin>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                            </GridPane.margin>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                            <children>
+                                <RadioButton mnemonicParsing="false" text="Dab" toggleGroup="$attackToggleGroup">
+                                    <VBox.margin>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                    </VBox.margin>
+                                </RadioButton>
+                                <RadioButton mnemonicParsing="false" text="Manifesto" toggleGroup="$attackToggleGroup">
+                                    <VBox.margin>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                    </VBox.margin>
+                                </RadioButton>
+                            </children>
+                            <GridPane.margin>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                            </GridPane.margin>
+                        </VBox>
+                    </children>
+                </GridPane>
+            </children>
+        </GridPane>
+        <Hyperlink fx:id="NPCButton" layoutX="426.0" layoutY="146.0" onAction="#handleNPCButtonEvent" prefHeight="122.0" prefWidth="118.0" />
+        <Hyperlink fx:id="itemButton" layoutX="168.0" layoutY="164.0" onAction="#handleItemButtonEvent" prefHeight="92.0" prefWidth="109.0" />
+    </children>
 </AnchorPane>
