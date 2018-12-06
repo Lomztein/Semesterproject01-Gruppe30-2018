@@ -31,6 +31,7 @@ public class GUI extends Application{
         primaryStage.setTitle("Depressionsspillet!");
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setResizable(false); //frame cannot be resized
 
     }
 
