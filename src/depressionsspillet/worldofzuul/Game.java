@@ -14,14 +14,14 @@ public class Game implements IGame {
     // Instance-variables / attributes for a command parser and a current room is declared for later use.
     private Parser parser;
     private Player player;
-    
+
     // Keep track of whether or not you tried to enter a locked room.
     private String triedEnteringLockedRoomResponse;
 
     // Keep track of which command was last input.
     private String lastCommand;
     private String[] lastCommandWords;
-    
+
     // Track otherwise unavailable textual responses to commands.
     private String lastCommandResponse;
 
@@ -92,8 +92,6 @@ public class Game implements IGame {
     }
 
     //This should definitely be handled by the CLI.
-    
-
     private void goRoom(Command command) {
         if (command.getSecondWord() == null) {
             return;
@@ -112,7 +110,7 @@ public class Game implements IGame {
                 if (player.getHappiness() < 99d) {
                     triedEnteringLockedRoomResponse = "You quiver in fear at the sight of this mighty gate, as you lack the self-comfidence to enter. Return when you are happier.";
                 } else {
-                    player.setCurrentRoom (nextRoom.getRoom ());
+                    player.setCurrentRoom(nextRoom.getRoom());
                 }
             } else {
                 player.setCurrentRoom(nextRoom.getRoom());
@@ -121,7 +119,7 @@ public class Game implements IGame {
             }
         }
     }
-    
+
     //   > Not currently in use <
     /*private void interact(Command command) {
 
@@ -165,7 +163,6 @@ public class Game implements IGame {
         }
 
     }*/
-
     //Engage replaces the interact-command.
     //This allows the player to 'engage' with an NPC, opening up the command 'attack'. 
     private void engage(Command command) {
@@ -219,41 +216,32 @@ public class Game implements IGame {
 
         //Inventory commands
         if (command.hasSecondWord()) {
-            
+
             if ("drop".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
                     player.dropItem(Integer.parseInt(command.getThirdWord()));
                 } else {
-                    System.out.println("You attempt to drop nothing. You're worried if you looked stupid. \n\nYou did.\n");
+                    lastCommandResponse = ("You attempt to drop nothing. You're worried if you looked stupid. \n\nYou did.\n");
                 }
             } else if ("use".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
-                    player.useItem(Integer.parseInt(command.getThirdWord()));
+                    lastCommandResponse = player.useItem(Integer.parseInt(command.getThirdWord()));
                 } else {
-                    System.out.println("You stuff a handfull of nothing in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
+                    lastCommandResponse = ("You stuff a handfull of nothing in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
                 }
             } else if ("pickup".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
+
                     //Check the room for the item.name, and add it to inventory
-
-                    if (command.hasFourthWord()) {
-                        player.addItem(command.getThirdWord());
-                    }
-
-                    //Check the room for the item.name
-                    if (player.currentRoomHasItem(command.getThirdWord()) != null) {
-                        System.out.println("You pick up the " + command.getThirdWord() + " and then promptly put it back down.");
-                    }
-
+                    lastCommandResponse = player.addItem(command.getThirdWord());
                 }
             } else {
                 //Obligatory player insult if the command is unknown.
-                System.out.println("I don't speak depression. Try rephrasing that, without all the sobbing.");
+                lastCommandResponse = ("I don't speak depression. Try rephrasing that, without all the sobbing.");
             }
             //If there's no second input, just check your pockets.
         } else {
-            System.out.println("You check your pockets: ");
-            player.printInventoryList();
+            lastCommandResponse = ("You check your pockets:\n" + player.printInventoryList());
         }
     }
 
@@ -325,12 +313,12 @@ public class Game implements IGame {
     public String[] getCommandWords() {
         ArrayList<String> tempArray = parser.showCommands();
         String[] stringArray = tempArray.toArray(new String[tempArray.size()]);
-        
+
         return stringArray;
     }
 
     @Override
-    public String getPlayerTriedEnteringLockedDoorResponse () {
+    public String getPlayerTriedEnteringLockedDoorResponse() {
         return this.triedEnteringLockedRoomResponse;
     }
 
@@ -351,7 +339,7 @@ public class Game implements IGame {
 
     @Override
     public String[] getNPCNames() {
-        return player.getCurrentRoom ().getEntityNames(NPC.class);
+        return player.getCurrentRoom().getEntityNames(NPC.class);
         // In hindsight I realize that this contains a reference to NPC, therefore an association.
         // We should reconsider this generic approach. Perhaps implement it differently.
     }
@@ -383,7 +371,7 @@ public class Game implements IGame {
 
     @Override
     public boolean getPlayerTriedEnteringLockedDoor() {
-        return getPlayerTriedEnteringLockedDoorResponse () != null;
+        return getPlayerTriedEnteringLockedDoorResponse() != null;
     }
 
     @Override
@@ -413,7 +401,7 @@ public class Game implements IGame {
 
     @Override
     public String getLastAttackResponse() {
-        return player.getLastAttackDamageResponse ();
+        return player.getLastAttackDamageResponse();
     }
 
     @Override
@@ -433,7 +421,7 @@ public class Game implements IGame {
 
     @Override
     public String getRetaliationAttackResponse() {
-        return player.getHealth().getResistanceForType(player.getHealth ().getLastDamage().getDamageType()).getResponse();
+        return player.getHealth().getResistanceForType(player.getHealth().getLastDamage().getDamageType()).getResponse();
     }
 
     @Override

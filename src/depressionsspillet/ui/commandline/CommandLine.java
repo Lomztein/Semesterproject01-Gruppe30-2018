@@ -51,9 +51,12 @@ public class CommandLine {
                 case "UNKNOWN":
                     System.out.println("I don't speak whatever language \"" + input + "\" is. Type \"help\" for help.");
                     break;
+                case "INVENTORY":
+                    System.out.println(game.getCommandResponse());
+                    break;
 
                 default:
-                    System.out.println("\n\u001B[33mWarning: This command hasn't been implemented properly into the CLI. Please scream at the developers for not doing their job.\u001B[0m\n");
+                    System.out.println("\n\u001B[33mWarning: This command hasn't been implemented properly into the CLI. Please scream at the developers for not doing their job.\u001B[0m \n");
                     break;
             }
         }
@@ -144,8 +147,9 @@ public class CommandLine {
         System.out.println("You're currently this happy: " + game.getCurrentHappiness());
         System.out.println("Okay? So, your options are:");
         for (String str : game.getCommandWords()) {
-            System.out.println(str + ", ");
+            System.out.print(str + "   ");
         }
+        System.out.println("");
     }
 
     private String singlify(String[] strings, String seperator) {
