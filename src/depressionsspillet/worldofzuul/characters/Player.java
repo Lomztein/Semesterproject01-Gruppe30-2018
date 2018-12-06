@@ -114,7 +114,7 @@ public class Player extends Character implements Attacker, HasHealth {
     public void addHappiness(int value) {
         this.happiness += value;
     }
-    
+
     public void addHealth(double value) {
         getHealth().changeHealth(value);
     }
@@ -199,6 +199,7 @@ public class Player extends Character implements Attacker, HasHealth {
         return true;
     }
 
+    //Uses the item, adds buffs and removes it from inventory.
     public String useItem(int i) {
         i -= 1;
         String printOut;

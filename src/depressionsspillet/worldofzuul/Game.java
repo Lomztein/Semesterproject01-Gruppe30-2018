@@ -116,7 +116,7 @@ public class Game implements IGame {
             }
         }
     }
-    
+
     //Engage replaces the interact-command.
     //This allows the player to 'engage' with an NPC, opening up the command 'attack'. 
     private void engage(Command command) {
@@ -168,35 +168,44 @@ public class Game implements IGame {
 
         //Inventory commands
         if (command.hasSecondWord()) {
-
-            if ("drop".equals(command.getSecondWord())) {
-                if (command.hasThirdWord()) {
-                    player.dropItem(Integer.parseInt(command.getThirdWord()));
-                } else {
-                    lastCommandResponse = ("You attempt to drop nothing. You're worried if you looked stupid. \n\nYou did.\n");
-                }
-            } else if ("use".equals(command.getSecondWord())) {
-                if (command.hasThirdWord()) {
-                    try {
-                        int temp = Integer.parseInt(command.getThirdWord());
-                        lastCommandResponse = player.useItem(temp);
-                    } catch (NumberFormatException exc) {
-                        lastCommandResponse = ("That's not a pocket number you massive tosser.");
-                    }
-                } else {
-                    lastCommandResponse = ("You stuff a handfull of nothing in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
-                }
-            } else if ("pickup".equals(command.getSecondWord())) {
-                if (command.hasThirdWord()) {
-
-                    //Check the room for the item.name, and add it to inventory
-                    lastCommandResponse = player.addItem(command.getThirdWord());
-                }
-            } else {
+            if (null == command.getSecondWord()) {
                 //Obligatory player insult if the command is unknown.
                 lastCommandResponse = ("I don't speak depression. Try rephrasing that, without all the sobbing.");
+            } else {
+                switch (command.getSecondWord()) {
+                    case "drop":
+                        if (command.hasThirdWord()) {
+                            player.dropItem(Integer.parseInt(command.getThirdWord()));
+                        } else {
+                            lastCommandResponse = ("You attempt to drop nothing. You're worried if you looked stupid. \n\nYou did.\n");
+                        }
+                        break;
+                    //If there's no second input, just check your pockets.
+                    case "use":
+                        if (command.hasThirdWord()) {
+                            try {
+                                int temp = Integer.parseInt(command.getThirdWord());
+                                lastCommandResponse = player.useItem(temp);
+                            } catch (NumberFormatException exc) {
+                                lastCommandResponse = ("That's not a pocket number you massive tosser.");
+                            }
+                        } else {
+                            lastCommandResponse = ("You stuff a handfull of nothing in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
+                        }
+                        break;
+                    case "pickup":
+                        if (command.hasThirdWord()) {
+
+                            //Check the room for the item.name, and add it to inventory
+                            lastCommandResponse = player.addItem(command.getThirdWord());
+                        }
+                        break;
+                    default:
+                        //Obligatory player insult if the command is unknown.
+                        lastCommandResponse = ("I don't speak depression. Try rephrasing that, without all the sobbing.");
+                        break;
+                }
             }
-            //If there's no second input, just check your pockets.
         } else {
             lastCommandResponse = ("You check your pockets:\n" + player.printInventoryList());
         }
@@ -205,26 +214,30 @@ public class Game implements IGame {
     //Inside joke, that only works in the CLI version
     private void no(Command command) {
         Damage last = player.getHealth().getLastDamage();
-        switch (command.getSecondWord()) {
+        if (command.hasSecondWord()) {
+            switch (command.getSecondWord()) {
 
-            case "u":
-                if (last != null && player.isEngaged() && last.getAttacker() == player.getEngaged() && last.getDamageType() == DamageType.MENTAL) {
-                    lastCommandResponse = "With raw confidence and sexual provess you \"no u\" " + player.getEngaged().getName() + "'s last attack straight back at them with magnitudes more strength.";
-                    Damage retaliation = new Damage(player, player.getEngaged(), DamageType.MENTAL, last.getDamageValue() * 100);
-                    retaliation.doDamage();
-                }
-                break;
+                case "u":
+                    if (last != null && player.isEngaged() && last.getAttacker() == player.getEngaged() && last.getDamageType() == DamageType.MENTAL) {
+                        lastCommandResponse = "With raw confidence and sexual provess you \"no u\" " + player.getEngaged().getName() + "'s last attack straight back at them with magnitudes more strength.";
+                        Damage retaliation = new Damage(player, player.getEngaged(), DamageType.MENTAL, last.getDamageValue() * 100);
+                        retaliation.doDamage();
+                    }
+                    break;
 
-            case "me":
-                lastCommandResponse = "You realize the loathsome futility of it all, and decide to finally end it right on the spot. You inhale enough air to explode in a majestic display of viscera.";
-                Damage selfsplode = new Damage(player, player, DamageType.FIRE, 1337);
-                selfsplode.doDamage();
-                break;
+                case "me":
+                    lastCommandResponse = "You realize the loathsome futility of it all, and decide to finally end it right on the spot. You inhale enough air to explode in a majestic display of viscera.";
+                    Damage selfsplode = new Damage(player, player, DamageType.FIRE, 1337);
+                    selfsplode.doDamage();
+                    break;
 
-            case "us":
-                lastCommandResponse = "From within you feel an intense burning, as if The Socialist Manifesto spontaniously materializes in your chest cavity. You have become Lenin himself.";
-                player.addAttack(new Attack(DamageType.FIRE, 100, "manifesto", "The physical manifastation of socialst pride."));
-                break;
+                case "us":
+                    lastCommandResponse = "From within you feel an intense burning, as if The Socialist Manifesto spontaniously materializes in your chest cavity. You have become Lenin himself.";
+                    player.addAttack(new Attack(DamageType.FIRE, 100, "manifesto", "The physical manifastation of socialst pride."));
+                    break;
+            }
+        } else {
+            lastCommandResponse = "You fool..!";
         }
     }
 

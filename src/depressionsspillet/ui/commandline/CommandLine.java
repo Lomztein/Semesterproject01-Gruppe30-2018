@@ -133,7 +133,7 @@ public class CommandLine {
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
         System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
-        System.out.println("Your stats currently are: " + game.getCurrentHappiness()+ " happiness, and " + game.getPlayerHealth() + " health.");
+        System.out.println("Your stats currently are: " + game.getCurrentHappiness() + " happiness, and " + game.getPlayerHealth() + " health.");
         System.out.println("Okay? So, your options are:");
         for (String str : game.getCommandWords()) {
             System.out.print(str + "   ");
