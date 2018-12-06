@@ -179,6 +179,8 @@ public class Game implements IGame {
 
     }*/
 
+    //Engage replaces the interact-command.
+    //This allows the player to 'engage' with an NPC, opening up the command 'attack'. 
     private void engage(Command command) {
 
         if (player.isEngaged()) {
@@ -200,9 +202,10 @@ public class Game implements IGame {
         }
     }
 
+    //Disengages the player with the NPC, if he is engaged.
     private void disengage(Command command) {
         if (player.isEngaged()) {
-            lastCommandResponse = "You poop yourself a little before disengaging " + player.getEngaged().getName() + " before running to a safe distance.";
+            lastCommandResponse = "You accidentally poop yourself a little before disengaging " + player.getEngaged().getName() + " before running to a safe distance.";
             player.disengage();
         } else {
             lastCommandResponse = "You aren't currently engaged in combat.";
@@ -229,6 +232,7 @@ public class Game implements IGame {
 
         //Inventory commands
         if (command.hasSecondWord()) {
+            
             if ("drop".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
                     player.dropItem(Integer.parseInt(command.getThirdWord()));
@@ -246,11 +250,11 @@ public class Game implements IGame {
                     //Check the room for the item.name, and add it to inventory
 
                     if (command.hasFourthWord()) {
-                        player.addItem(command.getThirdWord(), command.getFourthWord());
+                        player.addItem(command.getThirdWord());
                     }
 
                     //Check the room for the item.name
-                    if (player.addItem(command.getThirdWord()) != null) {
+                    if (player.currentRoomHasItem(command.getThirdWord()) != null) {
                         System.out.println("You pick up the " + command.getThirdWord() + " and then promptly put it back down.");
                     }
 
@@ -266,6 +270,7 @@ public class Game implements IGame {
         }
     }
 
+    //Inside joke, that only works in the CLI version
     private void no(Command command) {
         Damage last = player.getHealth().getLastDamage();
         switch (command.getSecondWord()) {
@@ -279,7 +284,7 @@ public class Game implements IGame {
                 break;
 
             case "me":
-                lastCommandResponse = "You realize the loathsome futility of it all, and decide to finally end it right at the spot. You inhale enough air to explode in a majestic display of viscera.";
+                lastCommandResponse = "You realize the loathsome futility of it all, and decide to finally end it right on the spot. You inhale enough air to explode in a majestic display of viscera.";
                 Damage selfsplode = new Damage(player, player, DamageType.FIRE, 1337);
                 selfsplode.doDamage();
                 break;
@@ -357,7 +362,7 @@ public class Game implements IGame {
     @Override
     public String[] getNPCNames() {
         return player.getCurrentRoom ().getEntityNames(NPC.class);
-        // In hindsight I realize that this is contains a reference to NPC, therefore an association.
+        // In hindsight I realize that this contains a reference to NPC, therefore an association.
         // We should reconsider this generic approach. Perhaps implement it differently.
     }
 
