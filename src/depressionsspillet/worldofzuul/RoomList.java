@@ -109,6 +109,7 @@ public class RoomList {
 
         boss.setExit("south", suprise);
 
+        //A new NPC, the boss Erikthulhu, is created. 
         HostileNPC erikthulhu = new HostileNPC("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, true, new Health(666d).withResistances(
                 new DamageResistance[]{
                     new DamageResistance(DamageType.BLUNT, "is impervious to blunt force trauma, he is simply too great.", 0),

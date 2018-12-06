@@ -4,7 +4,7 @@
 // Each constant in this case, such as GO or HELP is declared using a constructor just like any other class.
 // These can then be used elsewhere as constants by referencing them using CommandWord.GO for example, and their attributes and methods can then be accessed.
 public enum CommandWord
-{
+{                                        //Interact is Obsolete
     GO("go"), QUIT("quit"), HELP("help"), INTERACT ("interact"), ENGAGE ("engage"), DISENGAGE ("disengage"), ATTACK ("attack"), INVENTORY("inventory"), NO ("no"), UNKNOWN("?");
     
     private final String commandString;
