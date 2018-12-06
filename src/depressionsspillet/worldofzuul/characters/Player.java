@@ -31,8 +31,8 @@ public class Player extends Character implements Attacker, HasHealth {
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
-        playerHealth = new Health (1);
-        playerHealth.onTakeDamage.add((x) -> System.out.println (String.format("The player " + x.getResistance().getResponse(), x.getDamageTaken())));
+        playerHealth = new Health(1);
+        playerHealth.onTakeDamage.add((x) -> System.out.println(String.format("The player " + x.getResistance().getResponse(), x.getDamageTaken())));
     }
 
     public void generatePlayerResistances() {
@@ -52,78 +52,78 @@ public class Player extends Character implements Attacker, HasHealth {
 
         getHealth().withResistances(playerResistances);
     }
-    
-    public double getLastAttackDamageValue () {
+
+    public double getLastAttackDamageValue() {
         if (engagedWith != null && engagedWith instanceof HasHealth) {
-            return ((HasHealth)engagedWith).getHealth().getLastDamage().getDamageValue();
+            return ((HasHealth) engagedWith).getHealth().getLastDamage().getDamageValue();
         }
         return 0; // Perhaps having different layers of "Damagable" was overcomplicating things. Consider merging Damagable and HasHealth.
     }
-    
-    public String getLastAttackDamageResponse () {
+
+    public String getLastAttackDamageResponse() {
         if (engagedWith != null && engagedWith instanceof HasHealth) {
-            HasHealth engagedWithHealth = ((HasHealth)engagedWith);
-            return engagedWithHealth.getHealth ().getResistanceForType (engagedWithHealth.getHealth().getLastDamage().getDamageType()).getResponse();
+            HasHealth engagedWithHealth = ((HasHealth) engagedWith);
+            return engagedWithHealth.getHealth().getResistanceForType(engagedWithHealth.getHealth().getLastDamage().getDamageType()).getResponse();
         }
         return "";
     }
-    
-    public double getLastAttackedHealth () {
+
+    public double getLastAttackedHealth() {
         if (engagedWith != null && engagedWith instanceof HasHealth) {
-            return ((HasHealth)engagedWith).getHealth().getCurrentHealth();
+            return ((HasHealth) engagedWith).getHealth().getCurrentHealth();
         }
         return -1;
     }
-    
-    public String[] getInventoryItemNames () {
+
+    public String[] getInventoryItemNames() {
         ArrayList<String> names = new ArrayList<>();
         for (Item item : inventory) {
             names.add(item.getName());
         }
-        return names.toArray (new String[0]);
+        return names.toArray(new String[0]);
     }
-    
-    public String[] getInventoryItemDescriptions () {
+
+    public String[] getInventoryItemDescriptions() {
         ArrayList<String> descriptions = new ArrayList<>();
         for (Item item : inventory) {
             descriptions.add(item.getDescription());
         }
-        return descriptions.toArray (new String[0]);
+        return descriptions.toArray(new String[0]);
     }
-    
-    public String[] getAttackNames () {
+
+    public String[] getAttackNames() {
         ArrayList<String> names = new ArrayList<>();
         for (Attack attack : this.getAttacks()) {
             names.add(attack.getName());
         }
-        return names.toArray (new String[0]);
+        return names.toArray(new String[0]);
     }
-    
-    public String[] getAttackDescriptions () {
+
+    public String[] getAttackDescriptions() {
         ArrayList<String> descriptions = new ArrayList<>();
         for (Attack attack : this.getAttacks()) {
             descriptions.add(attack.getDescription());
         }
-        return descriptions.toArray (new String[0]);
+        return descriptions.toArray(new String[0]);
     }
 
-    public int getHappiness () {
+    public int getHappiness() {
         return this.happiness;
     }
-    
-    public void setHappiness (int value) {
+
+    public void setHappiness(int value) {
         this.happiness = value;
     }
-    
-    public void addHealth (double value) {
-        getHealth ().changeHealth(value);
+
+    public void addHealth(double value) {
+        getHealth().changeHealth(value);
     }
 
     @Override
     public Health getHealth() {
         return playerHealth;
     }
-    
+
     public void engage(Damagable damagable) {
         engagedWith = damagable;
     }
@@ -167,27 +167,31 @@ public class Player extends Character implements Attacker, HasHealth {
      happinesslevel -= damage.getDamageValue();
      }
      }*/
-    
-    
     //Methods
+    //Prints the full list of the inventory for the CLI
     public void printInventoryList() {
         int i = 1;
+
+        //Checks if the inventory is empty, and exits if it is.
+        if (inventoryCheck()) {
+            System.out.println("It's all empty, like your soul.");
+            return;
+        }
+
+        //Continues with checking every item in the inventory.
         for (Item item : inventory) {
 
             if (item != null) {
                 System.out.println(i + ",  " + item.getName());
-            } else {
-                System.out.println(i + ",  Empty");
             }
             i++;
         }
     }
 
     //>>>>>> Everything that has to do with player inventory has very high coupling, and should definitely be revised!!!! <<<<<<
-    
-    //Now a useless method to check whether the inventory is empty or not. 
+    //Checks whether the inventory is empty or not.
     public boolean inventoryCheck() {
-        
+
         for (Item item : inventory) {
             return false;
         }
@@ -197,9 +201,12 @@ public class Player extends Character implements Attacker, HasHealth {
     public void useItem(int i) {
         i -= 1;
         try {
-            if (inventory.get(i) instanceof ConsumableItem && inventory.get(i) != null) {
+            if (inventory.get(i) instanceof ConsumableItem) {
                 ConsumableItem item = (ConsumableItem) inventory.get(i);
-                addHealth (item.getHealthIncrease());
+                addHealth(item.getHealthIncrease());
+                System.out.println("You gain " + item.getHealthIncrease() + " happiness.");
+                inventory.remove(i); //At this point the item will be removed from all lists, and should not be accessibe, but it would still exist.
+                
             } else { //Temporary solution, more conditions will be added later, as more items are added.
                 System.out.println("You stuff a handfull of nothing from pocket " + (i + 1) + " in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
             }
@@ -214,51 +221,50 @@ public class Player extends Character implements Attacker, HasHealth {
         for (Item item : super.getCurrentRoom().getItemArray()) {
             if (name != null && name.equals(item.getName())) {
                 return item;
-            } else {
-                return null;
             }
         }
         return null;
     }
 
+    //Adds item to inventory, and removes it from room's item-array.
     public void addItem(String name) {
         Item item = currentRoomHasItem(name);
 
         if (item != null) {
-                inventory.add(item);
-                getCurrentRoom().removeItem(item);
-                System.out.println("You pick up the " + item.getName() + " and stuff it in your pocket");
-           
+            inventory.add(item);
+            getCurrentRoom().removeItem(item);
+            System.out.println("You pick up the " + item.getName() + " and stuff it in your pocket");
+
         } else {
-            noItemFound(item.getName());
+            noItemFound(name);
         }
     }
-    
-    //
+
+    //When no item by the name of 'item' was found in the room.
     public void noItemFound(String name) {
         System.out.println("You grab at what you thought was the " + name + ", but there's nothing there.\n\nIt might be best to see a pshycologist if this issue persists.");
     }
 
+    //Drops the item in slot i into the room's item array. 
     public void dropItem(int i) {
         i -= 1;
         try {
-            if (inventory.get(i) == null) {
-                System.out.println("You attempt to drop an empty inventory slot on the ground. You check around to see \nif anyone saw that. Somehow, someone did. The shadows are laughing at you.");
-            } else {
-
+            
+            if (inventory.get(i) != null) {
                 getCurrentRoom().addItem(inventory.get(i));
                 System.out.println("You drop the " + inventory.get(i).getName() + " on the ground before you.\n");
-                inventory.set(i, null);
-
+                inventory.remove(i);
             }
-        } catch (ArrayIndexOutOfBoundsException error) {
+
+            //Gets called whenever a player attemps to drop something from a slot that has not yet been occupied.
+        } catch (IndexOutOfBoundsException error) {
             emptyPockets(i);
         }
     }
-    
-    //This won't work anymore, in the sense that it would never be called, as the inventory is now an infinite arraylist.
+
+    //
     private void emptyPockets(int i) {
-        System.out.println("You reach towards pocket " + (i + 1) + ", but for some reason,\nthere's nothing in it. Perhaps you should check your pockets first.");
+        System.out.println("You reach towards pocket " + (i + 1) + ", but for some reason,\nthere's nothing in it. Perhaps you should check your pockets first. Perhaps you're an idiot.");
     }
 
     @Override
