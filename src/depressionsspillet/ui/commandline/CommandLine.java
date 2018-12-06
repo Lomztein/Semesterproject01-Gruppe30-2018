@@ -67,6 +67,7 @@ public class CommandLine {
     }
 
     private void printRoom() {
+        //Checks the CommandWords array for values.
         if (game.getCommandWords()[0] == null) {
             System.out.println("Go? Go where..?");
             // If this happens, then exit out of this function using a return statement.
@@ -75,13 +76,17 @@ public class CommandLine {
             System.out.println(game.getPlayerTriedEnteringLockedDoorResponse());
         }
 
-        System.out.println("-------------------------");
-        System.out.println("You are now in " + game.getCurrentRoomLongDesc());
+        System.out.println(
+                "-------------------------\n"
+                + "You are now in " + game.getCurrentRoomLongDesc());
+
         //The following is printing the room's items and NPC's to tell the user what they can do.
         //Adds the rooms happiness to yours and sets the room happiness to 0.
-        System.out.println("You feel your happiness rising to: " + game.getPlayerHealth());
+        System.out.println(
+                "You feel your happiness rising to: " + game.getPlayerHealth() + "\n\n"
+                + "In this place, you find the following items to be of potential significance: \n");
 
-        System.out.println("In this place, you find the following items to be of potential significance: ");
+        //Printing items from array
         String[] itemNames = game.getItemNames();
         String[] itemDescription = game.getItemDescriptions();
 
@@ -93,15 +98,16 @@ public class CommandLine {
             System.out.println("Nothing.");
         }
 
+        //Printing NPCs from array
         String[] npcNames = game.getNPCNames();
         String[] npcDescriptions = game.getItemDescriptions();
-        System.out.println("The following NPCs are present: ");
         if (npcNames.length != 0) {
+            System.out.println("The following NPCs are present: ");
             for (int i = 0; i < npcNames.length; i++) {
                 System.out.println(npcNames[i] + " - " + npcDescriptions[i]);
             }
         } else {
-            System.out.println("Nothing.");
+            System.out.println("\nThere are no NPCs to interact with here.\n");
         }
 
         System.out.println("Type HELP for help.");
@@ -109,35 +115,20 @@ public class CommandLine {
     }
 
     private void printWelcome() {
-        // A simple, warm welcome.
-        System.out.println();
-        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
-        System.out.println();
 
         // An introduction to our current room.
-        System.out.println("Welcome to Depressionsspillet!");
-        System.out.println("Depressionsspillet is a positive and uplifting game, designed to make the player remember the positives of a student's life!");
-        System.out.println();
-        // A basic guide on how to play this game.
-        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
-        System.out.println();
+        System.out.print(
+                "Welcome to Depressionsspillet!\nDepressionsspillet is a positive and uplifting game, "
+                + "designed to make the player remember the positives of a student's life!\n(Please sign the non-disclosure agreement before playing the game.)\n\n"
+                + "Type '" + CommandWord.HELP + "' if you need help.\n\nYour adventure starts near the barn of the famous Spilmester Martin.\n- Greetings, youngling!\n"
+                + "- My name is Spilmester Martin, and I am the leader of the Warriors against Erikthulu!\n"
+                + "- Please state your desired character style\nOptions include: Wizard, warrior, monk, witch hunter and berserker.\n>");
 
-        //Trolling the player
-        System.out.println("Your adventure starts near the barn of the famous Spilmester Martin.");
-        System.out.println();
-        System.out.println("- Greetings, youngling!");
-        System.out.println("- My name is Spilmester Martin, and I am the leader of the Warriors against Erikthulu!");
-        System.out.println("- Please state your desired character style!");
-        System.out.println("Options include: Wizard, warrior, monk, witch hunter and berserker.");
-        System.out.print(">");
         Scanner input = new Scanner(System.in);
         String someStyle = input.next();
-        System.out.println("- Please state your desired name!");
-        System.out.print(">");
+        System.out.print("- Please state your desired name\n>");
         String someName = input.next();
-        System.out.println("- Alright! You are now Janus the Magic Midget.");
-        System.out.println("");
-        System.out.println(game.getCurrentRoomShortDesc());
+        System.out.println("- Alright! You are now Janus the Magic Midget.\n" + game.getCurrentRoomShortDesc() + "\n");
         System.out.println(singlify(game.getCurrentExits(), ", "));
     }
 

@@ -54,8 +54,6 @@ public class RoomList {
         magicForrest.setExit("east", vendor);
         magicForrest.setExit("west", thaiHooker);
 
-        magicForrest.addItem(new ConsumableItem("Apple", "An apple of particularly moist texture.", 100, 42));
-
         // Exits for vendor are declared.
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
@@ -134,6 +132,10 @@ public class RoomList {
 
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
+        
+        //Items added to the different rooms:
+        magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 42, 5));
+        magicForrest.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 200, 10, -1));
     }
 
 }

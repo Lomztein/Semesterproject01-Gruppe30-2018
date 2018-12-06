@@ -206,13 +206,13 @@ public class Player extends Character implements Attacker, HasHealth {
             if (inventory.get(i) instanceof ConsumableItem) {
                 ConsumableItem item = (ConsumableItem) inventory.get(i);
                 addHealth(item.getHealthIncrease());
-                printOut = ("You quickly consume the " + item.getName() + ".\nYou gain " + item.getHealthIncrease() + " happiness.");
+                printOut = ("You quickly consume the " + item.getName() + ".\nYou gain " + item.getHealthIncrease() + " health, and " + item.gethappinessIncrease() + " happiness.");
                 inventory.remove(i); //At this point the item will be removed from all lists, and should not be accessibe, but it would still exist. It's not very effective.
 
             } else { //Temporary solution, more conditions will be added later, as more items are added.
                 printOut = ("You stuff a handfull of nothing from pocket " + (i + 1) + " in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
             }
-        } catch (ArrayIndexOutOfBoundsException error) {
+        } catch (IndexOutOfBoundsException error) {
             return emptyPockets(i + 1);
         }
         return printOut;
@@ -270,7 +270,7 @@ public class Player extends Character implements Attacker, HasHealth {
 
     //
     private String emptyPockets(int i) {
-        return ("You reach towards pocket " + (i + 1) + ", but for some reason,\nthere's nothing in it. Perhaps you should check your pockets first. Perhaps you're an idiot. Who knows?");
+        return ("You reach towards pocket " + (i) + ", but for some reason,\nthere's nothing in it. Perhaps you should check your pockets first. Perhaps you're an idiot. Who knows?");
     }
 
     @Override

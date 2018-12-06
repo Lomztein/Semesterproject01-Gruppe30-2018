@@ -66,9 +66,6 @@ public class Game implements IGame {
                 case QUIT:
                     wantToQuit = quit(command);
                     break;
-                case INTERACT:
-                    //interact(command);
-                    break;
                 case ATTACK:
                     attack(command);
                     break;
@@ -180,7 +177,12 @@ public class Game implements IGame {
                 }
             } else if ("use".equals(command.getSecondWord())) {
                 if (command.hasThirdWord()) {
-                    lastCommandResponse = player.useItem(Integer.parseInt(command.getThirdWord()));
+                    try {
+                        int temp = Integer.parseInt(command.getThirdWord());
+                        lastCommandResponse = player.useItem(temp);
+                    } catch (NumberFormatException exc) {
+                        lastCommandResponse = ("That's not a pocket number you massive tosser.");
+                    }
                 } else {
                     lastCommandResponse = ("You stuff a handfull of nothing in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
                 }
