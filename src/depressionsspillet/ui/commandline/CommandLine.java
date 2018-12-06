@@ -50,7 +50,7 @@ public class CommandLine {
                     break;
 
                 default:
-                    System.out.println("This command hasn't been implemented into the CLI. Please scream at the developers.");
+                    System.out.println("This command hasn't been implemented properly into the CLI. Please scream at the developers.");
                     break;
             }
         }

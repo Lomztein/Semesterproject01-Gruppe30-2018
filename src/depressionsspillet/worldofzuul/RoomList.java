@@ -20,6 +20,10 @@ import depressionsspillet.worldofzuul.combat.Health;
  */
 public class RoomList {
 
+    
+    //This class was made to combat the amount of bloat in the game-class. 
+    //It contains all the rooms, the items and entities inside the rooms, and exits.
+
     static Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
     public static void listRooms() {

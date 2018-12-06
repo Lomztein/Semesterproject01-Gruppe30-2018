@@ -25,11 +25,12 @@ public class Parser
         // If the scanner has been given an input, then take it and save it as word1.
         if(tokenizer.hasNext()) {
             word1 = tokenizer.next();
-            // If there are more words, then save the second word as word2
+            // If there are more words, then save the second word as word2, and so-on.
             if(tokenizer.hasNext()) {
                 word2 = tokenizer.next();
                 if (tokenizer.hasNext ()) {
                     word3 = tokenizer.next();
+                    //Revising the inventory to work with GUI removes the need for a fourth word.
                     if (tokenizer.hasNext()) {
                         word4 = tokenizer.next();
                     }

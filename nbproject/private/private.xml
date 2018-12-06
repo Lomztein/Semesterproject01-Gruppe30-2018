@@ -3,52 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< Updated upstream
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/Parser.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/characters/Player.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/Room.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/Named.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/interaction/Interaction.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/ui/InterfaceUtils.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/IGame.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/combat/Attack.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/Item.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/characters/HostileNPC.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/combat/HasHealth.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/ConsumableItem.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/characters/Character.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/combat/Damage.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/ui/commandline/CommandLine.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/interaction/Interactable.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/ui/IInterface.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/CommandWords.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/combat/Damagable.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/combat/DamageType.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/combat/DamageResistance.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/Entity.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/Command.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/characters/NPC.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/observables/Observable.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/combat/Health.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/interaction/Action.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/combat/Attacker.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/observables/Event.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/CommandWord.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/ui/graphical/FXMLController.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/Game.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/observables/Observer.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/worldofzuul/Door.java</file>
-            <file>file:/C:/Users/Lomztein/Documents/GitHub/Semesterproject01/src/depressionsspillet/ui/graphical/GUI.java</file>
-=======
-            <file>file:/C:/Users/Joachim/Documents/GitHub/Semesterproject01-Gruppe30-2018/src/depressionsspillet/worldofzuul/Room.java</file>
-            <file>file:/C:/Users/Joachim/Documents/GitHub/Semesterproject01-Gruppe30-2018/src/depressionsspillet/worldofzuul/characters/Player.java</file>
-            <file>file:/C:/Users/Joachim/Documents/GitHub/Semesterproject01-Gruppe30-2018/src/depressionsspillet/worldofzuul/IGame.java</file>
-            <file>file:/C:/Users/Joachim/Documents/GitHub/Semesterproject01-Gruppe30-2018/src/depressionsspillet/worldofzuul/combat/Health.java</file>
-            <file>file:/C:/Users/Joachim/Documents/GitHub/Semesterproject01-Gruppe30-2018/src/depressionsspillet/ui/graphical/FXMLGameController.java</file>
-            <file>file:/C:/Users/Joachim/Documents/GitHub/Semesterproject01-Gruppe30-2018/src/depressionsspillet/worldofzuul/Game.java</file>
-            <file>file:/C:/Users/Joachim/Documents/GitHub/Semesterproject01-Gruppe30-2018/src/depressionsspillet/ui/graphical/GUI.java</file>
-            <file>file:/C:/Users/Joachim/Documents/GitHub/Semesterproject01-Gruppe30-2018/src/depressionsspillet/worldofzuul/characters/Character.java</file>
->>>>>>> Stashed changes
+            <file>file:/C:/Users/nikke/Documents/gitkraken%20Projects/ZUUL/Semesterproject01-Gruppe30-2018/src/depressionsspillet/ui/graphical/GUI.java</file>
+            <file>file:/C:/Users/nikke/Documents/gitkraken%20Projects/ZUUL/Semesterproject01-Gruppe30-2018/src/depressionsspillet/ui/graphical/FXMLGame.fxml</file>
+            <file>file:/C:/Users/nikke/Documents/gitkraken%20Projects/ZUUL/Semesterproject01-Gruppe30-2018/src/depressionsspillet/ui/graphical/FXMLGameController.java</file>
         </group>
     </open-files>
 </project-private>

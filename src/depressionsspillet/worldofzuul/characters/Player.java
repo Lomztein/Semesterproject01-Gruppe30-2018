@@ -27,7 +27,7 @@ public class Player extends Character implements Attacker, HasHealth {
     private final Health playerHealth;
     private int happiness = 10;
 
-    Item[] inventory = new Item[4];
+    private final ArrayList<Item> inventory = new ArrayList<>();
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
@@ -167,6 +167,8 @@ public class Player extends Character implements Attacker, HasHealth {
      happinesslevel -= damage.getDamageValue();
      }
      }*/
+    
+    
     //Methods
     public void printInventoryList() {
         int i = 1;
@@ -181,22 +183,22 @@ public class Player extends Character implements Attacker, HasHealth {
         }
     }
 
-    //Useless method to check whether the inventory is empty or not. 
+    //>>>>>> Everything that has to do with player inventory has very high coupling, and should definitely be revised!!!! <<<<<<
+    
+    //Now a useless method to check whether the inventory is empty or not. 
     public boolean inventoryCheck() {
-        boolean isEmpty = true;
-
+        
         for (Item item : inventory) {
-            isEmpty = false;
+            return false;
         }
-
-        return isEmpty;
+        return true;
     }
 
     public void useItem(int i) {
         i -= 1;
         try {
-            if (inventory[i] instanceof ConsumableItem && inventory[i] != null) {
-                ConsumableItem item = (ConsumableItem) inventory[i];
+            if (inventory.get(i) instanceof ConsumableItem && inventory.get(i) != null) {
+                ConsumableItem item = (ConsumableItem) inventory.get(i);
                 addHealth (item.getHealthIncrease());
             } else { //Temporary solution, more conditions will be added later, as more items are added.
                 System.out.println("You stuff a handfull of nothing from pocket " + (i + 1) + " in your mouth, and chew for a few seconds.\n\nYou feel just as empty inside as before.");
@@ -206,7 +208,9 @@ public class Player extends Character implements Attacker, HasHealth {
         }
     }
 
-    public Item addItem(String name) {
+    //Method for determining whether an item with a certain name exists in the room. 
+    //Is used by the addItem, and nowhere else, at this point.
+    public Item currentRoomHasItem(String name) {
         for (Item item : super.getCurrentRoom().getItemArray()) {
             if (name != null && name.equals(item.getName())) {
                 return item;
@@ -217,23 +221,20 @@ public class Player extends Character implements Attacker, HasHealth {
         return null;
     }
 
-    public void addItem(String name, String integer) {
-        Item item = addItem(name);
-        int i = Integer.parseInt(integer) - 1;
+    public void addItem(String name) {
+        Item item = currentRoomHasItem(name);
 
         if (item != null) {
-            if (inventory[i] == null) {
-                inventory[i] = item;
-                getCurrentRoom().removeItem(inventory[i]);
-                System.out.println("You pick up the " + item.getName() + " and stuff it in pocket " + i + ".");
-            } else {
-                System.out.println("You attempt to pry " + item.getName() + "into pocket " + i + ",\nbut it's already full of " + inventory[i].getName() + ". \n\nMaybe you should empty it first.\n");
-            }
+                inventory.add(item);
+                getCurrentRoom().removeItem(item);
+                System.out.println("You pick up the " + item.getName() + " and stuff it in your pocket");
+           
         } else {
             noItemFound(item.getName());
         }
     }
-
+    
+    //
     public void noItemFound(String name) {
         System.out.println("You grab at what you thought was the " + name + ", but there's nothing there.\n\nIt might be best to see a pshycologist if this issue persists.");
     }
@@ -241,22 +242,23 @@ public class Player extends Character implements Attacker, HasHealth {
     public void dropItem(int i) {
         i -= 1;
         try {
-            if (inventory[i] == null) {
+            if (inventory.get(i) == null) {
                 System.out.println("You attempt to drop an empty inventory slot on the ground. You check around to see \nif anyone saw that. Somehow, someone did. The shadows are laughing at you.");
             } else {
 
-                getCurrentRoom().addItem(inventory[i]);
-                System.out.println("You drop the " + inventory[i].getName() + " on the ground before you.\n");
-                inventory[i] = null;
+                getCurrentRoom().addItem(inventory.get(i));
+                System.out.println("You drop the " + inventory.get(i).getName() + " on the ground before you.\n");
+                inventory.set(i, null);
 
             }
         } catch (ArrayIndexOutOfBoundsException error) {
             emptyPockets(i);
         }
     }
-
+    
+    //This won't work anymore, in the sense that it would never be called, as the inventory is now an infinite arraylist.
     private void emptyPockets(int i) {
-        System.out.println("You reach towards pocket " + (i + 1) + ", but for some reason,\nyou can't find it. Perhaps you should check how many pockets you have first.");
+        System.out.println("You reach towards pocket " + (i + 1) + ", but for some reason,\nthere's nothing in it. Perhaps you should check your pockets first.");
     }
 
     @Override
