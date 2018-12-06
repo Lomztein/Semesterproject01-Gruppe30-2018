@@ -1,5 +1,6 @@
 package depressionsspillet.worldofzuul;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Parser 
@@ -42,8 +43,8 @@ public class Parser
         return new Command(commands.getCommandWord(word1), word2, word3, word4);
     }
 
-    public void showCommands()  
+    public ArrayList<String> showCommands()  
     {
-        commands.showAll();
+        return commands.showAll();
     }
 }

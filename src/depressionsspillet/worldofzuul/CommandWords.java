@@ -1,51 +1,50 @@
 package depressionsspillet.worldofzuul;
+
+import depressionsspillet.worldofzuul.combat.DamageResistance;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+public class CommandWords {
 
-public class CommandWords
-{
     // Declare a HashMap that contains the valid commands. Go to Room.java for an explananation of HashMaps.
     private HashMap<String, CommandWord> validCommands;
 
-    public CommandWords()
-    {
+    public CommandWords() {
         validCommands = new HashMap<String, CommandWord>();
         // For each in the CommandWord enum, add it to the validCommands hashmap for easy indexing using the command identifier.
         // Check CommandWord.java for an explanantion of enums.
-        for(CommandWord command : CommandWord.values()) {
-            if(command != CommandWord.UNKNOWN) {
+        for (CommandWord command : CommandWord.values()) {
+            if (command != CommandWord.UNKNOWN) {
                 validCommands.put(command.toString(), command);
             }
         }
     }
 
-    public CommandWord getCommandWord(String commandWord)
-    {
+    public CommandWord getCommandWord(String commandWord) {
         // Get the correct CommandWord by indexing the validCommands HashMap using the input.
         CommandWord command = validCommands.get(commandWord);
-        
+
         // If it exists, return it.
-        if(command != null) {
+        if (command != null) {
             return command;
-        }
-        else {
+        } else {
             // Otherwise, return UNKNOWN.
             return CommandWord.UNKNOWN;
         }
     }
-    
+
     // Helper function for checking if a command is valid in the first place.
-    public boolean isCommand(String aString)
-    {
+    public boolean isCommand(String aString) {
         return validCommands.containsKey(aString);
     }
 
-    public void showAll() 
-    {
+    public ArrayList<String> showAll() {
+        ArrayList<String> tempArray = new ArrayList<>();
+        
         // Loop through and print each key in the validCommand HashMap.
-        for(String command : validCommands.keySet()) {
-            System.out.print(command + "  ");
+        for (String command : validCommands.keySet()) {
+            tempArray.add(command);
         }
-        System.out.println();
+        return tempArray;
     }
 }

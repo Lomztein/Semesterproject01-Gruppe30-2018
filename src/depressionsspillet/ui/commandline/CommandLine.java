@@ -36,25 +36,29 @@ public class CommandLine {
             wantToQuit = game.enterCommand(input);
 
             String last = game.getLastCommand();
+
+            //This might seem very redundant, and it probably is, but this is neccessary to properly print all the actions of the player, as the game class must handle both the GUI and the CLI. 
+            //Without this, you wouldn't know which room you were standing in and so on. - This switch-case is supposed to handle all the CLI prints, whereas the switch-case in the game-class handles all the logic within.
             switch (last) {
                 case "GO":
                     printRoom();
                     break;
-                    
+
                 case "HELP":
-                    printHelp ();
+                    printHelp();
                     break;
-                    
-                case "?":
-                    System.out.println ("Command \"" + input + "\" not recognized. Type \"help\" for help.");
+
+                case "UNKNOWN":
+                    System.out.println("I don't speak whatever language \"" + input + "\" is. Type \"help\" for help.");
                     break;
 
                 default:
-                    System.out.println("Warning: This command hasn't been implemented properly into the CLI. Please scream at the developers.");
+                    System.out.println("\n\u001B[33mWarning: This command hasn't been implemented properly into the CLI. Please scream at the developers for not doing their job.\u001B[0m\n");
                     break;
             }
         }
 
+        //The quitting-response.
         System.out.println("You walk away to cry in the corner. Spilmester Martin will not forget this.");
         System.out.println("Thank you for playing.  Good bye.");
     }
@@ -133,14 +137,14 @@ public class CommandLine {
         System.out.println(game.getCurrentRoomShortDesc());
         System.out.println(singlify(game.getCurrentExits(), ", "));
     }
-    
-        private void printHelp() {
+
+    private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
         System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
         System.out.println("You're currently this happy: " + game.getCurrentHappiness());
-        System.out.println("Right. Your options are:");
+        System.out.println("Okay? So, your options are:");
         for (String str : game.getCommandWords()) {
-            System.out.println (str + ", ");
+            System.out.println(str + ", ");
         }
     }
 

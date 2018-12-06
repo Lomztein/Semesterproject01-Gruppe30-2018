@@ -7,6 +7,7 @@ import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageType;
+import java.util.ArrayList;
 
 public class Game implements IGame {
 
@@ -53,16 +54,12 @@ public class Game implements IGame {
 
         // If the commmand word hasn't been declared in code..
         if (commandWord == CommandWord.UNKNOWN) {
-            System.out.println("I don't know what you mean...");
             return false;
         }
 
         // A switch-case block the takes care of the diffirent possible command executions.
         if (null != commandWord) {
             switch (commandWord) {
-                case HELP:
-                    printHelp();
-                    break;
                 case GO:
                     goRoom(command);
                     break;
@@ -94,13 +91,8 @@ public class Game implements IGame {
         return wantToQuit;
     }
 
-    private void printHelp() {
-        // A desturbingly omnious function for printing out a short guide.
-        System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
-        System.out.println("You're currently this happy: " + player.getHealth());
-        System.out.println("Right. Your options are:");
-        parser.showCommands();
-    }
+    //This should definitely be handled by the CLI.
+    
 
     private void goRoom(Command command) {
         if (command.getSecondWord() == null) {
@@ -331,7 +323,10 @@ public class Game implements IGame {
 
     @Override
     public String[] getCommandWords() {
-        return lastCommandWords;
+        ArrayList<String> tempArray = parser.showCommands();
+        String[] stringArray = tempArray.toArray(new String[tempArray.size()]);
+        
+        return stringArray;
     }
 
     @Override
