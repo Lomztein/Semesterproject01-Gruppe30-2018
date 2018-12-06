@@ -20,6 +20,7 @@ public class ConsumableItem extends Item {
         super(name, description, rarity);
         
         this.healthIncrease = healthIncrease;
+        this.happinessIncrease = happinessIncrease;
         
     }
     
@@ -33,7 +34,7 @@ public class ConsumableItem extends Item {
         return healthIncrease;
     }
     
-    public int gethappinessIncrease() {
+    public int getHappinessIncrease() {
         return happinessIncrease;
     }
     

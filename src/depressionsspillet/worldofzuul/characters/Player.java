@@ -25,7 +25,7 @@ public class Player extends Character implements Attacker, HasHealth {
     private Damagable engagedWith;
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
     private final Health playerHealth;
-    private int happiness = 10;
+    private int happiness = 2;
 
     private final ArrayList<Item> inventory = new ArrayList<>();
 
@@ -111,10 +111,10 @@ public class Player extends Character implements Attacker, HasHealth {
         return this.happiness;
     }
 
-    public void setHappiness(int value) {
-        this.happiness = value;
+    public void addHappiness(int value) {
+        this.happiness += value;
     }
-
+    
     public void addHealth(double value) {
         getHealth().changeHealth(value);
     }
@@ -206,7 +206,8 @@ public class Player extends Character implements Attacker, HasHealth {
             if (inventory.get(i) instanceof ConsumableItem) {
                 ConsumableItem item = (ConsumableItem) inventory.get(i);
                 addHealth(item.getHealthIncrease());
-                printOut = ("You quickly consume the " + item.getName() + ".\nYou gain " + item.getHealthIncrease() + " health, and " + item.gethappinessIncrease() + " happiness.");
+                addHappiness(item.getHappinessIncrease());
+                printOut = ("You quickly consume the " + item.getName() + ".\nYou gain " + item.getHealthIncrease() + " health, and " + item.getHappinessIncrease() + " happiness.");
                 inventory.remove(i); //At this point the item will be removed from all lists, and should not be accessibe, but it would still exist. It's not very effective.
 
             } else { //Temporary solution, more conditions will be added later, as more items are added.

@@ -134,8 +134,8 @@ public class RoomList {
         // In other words, the game begins with us outside.
         
         //Items added to the different rooms:
-        magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 42, 5));
-        magicForrest.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 200, 10, -1));
+        magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 4, 0));
+        magicForrest.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 200, 2, 5));
     }
 
 }

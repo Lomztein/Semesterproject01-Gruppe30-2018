@@ -78,24 +78,23 @@ public class CommandLine {
 
         System.out.println(
                 "-------------------------\n"
-                + "You are now in " + game.getCurrentRoomLongDesc());
+                + game.getCurrentRoomLongDesc());
 
         //The following is printing the room's items and NPC's to tell the user what they can do.
         //Adds the rooms happiness to yours and sets the room happiness to 0.
-        System.out.println(
-                "You feel your happiness rising to: " + game.getPlayerHealth() + "\n\n"
-                + "In this place, you find the following items to be of potential significance: \n");
+        System.out.println("You feel your happiness rising to: " + game.getPlayerHealth() + "\n");
 
         //Printing items from array
         String[] itemNames = game.getItemNames();
         String[] itemDescription = game.getItemDescriptions();
 
         if (itemNames.length != 0) {
+            System.out.println("In this place, you find the following items to be of potential significance: \n");
             for (int i = 0; i < itemNames.length; i++) {
                 System.out.println(itemNames[i] + " - " + itemDescription[i]);
             }
         } else {
-            System.out.println("Nothing.");
+            System.out.println("There are no items in here to interact with.");
         }
 
         //Printing NPCs from array
@@ -110,8 +109,7 @@ public class CommandLine {
             System.out.println("\nThere are no NPCs to interact with here.\n");
         }
 
-        System.out.println("Type HELP for help.");
-        System.out.println(singlify(game.getCurrentExits(), ", "));
+        System.out.println("Type HELP for help.\nYou can now go the following directions: \n" + singlify(game.getCurrentExits(), ",  "));
     }
 
     private void printWelcome() {
@@ -135,7 +133,7 @@ public class CommandLine {
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
         System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
-        System.out.println("You're currently this happy: " + game.getCurrentHappiness());
+        System.out.println("Your stats currently are: " + game.getCurrentHappiness()+ " happiness, and " + game.getPlayerHealth() + " health.");
         System.out.println("Okay? So, your options are:");
         for (String str : game.getCommandWords()) {
             System.out.print(str + "   ");
