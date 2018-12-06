@@ -119,56 +119,13 @@ public class Game implements IGame {
             }
         }
     }
-
-    //   > Not currently in use <
-    /*private void interact(Command command) {
-
-        if (command.hasSecondWord()) {
-
-            System.out.println("You have the option to interact with the following: ");
-            System.out.println(player.getCurrentRoom().listEntities(Interactable.class));
-
-        } else {
-
-            Interactable[] interactables = player.getCurrentRoom().getEntities(Interactable.class);
-            Interactable correct = null;
-            for (Interactable i : interactables) {
-                if (i.getName().toLowerCase().equals(command.getSecondWord().toLowerCase())) {
-                    correct = i;
-                }
-            }
-
-            if (correct != null) {
-
-                if (command.hasThirdWord()) {
-
-                    Interaction interaction = correct.findInteraction(command.getThirdWord());
-
-                    if (interaction != null) {
-                        interaction.execute(player);
-                        System.out.println(interaction.getDescription());
-                    } else {
-                        System.out.println("You have no idea how to " + command.getThirdWord() + " " + correct.getName());
-                    }
-
-                } else {
-                    System.out.println("You have the option of the following interactions: ");
-                    System.out.println(correct.listInteractions());
-                }
-
-            } else {
-                System.out.println(command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
-            }
-
-        }
-
-    }*/
+    
     //Engage replaces the interact-command.
     //This allows the player to 'engage' with an NPC, opening up the command 'attack'. 
     private void engage(Command command) {
 
         if (player.isEngaged()) {
-            System.out.println("You are already engaged in combat with " + player.getEngaged().getName() + ".");
+            lastCommandResponse = ("You are already engaged in combat with " + player.getEngaged().getName() + ".");
         }
 
         if (command.hasSecondWord()) {
@@ -180,9 +137,8 @@ public class Game implements IGame {
                 lastCommandResponse = "There is no " + command.hasSecondWord() + " that you can engage.";
             }
         } else {
-            // TODO: Reimplement in CommandLine.java
-            System.out.println("You have the option to engage: ");
-            System.out.println(player.getCurrentRoom().listEntities(Damagable.class));
+            // TODO: Reimplement in CommandLine.java <------- 
+            lastCommandResponse = ("You have the iption to engage: " + player.getCurrentRoom().listEntities(Damagable.class));
         }
     }
 
@@ -198,17 +154,16 @@ public class Game implements IGame {
 
     private void attack(Command command) {
         if (!command.hasSecondWord()) {
-            System.out.println("You have the option of the following attacks:");
-            System.out.println(player.getAttackList());
+            lastCommandResponse = ("You have the option of the following attacks: " + player.getAttackList());
         } else if (player.isEngaged()) {
             Attack playerAttack = player.getAttack(command.getSecondWord());
             if (playerAttack != null) {
                 player.attackEngaged(playerAttack);
             } else {
-                System.out.println("You don't have the ability to attack using " + command.getSecondWord());
+                lastCommandResponse = ("You don't have the ability to attack using " + command.getSecondWord());
             }
         } else {
-            System.out.println("You aren't currently engaged in combat, therefore you cannot attack anything.");
+            lastCommandResponse = ("You aren't currently engaged in combat, therefore you cannot attack anything.");
         }
     }
 
@@ -274,7 +229,7 @@ public class Game implements IGame {
     private boolean quit(Command command) {
         // If the command has a second word, become confused.
         if (command.hasSecondWord()) {
-            System.out.println("Quit what?");
+            lastCommandResponse = ("Quit what?");
             return false;
         } else {
             // If not, return true, which then quits the game through the previously mentioned "wantToQuit" boolean variable on line 87.
