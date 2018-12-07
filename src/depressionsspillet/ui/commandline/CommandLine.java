@@ -24,11 +24,12 @@ public class CommandLine {
     }
 
     private void init() {
+        //Creating a 'Game attribute and a scanner for inputs.
         game = new Game();
-
         scanner = new Scanner(System.in);
         boolean wantToQuit = false;
 
+        //Calling the welcome-method.
         printWelcome();
 
         while (!wantToQuit) {
@@ -37,6 +38,7 @@ public class CommandLine {
             String input = scanner.nextLine();
             wantToQuit = game.enterCommand(input);
 
+            //Gets the last command from Game.java.
             String last = game.getLastCommand();
 
             //This might seem very redundant, and it probably is, but this is neccessary to properly print all the actions of the player, as the game class must handle both the GUI and the CLI. 
@@ -111,13 +113,11 @@ public class CommandLine {
         } else {
             System.out.println("\nThere are no NPCs to interact with here.\n");
         }
-
         System.out.println("Type HELP for help.\nYou can now go the following directions: \n" + singlify(game.getCurrentExits(), ",  "));
     }
 
     private void printWelcome() {
-
-        // An introduction to our current room.
+        // A tiny, not-so-welcoming method.
         System.out.print(
                 "Welcome to Depressionsspillet!\nDepressionsspillet is a positive and uplifting game, "
                 + "designed to make the player remember the positives of a student's life!\n(Please sign the non-disclosure agreement before playing the game.)\n\n"
@@ -125,6 +125,7 @@ public class CommandLine {
                 + "- My name is Spilmester Martin, and I am the leader of the Warriors against Erikthulu!\n"
                 + "- Please state your desired character style\nOptions include: Wizard, warrior, monk, witch hunter and berserker.\n> ");
 
+        //Prompts the player to enter a name and a class, wheras it's used for nothing but to troll the player.
         Scanner input = new Scanner(System.in);
         String someStyle = input.next();
         System.out.print("- Please state your desired name\n> ");
@@ -134,12 +135,12 @@ public class CommandLine {
     }
 
     private void printHelp() {
-        // A desturbingly omnious function for printing out a short guide.
+        //A very short method that prints out some help.
         System.out.println(
                 "You wimper softly as your check your surroundings:\n"
                 + "Your stats currently are: " + game.getCurrentHappiness() + " happiness, and " + game.getPlayerHealth() + " health.\n"
                 + "Your commands are:");
-        
+
         for (String str : game.getCommandWords()) {
             System.out.print(str + "   ");
         }
@@ -147,7 +148,7 @@ public class CommandLine {
     }
 
     private String singlify(String[] strings, String seperator) {
-
+        //A method to handle arrays and print each value individually with a seperator.
         String result = "";
         for (int i = 0; i < strings.length; i++) {
             result += strings[i];
@@ -155,8 +156,6 @@ public class CommandLine {
                 result += seperator;
             }
         }
-
         return result;
-
     }
 }
