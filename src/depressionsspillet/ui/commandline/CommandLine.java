@@ -32,6 +32,8 @@ public class CommandLine {
         printWelcome();
 
         while (!wantToQuit) {
+            //Print the input-arrow, and check if player wants to quit.
+            System.out.print("> ");
             String input = scanner.nextLine();
             wantToQuit = game.enterCommand(input);
 
@@ -51,6 +53,7 @@ public class CommandLine {
                 case "UNKNOWN":
                     System.out.println("I don't speak whatever language \"" + input + "\" is. Type \"help\" for help.");
                     break;
+
                 case "INVENTORY":
                     System.out.println(game.getCommandResponse());
                     break;
@@ -120,21 +123,23 @@ public class CommandLine {
                 + "designed to make the player remember the positives of a student's life!\n(Please sign the non-disclosure agreement before playing the game.)\n\n"
                 + "Type '" + CommandWord.HELP + "' if you need help.\n\nYour adventure starts near the barn of the famous Spilmester Martin.\n- Greetings, youngling!\n"
                 + "- My name is Spilmester Martin, and I am the leader of the Warriors against Erikthulu!\n"
-                + "- Please state your desired character style\nOptions include: Wizard, warrior, monk, witch hunter and berserker.\n>");
+                + "- Please state your desired character style\nOptions include: Wizard, warrior, monk, witch hunter and berserker.\n> ");
 
         Scanner input = new Scanner(System.in);
         String someStyle = input.next();
-        System.out.print("- Please state your desired name\n>");
+        System.out.print("- Please state your desired name\n> ");
         String someName = input.next();
-        System.out.println("- Alright! You are now Janus the Magic Midget.\n" + game.getCurrentRoomShortDesc() + "\n");
-        System.out.println(singlify(game.getCurrentExits(), ", "));
+        System.out.println("\n\u001B[32m- Alright! You are now Janus the Magic Midget.\u001B[0m\n");
+        printHelp();
     }
 
     private void printHelp() {
         // A desturbingly omnious function for printing out a short guide.
-        System.out.println("You are lost. You are alone. Again... - Really? For Gods sake...");
-        System.out.println("Your stats currently are: " + game.getCurrentHappiness() + " happiness, and " + game.getPlayerHealth() + " health.");
-        System.out.println("Okay? So, your options are:");
+        System.out.println(
+                "You wimper softly as your check your surroundings:\n"
+                + "Your stats currently are: " + game.getCurrentHappiness() + " happiness, and " + game.getPlayerHealth() + " health.\n"
+                + "Your commands are:");
+        
         for (String str : game.getCommandWords()) {
             System.out.print(str + "   ");
         }

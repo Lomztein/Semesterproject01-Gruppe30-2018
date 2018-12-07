@@ -19,8 +19,6 @@ public class Parser
         String word2 = null;
         String word3 = null;
         String word4 = null;
-        
-        System.out.print("> "); 
 
         Scanner tokenizer = new Scanner(input);
         // If the scanner has been given an input, then take it and save it as word1.
