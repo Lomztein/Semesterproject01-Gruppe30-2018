@@ -5,9 +5,11 @@
  */
 package depressionsspillet.ui.commandline;
 
+import depressionsspillet.worldofzuul.Command;
 import depressionsspillet.worldofzuul.CommandWord;
 import depressionsspillet.worldofzuul.Game;
 import depressionsspillet.worldofzuul.IGame;
+import depressionsspillet.worldofzuul.combat.Damagable;
 import java.util.Scanner;
 
 /**
@@ -52,17 +54,38 @@ public class CommandLine {
                     printHelp();
                     break;
 
-                case "UNKNOWN":
-                    System.out.println("I don't speak whatever language \"" + input + "\" is. Type \"help\" for help.");
+                case "QUIT":
+                    wantToQuit = quit();
                     break;
 
+                case "ATTACK":
+                    attack();
+                    break;
+
+                case "ENGAGE":
+                    break;
+
+                case "DISENGAGE":
+                    break;
+                    
+                case "NO":
+                    break;
+                    
                 case "INVENTORY":
-                    System.out.println(game.getCommandResponse());
+                    inventory();
+                    break;
+
+                case "?":
+                    System.out.println("Command \"" + input + "\" not recognized. Type \"help\" for help.");
                     break;
 
                 default:
                     System.out.println("\n\u001B[33mWarning: This command hasn't been implemented properly into the CLI. Please scream at the developers for not doing their job.\u001B[0m \n");
                     break;
+            }
+
+            if (game.getCommandResponse() != null) {
+                System.out.println(game.getCommandResponse());
             }
         }
 
@@ -104,7 +127,7 @@ public class CommandLine {
 
         //Printing NPCs from array
         String[] npcNames = game.getNPCNames();
-        String[] npcDescriptions = game.getItemDescriptions();
+        String[] npcDescriptions = game.getNPCDescriptions();
         if (npcNames.length != 0) {
             System.out.println("The following NPCs are present: ");
             for (int i = 0; i < npcNames.length; i++) {
@@ -158,4 +181,54 @@ public class CommandLine {
         }
         return result;
     }
+
+    private boolean quit() {
+        // If the command has a second word, become confused.
+        if (game.getCommandWords()[0] != null) {
+            System.out.println("Quit what?");
+            return false;
+        } else {
+            // If not, return true, which then quits the game through the previously mentioned "wantToQuit" boolean variable on line 87.
+            return true;
+        }
+    }
+
+    private void attack() {
+        if (game.getCommandWords()[0] == null) {
+            System.out.println("You have the option of the following attacks: ");
+            String[] names = game.getAvailableAttackNames();
+            String[] descriptions = game.getAvailableAttackDescriptions();
+            for (int i = 0; i < names.length; i++) {
+                System.out.println(names[i] + " - " + descriptions[i]);
+            }
+        }else if (game.getCommandWords ()[0] != null) {
+            // An attack was performed.
+            if (game.getIsCurrentlyAttacking()) {
+                
+                double lastAttackDamage = game.getLastAttackDamage();
+                String lastAttackResponse = game.getLastAttackResponse();
+                System.out.println (String.format("You attack " + game.getEngagedName() + " using " + lastAttackResponse, lastAttackDamage));
+                
+                double lastRetaliationDamage = game.getRetaliationAttackDamage();
+                String lastRetaliationResponse = game.getRetaliationAttackResponse();
+                System.out.println (String.format(game.getEngagedName() + " attacks you using " + lastRetaliationResponse, lastRetaliationDamage));
+                
+            }else {
+                System.out.println ("Your attack failed, just as the world expected from you.");
+            }
+        }
+    }
+
+    private void inventory() {
+        if (game.getCommandWords()[0] == null) {
+            System.out.println("You are carrying the following: ");
+            String[] names = game.getPlayerInventoryNames();
+            String[] descriptions = game.getPlayerInventoryDescriptions();
+
+            for (int i = 0; i < names.length; i++) {
+                System.out.println(i + " - " + names[i] + " - " + descriptions[i]);
+            }
+        }
+    }
+
 }

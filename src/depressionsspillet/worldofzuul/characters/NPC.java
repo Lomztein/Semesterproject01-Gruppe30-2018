@@ -25,5 +25,10 @@ public class NPC extends Character implements Interactable {
     public Interaction[] getInteractions() {
         return interactions;
     }
+    
+    @Override
+    public String toString () {
+        return this.getName ();
+    }
 
 }

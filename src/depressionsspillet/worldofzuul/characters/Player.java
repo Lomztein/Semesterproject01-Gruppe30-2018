@@ -182,7 +182,7 @@ public class Player extends Character implements Attacker, HasHealth {
         return printOut;
     }
 
-    //>>>>>> Everything that has to do with player inventory has very high coupling, and should definitely be revised!!!! <<<<<<
+    //>>>>>> Everything that has to do with player inventory has very high coupling, and should definitely be revised!!!! <<<<<< - Not coupling but cohesion mate.
     //Checks whether the inventory is empty or not.
     public boolean inventoryCheck() {
 
