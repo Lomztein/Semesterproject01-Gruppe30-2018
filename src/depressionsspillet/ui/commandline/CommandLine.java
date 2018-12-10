@@ -67,17 +67,16 @@ public class CommandLine {
 
                 case "DISENGAGE":
                     break;
-
+                    
+                case "NO":
+                    break;
+                    
                 case "INVENTORY":
                     inventory();
                     break;
 
                 case "?":
                     System.out.println("Command \"" + input + "\" not recognized. Type \"help\" for help.");
-                    break;
-
-                case "INVENTORY":
-                    System.out.println(game.getCommandResponse());
                     break;
 
                 default:
@@ -129,7 +128,6 @@ public class CommandLine {
         //Printing NPCs from array
         String[] npcNames = game.getNPCNames();
         String[] npcDescriptions = game.getNPCDescriptions();
-        System.out.println("The following NPCs are present: ");
         if (npcNames.length != 0) {
             System.out.println("The following NPCs are present: ");
             for (int i = 0; i < npcNames.length; i++) {
@@ -202,6 +200,21 @@ public class CommandLine {
             String[] descriptions = game.getAvailableAttackDescriptions();
             for (int i = 0; i < names.length; i++) {
                 System.out.println(names[i] + " - " + descriptions[i]);
+            }
+        }else if (game.getCommandWords ()[0] != null) {
+            // An attack was performed.
+            if (game.getIsCurrentlyAttacking()) {
+                
+                double lastAttackDamage = game.getLastAttackDamage();
+                String lastAttackResponse = game.getLastAttackResponse();
+                System.out.println (String.format("You attack " + game.getEngagedName() + " using " + lastAttackResponse, lastAttackDamage));
+                
+                double lastRetaliationDamage = game.getRetaliationAttackDamage();
+                String lastRetaliationResponse = game.getRetaliationAttackResponse();
+                System.out.println (String.format(game.getEngagedName() + " attacks you using " + lastRetaliationResponse, lastRetaliationDamage));
+                
+            }else {
+                System.out.println ("Your attack failed, just as the world expected from you.");
             }
         }
     }

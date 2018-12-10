@@ -24,6 +24,7 @@ public class Game implements IGame {
 
     // Track otherwise unavailable textual responses to commands.
     private String lastCommandResponse;
+    private boolean isCurrentlyAttacking;
 
     public Game() {
         // The attributes are populated with their appropiate data.
@@ -46,7 +47,7 @@ public class Game implements IGame {
             command.getThirdWord(),
             command.getFourthWord(),};
         lastCommandResponse = null;
-        
+
         boolean wantToQuit = false;
 
         // Find out just which word was used to get this command.
@@ -146,17 +147,16 @@ public class Game implements IGame {
     }
 
     private void attack(Command command) {
-        if (!command.hasSecondWord()) {
-            lastCommandResponse = ("You have the option of the following attacks: " + player.getAttackList());
-        } else if (player.isEngaged()) {
+        if (player.isEngaged()) {
+            isCurrentlyAttacking = true;
             Attack playerAttack = player.getAttack(command.getSecondWord());
             if (playerAttack != null) {
                 player.attackEngaged(playerAttack);
             } else {
                 lastCommandResponse = ("You don't have the ability to attack using " + command.getSecondWord());
             }
+            isCurrentlyAttacking = true;
         } else {
-            lastCommandResponse = ("You aren't currently engaged in combat, therefore you cannot attack anything.");
         }
     }
 
@@ -398,5 +398,25 @@ public class Game implements IGame {
     @Override
     public String[] getAvailableCommands() {
         return parser.getCommands();
+    }
+
+    @Override
+    public boolean getIsCurrentlyAttacking() {
+        return isCurrentlyAttacking;
+    }
+
+    @Override
+    public String getEngagedName() {
+        return player.getEngaged ().getName ();
+    }
+
+    @Override
+    public String getPlayerName() {
+        return player.getName ();
+    }
+
+    @Override
+    public String getPlayerDescription() {
+        return player.getDescription();
     }
 }

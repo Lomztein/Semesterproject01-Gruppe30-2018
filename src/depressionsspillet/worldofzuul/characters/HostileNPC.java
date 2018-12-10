@@ -34,7 +34,6 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
         this.retaliate = retaliate;
         health.onTakeDamage.add(e
                 -> {
-            System.out.println(String.format (this.getName() + " " + e.getResistance().getResponse(), e.getDamageTaken()));
             if (!health.isDead() && retaliate) {
                 if (e.getDamage().getAttacker() instanceof Damagable) {
                     attack((Damagable) e.getDamage().getAttacker());
@@ -59,8 +58,6 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
             if (lastTaken.getAttacker() instanceof Damagable) {
                 attack((Damagable) lastTaken.getAttacker());
             }
-        } else {
-            System.out.println(getName() + " they would retaliate with glee, but they've already been murdered in cold blood.");
         }
 
     }

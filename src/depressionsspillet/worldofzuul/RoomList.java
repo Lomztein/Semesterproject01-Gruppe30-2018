@@ -6,6 +6,8 @@
 package depressionsspillet.worldofzuul;
 
 import depressionsspillet.worldofzuul.characters.HostileNPC;
+import depressionsspillet.worldofzuul.characters.NPC;
+import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damagable;
@@ -13,6 +15,8 @@ import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
+import depressionsspillet.worldofzuul.interaction.Action;
+import depressionsspillet.worldofzuul.interaction.Interaction;
 
 /**
  *
@@ -63,12 +67,25 @@ public class RoomList {
         // You know the drill by now.
         animals.setExit("west", vendor);
         animals.setHappiness(15);
+        
+        animals.addEntityToRoom(new HostileNPC ("Direwolf", "An albino wolf looking menacingly at you, yet you cannot tell the nature of its desire.", animals, true, new Health (20),
+                new Attack (DamageType.SLASH, 5, "Claw slash", "A violent lash of the wolfs claws."),
+                new Attack (DamageType.MENTAL, 2, "Loud bark", "A frightening bark. Though scary, it doesn't do much."),
+                new Attack (DamageType.BLUNT, 1, "Headbutt", "A vicious headbutt, however it is infact more adorable than scary.")
+        ));
 
         thaiHooker.setExit("north", movie);
         thaiHooker.setExit("south", fridayBar);
         thaiHooker.setExit("east", magicForrest);
         thaiHooker.setExit("west", drugs);
         thaiHooker.setHappiness(15);
+        
+        thaiHooker.addEntityToRoom(new NPC ("Thai-Hooker", "A prostetute of questionable age and gender, yet you are still attracted to them.", thaiHooker, 
+                new Interaction ("Empregnate", "Give in to your carnal lust.", x -> {
+                    x.addHappiness(20);
+                    x.addAttack(new Attack (DamageType.FIRE, 10, "Chlamydia", "Recieved from a previous encounter, itches like a bitch."));
+                }
+        )));
 
         sleepover.setExit("north", magicForrest);
         sleepover.setExit("south", gate);
@@ -84,6 +101,8 @@ public class RoomList {
         stripClub.setExit("east", kfc);
         stripClub.setExit("west", sleepover);
         stripClub.setHappiness(10);
+        
+        stripClub.addItem(new ConsumableItem ("Moist money", "A bunch o one-doller bills covered by strange fluids.", 10, 15, 25));
 
         kfc.setExit("east", shrek);
         kfc.setExit("west", stripClub);
@@ -91,6 +110,14 @@ public class RoomList {
 
         shrek.setExit("west", kfc);
 
+        shrek.addEntityToRoom(new HostileNPC ("Shrek", "Memelord Alpha-Omega", shrek, true, new Health (42), 
+                new Attack (DamageType.DAB, 5, "Shrek'd", "Get shreked you fucking looser."),
+                new Attack (DamageType.BLUNT, 10, "Fat rip", "A different form of blunt damage, causing you to pass out for five hours. Any damage done is due to hunger."),
+                new Attack (DamageType.FIRE, 8, "Onions", "OGRES ARE LIKE ONIONS EYH."),
+                new Attack (DamageType.MENTAL, 20, "Love", "Shrek is love."),
+                new Attack (DamageType.MENTAL, 20, "Life", "Shrek is life.")
+        ));
+        
         allotment.setExit("south", drugs);
         allotment.setExit("east", movie);
         allotment.setHappiness(10);
