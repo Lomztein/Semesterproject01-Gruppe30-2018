@@ -82,6 +82,7 @@ public class Player extends Character implements Attacker, HasHealth {
         return names.toArray(new String[0]);
     }
 
+    //Returns the item descriptions in the player inventory.
     public String[] getInventoryItemDescriptions() {
         ArrayList<String> descriptions = new ArrayList<>();
         for (Item item : inventory) {
@@ -159,14 +160,6 @@ public class Player extends Character implements Attacker, HasHealth {
         }
     }
 
-    /*@Override
-     public void takeDamage(Damage damage) {
-     onDamaged.execute(damage);
-     if (damage.getDamageType() == DamageType.MENTAL) {
-     happinesslevel -= damage.getDamageValue();
-     }
-     }*/
-    //Methods
     //Prints the full list of the inventory for the CLI
     public String printInventoryList() {
         int i = 1;
