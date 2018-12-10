@@ -13,6 +13,6 @@ import depressionsspillet.worldofzuul.characters.Player;
  */
 public interface Action {
     
-    void execute (Player player);
+    String execute (Player player);
     
 }

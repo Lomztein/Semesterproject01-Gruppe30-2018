@@ -38,4 +38,8 @@ public class Parser {
     public ArrayList<String> showCommands() {
         return commands.showAll();
     }
+    
+    public String[] getCommands () {
+        return commands.getAll();
+    }
 }

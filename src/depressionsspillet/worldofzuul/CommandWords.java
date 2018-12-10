@@ -1,6 +1,4 @@
 package depressionsspillet.worldofzuul;
-
-import depressionsspillet.worldofzuul.combat.DamageResistance;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,5 +44,13 @@ public class CommandWords {
             tempArray.add(command);
         }
         return tempArray;
+    }
+    
+    public String[] getAll () {
+        ArrayList<String> all = new ArrayList<>();
+        for (CommandWord word : CommandWord.values()) {
+            all.add (word.name());
+        }
+        return all.toArray (new String[0]);
     }
 }

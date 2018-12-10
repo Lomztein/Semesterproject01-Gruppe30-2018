@@ -17,8 +17,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -32,6 +30,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author Lomztein
  */
 public class FXMLController implements Initializable {
+
     @FXML
     private Button playGameButton;
     @FXML
@@ -62,9 +61,9 @@ public class FXMLController implements Initializable {
          //New scene
         Parent playParent = FXMLLoader.load(getClass().getResource("FXMLGame.fxml"));
         Scene playScene = new Scene(playParent);
-                
+        
         //Setting this scene to stage
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(playScene);
         window.show();
     }
@@ -74,11 +73,11 @@ public class FXMLController implements Initializable {
         //New scene
         Parent creditsParent = FXMLLoader.load(getClass().getResource("FXMLCredits.fxml"));
         Scene creditsScene = new Scene(creditsParent);
-        
+
         //Setting this scene to stage
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(creditsScene);
         window.show();
     }
-    
+
 }

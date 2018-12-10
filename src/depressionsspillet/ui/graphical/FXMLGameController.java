@@ -9,7 +9,10 @@ import depressionsspillet.worldofzuul.Game;
 import depressionsspillet.worldofzuul.IGame;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +21,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -36,6 +39,7 @@ public class FXMLGameController implements Initializable {
 
     //Interface
     IGame game = new Game();
+    ObservableList<String> inventory = FXCollections.observableArrayList();
 
     @FXML
     private ImageView backgroundImageView;
@@ -64,9 +68,9 @@ public class FXMLGameController implements Initializable {
     @FXML
     private ToggleGroup attackToggleGroup;
     @FXML
-    private Hyperlink NPCButton;
+    private ImageView itemImageView;
     @FXML
-    private Hyperlink itemButton;
+    private ListView<String> inventoryList;
 
     /**
      * Initializes the controller class.
@@ -82,6 +86,10 @@ public class FXMLGameController implements Initializable {
         }
         game.playGame();
         txtAreaOutput.setText(game.getCurrentRoomLongDesc());
+
+        String[] temp = game.getPlayerInventoryNames();
+        inventory.addAll(Arrays.asList(temp));
+        inventoryList.setItems(inventory);
     }
 
     @FXML
@@ -229,14 +237,6 @@ public class FXMLGameController implements Initializable {
 
     @FXML
     private void handlePickUpButtonEvent(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleNPCButtonEvent(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleItemButtonEvent(ActionEvent event) {
     }
 
 }
