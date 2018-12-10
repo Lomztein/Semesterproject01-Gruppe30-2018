@@ -398,4 +398,5 @@ public class Game implements IGame {
     public String getCommandResponse() {
         return lastCommandResponse;
     }
+
 }

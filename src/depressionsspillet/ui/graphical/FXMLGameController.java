@@ -24,6 +24,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -63,10 +64,6 @@ public class FXMLGameController implements Initializable {
     private Button pickUpButton;
     @FXML
     private ToggleGroup attackToggleGroup;
-    @FXML
-    private Hyperlink NPCButton;
-    @FXML
-    private Hyperlink itemButton;
 
     /**
      * Initializes the controller class.
@@ -231,12 +228,5 @@ public class FXMLGameController implements Initializable {
     private void handlePickUpButtonEvent(ActionEvent event) {
     }
 
-    @FXML
-    private void handleNPCButtonEvent(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleItemButtonEvent(ActionEvent event) {
-    }
 
 }
