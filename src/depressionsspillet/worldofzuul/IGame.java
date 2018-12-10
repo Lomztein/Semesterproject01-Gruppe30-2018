@@ -15,6 +15,8 @@ public interface IGame {
     
     // COMMAND STUFFINGS
     boolean enterCommand(String input);
+    String[] getAvailableCommands ();
+    
     String getLastCommand();
     String[] getCommandWords();
     String getCommandResponse ();
@@ -37,6 +39,9 @@ public interface IGame {
     // ROOM STUFFINGS END
 
     // PLAYER STUFFINGS
+    String getPlayerName ();
+    String getPlayerDescription ();
+    
     double getPlayerHealth();
     int getCurrentHappiness();
     
@@ -52,6 +57,9 @@ public interface IGame {
     String[] getAvailableAttackNames ();
     String[] getAvailableAttackDescriptions ();
     
+    String getEngagedName ();
+    
+    boolean getIsCurrentlyAttacking ();
     double getLastAttackDamage ();
     String getLastAttackResponse ();
     

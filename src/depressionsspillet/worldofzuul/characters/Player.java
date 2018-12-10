@@ -32,7 +32,6 @@ public class Player extends Character implements Attacker, HasHealth {
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
         playerHealth = new Health(1);
-        playerHealth.onTakeDamage.add((x) -> System.out.println(String.format("The player " + x.getResistance().getResponse(), x.getDamageTaken())));
     }
 
     public void generatePlayerResistances() {
@@ -83,6 +82,7 @@ public class Player extends Character implements Attacker, HasHealth {
         return names.toArray(new String[0]);
     }
 
+    //Returns the item descriptions in the player inventory.
     public String[] getInventoryItemDescriptions() {
         ArrayList<String> descriptions = new ArrayList<>();
         for (Item item : inventory) {
@@ -160,14 +160,6 @@ public class Player extends Character implements Attacker, HasHealth {
         }
     }
 
-    /*@Override
-     public void takeDamage(Damage damage) {
-     onDamaged.execute(damage);
-     if (damage.getDamageType() == DamageType.MENTAL) {
-     happinesslevel -= damage.getDamageValue();
-     }
-     }*/
-    //Methods
     //Prints the full list of the inventory for the CLI
     public String printInventoryList() {
         int i = 1;
@@ -189,7 +181,7 @@ public class Player extends Character implements Attacker, HasHealth {
         return printOut;
     }
 
-    //>>>>>> Everything that has to do with player inventory has very high coupling, and should definitely be revised!!!! <<<<<<
+    //>>>>>> Everything that has to do with player inventory has very high coupling, and should definitely be revised!!!! <<<<<< - Not coupling but cohesion mate.
     //Checks whether the inventory is empty or not.
     public boolean inventoryCheck() {
 

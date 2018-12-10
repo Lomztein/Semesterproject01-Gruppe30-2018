@@ -86,7 +86,7 @@ public class Health {
                 return resistance;
             }
         }
-        return null;
+        return DamageResistance.NULL_RESISTANCE;
     }
 
     public void takeDamage(Damage damage) {
