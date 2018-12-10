@@ -6,6 +6,7 @@
 package depressionsspillet.worldofzuul;
 
 import depressionsspillet.worldofzuul.characters.HostileNPC;
+import depressionsspillet.worldofzuul.characters.NPC;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damagable;
@@ -13,6 +14,7 @@ import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
+import depressionsspillet.worldofzuul.interaction.Interaction;
 
 /**
  *
@@ -24,7 +26,7 @@ public class RoomList {
     //This class was made to combat the amount of bloat in the game-class. 
     //It contains all the rooms, the items and entities inside the rooms, and exits.
 
-    static Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
+    static Room start, magicForrest, vendor, animals, thaiHooker, campfire, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
     public static void listRooms() {
 
@@ -34,7 +36,7 @@ public class RoomList {
         vendor = new Room("You have visited the blackboard vendor, a replacement of blackboard is currently in the works, in the meantime however, \n please feel free to browse the vendor's wares.", "vendor");
         animals = new Room("You go deeper into the forest and find yourself in a completely white room filled with puppies and kittens.", "animals");
         thaiHooker = new Room("A beuatiful asian woman approaches you and asks what you are doing tonight. She seems interresting but a beautiful woman \n has never approached you before... Could it be a trap?", "thaiHooker");
-        sleepover = new Room("You find yourself at your best friends house in your pajamas with icecream. Your best friends invites you inside for a sleepover.", "sleepover");
+        campfire = new Room("", "campfire");
         fridayBar = new Room("Wuhuu it is friday on SDU and you suddenly feel your spirite soaring and you feel like getting smashed and so you do... You feel \n great.", "fridayBar");
         stripClub = new Room("As you continued through the forrest you notices a couple of flikering light as you move closer you see a sign saying: \n 'Gentleman's club. Free tonight' You enter, look around, start smiling slyly and have a great time. Your mum would be disappointed", "stripClub");
         kfc = new Room("Suddenly in your path you see a familiar red sign with tree white letters. It reads: KFC, and you are overjoyed. You enter and when \n you tell the cashier about your amazing \n journey. She decides to give you free food for your trip and warns you about continuing \n east becuase a dangerous and mysterious creature lurks in the swamp.", "kfc");
@@ -50,7 +52,7 @@ public class RoomList {
         start.setExit("south", magicForrest);
 
         // Exits for magicForrest are declared.
-        magicForrest.setExit("south", sleepover);
+        magicForrest.setExit("south", campfire);
         magicForrest.setExit("east", vendor);
         magicForrest.setExit("west", thaiHooker);
 
@@ -70,19 +72,19 @@ public class RoomList {
         thaiHooker.setExit("west", drugs);
         thaiHooker.setHappiness(15);
 
-        sleepover.setExit("north", magicForrest);
-        sleepover.setExit("south", gate);
-        sleepover.setExit("east", stripClub);
-        sleepover.setExit("west", fridayBar);
-        sleepover.setHappiness(15);
+        campfire.setExit("north", magicForrest);
+        campfire.setExit("south", gate);
+        campfire.setExit("east", stripClub);
+        campfire.setExit("west", fridayBar);
+        campfire.setHappiness(15);
 
         fridayBar.setExit("north", thaiHooker);
-        fridayBar.setExit("east", sleepover);
+        fridayBar.setExit("east", campfire);
         fridayBar.setHappiness(10);
 
         stripClub.setExit("north", vendor);
         stripClub.setExit("east", kfc);
-        stripClub.setExit("west", sleepover);
+        stripClub.setExit("west", campfire);
         stripClub.setHappiness(10);
 
         kfc.setExit("east", shrek);
@@ -102,7 +104,7 @@ public class RoomList {
         drugs.setExit("north", allotment);
         drugs.setExit("east", thaiHooker);
 
-        gate.setExit("north", sleepover);
+        gate.setExit("north", campfire);
         gate.setExit("south", boss, false);
 
         boss.setExit("south", suprise);
@@ -129,13 +131,51 @@ public class RoomList {
             }
         });
         boss.addEntityToRoom(erikthulhu);
+        
+        NPC Vendorboi = new NPC("Vendorboi", "The friendly purveyor of various liquid substances, that may or may not be of use", vendor, 
+                new Interaction ("Bargain for a Health Concoction", "Restores Health at the cost of Happiness", x -> {x.addHealth(100d - x.getHealth().getCurrentHealth()); x.addHappiness(-5);
+                    return "Your health is restored to 100";})
+        );
+        vendor.addEntityToRoom(Vendorboi);
 
-        // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
-        // In other words, the game begins with us outside.
+        NPC Vader = new NPC("Darth Vader the Elderly", "Passionate owner of a beautiful allotment", allotment, 
+                new Interaction ("Stay awhile; and listen...", "Let Vader tell you about his succeses and failures in life.", x -> {x.addHappiness(20);
+                        return "As you listen to the tales of an old wise man, you feel an ember of purposefulness flicker inside. +20 happiness";}),
+                new Interaction ("Ask Vader if he wants to be your daddy", "This question is not thoroughly thought through, and the answer may not please you.", x -> {x.addHappiness(-15);
+                        return "He responds with a stern and slightly disgusted refusal. This makes you a bit sad. -15 happiness";})
+        );
+        allotment.addEntityToRoom(Vader);
+        
+        NPC friend = new NPC("Dan", "A childhood buddy, always cheery and positive", campfire,
+            new Interaction ("Make a friendly gesture", "Slap his ass", x -> {x.addHappiness(5);
+                return "Dan is surprised by the slap but laughs and tries to slap you back meanwhile he makes rude but friendlyminded remarks about your appearance and actions. +5 happiness";})
+        ); 
+        
+        NPC buddy = new NPC("Mark", "A friend from school, smart, handsome and probably gay, but everloving by heart", campfire,
+            new Interaction ("Make a friendly gesture", "Slap his ass", x -> {x.addHappiness(-5);
+                return "Mark is not amused by your blatant sexual discrimination - you recieve a light slap, but can sense Mark's deep disappointment. -5 happiness";}),
+            new Interaction ("Say something nice to Mark", "Compliment Mark's eyebrows and his choice of fashion", x -> {x.addHappiness(5);
+                    return "Mark replies with a compliment about how you are polite and sweet and gives you a light pat on the shoulder. +5 happiness";})
+        );
+        
+        NPC girlie = new NPC("Mia", "A childhood girl friend with whom you've never really been apart", campfire,
+            new Interaction ("Make a move", "touch tiddies", x -> {x.addHappiness(1);
+                return "Mia is startled by this sudden sexual movement and retaliates with a decisive knock in your bollocks. +1 happiness cuz you got to touch dem tiddies";}),
+            new Interaction ("Ask a serious question", "Ask why you were never together", x -> {x.addHappiness(10);
+                return "Mia explains that she never thought she were good enough for you, and besides it would be wierd to mess around with someone you've known almost since birth. +10 happiness";}),
+            new Interaction ("Propose", "Ask Mia if she wants to marry you", x -> {x.addHappiness(-10);
+                return "Your being thickskulled and too sudden and blunt has provoked an anxious refusal from Mia. She tells you to grow up and get over your desperation, as she looks away in resentment. -10 happiness";}) 
+        );
+        campfire.addEntityToRoom(friend);
+        campfire.addEntityToRoom(buddy);
+        campfire.addEntityToRoom(girlie);
+        
         
         //Items added to the different rooms:
         magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 4, 0));
-        magicForrest.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 200, 2, 5));
+        
+        fridayBar.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 200, 2, 5));
+        fridayBar.addItem(new ConsumableItem("more beer", "This is exactly what you need.", 300, 8, 15));
     }
 
 }
