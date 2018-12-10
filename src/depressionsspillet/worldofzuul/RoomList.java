@@ -20,6 +20,10 @@ import depressionsspillet.worldofzuul.combat.Health;
  */
 public class RoomList {
 
+    
+    //This class was made to combat the amount of bloat in the game-class. 
+    //It contains all the rooms, the items and entities inside the rooms, and exits.
+
     static Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
     public static void listRooms() {
@@ -49,8 +53,6 @@ public class RoomList {
         magicForrest.setExit("south", sleepover);
         magicForrest.setExit("east", vendor);
         magicForrest.setExit("west", thaiHooker);
-
-        magicForrest.addItem(new ConsumableItem("Apple", "An apple of particularly moist texture.", 100, 42));
 
         // Exits for vendor are declared.
         vendor.setExit("south", stripClub);
@@ -105,6 +107,7 @@ public class RoomList {
 
         boss.setExit("south", suprise);
 
+        //A new NPC, the boss Erikthulhu, is created. 
         HostileNPC erikthulhu = new HostileNPC("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, true, new Health(666d).withResistances(
                 new DamageResistance[]{
                     new DamageResistance(DamageType.BLUNT, "is impervious to blunt force trauma, he is simply too great.", 0),
@@ -129,6 +132,10 @@ public class RoomList {
 
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
+        
+        //Items added to the different rooms:
+        magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 4, 0));
+        magicForrest.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 200, 2, 5));
     }
 
 }
