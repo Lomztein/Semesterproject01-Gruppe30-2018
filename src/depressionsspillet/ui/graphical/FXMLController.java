@@ -5,6 +5,7 @@
  */
 package depressionsspillet.ui.graphical;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,6 +18,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * FXML Controller class
@@ -29,21 +35,33 @@ public class FXMLController implements Initializable {
     private Button playGameButton;
     @FXML
     private Button creditsButton;
+    private Clip clip;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+               
+            try {
+            File introMusic = new File("intromusic.wav");                 
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(introMusic);
+            clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+        }
     }
-
+    
     @FXML
     private void handlePlayButtonActionEvent(ActionEvent event) throws IOException {
-        //New scene
+        //stop intro music
+        clip.stop();
+        
+         //New scene
         Parent playParent = FXMLLoader.load(getClass().getResource("FXMLGame.fxml"));
         Scene playScene = new Scene(playParent);
-
+        
         //Setting this scene to stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(playScene);

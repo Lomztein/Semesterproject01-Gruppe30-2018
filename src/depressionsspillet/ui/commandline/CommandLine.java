@@ -164,7 +164,7 @@ public class CommandLine {
                 + "Your stats currently are: " + game.getCurrentHappiness() + " happiness, and " + game.getPlayerHealth() + " health.\n"
                 + "Your commands are:");
 
-        for (String str : game.getCommandWords()) {
+        for (String str : game.getAvailableCommands()) {
             System.out.print(str + "   ");
         }
         System.out.println("");
@@ -201,17 +201,19 @@ public class CommandLine {
             for (int i = 0; i < names.length; i++) {
                 System.out.println(names[i] + " - " + descriptions[i]);
             }
-        }else if (game.getCommandWords ()[0] != null) {
+        }else if (game.getCommandWords()[0] != null) {
             // An attack was performed.
             if (game.getIsCurrentlyAttacking()) {
                 
                 double lastAttackDamage = game.getLastAttackDamage();
                 String lastAttackResponse = game.getLastAttackResponse();
-                System.out.println (String.format("You attack " + game.getEngagedName() + " using " + lastAttackResponse, lastAttackDamage));
+                System.out.println (String.format("You attack " + game.getEngagedName() + " using " + game.getCommandWords()[0] + " - " + lastAttackResponse, lastAttackDamage));
+                System.out.println ("They have " + game.getLastAttackedHealth() + " health left.");
                 
                 double lastRetaliationDamage = game.getRetaliationAttackDamage();
                 String lastRetaliationResponse = game.getRetaliationAttackResponse();
-                System.out.println (String.format(game.getEngagedName() + " attacks you using " + lastRetaliationResponse, lastRetaliationDamage));
+                System.out.println (String.format(game.getEngagedName() + " attacks you with " + lastRetaliationResponse, lastRetaliationDamage));
+                System.out.println ("You have " + game.getPlayerHealth() + " health left.");
                 
             }else {
                 System.out.println ("Your attack failed, just as the world expected from you.");

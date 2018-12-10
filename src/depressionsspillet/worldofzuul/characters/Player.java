@@ -32,7 +32,6 @@ public class Player extends Character implements Attacker, HasHealth {
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
         playerHealth = new Health(1);
-        playerHealth.onTakeDamage.add((x) -> System.out.println(String.format("The player " + x.getResistance().getResponse(), x.getDamageTaken())));
     }
 
     public void generatePlayerResistances() {
