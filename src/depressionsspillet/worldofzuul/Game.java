@@ -277,10 +277,7 @@ public class Game implements IGame {
 
     @Override
     public String[] getCommandWords() {
-        ArrayList<String> tempArray = parser.showCommands();
-        String[] stringArray = tempArray.toArray(new String[tempArray.size()]);
-
-        return stringArray;
+        return lastCommandWords;
     }
 
     @Override

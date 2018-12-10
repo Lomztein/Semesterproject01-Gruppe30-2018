@@ -24,10 +24,8 @@ import depressionsspillet.worldofzuul.interaction.Interaction;
  */
 public class RoomList {
 
-    
     //This class was made to combat the amount of bloat in the game-class. 
     //It contains all the rooms, the items and entities inside the rooms, and exits.
-
     static Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
     public static void listRooms() {
@@ -53,6 +51,13 @@ public class RoomList {
         // Exits for are declared.
         start.setExit("south", magicForrest);
 
+        HostileNPC direwolf = new HostileNPC("Direwolf", "An albino wolf looking menacingly at you, yet you cannot tell the nature of its desire.", animals, true, new Health(20),
+                new Attack(DamageType.SLASH, 5, "Claw slash", "a violent slash of the wolfs claws."),
+                new Attack(DamageType.MENTAL, 2, "Loud bark", "a frightening bark. Though scary, it doesn't do much."),
+                new Attack(DamageType.BLUNT, 1, "Headbutt", "a vicious headbutt, however it is in fact more adorable than scary.")
+        );
+        magicForrest.addEntityToRoom(direwolf);
+
         // Exits for magicForrest are declared.
         magicForrest.setExit("south", sleepover);
         magicForrest.setExit("east", vendor);
@@ -67,25 +72,22 @@ public class RoomList {
         // You know the drill by now.
         animals.setExit("west", vendor);
         animals.setHappiness(15);
-        
-        animals.addEntityToRoom(new HostileNPC ("Direwolf", "An albino wolf looking menacingly at you, yet you cannot tell the nature of its desire.", animals, true, new Health (20),
-                new Attack (DamageType.SLASH, 5, "Claw slash", "A violent lash of the wolfs claws."),
-                new Attack (DamageType.MENTAL, 2, "Loud bark", "A frightening bark. Though scary, it doesn't do much."),
-                new Attack (DamageType.BLUNT, 1, "Headbutt", "A vicious headbutt, however it is infact more adorable than scary.")
-        ));
+
+        animals.addEntityToRoom(direwolf);
 
         thaiHooker.setExit("north", movie);
         thaiHooker.setExit("south", fridayBar);
         thaiHooker.setExit("east", magicForrest);
         thaiHooker.setExit("west", drugs);
         thaiHooker.setHappiness(15);
-        
-        thaiHooker.addEntityToRoom(new NPC ("Thai-Hooker", "A prostetute of questionable age and gender, yet you are still attracted to them.", thaiHooker, 
-                new Interaction ("Empregnate", "Give in to your carnal lust.", x -> {
+
+        thaiHooker.addEntityToRoom(new NPC("Thai-Hooker", "A prostetute of questionable age and gender, yet you are still attracted to them.", thaiHooker,
+                new Interaction("Empregnate", "Give in to your carnal lust.", x -> {
                     x.addHappiness(20);
-                    x.addAttack(new Attack (DamageType.FIRE, 10, "Chlamydia", "Recieved from a previous encounter, itches like a bitch."));
+                    x.addAttack(new Attack(DamageType.FIRE, 10, "Chlamydia", "Recieved from a previous encounter, itches like a bitch."));
+                    return "You have recieved the power of Stan Lee";
                 }
-        )));
+                )));
 
         sleepover.setExit("north", magicForrest);
         sleepover.setExit("south", gate);
@@ -101,8 +103,8 @@ public class RoomList {
         stripClub.setExit("east", kfc);
         stripClub.setExit("west", sleepover);
         stripClub.setHappiness(10);
-        
-        stripClub.addItem(new ConsumableItem ("Moist money", "A bunch o one-doller bills covered by strange fluids.", 10, 15, 25));
+
+        stripClub.addItem(new ConsumableItem("Moist money", "A bunch o one-doller bills covered by strange fluids.", 10, 15, 25));
 
         kfc.setExit("east", shrek);
         kfc.setExit("west", stripClub);
@@ -110,14 +112,14 @@ public class RoomList {
 
         shrek.setExit("west", kfc);
 
-        shrek.addEntityToRoom(new HostileNPC ("Shrek", "Memelord Alpha-Omega", shrek, true, new Health (42), 
-                new Attack (DamageType.DAB, 5, "Shrek'd", "Get shreked you fucking looser."),
-                new Attack (DamageType.BLUNT, 10, "Fat rip", "A different form of blunt damage, causing you to pass out for five hours. Any damage done is due to hunger."),
-                new Attack (DamageType.FIRE, 8, "Onions", "OGRES ARE LIKE ONIONS EYH."),
-                new Attack (DamageType.MENTAL, 20, "Love", "Shrek is love."),
-                new Attack (DamageType.MENTAL, 20, "Life", "Shrek is life.")
+        shrek.addEntityToRoom(new HostileNPC("Shrek", "Memelord Alpha-Omega", shrek, true, new Health(42),
+                new Attack(DamageType.DAB, 5, "Shrek'd", "a complete shrek."),
+                new Attack(DamageType.BLUNT, 10, "Fat rip", "a different form of blunt damage, causing you to pass out for five hours. Any damage done is due to hunger."),
+                new Attack(DamageType.FIRE, 8, "Onions", "the multiple layers of his soul."),
+                new Attack(DamageType.MENTAL, 20, "Love", "his love."),
+                new Attack(DamageType.MENTAL, 20, "Life", "his life.")
         ));
-        
+
         allotment.setExit("south", drugs);
         allotment.setExit("east", movie);
         allotment.setHappiness(10);
@@ -141,25 +143,17 @@ public class RoomList {
                     new DamageResistance(DamageType.SLASH, "has too thick skin to penetrate, your slash simply glances off with a small papercut-like wound left, doing %.2f damage.", 0.1),
                     new DamageResistance(DamageType.DAB, "doesn't care. You cannot merely dab upon all your problems. Please actually try to solve your problems.", 0),
                     new DamageResistance(DamageType.MENTAL, "is distraught by your comfidence and self-worth, and so he takes an impressive %.2f damage.", 2),}),
-                new Attack(DamageType.DAB, 10d, "Intense Dab", "Erikthulhu uses your own tactics against you. You cannot keep fighting yourself like this."),
-                new Attack(DamageType.FIRE, 15d, "Firebreath", "A massive storm of fire. Bricks will be shat."),
-                new Attack(DamageType.SUNONASTICK, 0, "Sun on a Stick", "Arguably the most useful of all weapons."),
-                new Attack(DamageType.WATER, 2d, "Water Gun", "A soft, rather refreshing spray of water originating from a toy gun."),
-                new Attack(DamageType.BLUNT, 10d, "Vigerous Punch", "An intense punch, using raw strength alone."),
-                new Attack(DamageType.MENTAL, 10d, "Insult", "An insult upon your appearance, talents and skills all wowen together in a beautiful euphony of wordsmithing.")
+                new Attack(DamageType.DAB, 10d, "Intense Dab", "your own tactics against you. You cannot keep fighting yourself like this."),
+                new Attack(DamageType.FIRE, 15d, "Firebreath", "a massive storm of fire. Bricks will be shat."),
+                new Attack(DamageType.SUNONASTICK, 0, "Sun on a Stick", "arguably the most useful of all weapons."),
+                new Attack(DamageType.WATER, 2d, "Water Gun", "a soft, rather refreshing spray of water originating from a toy gun."),
+                new Attack(DamageType.BLUNT, 10d, "Vigerous Punch", "an intense punch, using raw strength alone."),
+                new Attack(DamageType.MENTAL, 10d, "Insult", "an insult upon your appearance, talents and skills all wowen together in a beautiful euphony of wordsmithing.")
         );
-        erikthulhu.getHealth().onTakeDamage.add(x -> {
-            if (x.getDamage().getDamageType() == DamageType.DAB) {
-                System.out.println("Erikthulhu will not allow you to outdab him, he retaliates with a furious dab in addition to his regular counter-attack.");
-                Damage retaliation = new Damage((Attacker) x.getDamage().getReciever(), (Damagable) x.getDamage().getAttacker(), DamageType.DAB, 100);
-                retaliation.doDamage();
-            }
-        });
         boss.addEntityToRoom(erikthulhu);
 
         // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
         // In other words, the game begins with us outside.
-        
         //Items added to the different rooms:
         magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 4, 0));
         magicForrest.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 200, 2, 5));
