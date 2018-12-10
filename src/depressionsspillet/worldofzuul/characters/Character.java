@@ -31,6 +31,7 @@ public abstract class Character implements Entity {
         return this.name;
     }
 
+    @Override
     public String getDescription() {
         return this.description;
     }
