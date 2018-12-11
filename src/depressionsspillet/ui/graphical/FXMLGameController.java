@@ -72,13 +72,12 @@ public class FXMLGameController implements Initializable {
     private Button pickUpButton;
     @FXML
     private ToggleGroup attackToggleGroup;
-    private ListView<String> inventoryList;
     @FXML
     private ListView<String> lvNPC;
     @FXML
     private ListView<String> lvItems;
     @FXML
-    private ListView<?> lvInventory;
+    private ListView<String> lvInventory;
     //<Placeholder>
     @FXML
     private Circle snotface;
@@ -246,23 +245,42 @@ public class FXMLGameController implements Initializable {
     }
 
     @FXML
-    private void handleAttackButtonEvent(ActionEvent event
-    ) {
+    private void handleAttackButtonEvent(ActionEvent event) {
     }
 
     @FXML
-    private void handleUseButtonEvent(ActionEvent event
-    ) {
+    private void handleUseButtonEvent(ActionEvent event) {
     }
 
     @FXML
-    private void handleDropButtonEvent(ActionEvent event
-    ) {
+    private void handleDropButtonEvent(ActionEvent event) {
+        int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
+        selectedInventoryItemIndex += 1;
+        game.enterCommand("inventory drop " + selectedInventoryItemIndex);
+
+        //Refreshing inventory
+        inventory.clear();
+        String[] inventoryStrings = game.getPlayerInventoryNames();
+        for (String string : inventoryStrings) {
+            inventory.add(string);
+        }
+        lvInventory.setItems(inventory);
+        updateItemsList();
     }
 
     @FXML
-    private void handlePickUpButtonEvent(ActionEvent event
-    ) {
+    private void handlePickUpButtonEvent(ActionEvent event) {
+        String selectedItem = lvItems.getSelectionModel().getSelectedItem();
+        game.enterCommand("inventory pickup " + selectedItem);
+        //Refreshing inventory
+        String[] inventoryStrings = game.getPlayerInventoryNames();
+        for (String string : inventoryStrings) {
+            if (inventory.contains(string) == false) {
+                inventory.add(string);
+            }
+        }
+        lvInventory.setItems(inventory);
+        updateItemsList();
     }
 
     //Gets the width of the object, which is currently a circle - So it gets the diameter.
