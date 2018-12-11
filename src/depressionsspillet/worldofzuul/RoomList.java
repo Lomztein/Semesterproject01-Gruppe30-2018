@@ -128,7 +128,7 @@ public class RoomList {
         fridayBar.setExit("east", campfire);
         fridayBar.setHappiness(10);
         
-        fridayBar.addEntityToRoom(new NPC("Dennis", "Bartender", fridayBar,
+        fridayBar.addEntityToRoom(new InteractableNPC("Dennis", "Bartender", fridayBar,
             new Interaction("Beer", "Sit down at the bar, greet the bartender and order a drink", 
                     x -> {x.addHappiness(5); 
                     x.addHealth(10);
@@ -194,7 +194,7 @@ public class RoomList {
         movie.setExit("west", allotment);
         movie.setHappiness(10);
         
-        movie.addEntityToRoom(new NPC("tv", "A big television seemingly for free use.", movie,
+        movie.addEntityToRoom(new InteractableNPC("tv", "A big television seemingly for free use.", movie,
             new Interaction("Watch", "You turn on the tv and apparently a movie is just starting.", x -> {
                 x.addHappiness(5); 
                 x.addHealth(5);
@@ -213,7 +213,7 @@ public class RoomList {
         gate.setExit("north", campfire);
         gate.setExit("south", boss, false);
         
-        gate.addEntityToRoom(new NPC("Gate", "Big, huge gate", gate,
+        gate.addEntityToRoom(new InteractableNPC("Gate", "Big, huge gate", gate,
                 new Interaction("Admire", "You look at the gate with awe and curiosity.", x -> {x.addHealth(1);
                     return "As you stare at the gate for a good few minutes you feel a bit of strength return to your body. +1 health.";})
         ));
