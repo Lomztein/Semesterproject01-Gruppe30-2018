@@ -52,7 +52,7 @@ public class RoomList {
         // Exits for are declared.
         start.setExit("south", magicForrest);
 
-        HostileNPC direwolf = new HostileNPC("Direwolf", "An albino wolf looking menacingly at you, yet you cannot tell the nature of its desire.", animals, true, new Health(20),
+        HostileNPC direwolf = new HostileNPC("Direwolf", "A big wolf looking menacingly at you, yet you cannot tell the nature of its desire.", animals, true, new Health(20),
                 new Attack(DamageType.SLASH, 5, "Claw slash", "a violent slash of the wolfs claws."),
                 new Attack(DamageType.MENTAL, 2, "Loud bark", "a frightening bark. Though scary, it doesn't do much."),
                 new Attack(DamageType.BLUNT, 1, "Headbutt", "a vicious headbutt, however it is in fact more adorable than scary.")
@@ -129,8 +129,16 @@ public class RoomList {
         fridayBar.setExit("east", campfire);
         fridayBar.setHappiness(10);
         
-        fridayBar.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 200, 2, 5));
-        fridayBar.addItem(new ConsumableItem("more beer", "This is exactly what you need.", 300, 8, 15));
+        fridayBar.addEntityToRoom(new NPC("Dennis", "Bartender", fridayBar,
+            new Interaction("Have a beer", "Sit down at the bar, greet the bartender and order a drink", 
+                    x -> {x.addHappiness(5); 
+                    x.addHealth(10);
+                        return "As you gulp down the cold beer and Dennis asks how you are feeling, you let out a bit of the feelings you've bottled up over the past few years. "
+                                + "It feels as though a burden has been lifted from your chest. +5 happiness";})
+        ));
+        
+        fridayBar.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 100, 5, 10));
+        fridayBar.addItem(new ConsumableItem("abandoned beer", "This is exactly what you need.", 100, 5, 0));
 
         stripClub.setExit("north", vendor);
         stripClub.setExit("east", kfc);
@@ -179,6 +187,9 @@ public class RoomList {
                 new Interaction ("\"What kind of plants are you growing here\"", "Ask Vader to elaborate on the flora of his allotment", x -> {x.addHappiness(10);
                         return "While guiding you around the garden he suddenly stumbles upon a particular plant which, as he explains, is tremendous as an ingredient in pastrymaking";})
         ));
+        
+        allotment.addItem(new ConsumableItem("Some wierd vegetable", "A strange plant with distinctly shaped leaves. Something tells you this can be smoked.", 100, 0, 10));
+
 
         movie.setExit("south", thaiHooker);
         movie.setExit("west", allotment);
@@ -213,7 +224,6 @@ public class RoomList {
         magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 4, 0));
         
         
-        allotment.addItem(new ConsumableItem("Some wierd vegetable", "A strange plant with distinctly shaped leaves. Something tells you this can be smoked.", 100, 0, 10));
         
     }
 
