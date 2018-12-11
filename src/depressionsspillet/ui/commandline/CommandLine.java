@@ -75,7 +75,7 @@ public class CommandLine {
                     inventory();
                     break;
 
-                case "?":
+                case "UNKNOWN":
                     System.out.println("Command \"" + input + "\" not recognized. Type \"help\" for help.");
                     break;
 

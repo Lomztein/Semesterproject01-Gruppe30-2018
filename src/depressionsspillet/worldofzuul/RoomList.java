@@ -26,7 +26,8 @@ public class RoomList {
 
     //This class was made to combat the amount of bloat in the game-class. 
     //It contains all the rooms, the items and entities inside the rooms, and exits.
-    static Room start, magicForrest, vendor, animals, thaiHooker, sleepover, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
+
+    static Room start, magicForrest, vendor, animals, thaiHooker, campfire, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
     public static void listRooms() {
 
@@ -36,7 +37,7 @@ public class RoomList {
         vendor = new Room("You have visited the blackboard vendor, a replacement of blackboard is currently in the works, in the meantime however, \n please feel free to browse the vendor's wares.", "vendor");
         animals = new Room("You go deeper into the forest and find yourself in a completely white room filled with puppies and kittens.", "animals");
         thaiHooker = new Room("A beuatiful asian woman approaches you and asks what you are doing tonight. She seems interresting but a beautiful woman \n has never approached you before... Could it be a trap?", "thaiHooker");
-        sleepover = new Room("You find yourself at your best friends house in your pajamas with icecream. Your best friends invites you inside for a sleepover.", "sleepover");
+        campfire = new Room("As you walk through the forest an opening suddenly appears. Here you find three of your best friends, sitting around a campfire, waiting for you...", "campfire");
         fridayBar = new Room("Wuhuu it is friday on SDU and you suddenly feel your spirite soaring and you feel like getting smashed and so you do... You feel \n great.", "fridayBar");
         stripClub = new Room("As you continued through the forrest you notices a couple of flikering light as you move closer you see a sign saying: \n 'Gentleman's club. Free tonight' You enter, look around, start smiling slyly and have a great time. Your mum would be disappointed", "stripClub");
         kfc = new Room("Suddenly in your path you see a familiar red sign with tree white letters. It reads: KFC, and you are overjoyed. You enter and when \n you tell the cashier about your amazing \n journey. She decides to give you free food for your trip and warns you about continuing \n east becuase a dangerous and mysterious creature lurks in the swamp.", "kfc");
@@ -59,7 +60,7 @@ public class RoomList {
         magicForrest.addEntityToRoom(direwolf);
 
         // Exits for magicForrest are declared.
-        magicForrest.setExit("south", sleepover);
+        magicForrest.setExit("south", campfire);
         magicForrest.setExit("east", vendor);
         magicForrest.setExit("west", thaiHooker);
 
@@ -68,6 +69,12 @@ public class RoomList {
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
         vendor.setHappiness(0);
+        
+        NPC Vendorboi = new NPC("Vendorboi", "The friendly purveyor of various liquid substances, that may or may not be of use", vendor, 
+                new Interaction ("Bargain for a Health Concoction", "Restores Health at the cost of Happiness", x -> {x.addHealth(100d - x.getHealth().getCurrentHealth()); x.addHappiness(-5);
+                    return "Your health is restored to 100";})
+        );
+        vendor.addEntityToRoom(Vendorboi);
 
         // You know the drill by now.
         animals.setExit("west", vendor);
@@ -80,36 +87,76 @@ public class RoomList {
         thaiHooker.setExit("east", magicForrest);
         thaiHooker.setExit("west", drugs);
         thaiHooker.setHappiness(15);
+        
+        thaiHooker.addItem(new ConsumableItem("Flavored lube", "Label says 'Dashing Strawberry flavor'. You feel curious.", 100, 3, 3));
 
         thaiHooker.addEntityToRoom(new NPC("Thai-Hooker", "A prostetute of questionable age and gender, yet you are still attracted to them.", thaiHooker,
-                new Interaction("Empregnate", "Give in to your carnal lust.", x -> {
+                new Interaction("Impregnate", "Give in to your carnal lust.", x -> {
                     x.addHappiness(20);
                     x.addAttack(new Attack(DamageType.FIRE, 10, "Chlamydia", "Recieved from a previous encounter, itches like a bitch."));
-                    return "You have recieved the power of Stan Lee";
-                }
-                )));
+                        return "You have recieved the power of Stan Lee";}
+        )));
 
-        sleepover.setExit("north", magicForrest);
-        sleepover.setExit("south", gate);
-        sleepover.setExit("east", stripClub);
-        sleepover.setExit("west", fridayBar);
-        sleepover.setHappiness(15);
+        campfire.setExit("north", magicForrest);
+        campfire.setExit("south", gate);
+        campfire.setExit("east", stripClub);
+        campfire.setExit("west", fridayBar);
+        campfire.setHappiness(15);
+        
+        campfire.addEntityToRoom(new NPC("Dan", "A childhood buddy, always cheery and positive", campfire,
+            new Interaction ("Make a friendly gesture", "Slap his ass", x -> {x.addHappiness(5);
+                return "Dan is surprised by the slap but laughs and tries to slap you back meanwhile he makes rude but friendlyminded remarks about your appearance and actions. +5 happiness";})
+        ));
+        
+        campfire.addEntityToRoom(new NPC("Mark", "A friend from school, smart, handsome and probably gay, but everloving by heart", campfire,
+            new Interaction ("Make a friendly gesture", "Slap his ass", x -> {x.addHappiness(-5);
+                return "Mark is not amused by your blatant sexual discrimination - you recieve a light slap, but can sense Mark's deep disappointment. -5 happiness";}),
+            new Interaction ("Say something nice to Mark", "Compliment Mark's eyebrows and his choice of fashion", x -> {x.addHappiness(5);
+                    return "Mark replies with a compliment about how you are polite and sweet and gives you a light pat on the shoulder. +5 happiness";})
+        ));
+        
+        campfire.addEntityToRoom(new NPC("Mia", "A childhood girl friend with whom you've never really been apart", campfire,
+            new Interaction ("Make a move", "touch tiddies", x -> {x.addHappiness(1);
+                return "Mia is startled by this sudden sexual movement and retaliates with a decisive knock in your bollocks. +1 happiness cuz you got to touch dem tiddies";}),
+            new Interaction ("Ask a serious question", "Ask why you were never together", x -> {x.addHappiness(10);
+                return "Mia explains that she never thought she were good enough for you, and besides it would be wierd to mess around with someone you've known almost since birth. +10 happiness";}),
+            new Interaction ("Propose", "Ask Mia if she wants to marry you", x -> {x.addHappiness(-10);
+                return "Your being thickskulled and too sudden and blunt has provoked an anxious refusal from Mia. She tells you to grow up and get over your desperation, as she looks away in resentment. -10 happiness";}) 
+        ));
 
+        
         fridayBar.setExit("north", thaiHooker);
-        fridayBar.setExit("east", sleepover);
+        fridayBar.setExit("east", campfire);
         fridayBar.setHappiness(10);
+        
+        fridayBar.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 200, 2, 5));
+        fridayBar.addItem(new ConsumableItem("more beer", "This is exactly what you need.", 300, 8, 15));
 
         stripClub.setExit("north", vendor);
         stripClub.setExit("east", kfc);
-        stripClub.setExit("west", sleepover);
+        stripClub.setExit("west", campfire);
         stripClub.setHappiness(10);
+        
+        stripClub.addEntityToRoom(new HostileNPC("Diamond Rodriguez", "Very skilled in barfights resulted from a long career as an exotic dancer. She dislikes you because you are broke.", stripClub, false, new Health(35),
+            new Attack(DamageType.BLUNT, 3, "Boob Bash", "smacks you with a hardened fake titty."),
+            new Attack(DamageType.FIRE, 10, "Molotov Cocktail", "grabbing a bottle from the bar, she lights in on fire and throws it at you."),
+            new Attack(DamageType.SLASH, 5, "Stiletto Stab", "using her pumps, she impales one of your limbs."),
+            new Attack(DamageType.MENTAL, 4, "Berate", "she ruthlessly yells slurs about your worthlessness.")
+        ));
 
-        stripClub.addItem(new ConsumableItem("Moist money", "A bunch o one-doller bills covered by strange fluids.", 10, 15, 25));
+        stripClub.addItem(new ConsumableItem("Moist money", "A bunch of one-dollar bills covered by strange fluids.", 10, 15, 25));
 
         kfc.setExit("east", shrek);
         kfc.setExit("west", stripClub);
         kfc.setHappiness(15);
-
+        
+        
+        kfc.addEntityToRoom(new NPC("Katie", "Seems like one of those fast food cashiers who give people extra nuggets. Her name badge says Katie.", kfc,
+                new Interaction("Order something", "Place an order for whatever you feel like having", x -> {x.addHappiness(7);
+                    return "The cashier happily guides you through the order and predicts exactly what you wanted as if she read your mind. "
+                            + "A bit creepy, but it makes you happy that someone would understand you so. +7 happiness";})
+        ));
+        
         shrek.setExit("west", kfc);
 
         shrek.addEntityToRoom(new HostileNPC("Shrek", "Memelord Alpha-Omega", shrek, true, new Health(42),
@@ -123,6 +170,15 @@ public class RoomList {
         allotment.setExit("south", drugs);
         allotment.setExit("east", movie);
         allotment.setHappiness(10);
+        
+        allotment.addEntityToRoom(new NPC("Darth Vader the Elderly", "Passionate owner of a beautiful allotment", allotment, 
+                new Interaction ("Stay awhile; and listen...", "Let Vader tell you about his succeses and failures in life.", x -> {x.addHappiness(5);
+                        return "As you listen to the tales of an old wise man, you feel an ember of purpose flicker inside. +20 happiness";}),
+                new Interaction ("Ask Vader if he wants to be your daddy", "This question is not thoroughly thought through, and the answer may not please you.", x -> {x.addHappiness(-15);
+                        return "He responds with a stern and slightly disgusted refusal. This makes you a bit sad. -15 happiness";}),
+                new Interaction ("\"What kind of plants are you growing here\"", "Ask Vader to elaborate on the flora of his allotment", x -> {x.addHappiness(10);
+                        return "While guiding you around the garden he suddenly stumbles upon a particular plant which, as he explains, is tremendous as an ingredient in pastrymaking";})
+        ));
 
         movie.setExit("south", thaiHooker);
         movie.setExit("west", allotment);
@@ -131,7 +187,7 @@ public class RoomList {
         drugs.setExit("north", allotment);
         drugs.setExit("east", thaiHooker);
 
-        gate.setExit("north", sleepover);
+        gate.setExit("north", campfire);
         gate.setExit("south", boss, false);
 
         boss.setExit("south", suprise);
@@ -151,12 +207,14 @@ public class RoomList {
                 new Attack(DamageType.MENTAL, 10d, "Insult", "an insult upon your appearance, talents and skills all wowen together in a beautiful euphony of wordsmithing.")
         );
         boss.addEntityToRoom(erikthulhu);
-
-        // the currentRoom, which represents the room our player is currently in, is assigned the "outside" room.
-        // In other words, the game begins with us outside.
+        
+        
         //Items added to the different rooms:
         magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 4, 0));
-        magicForrest.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 200, 2, 5));
+        
+        
+        allotment.addItem(new ConsumableItem("Some wierd vegetable", "A strange plant with distinctly shaped leaves. Something tells you this can be smoked.", 100, 0, 10));
+        
     }
 
 }

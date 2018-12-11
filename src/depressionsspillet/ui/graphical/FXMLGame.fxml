@@ -193,8 +193,20 @@
                   </AnchorPane>
                     </children>
                 </GridPane>
-            <ImageView fx:id="itemImageView" fitHeight="76.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ListView fx:id="inventoryList" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+               <children>
+                  <Label text="NPCs:" textFill="RED" />
+                  <ListView fx:id="lvNPC" prefHeight="131.0" prefWidth="155.0" />
+                  <Label text="Items:" textFill="RED" />
+                  <ListView fx:id="lvItems" prefHeight="151.0" prefWidth="155.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Inventory:" textFill="#f90000" />
+                  <ListView fx:id="lvInventory" prefHeight="200.0" prefWidth="201.0" />
+               </children>
+            </VBox>
             </children>
         </GridPane>
     </children>
