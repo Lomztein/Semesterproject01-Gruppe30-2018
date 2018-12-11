@@ -27,6 +27,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -71,6 +72,9 @@ public class FXMLGameController implements Initializable {
     private ImageView itemImageView;
     @FXML
     private ListView<String> inventoryList;
+    
+    //<Placeholder>
+    Circle snotface = new Circle();
 
     /**
      * Initializes the controller class.
@@ -78,12 +82,9 @@ public class FXMLGameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Setting starting image
-        try {
-            Image imageMagicalForest = new Image("images\\spilMesterMartinImage.jpg");
-            backgroundImageView.setImage(imageMagicalForest);
-        } catch (Exception e) {
-            System.out.println("Start image not found");
-        }
+        Image imageMagicalForest = new Image("images\\spilMesterMartinImage.jpg");
+        backgroundImageView.setImage(imageMagicalForest);
+
         game.playGame();
         txtAreaOutput.setText(game.getCurrentRoomLongDesc());
 
@@ -237,6 +238,36 @@ public class FXMLGameController implements Initializable {
 
     @FXML
     private void handlePickUpButtonEvent(ActionEvent event) {
+    }
+
+    //Gets the width of the object, which is currently a circle - So it gets the diameter.
+    public double getPlayerLocalX() {
+
+        return snotface.getBoundsInLocal().getWidth();
+    }
+
+    //Gets the height of the object, which is currently a circle - So it gets the diameter.
+    public double getPlayerLocalY() {
+
+        return snotface.getBoundsInLocal().getHeight();
+    }
+
+    //Gets the current X-coordinates of the player
+    public double getPlayerX() {
+
+        return snotface.getLayoutX();
+    }
+
+    //Gets the current Y-coordinates of the player.
+    public double getPlayerY() {
+
+        return snotface.getLayoutY();
+    }
+
+    //Moves the player to the given X-Y coordinate.
+    public void movePlayer(double X, double Y) {
+        System.out.println("Moved player to" + X + ", " + Y);
+        snotface.relocate(X, Y);
     }
 
 }
