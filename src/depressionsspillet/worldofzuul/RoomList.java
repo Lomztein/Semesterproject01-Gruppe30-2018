@@ -6,16 +6,12 @@
 package depressionsspillet.worldofzuul;
 
 import depressionsspillet.worldofzuul.characters.HostileNPC;
+import depressionsspillet.worldofzuul.characters.InteractableNPC;
 import depressionsspillet.worldofzuul.characters.NPC;
-import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.combat.Attack;
-import depressionsspillet.worldofzuul.combat.Attacker;
-import depressionsspillet.worldofzuul.combat.Damagable;
-import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
-import depressionsspillet.worldofzuul.interaction.Action;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 
 /**
@@ -73,7 +69,7 @@ public class RoomList {
         vendor.setExit("west", magicForrest);
         vendor.setHappiness(0);
         
-        NPC Vendorboi = new NPC("Vendorboi", "The friendly purveyor of various liquid substances, that may or may not be of use", vendor, 
+        NPC Vendorboi = new InteractableNPC("Vendorboi", "The friendly purveyor of various liquid substances, that may or may not be of use", vendor, 
                 new Interaction ("Bargain", "Restores Health at the cost of Happiness", x -> {x.addHealth(100d - x.getHealth().getCurrentHealth()); x.addHappiness(-5);
                     return "Your health is restored to 100";})
         );
@@ -93,11 +89,11 @@ public class RoomList {
         
         thaiHooker.addItem(new ConsumableItem("Lube", "Label says 'Dashing Strawberry flavor'. You feel curious.", 100, 3, 3));
 
-        thaiHooker.addEntityToRoom(new NPC("Thai-Hooker", "A prostetute of questionable age and gender, yet you are still attracted to them.", thaiHooker,
+        thaiHooker.addEntityToRoom(new InteractableNPC("Thai-Hooker", "A prostetute of questionable age and gender, yet you are still attracted to them.", thaiHooker,
                 new Interaction("Impregnate", "Give in to your carnal lust.", x -> {
                     x.addHappiness(20);
-                    x.addAttack(new Attack(DamageType.FIRE, 10, "Chlamydia", "Recieved from a previous encounter, itches like a bitch."));
-                        return "You have recieved the power of Stan Lee";}
+                    x.addAttack(new Attack(DamageType.FIRE, 10, "chlamydia", "a rash in unpleasent locations"));
+                        return "You engage in adultery with the hooker, recieving an itchy contagion.";}
         )));
 
         campfire.setExit("north", magicForrest);
@@ -106,19 +102,19 @@ public class RoomList {
         campfire.setExit("west", fridayBar);
         campfire.setHappiness(15);
         
-        campfire.addEntityToRoom(new NPC("Dan", "A childhood buddy, always cheery and positive", campfire,
+        campfire.addEntityToRoom(new InteractableNPC("Dan", "A childhood buddy, always cheery and positive", campfire,
             new Interaction ("Friendly-gesture", "Slap his ass", x -> {x.addHappiness(5);
                 return "Dan is surprised by the slap but laughs and tries to slap you back meanwhile he makes rude but friendlyminded remarks about your appearance and actions. +5 happiness";})
         ));
         
-        campfire.addEntityToRoom(new NPC("Mark", "A friend from school, smart, handsome and probably gay, but everloving by heart", campfire,
+        campfire.addEntityToRoom(new InteractableNPC("Mark", "A friend from school, smart, handsome and probably gay, but everloving by heart", campfire,
             new Interaction ("Friendly-gesture", "Slap his ass", x -> {x.addHappiness(-5);
                 return "Mark is not amused by your blatant sexual discrimination - you recieve a light slap, but can sense Mark's deep disappointment. -5 happiness";}),
             new Interaction ("Compliment", "Compliment Mark's eyebrows and his choice of fashion", x -> {x.addHappiness(5);
                     return "Mark replies with a compliment about how you are polite and sweet and gives you a light pat on the shoulder. +5 happiness";})
         ));
         
-        campfire.addEntityToRoom(new NPC("Mia", "A childhood girl friend with whom you've never really been apart", campfire,
+        campfire.addEntityToRoom(new InteractableNPC("Mia", "A childhood girl friend with whom you've never really been apart", campfire,
             new Interaction ("Harass", "touch tiddies", x -> {x.addHappiness(1);
                 return "Mia is startled by this sudden sexual movement and retaliates with a decisive knock in your bollocks. +1 happiness cuz you got to touch dem tiddies";}),
             new Interaction ("Question", "Ask why you were never together", x -> {x.addHappiness(10);
@@ -132,7 +128,7 @@ public class RoomList {
         fridayBar.setExit("east", campfire);
         fridayBar.setHappiness(10);
         
-        fridayBar.addEntityToRoom(new NPC("Dennis", "Bartender", fridayBar,
+        fridayBar.addEntityToRoom(new InteractableNPC("Dennis", "Bartender", fridayBar,
             new Interaction("Beer", "Sit down at the bar, greet the bartender and order a drink", 
                     x -> {x.addHappiness(5); 
                     x.addHealth(10);
@@ -162,7 +158,7 @@ public class RoomList {
         kfc.setHappiness(15);
         
         
-        kfc.addEntityToRoom(new NPC("Katie", "Seems like one of those fast food employees who give people extra nuggets.", kfc,
+        kfc.addEntityToRoom(new InteractableNPC("Katie", "Seems like one of those fast food employees who give people extra nuggets.", kfc,
                 new Interaction("Order something", "Place an order for whatever you feel like having", x -> {x.addHappiness(7);
                     return "The cashier happily guides you through the order and predicts exactly what you wanted as if she read your mind. "
                             + "A bit creepy, but it makes you happy that someone would understand you so. +7 happiness";})
@@ -182,7 +178,7 @@ public class RoomList {
         allotment.setExit("east", movie);
         allotment.setHappiness(10);
         
-        allotment.addEntityToRoom(new NPC("Vader", "Darth Vader the Elderly - Passionate owner of a beautiful allotment", allotment, 
+        allotment.addEntityToRoom(new InteractableNPC("Vader", "Darth Vader the Elderly - Passionate owner of a beautiful allotment", allotment, 
                 new Interaction ("Storytime", "Let Vader tell you about his succeses and failures in life.", x -> {x.addHappiness(5);
                         return "As you listen to the tales of an old wise man, you feel an ember of purpose flicker inside. +20 happiness";}),
                 new Interaction ("Father?", "This question is not thoroughly thought through, and the answer may not please you.", x -> {x.addHappiness(-15);
@@ -198,7 +194,7 @@ public class RoomList {
         movie.setExit("west", allotment);
         movie.setHappiness(10);
         
-        movie.addEntityToRoom(new NPC("tv", "A big television seemingly for free use.", movie,
+        movie.addEntityToRoom(new InteractableNPC("tv", "A big television seemingly for free use.", movie,
             new Interaction("Watch", "You turn on the tv and apparently a movie is just starting.", x -> {
                 x.addHappiness(5); 
                 x.addHealth(5);
@@ -222,7 +218,7 @@ public class RoomList {
         gate.setExit("north", campfire);
         gate.setExit("south", boss, false);
         
-        gate.addEntityToRoom(new NPC("Gate", "Big, huge gate", gate,
+        gate.addEntityToRoom(new InteractableNPC("Gate", "Big, huge gate", gate,
                 new Interaction("Admire", "You look at the gate with awe and curiosity.", x -> {x.addHealth(1);
                     return "As you stare at the gate for a good few minutes you feel a bit of strength return to your body. +1 health.";})
         ));

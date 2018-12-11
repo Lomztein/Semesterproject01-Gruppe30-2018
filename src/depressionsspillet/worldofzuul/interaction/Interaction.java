@@ -32,8 +32,8 @@ public class Interaction {
         return this.description;
     }
 
-    public void execute (Player player) {
-        action.execute (player);
+    public String execute (Player player) {
+        return action.execute (player);
     }
     
 }

@@ -9,7 +9,6 @@ import depressionsspillet.worldofzuul.Game;
 import depressionsspillet.worldofzuul.IGame;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -80,7 +79,9 @@ public class FXMLGameController implements Initializable {
     @FXML
     private ListView<String> lvInventory;
     //<Placeholder>
-    Circle snotface = new Circle();
+    @FXML
+    private Circle snotface;
+    
 
     /**
      * Initializes the controller class.
@@ -97,7 +98,7 @@ public class FXMLGameController implements Initializable {
     }
 
     @FXML
-    private void handleQuitButtonEvent(ActionEvent event) throws IOException {
+    protected void handleQuitButtonEvent(ActionEvent event) throws IOException {
         Parent quitParent = FXMLLoader.load(getClass().getResource("FXML.fxml"));
         Scene quitScene = new Scene(quitParent);
 
@@ -285,13 +286,13 @@ public class FXMLGameController implements Initializable {
     //Gets the width of the object, which is currently a circle - So it gets the diameter.
     public double getPlayerLocalX() {
 
-        return snotface.getBoundsInLocal().getWidth();
+        return snotface.getLayoutBounds().getWidth();
     }
 
     //Gets the height of the object, which is currently a circle - So it gets the diameter.
     public double getPlayerLocalY() {
 
-        return snotface.getBoundsInLocal().getHeight();
+        return snotface.getLayoutBounds().getHeight();
     }
 
     //Gets the current X-coordinates of the player
