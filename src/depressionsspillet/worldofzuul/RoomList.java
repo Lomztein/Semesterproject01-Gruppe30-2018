@@ -43,7 +43,7 @@ public class RoomList {
         kfc = new Room("Suddenly in your path you see a familiar red sign with tree white letters. It reads: KFC, and you are overjoyed. You enter and when \n you tell the cashier about your amazing \n journey. She decides to give you free food for your trip and warns you about continuing \n east becuase a dangerous and mysterious creature lurks in the swamp.", "kfc");
         shrek = new Room("You defied the warnings of the nice KFC lady and walked onwards to the east. The forest soon ends and a dank swamp emerges. \n Carefully you explore the area and come across \n a small wooden shack. As you are about to enter, a rumbling voice appears behinds you \n ' ' After turning around you realise you have entered the domain of the one and only Shrek. In an adrenaline induced panic you try \n to escape, but you are easily caught, and as you are dragged inside the raggedy shack, Shreks whispers softly 'it's all ogre now'. The rest of this encounter is best described as a deep scar on your soul, and should never again be spoken off.", "shrek");
         allotment = new Room("As you continue walking the forest gets brighter as more and more light slips through the treetops. Flowers start to appear and as \n you follow them you find a small cosycabin. When you are just about to knock on the door to ask for directions, when you \n a familiar eerie sound. *heavy forced inhaling* *heavy forced exhaling* you decide to scout out the house for inhabitants, before \n trying to enter. Walking around to the backyard, you spot a figure dressed in black armor, wearing a black mask and cape,  \n holding a watering can. It is the retired Darth Vader!", "allotment");
-        movie = new Room("You discover a room with a big couch, floffy teddybears and a couple of friends to snuggle. So you dive into the pillows on the couch \n and rest for a while.", "movie");
+        movie = new Room("You discover a place in the forest with a large TV, comfortable chairs and snacks ready for you to get cozy and immerse yourself in a good movie.", "movie");
         drugs = new Room("In a twisted turn of events, you stumble upon a bald russian man selling some sort of homemade white powder. You assume this is heroin, \n and it is verified by the man with a deep, emotionless 'Da. Krokodil'. You feel slightly eerie and disturbed. ", "drugs");
         gate = new Room("This is a big impenetrable, unavoidable, indomitable, completely daunting and locked gate. You will need some kind of key to get through.", "gate");
         boss = new Room("bossbattle", "boss");
@@ -63,6 +63,9 @@ public class RoomList {
         magicForrest.setExit("south", campfire);
         magicForrest.setExit("east", vendor);
         magicForrest.setExit("west", thaiHooker);
+        
+        magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 4, 0));
+
 
         // Exits for vendor are declared.
         vendor.setExit("south", stripClub);
@@ -71,7 +74,7 @@ public class RoomList {
         vendor.setHappiness(0);
         
         NPC Vendorboi = new NPC("Vendorboi", "The friendly purveyor of various liquid substances, that may or may not be of use", vendor, 
-                new Interaction ("Bargain for a Health Concoction", "Restores Health at the cost of Happiness", x -> {x.addHealth(100d - x.getHealth().getCurrentHealth()); x.addHappiness(-5);
+                new Interaction ("Bargain", "Restores Health at the cost of Happiness", x -> {x.addHealth(100d - x.getHealth().getCurrentHealth()); x.addHappiness(-5);
                     return "Your health is restored to 100";})
         );
         vendor.addEntityToRoom(Vendorboi);
@@ -88,7 +91,7 @@ public class RoomList {
         thaiHooker.setExit("west", drugs);
         thaiHooker.setHappiness(15);
         
-        thaiHooker.addItem(new ConsumableItem("Flavored lube", "Label says 'Dashing Strawberry flavor'. You feel curious.", 100, 3, 3));
+        thaiHooker.addItem(new ConsumableItem("Lube", "Label says 'Dashing Strawberry flavor'. You feel curious.", 100, 3, 3));
 
         thaiHooker.addEntityToRoom(new NPC("Thai-Hooker", "A prostetute of questionable age and gender, yet you are still attracted to them.", thaiHooker,
                 new Interaction("Impregnate", "Give in to your carnal lust.", x -> {
@@ -104,21 +107,21 @@ public class RoomList {
         campfire.setHappiness(15);
         
         campfire.addEntityToRoom(new NPC("Dan", "A childhood buddy, always cheery and positive", campfire,
-            new Interaction ("Make a friendly gesture", "Slap his ass", x -> {x.addHappiness(5);
+            new Interaction ("Friendly-gesture", "Slap his ass", x -> {x.addHappiness(5);
                 return "Dan is surprised by the slap but laughs and tries to slap you back meanwhile he makes rude but friendlyminded remarks about your appearance and actions. +5 happiness";})
         ));
         
         campfire.addEntityToRoom(new NPC("Mark", "A friend from school, smart, handsome and probably gay, but everloving by heart", campfire,
-            new Interaction ("Make a friendly gesture", "Slap his ass", x -> {x.addHappiness(-5);
+            new Interaction ("Friendly-gesture", "Slap his ass", x -> {x.addHappiness(-5);
                 return "Mark is not amused by your blatant sexual discrimination - you recieve a light slap, but can sense Mark's deep disappointment. -5 happiness";}),
-            new Interaction ("Say something nice to Mark", "Compliment Mark's eyebrows and his choice of fashion", x -> {x.addHappiness(5);
+            new Interaction ("Compliment", "Compliment Mark's eyebrows and his choice of fashion", x -> {x.addHappiness(5);
                     return "Mark replies with a compliment about how you are polite and sweet and gives you a light pat on the shoulder. +5 happiness";})
         ));
         
         campfire.addEntityToRoom(new NPC("Mia", "A childhood girl friend with whom you've never really been apart", campfire,
-            new Interaction ("Make a move", "touch tiddies", x -> {x.addHappiness(1);
+            new Interaction ("Harass", "touch tiddies", x -> {x.addHappiness(1);
                 return "Mia is startled by this sudden sexual movement and retaliates with a decisive knock in your bollocks. +1 happiness cuz you got to touch dem tiddies";}),
-            new Interaction ("Ask a serious question", "Ask why you were never together", x -> {x.addHappiness(10);
+            new Interaction ("Question", "Ask why you were never together", x -> {x.addHappiness(10);
                 return "Mia explains that she never thought she were good enough for you, and besides it would be wierd to mess around with someone you've known almost since birth. +10 happiness";}),
             new Interaction ("Propose", "Ask Mia if she wants to marry you", x -> {x.addHappiness(-10);
                 return "Your being thickskulled and too sudden and blunt has provoked an anxious refusal from Mia. She tells you to grow up and get over your desperation, as she looks away in resentment. -10 happiness";}) 
@@ -130,7 +133,7 @@ public class RoomList {
         fridayBar.setHappiness(10);
         
         fridayBar.addEntityToRoom(new NPC("Dennis", "Bartender", fridayBar,
-            new Interaction("Have a beer", "Sit down at the bar, greet the bartender and order a drink", 
+            new Interaction("Beer", "Sit down at the bar, greet the bartender and order a drink", 
                     x -> {x.addHappiness(5); 
                     x.addHealth(10);
                         return "As you gulp down the cold beer and Dennis asks how you are feeling, you let out a bit of the feelings you've bottled up over the past few years. "
@@ -138,28 +141,28 @@ public class RoomList {
         ));
         
         fridayBar.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 100, 5, 10));
-        fridayBar.addItem(new ConsumableItem("abandoned beer", "This is exactly what you need.", 100, 5, 0));
+        fridayBar.addItem(new ConsumableItem("abandoned-beer", "This is exactly what you need.", 100, 5, 0));
 
         stripClub.setExit("north", vendor);
         stripClub.setExit("east", kfc);
         stripClub.setExit("west", campfire);
         stripClub.setHappiness(10);
         
-        stripClub.addEntityToRoom(new HostileNPC("Diamond Rodriguez", "Very skilled in barfights resulted from a long career as an exotic dancer. She dislikes you because you are broke.", stripClub, false, new Health(35),
+        stripClub.addEntityToRoom(new HostileNPC("Diamond", "Very skilled in barfights resulted from a long career as an exotic dancer. She dislikes you because you are broke.", stripClub, true, new Health(35),
             new Attack(DamageType.BLUNT, 3, "Boob Bash", "smacks you with a hardened fake titty."),
             new Attack(DamageType.FIRE, 10, "Molotov Cocktail", "grabbing a bottle from the bar, she lights in on fire and throws it at you."),
             new Attack(DamageType.SLASH, 5, "Stiletto Stab", "using her pumps, she impales one of your limbs."),
             new Attack(DamageType.MENTAL, 4, "Berate", "she ruthlessly yells slurs about your worthlessness.")
         ));
 
-        stripClub.addItem(new ConsumableItem("Moist money", "A bunch of one-dollar bills covered by strange fluids.", 10, 15, 25));
+        stripClub.addItem(new ConsumableItem("Money", "A bunch of one-dollar bills covered by strange fluids. Moist.", 10, 15, 25));
 
         kfc.setExit("east", shrek);
         kfc.setExit("west", stripClub);
         kfc.setHappiness(15);
         
         
-        kfc.addEntityToRoom(new NPC("Katie", "Seems like one of those fast food cashiers who give people extra nuggets. Her name badge says Katie.", kfc,
+        kfc.addEntityToRoom(new NPC("Katie", "Seems like one of those fast food employees who give people extra nuggets.", kfc,
                 new Interaction("Order something", "Place an order for whatever you feel like having", x -> {x.addHappiness(7);
                     return "The cashier happily guides you through the order and predicts exactly what you wanted as if she read your mind. "
                             + "A bit creepy, but it makes you happy that someone would understand you so. +7 happiness";})
@@ -179,28 +182,46 @@ public class RoomList {
         allotment.setExit("east", movie);
         allotment.setHappiness(10);
         
-        allotment.addEntityToRoom(new NPC("Darth Vader the Elderly", "Passionate owner of a beautiful allotment", allotment, 
-                new Interaction ("Stay awhile; and listen...", "Let Vader tell you about his succeses and failures in life.", x -> {x.addHappiness(5);
+        allotment.addEntityToRoom(new NPC("Vader", "Darth Vader the Elderly - Passionate owner of a beautiful allotment", allotment, 
+                new Interaction ("Storytime", "Let Vader tell you about his succeses and failures in life.", x -> {x.addHappiness(5);
                         return "As you listen to the tales of an old wise man, you feel an ember of purpose flicker inside. +20 happiness";}),
-                new Interaction ("Ask Vader if he wants to be your daddy", "This question is not thoroughly thought through, and the answer may not please you.", x -> {x.addHappiness(-15);
+                new Interaction ("Father?", "This question is not thoroughly thought through, and the answer may not please you.", x -> {x.addHappiness(-15);
                         return "He responds with a stern and slightly disgusted refusal. This makes you a bit sad. -15 happiness";}),
-                new Interaction ("\"What kind of plants are you growing here\"", "Ask Vader to elaborate on the flora of his allotment", x -> {x.addHappiness(10);
+                new Interaction ("Flora", "Ask Vader to elaborate on the flora of his allotment", x -> {x.addHappiness(10);
                         return "While guiding you around the garden he suddenly stumbles upon a particular plant which, as he explains, is tremendous as an ingredient in pastrymaking";})
         ));
         
-        allotment.addItem(new ConsumableItem("Some wierd vegetable", "A strange plant with distinctly shaped leaves. Something tells you this can be smoked.", 100, 0, 10));
+        allotment.addItem(new ConsumableItem("Plant", "A strange plant with distinctly shaped leaves. Something tells you this can be smoked.", 100, 0, 10));
 
 
         movie.setExit("south", thaiHooker);
         movie.setExit("west", allotment);
         movie.setHappiness(10);
+        
+        movie.addEntityToRoom(new NPC("tv", "A big television seemingly for free use.", movie,
+            new Interaction("Watch", "You turn on the tv and apparently a movie is just starting.", x -> {
+                x.addHappiness(5); 
+                x.addHealth(5);
+                    return "After the movie is finished you feel rejuvenated as the movie was good and you had a chance to relax. +5 happiness, +5 health.";})
+        ));
+        
+        movie.addEntityToRoom(new ConsumableItem("Snack", "Buttered popcorn", 100, 5, 5));
+        movie.addEntityToRoom(new ConsumableItem("Drink", "Seems to change in taste according the drink you're thinking about", 100, 5, 5));
+        
 
         drugs.setExit("north", allotment);
         drugs.setExit("east", thaiHooker);
+        
+        
 
         gate.setExit("north", campfire);
         gate.setExit("south", boss, false);
-
+        
+        gate.addEntityToRoom(new NPC("Gate", "Big, huge gate", gate,
+                new Interaction("Admire", "You look at the gate with awe and curiosity.", x -> {x.addHealth(1);
+                    return "As you stare at the gate for a good few minutes you feel a bit of strength return to your body. +1 health.";})
+        ));
+        
         boss.setExit("south", suprise);
 
         //A new NPC, the boss Erikthulhu, is created. 
@@ -221,7 +242,6 @@ public class RoomList {
         
         
         //Items added to the different rooms:
-        magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 4, 0));
         
         
         
