@@ -212,7 +212,12 @@ public class RoomList {
         drugs.setExit("north", allotment);
         drugs.setExit("east", thaiHooker);
         
-        
+        drugs.addEntityToRoom(new HostileNPC("Bigol'boi", "A mean looking fellow who seemingly wants to nick your stuff. You are having none of this and decides to fight him", drugs, true, new Health(50),
+            new Attack(DamageType.BLUNT, 5, "Clobber", "bludgeons you on the head with an improvised mace."),
+            new Attack(DamageType.FIRE, 7, "Ignite", "douses you with gasoline and flicks a lit match at you."),
+            new Attack(DamageType.MENTAL, 8, "Flash", "rips off his trenchcoat and exposes himself"),
+            new Attack(DamageType.SLASH, 4, "Stab", "flails his pocketknife around uncontrollably")
+        ));
 
         gate.setExit("north", campfire);
         gate.setExit("south", boss, false);
