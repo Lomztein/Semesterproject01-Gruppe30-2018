@@ -195,15 +195,15 @@
                 </GridPane>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                <children>
-                  <Label text="NPCs:" />
+                  <Label text="NPCs:" textFill="RED" />
                   <ListView fx:id="lvNPC" prefHeight="131.0" prefWidth="155.0" />
-                  <Label text="Items:" />
+                  <Label text="Items:" textFill="RED" />
                   <ListView fx:id="lvItems" prefHeight="151.0" prefWidth="155.0" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
-                  <Label text="Inventory:" />
+                  <Label text="Inventory:" textFill="#f90000" />
                   <ListView fx:id="lvInventory" prefHeight="200.0" prefWidth="201.0" />
                </children>
             </VBox>
