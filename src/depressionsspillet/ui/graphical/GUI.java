@@ -85,6 +85,7 @@ public class GUI extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setMaximized(true);
 
         //This is an animation-timer. It runs the code within the method 'handle', every frame the timer is active, until it is stopped. 
         //This means we can have an active animation running, while the code isn't stuck in a loop, never getting to the end.
