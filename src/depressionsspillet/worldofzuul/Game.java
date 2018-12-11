@@ -7,6 +7,8 @@ import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Damagable;
 import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageType;
+import depressionsspillet.worldofzuul.interaction.Interactable;
+import depressionsspillet.worldofzuul.interaction.Interaction;
 import java.util.ArrayList;
 
 public class Game implements IGame {
@@ -24,7 +26,10 @@ public class Game implements IGame {
 
     // Track otherwise unavailable textual responses to commands.
     private String lastCommandResponse;
-    private boolean isCurrentlyAttacking;
+
+    // Keep track of whether or not combat was succesful and/or had retaliation
+    private boolean lastAttackDidHit;
+    private boolean lastAttackHadRetaliation;
 
     public Game() {
         // The attributes are populated with their appropiate data.
@@ -73,6 +78,10 @@ public class Game implements IGame {
                 case DISENGAGE:
                     disengage(command);
                     break;
+                case INTERACT:
+                    interact (command);
+                    break;
+                    
                 case INVENTORY:
                     inventory(command);
                     break;
@@ -114,6 +123,37 @@ public class Game implements IGame {
         }
     }
 
+    private void interact(Command command) {
+
+        if (command.hasSecondWord()) {
+
+            Interactable[] interactables = player.getCurrentRoom().getEntities(Interactable.class);
+            Interactable correct = null;
+            for (Interactable i : interactables) {
+                if (i.getName().toLowerCase().equals(command.getSecondWord().toLowerCase())) {
+                    correct = i;
+                }
+            }
+
+            if (correct != null) {
+
+                if (command.hasThirdWord()) {
+
+                    Interaction interaction = correct.findInteraction(command.getThirdWord());
+
+                    if (interaction != null) {
+                        lastCommandResponse = interaction.execute(player);
+                    } else {
+                        lastCommandResponse = ("You have no idea how to " + command.getThirdWord() + " " + correct.getName());
+                    }
+
+                } else {
+                    lastCommandResponse = (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
+                }
+            }
+        }
+    }
+
     //Engage replaces the interact-command.
     //This allows the player to 'engage' with an NPC, opening up the command 'attack'. 
     private void engage(Command command) {
@@ -148,14 +188,21 @@ public class Game implements IGame {
 
     private void attack(Command command) {
         if (player.isEngaged()) {
-            isCurrentlyAttacking = true;
+
+            lastAttackDidHit = false;
+            lastAttackHadRetaliation = false;
+
             Attack playerAttack = player.getAttack(command.getSecondWord());
             if (playerAttack != null) {
                 player.attackEngaged(playerAttack);
+                lastAttackDidHit = true;
+
+                if (player.getEngaged() == player.getHealth().getLastDamage().getAttacker()) {
+                    lastAttackHadRetaliation = true;
+                }
             } else {
                 lastCommandResponse = ("You don't have the ability to attack using " + command.getSecondWord());
             }
-            isCurrentlyAttacking = true;
         } else {
         }
     }
@@ -216,14 +263,14 @@ public class Game implements IGame {
                 case "u":
                     if (last != null && player.isEngaged() && last.getAttacker() == player.getEngaged() && last.getDamageType() == DamageType.MENTAL) {
                         lastCommandResponse = "With raw confidence and sexual provess you \"no u\" " + player.getEngaged().getName() + "'s last attack straight back at them with magnitudes more strength.";
-                        Damage retaliation = new Damage(player, player.getEngaged(), DamageType.MENTAL, last.getDamageValue() * 100);
+                        Damage retaliation = new Damage(player, player.getEngaged(), new Attack(DamageType.MENTAL, last.getDamageValue() * 100, "No u", "dabbing on them haters."));
                         retaliation.doDamage();
                     }
                     break;
 
                 case "me":
                     lastCommandResponse = "You realize the loathsome futility of it all, and decide to finally end it right on the spot. You inhale enough air to explode in a majestic display of viscera.";
-                    Damage selfsplode = new Damage(player, player, DamageType.FIRE, 1337);
+                    Damage selfsplode = new Damage(player, player, new Attack(DamageType.FIRE, 1337, "Suicide", "the long-awaited end."));
                     selfsplode.doDamage();
                     break;
 
@@ -398,22 +445,96 @@ public class Game implements IGame {
     }
 
     @Override
-    public boolean getIsCurrentlyAttacking() {
-        return isCurrentlyAttacking;
-    }
-
-    @Override
     public String getEngagedName() {
-        return player.getEngaged ().getName ();
+        if (player.getEngaged() == null) {
+            return "nothing";
+        }
+        return player.getEngaged().getName();
     }
 
     @Override
     public String getPlayerName() {
-        return player.getName ();
+        return player.getName();
     }
 
     @Override
     public String getPlayerDescription() {
         return player.getDescription();
+    }
+
+    @Override
+    public boolean getLastAttackDidHit() {
+        return lastAttackDidHit;
+    }
+
+    @Override
+    public boolean getLastAttackHadRetaliation() {
+        return lastAttackHadRetaliation;
+    }
+
+    @Override
+    public String getLastAttackName() {
+        return player.getLastAttackName();
+    }
+
+    @Override
+    public String getLastAttackType() {
+        return player.getLastAttackType();
+    }
+
+    @Override
+    public String getRetaliationAttackName() {
+        return player.getHealth().getLastDamage().getAttack().getName();
+    }
+
+    @Override
+    public String getRetaliationAttackType() {
+        return player.getHealth().getLastDamage().getDamageType().name();
+    }
+
+    @Override
+    public String getLastAttackDescription() {
+        return player.getLastAttackDescription();
+    }
+
+    @Override
+    public String getRetaliationAttackDescription() {
+        return player.getHealth().getLastDamage().getAttack().getDescription();
+    }
+
+    @Override
+    public String[][] getInteractionNames() {
+        ArrayList<String[]> byNPC = new ArrayList<>();
+        for (Interactable interactable : player.getCurrentRoom().getEntities(Interactable.class)) {
+            ArrayList<String> names = new ArrayList<>();
+            for (Interaction interaction : interactable.getInteractions()) {
+                names.add(interaction.getName());
+            }
+            byNPC.add(names.toArray(new String[0]));
+        }
+        return byNPC.toArray(new String[0][0]);
+    }
+
+    @Override
+    public String[][] getInteractionDescriptions() {
+        ArrayList<String[]> byNPC = new ArrayList<>();
+        for (Interactable interactable : player.getCurrentRoom().getEntities(Interactable.class)) {
+            ArrayList<String> descriptions = new ArrayList<>();
+            for (Interaction interaction : interactable.getInteractions()) {
+                descriptions.add(interaction.getDescription());
+            }
+            byNPC.add(descriptions.toArray(new String[0]));
+        }
+        return byNPC.toArray(new String[0][0]);
+    }
+
+    @Override
+    public String[] getInteractableNames() {
+        return player.getCurrentRoom().getEntityNames(Interactable.class);
+    }
+
+    @Override
+    public String[] getInteractableDescriptions() {
+        return player.getCurrentRoom().getEntityDescriptions(Interactable.class);
     }
 }

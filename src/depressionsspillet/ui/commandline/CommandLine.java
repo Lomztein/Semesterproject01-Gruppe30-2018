@@ -5,11 +5,9 @@
  */
 package depressionsspillet.ui.commandline;
 
-import depressionsspillet.worldofzuul.Command;
 import depressionsspillet.worldofzuul.CommandWord;
 import depressionsspillet.worldofzuul.Game;
 import depressionsspillet.worldofzuul.IGame;
-import depressionsspillet.worldofzuul.combat.Damagable;
 import java.util.Scanner;
 
 /**
@@ -67,15 +65,19 @@ public class CommandLine {
 
                 case "DISENGAGE":
                     break;
-                    
+
+                case "INTERACT":
+                    interact();
+                    break;
+
                 case "NO":
                     break;
-                    
+
                 case "INVENTORY":
                     inventory();
                     break;
 
-                case "?":
+                case "UNKNOWN":
                     System.out.println("Command \"" + input + "\" not recognized. Type \"help\" for help.");
                     break;
 
@@ -122,7 +124,18 @@ public class CommandLine {
                 System.out.println(itemNames[i] + " - " + itemDescription[i]);
             }
         } else {
-            System.out.println("There are no items in here to interact with.");
+            System.out.println("There are no items in here to pick up.");
+        }
+
+        String[] interactables = game.getInteractableNames();
+        if (interactables.length == 0) {
+            System.out.println("You see nothing here you can INTERACT with.");
+        } else {
+            System.out.println("You notice some things you might want to INTERACT with:");
+            String[] descriptions = game.getInteractableDescriptions();
+            for (int i = 0; i < interactables.length; i++) {
+                System.out.println(interactables[i] + " - " + descriptions[i]);
+            }
         }
 
         //Printing NPCs from array
@@ -201,24 +214,72 @@ public class CommandLine {
             for (int i = 0; i < names.length; i++) {
                 System.out.println(names[i] + " - " + descriptions[i]);
             }
-        }else if (game.getCommandWords()[0] != null) {
+        } else if (game.getCommandWords()[0] != null) {
             // An attack was performed.
-            if (game.getIsCurrentlyAttacking()) {
-                
-                double lastAttackDamage = game.getLastAttackDamage();
-                String lastAttackResponse = game.getLastAttackResponse();
-                System.out.println (String.format("You attack " + game.getEngagedName() + " using " + game.getCommandWords()[0] + " - " + lastAttackResponse, lastAttackDamage));
-                System.out.println ("They have " + game.getLastAttackedHealth() + " health left.");
-                
-                double lastRetaliationDamage = game.getRetaliationAttackDamage();
-                String lastRetaliationResponse = game.getRetaliationAttackResponse();
-                System.out.println (String.format(game.getEngagedName() + " attacks you with " + lastRetaliationResponse, lastRetaliationDamage));
-                System.out.println ("You have " + game.getPlayerHealth() + " health left.");
-                
-            }else {
-                System.out.println ("Your attack failed, just as the world expected from you.");
+
+            String attacker;
+            String reciever;
+            String name;
+            String description;
+            String type;
+            double value;
+            double remaining;
+
+            if (game.getLastAttackDidHit()) {
+
+                attacker = "The player";
+                reciever = game.getEngagedName();
+                name = game.getLastAttackName();
+                description = game.getLastAttackDescription();
+                type = game.getLastAttackType();
+
+                value = game.getLastAttackDamage();
+                remaining = game.getLastAttackedHealth();
+
+                displayAttack(attacker, reciever, name, description, type, value, remaining);
+
+            } else {
+                boolean attackExisted = false;
+                for (String attackName : game.getAvailableAttackNames()) {
+                    if (attackName.toUpperCase().equals(game.getCommandWords()[0].toUpperCase())) {
+                        attackExisted = true;
+                    }
+                }
+
+                if (attackExisted) {
+                    System.out.println("Your attack failed, you as the world expected from you.");
+                } else {
+                    System.out.println("Your attack failed: You are unable to perform \"" + game.getCommandWords()[0]);
+                }
+            }
+
+            if (game.getLastAttackHadRetaliation()) {
+
+                attacker = game.getEngagedName();
+                reciever = "The player";
+                name = game.getRetaliationAttackName();
+                description = game.getRetaliationAttackDescription();
+                type = game.getRetaliationAttackType();
+
+                value = game.getRetaliationAttackDamage();
+                remaining = game.getPlayerHealth();
+
+                displayAttack(attacker, reciever, name, description, type, value, remaining);
+
+            } else {
+                System.out.print(game.getEngagedName() + " doesn't respond. ");
+                if (game.getLastAttackedHealth() <= 0) {
+                    System.out.println(game.getEngagedName() + " is dead.");
+                } else {
+                    System.out.println(" You might not be worth its time.");
+                }
             }
         }
+    }
+
+    private void displayAttack(String attacker, String reciever, String name, String description, String type, double value, double remaining) {
+        System.out.println(String.format(attacker + " attacks " + reciever + " with " + description + " doing " + value + " " + type + " damage.", value));
+        System.out.println(reciever + " has " + remaining + " health left .");
     }
 
     private void inventory() {
@@ -231,6 +292,44 @@ public class CommandLine {
                 System.out.println(i + " - " + names[i] + " - " + descriptions[i]);
             }
         }
+    }
+
+    private void interact() {
+        if (game.getCommandWords()[0] == null) {
+
+            String[] names = game.getInteractableNames();
+            String[] descriptions = game.getInteractableDescriptions();
+
+            System.out.println("You have the option to interact with the following: ");
+
+            for (int i = 0; i < names.length; i++) {
+                System.out.println(names[i] + " - " + descriptions[i]);
+            }
+
+        } else if (game.getCommandWords()[1] == null) {
+            int index = getInteractableIndex(game.getInteractableNames(), game.getCommandWords()[0]);
+            String interactable = game.getInteractableNames()[index];
+
+            String[] names = game.getInteractionNames()[index];
+            String[] descriptions = game.getInteractionDescriptions()[index];
+
+            System.out.println("You have the option of the following interactions with " + interactable);
+
+            for (int i = 0; i < names.length; i++) {
+                System.out.println(names[i] + " - " + descriptions[i]);
+            }
+        }
+    }
+
+    private int getInteractableIndex(String[] interactables, String interactable) {
+        String[] names = game.getInteractableNames();
+        for (int i = 0; i < names.length; i++) {
+            String name = names[i];
+            if (name.toUpperCase().equals(interactable.toUpperCase())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

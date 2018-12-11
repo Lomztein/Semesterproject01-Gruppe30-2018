@@ -46,9 +46,6 @@ public class FXMLCreditsController implements Initializable {
         //Setting this scene to stage
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(creditsScene);
-        window.setWidth(800);
-        window.setHeight(600);
-        window.setResizable(false);
         window.show();
     }
     

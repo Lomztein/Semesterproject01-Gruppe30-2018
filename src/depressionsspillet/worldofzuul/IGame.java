@@ -53,17 +53,32 @@ public interface IGame {
     String getPlayerTriedEnteringLockedDoorResponse ();
     // PLAYER STUFFINGS END
     
+    // INTERACTION STUFFINGS
+    String[] getInteractableNames ();
+    String[] getInteractableDescriptions ();
+    
+    String [][] getInteractionNames ();
+    String [][] getInteractionDescriptions ();
+    // INTERACTION STUFFINGS END
+    
     // COMBAT STUFFINGS
     String[] getAvailableAttackNames ();
     String[] getAvailableAttackDescriptions ();
     
     String getEngagedName ();
     
-    boolean getIsCurrentlyAttacking ();
+    boolean getLastAttackDidHit ();
     double getLastAttackDamage ();
+    String getLastAttackName ();
+    String getLastAttackDescription ();
+    String getLastAttackType ();
     String getLastAttackResponse ();
     
+    boolean getLastAttackHadRetaliation ();
     double getRetaliationAttackDamage ();
+    String getRetaliationAttackName ();
+    String getRetaliationAttackDescription ();
+    String getRetaliationAttackType ();
     String getRetaliationAttackResponse ();
     
     double getLastAttackedHealth ();

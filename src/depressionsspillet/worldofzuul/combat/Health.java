@@ -104,7 +104,7 @@ public class Health {
         if (damageTaken.size() > 0) {
             return damageTaken.get(damageTaken.size() - 1);
         } else {
-            return null;
+            return Damage.NULL_DAMAGE;
         }
     }
 
