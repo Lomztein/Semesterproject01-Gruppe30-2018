@@ -256,7 +256,7 @@ public class FXMLGameController implements Initializable {
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
         selectedInventoryItemIndex += 1;
         game.enterCommand("inventory drop " + selectedInventoryItemIndex);
-        
+
         //Refreshing inventory
         inventory.clear();
         String[] inventoryStrings = game.getPlayerInventoryNames();
@@ -279,7 +279,7 @@ public class FXMLGameController implements Initializable {
             }
         }
         lvInventory.setItems(inventory);
-updateItemsList();
+        updateItemsList();
     }
 
     //Gets the width of the object, which is currently a circle - So it gets the diameter.
