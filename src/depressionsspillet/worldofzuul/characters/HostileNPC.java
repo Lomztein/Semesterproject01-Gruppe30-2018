@@ -11,7 +11,6 @@ import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Attacker;
-import depressionsspillet.worldofzuul.combat.DamagedEvent;
 import depressionsspillet.worldofzuul.combat.HasHealth;
 import depressionsspillet.worldofzuul.combat.Health;
 import depressionsspillet.worldofzuul.observables.Event;
@@ -34,7 +33,6 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
         this.retaliate = retaliate;
         health.onTakeDamage.add(e
                 -> {
-            System.out.println (health.getCurrentHealth());
             if (!health.isDead() && retaliate) {
                 if (e.getDamage().getAttacker() instanceof Damagable) {
                     attack((Damagable) e.getDamage().getAttacker());
@@ -66,11 +64,6 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
     @Override
     public Health getHealth() {
         return health;
-    }
-
-    @Override
-    public Interaction[] getInteractions() {
-        return new Interaction[]{};
     }
 
     @Override

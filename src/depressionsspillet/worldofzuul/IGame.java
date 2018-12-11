@@ -53,6 +53,14 @@ public interface IGame {
     String getPlayerTriedEnteringLockedDoorResponse ();
     // PLAYER STUFFINGS END
     
+    // INTERACTION STUFFINGS
+    String[] getInteractableNames ();
+    String[] getInteractableDescriptions ();
+    
+    String [][] getInteractionNames ();
+    String [][] getInteractionDescriptions ();
+    // INTERACTION STUFFINGS END
+    
     // COMBAT STUFFINGS
     String[] getAvailableAttackNames ();
     String[] getAvailableAttackDescriptions ();

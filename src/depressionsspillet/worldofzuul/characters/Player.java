@@ -164,7 +164,7 @@ public class Player extends Character implements Attacker, HasHealth {
     public Attack getAttack(String attackName) {
         Attack attack = null;
         for (Attack att : availableAttacks) {
-            if (att.getName().toLowerCase().equals(attackName.toLowerCase())) {
+            if (attackName != null && att.getName().toLowerCase().equals(attackName.toLowerCase())) {
                 attack = att;
             }
         }
