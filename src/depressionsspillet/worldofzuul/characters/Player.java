@@ -12,6 +12,7 @@ import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Attacker;
 import depressionsspillet.worldofzuul.combat.Damagable;
+import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
@@ -51,12 +52,28 @@ public class Player extends Character implements Attacker, HasHealth {
 
         getHealth().withResistances(playerResistances);
     }
+    
+    private Damage getLastAttack () {
+        if (engagedWith != null && engagedWith instanceof HasHealth) {
+            return ((HasHealth) engagedWith).getHealth().getLastDamage();
+        }
+        return Damage.NULL_DAMAGE;
+    }
 
     public double getLastAttackDamageValue() {
-        if (engagedWith != null && engagedWith instanceof HasHealth) {
-            return ((HasHealth) engagedWith).getHealth().getLastDamage().getDamageValue();
-        }
-        return 0; // Perhaps having different layers of "Damagable" was overcomplicating things. Consider merging Damagable and HasHealth.
+        return getLastAttack ().getDamageValue();
+    }
+    
+    public String getLastAttackName () {
+        return getLastAttack ().getAttack().getName();
+    }
+    
+    public String getLastAttackDescription () {
+        return getLastAttack ().getAttack ().getDescription ();
+    }
+    
+    public String getLastAttackType () {
+        return getLastAttack ().getDamageType().name();
     }
 
     public String getLastAttackDamageResponse() {
