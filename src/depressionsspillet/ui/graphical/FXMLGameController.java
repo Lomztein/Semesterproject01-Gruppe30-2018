@@ -279,7 +279,7 @@ public class FXMLGameController implements Initializable {
             }
         }
         lvInventory.setItems(inventory);
-
+updateItemsList();
     }
 
     //Gets the width of the object, which is currently a circle - So it gets the diameter.
