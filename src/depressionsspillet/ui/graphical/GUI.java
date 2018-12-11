@@ -40,20 +40,20 @@ public class GUI extends Application {
         control = (FXMLGameController) loader.getController();
 
         Scene scene = new Scene(root, 1024, 768);
-
+        
         //Sets the respective keys' value to 'true', which is used by the animationtimerhandle.
         scene.setOnKeyPressed((KeyEvent event) -> {
             switch (event.getCode()) {
-                case UP:
+                case W:
                     goNorth = true;
                     break;
-                case DOWN:
+                case S:
                     goSouth = true;
                     break;
-                case LEFT:
+                case A:
                     goWest = true;
                     break;
-                case RIGHT:
+                case D:
                     goEast = true;
                     break;
                 case SHIFT:
@@ -65,16 +65,16 @@ public class GUI extends Application {
         //Sets the values false, if the key is released.
         scene.setOnKeyReleased((KeyEvent event) -> {
             switch (event.getCode()) {
-                case UP:
+                case W:
                     goNorth = false;
                     break;
-                case DOWN:
+                case S:
                     goSouth = false;
                     break;
-                case LEFT:
+                case A:
                     goWest = false;
                     break;
-                case RIGHT:
+                case D:
                     goEast = false;
                     break;
                 case SHIFT:
