@@ -59,13 +59,14 @@ public class FXMLController implements Initializable {
         clip.stop();
         
          //New scene
-        Parent playParent = FXMLLoader.load(getClass().getResource("FXMLGame.fxml"));
+        Parent playParent = FXMLLoader.load(getClass().getResource("FXMLPreGame.fxml"));
         Scene playScene = new Scene(playParent);
         
         //Setting this scene to stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(playScene);
         window.show();
+        
     }
 
     @FXML

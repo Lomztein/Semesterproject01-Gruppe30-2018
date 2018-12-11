@@ -67,10 +67,13 @@ public class FXMLGameController implements Initializable {
     private Button pickUpButton;
     @FXML
     private ToggleGroup attackToggleGroup;
-    @FXML
-    private ImageView itemImageView;
-    @FXML
     private ListView<String> inventoryList;
+    @FXML
+    private ListView<?> lvNPC;
+    @FXML
+    private ListView<?> lvItems;
+    @FXML
+    private ListView<?> lvInventory;
 
     /**
      * Initializes the controller class.
@@ -100,9 +103,6 @@ public class FXMLGameController implements Initializable {
         //Setting this scene to stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(quitScene);
-        window.setWidth(800);
-        window.setHeight(600);
-        window.setResizable(false);
         window.show();
     }
 
