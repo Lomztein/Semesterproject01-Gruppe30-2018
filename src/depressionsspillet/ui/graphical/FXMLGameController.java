@@ -22,7 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -98,7 +97,6 @@ public class FXMLGameController implements Initializable {
     private static double W = 800, H = 600;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
-    
 
     /**
      * Initializes the controller class.
@@ -108,6 +106,9 @@ public class FXMLGameController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        W = backgroundImageView.getFitWidth();
+        H = backgroundImageView.getFitHeight();
 
         //I was so tired, I figured this was the best I could come up with. Feel free to fix my mess.
         directionCommands[0] = "go north";
@@ -203,10 +204,7 @@ public class FXMLGameController implements Initializable {
         }
     }
 
-    
-    
     //If a key is held, make it's respective boolean value for being held, true.
-
     @FXML
     private void handleKeyPressed(KeyEvent event) throws IOException {
 
@@ -287,10 +285,12 @@ public class FXMLGameController implements Initializable {
         snotface.relocate(X, Y);
     }
 
+    //Moves the player to another room based on how close they are to it. 
     private void interact() {
         //The idea here is to get the player's coordinates to determine whether or not they are close enough to a certain object to 'interact' with it.
-        //For now, it'll handle the updateRoom-functions.
+        //For now, it'll handle the updateRoom-functions, to move the player from one room to another.
 
+        //The for-loop determines if we are close enough to a gate to move through it. If we are, call the respective command.
         for (int i = 0; i < 4; i++) {
             double differenceX = Math.abs(getPlayerX() - directionObjects[i].getLayoutX());
             double differenceY = Math.abs(getPlayerY() - directionObjects[i].getLayoutY());
@@ -300,28 +300,35 @@ public class FXMLGameController implements Initializable {
             if (differenceX <= 45 && differenceY <= 45) {
                 game.enterCommand(directionCommands[i]);
                 updateRoom();
+                return;
             }
         }
         //Perhaps add a timer to prevent the player from spamming the shit out of the button.
 
     }
 
+    //Moves the player to the opposite side of the room
     private void updatePlayerLocation() {
         String[] lastWords = game.getCommandWords();
         if (lastWords[0].equals("south")) {
-            movePlayer(280, 8);
+            movePlayer(getPlayerX(), 0);
+            System.out.println("south");
         }
         if (lastWords[0].equals("north")) {
-            movePlayer(170, 190);
+            movePlayer(getPlayerX(), H - 20);
+            System.out.println("north");
         }
         if (lastWords[0].equals("west")) {
-            movePlayer(420, 110);
+            movePlayer(W - 20, getPlayerY());
+            System.out.println("west");
         }
         if (lastWords[0].equals("east")) {
-            movePlayer(40, 115);
+            movePlayer(0, getPlayerY());
+            System.out.println("east");
         }
     }
 
+    //Selects the quit-screen FXML document and sets the scene to that one.
     @FXML
     protected void handleQuitButtonEvent(ActionEvent event) throws IOException {
         Parent quitParent = FXMLLoader.load(getClass().getResource("FXML.fxml"));
@@ -333,12 +340,12 @@ public class FXMLGameController implements Initializable {
         window.show();
     }
 
-    //Update of items and NPC's to be added here
+    //Update of items and NPCs to be added here
     private void updateRoom() {
         switch (game.getCurrentRoomName()) {
             case "magicForrest":
                 Image image1 = new Image("newImages/magicforrest.jpg");
-                backgroundImageView.setImage(image1);            
+                backgroundImageView.setImage(image1);
                 break;
             case "vendor":
                 Image image2 = new Image("newImages/vendor.jpg");
@@ -404,12 +411,14 @@ public class FXMLGameController implements Initializable {
         updateNPCList();
         updatePlayerLocation();
     }
-    
+
+    //Updates the text-area to have the current output printed.
     private void updateTxtArea() {
         txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
         txfFieldHappiness.setText("" + game.getCurrentHappiness());
     }
-    
+
+    //Removes all current items, and updates it based on the current room.
     private void updateItemsList() {
         items.clear();
         String[] itemarray = game.getItemNames();
@@ -426,6 +435,7 @@ public class FXMLGameController implements Initializable {
         }
     }
 
+    //Removes all current NPCs and updates them based on the current room.
     private void updateNPCList() {
         NPCs.clear();
         String[] NPCarray = game.getNPCNames();
@@ -440,7 +450,8 @@ public class FXMLGameController implements Initializable {
             lvNPC.setItems(emptyList);
         }
     }
-    
+
+    //Drops an item from the inventory observable-list, to rhe rooms' list.
     @FXML
     private void handleDropButtonEvent(ActionEvent event) {
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
@@ -455,6 +466,7 @@ public class FXMLGameController implements Initializable {
         updateItemsList();
     }
 
+    //Picks an item up from the selected observable list, and puts it in the player's inventory.
     @FXML
     private void handlePickUpButtonEvent(ActionEvent event) {
         String selectedItem = lvItems.getSelectionModel().getSelectedItem();
@@ -471,6 +483,7 @@ public class FXMLGameController implements Initializable {
         updateItemsList();
     }
 
+    //Attacks the selected NPC. Currently attacks with NULL, and doesn't really work for shit.
     @FXML
     private void handleAttackButtonEvent(ActionEvent event) {
         String selectedNPC = lvNPC.getSelectionModel().getSelectedItem();
@@ -481,16 +494,21 @@ public class FXMLGameController implements Initializable {
         game.enterCommand("disengage");
     }
 
+    //
     @FXML
     private void handleInteractButtonEvent(ActionEvent event) {
+        //TODO 
     }
 
+    //Calls the use-method on the item selected in the inventorys' observable-list. 
     @FXML
     private void handleUseButtonEvent(ActionEvent event) {
+
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
         selectedInventoryItemIndex += 1;
         game.enterCommand("inventory use " + selectedInventoryItemIndex);
         txtAreaOutput.setText(game.getCommandResponse());
+
         //Refreshing inventory
         inventory.clear();
         String[] inventoryStrings = game.getPlayerInventoryNames();

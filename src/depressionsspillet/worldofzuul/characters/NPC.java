@@ -5,9 +5,7 @@
  */
 package depressionsspillet.worldofzuul.characters;
 
-import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.Room;
-import depressionsspillet.worldofzuul.interaction.Interaction;
 
 /**
  * @author Joachim
