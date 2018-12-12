@@ -48,7 +48,6 @@ public class Player extends Character implements Attacker, HasHealth {
                     playerResistances.add(new DamageResistance(type, "takes a massive %.2f damage due to their crippling insecurities being exposed.", 2d));
                 }
             }
-
         }
 
         getHealth().withResistances(playerResistances);
