@@ -217,14 +217,17 @@ public class CommandLine {
     }
 
     private void attack() {
-        if (game.getCommandWords()[0] == null) {
+        
+        if (game.getEngagedName () == null) {
+            System.out.println ("You currently aren't engaged with anything. Please stop assaulting the air.");
+        }else if (game.getCommandWords()[0] == null) {
             System.out.println("You have the option of the following attacks: ");
             String[] names = game.getAvailableAttackNames();
             String[] descriptions = game.getAvailableAttackDescriptions();
             for (int i = 0; i < names.length; i++) {
                 System.out.println(names[i] + " - " + descriptions[i]);
             }
-        } else if (game.getCommandWords()[0] != null) {
+        } else {
             // An attack was performed.
 
             String attacker;
@@ -275,11 +278,11 @@ public class CommandLine {
                 remaining = game.getPlayerHealth();
 
                 displayAttack(attacker, reciever, name, description, type, value, remaining);
-
+                
             } else {
                 System.out.print(game.getEngagedName() + " doesn't respond. ");
                 if (game.getLastAttackedHealth() <= 0) {
-                    System.out.println(game.getEngagedName() + " is dead.");
+                    System.out.println(game.getEngagedName() + " is dead. You might want to DISENGAGE.");
                 } else {
                     System.out.println(" You might not be worth its time.");
                 }
@@ -288,7 +291,7 @@ public class CommandLine {
     }
 
     private void displayAttack(String attacker, String reciever, String name, String description, String type, double value, double remaining) {
-        System.out.println(String.format(attacker + " attacks " + reciever + " with " + description + " doing " + value + " " + type + " damage.", value));
+        System.out.println(String.format(attacker + " attacks " + reciever + " with " + name + ", "+ description + " doing " + value + " " + type + " damage.", value));
         System.out.println(reciever + " has " + remaining + " health left .");
     }
 

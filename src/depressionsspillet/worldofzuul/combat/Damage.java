@@ -51,5 +51,4 @@ public class Damage {
     public Damagable getReciever () {
         return reciever;
     }
-    
 }

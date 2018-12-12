@@ -1,6 +1,7 @@
 package depressionsspillet.worldofzuul;
 
 import static depressionsspillet.worldofzuul.RoomList.*;
+import depressionsspillet.worldofzuul.characters.HostileNPC;
 import depressionsspillet.worldofzuul.characters.NPC;
 import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.combat.Attack;
@@ -76,7 +77,7 @@ public class Game implements IGame {
                     engage(command);
                     break;
                 case DISENGAGE:
-                    disengage(command);
+                    disengage();
                     break;
                 case INTERACT:
                     interact(command);
@@ -165,8 +166,17 @@ public class Game implements IGame {
         if (command.hasSecondWord()) {
             Damagable toEngage = player.getCurrentRoom().getEntity(Damagable.class, command.getSecondWord());
             if (toEngage != null) {
+
                 player.engage(toEngage);
                 lastCommandResponse = "You engage " + toEngage.getName() + " with spirit and vigor!";
+
+                if (player.getEngagedAsHasHealth() != null) {
+                    if (player.getEngagedAsHasHealth().getHealth().isDead()) {
+                        disengage();
+                        lastCommandResponse = toEngage.getName() + " is dead. There is no reason to engage it.";
+                    }
+                }
+
             } else {
                 lastCommandResponse = "There is no " + command.getSecondWord() + " that you can engage.";
             }
@@ -177,7 +187,7 @@ public class Game implements IGame {
     }
 
     //Disengages the player with the NPC, if he is engaged.
-    private void disengage(Command command) {
+    private void disengage() {
         if (player.isEngaged()) {
             lastCommandResponse = "You accidentally poop yourself a little before disengaging " + player.getEngaged().getName() + " before running to a safe distance.";
             player.disengage();
@@ -197,13 +207,25 @@ public class Game implements IGame {
                 player.attackEngaged(playerAttack);
                 lastAttackDidHit = true;
 
-                if (player.getEngaged() == player.getHealth().getLastDamage().getAttacker()) {
+                // If the current engaged is the same as the last who did damage, and it isn't dead - Then it retaliated.
+                // This depends on the knowledge that the player is only ever engaged in combat with one entity at a time.
+                // Alternatively, a record of all attacks from different entities and whether or not they were retaliations and to what, would be needed to be kept.
+                if (player.getEngaged() == player.getHealth().getLastDamage().getAttacker() && 
+                        (player.getEngagedAsHasHealth() != null && !player.getEngagedAsHasHealth().getHealth().isDead())) {
+                    
                     lastAttackHadRetaliation = true;
                 }
+                
+                // Disengaging in the middle of a command means breaking the connection between the interface and the engaged item, before the interface has a chance to get the data.
+                // Instead we chose to half-ass it and decided that we can just keep punching dead engageables for all eternity, if we so desired.
+                /*if (player.getEngagedAsHasHealth() != null) {
+                    if (player.getEngagedAsHasHealth ().getHealth().isDead()) {
+                        player.disengage();
+                    }
+                }*/
             } else {
                 lastCommandResponse = ("You don't have the ability to attack using " + command.getSecondWord());
             }
-        } else {
         }
     }
 
@@ -447,7 +469,7 @@ public class Game implements IGame {
     @Override
     public String getEngagedName() {
         if (player.getEngaged() == null) {
-            return "nothing";
+            return null;
         }
         return player.getEngaged().getName();
     }

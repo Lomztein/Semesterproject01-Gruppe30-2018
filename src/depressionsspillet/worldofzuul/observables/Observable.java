@@ -24,6 +24,14 @@ public class Observable<T extends Event> {
         observers.remove (observer);
     }
     
+    public void remove (int index) {
+        observers.remove(index);
+    }
+    
+    public void clear () {
+        observers.clear();
+    }
+    
     public void notifyObservables (T event) {
         for (Observer observer : observers) {
             observer.onNotify (event.withTarget(this));

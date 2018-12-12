@@ -16,6 +16,7 @@ import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
+import depressionsspillet.worldofzuul.observables.Observer;
 import java.util.ArrayList;
 
 /**
@@ -32,7 +33,7 @@ public class Player extends Character implements Attacker, HasHealth {
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
-        playerHealth = new Health(1);
+        playerHealth = new Health(100);
     }
 
     public void generatePlayerResistances() {
@@ -52,8 +53,8 @@ public class Player extends Character implements Attacker, HasHealth {
 
         getHealth().withResistances(playerResistances);
     }
-    
-    private Damage getLastAttack () {
+
+    private Damage getLastAttack() {
         if (engagedWith != null && engagedWith instanceof HasHealth) {
             return ((HasHealth) engagedWith).getHealth().getLastDamage();
         }
@@ -61,19 +62,26 @@ public class Player extends Character implements Attacker, HasHealth {
     }
 
     public double getLastAttackDamageValue() {
-        return getLastAttack ().getDamageValue();
+        return getLastAttack().getDamageValue();
     }
-    
-    public String getLastAttackName () {
-        return getLastAttack ().getAttack().getName();
+
+    public String getLastAttackName() {
+        return getLastAttack().getAttack().getName();
     }
-    
-    public String getLastAttackDescription () {
-        return getLastAttack ().getAttack ().getDescription ();
+
+    public String getLastAttackDescription() {
+        return getLastAttack().getAttack().getDescription();
     }
-    
-    public String getLastAttackType () {
-        return getLastAttack ().getDamageType().name();
+
+    public String getLastAttackType() {
+        return getLastAttack().getDamageType().name();
+    }
+
+    public HasHealth getEngagedAsHasHealth() {
+        if (engagedWith != null && engagedWith instanceof HasHealth) {
+            return (HasHealth) engagedWith;
+        }
+        return null;
     }
 
     public String getLastAttackDamageResponse() {
