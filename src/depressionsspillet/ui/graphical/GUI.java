@@ -27,8 +27,8 @@ public class GUI extends Application {
     private static final double W = 456, H = 285;
 
     //To access the methods in the FXML-controller, this dank-ass workaround had to be implemented.
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGame.fxml"));
-    FXMLGameController control;
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML.fxml"));
+    FXMLController control;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
