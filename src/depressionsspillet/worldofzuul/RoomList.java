@@ -28,7 +28,7 @@ public class RoomList {
     public static void listRooms() {
 
         // The individual room variables are populated with their appropiate Room objects.
-        start = new Room("You leave Spilmester Martin, and enter the huge magical forest, with trees seemingly extending into the skies.", "start");
+        start = new Room("Spilmester Martin:\nHaha, what an ugly name, and btw the listed character types were all sold out, so you got a pathetic blue dot.\nNow please walk south using WASD to move, and defeat Erikthulu. Remember you must first acquire enough happiness\n from the world, before you can enter through the gate in the south!", "start");
         magicForrest = new Room("You are now in the magic forest, who knows what will happen.", "magicForrest");
         vendor = new Room("You have visited the blackboard vendor, a replacement of blackboard is currently in the works, in the meantime however, \n please feel free to browse the vendor's wares.", "vendor");
         animals = new Room("You go deeper into the forest and find yourself in a completely white room filled with puppies and kittens.", "animals");
