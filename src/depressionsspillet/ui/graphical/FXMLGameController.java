@@ -203,6 +203,8 @@ public class FXMLGameController implements Initializable {
         }
     }
 
+    
+    
     //If a key is held, make it's respective boolean value for being held, true.
 
     @FXML
@@ -396,7 +398,7 @@ public class FXMLGameController implements Initializable {
                 backgroundImageView.setImage(image15);
                 break;
             default:
-                txtAreaOutput.setText("You cannot go this way. Try another :)");
+                txtAreaOutput.setText("You cannot go this way. Try another.");
         }
         updateTxtArea();
         updateItemsList();
@@ -405,10 +407,10 @@ public class FXMLGameController implements Initializable {
     }
 
     private void updateTxtArea() {
-        txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises by: " + game.getRoomHappiness());
+        txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
         txfFieldHappiness.setText("" + game.getCurrentHappiness());
     }
-
+    
     private void updateItemsList() {
         items.clear();
         String[] itemarray = game.getItemNames();
@@ -440,7 +442,7 @@ public class FXMLGameController implements Initializable {
         }
     }
 
-    /*
+    
      private void handleGoWestButtonEvent(ActionEvent event
      ) {
      game.enterCommand("go west");
@@ -464,14 +466,14 @@ public class FXMLGameController implements Initializable {
      game.enterCommand("go south");
      updateRoom();
      }
-     */
+     
     
     @FXML
     private void handleDropButtonEvent(ActionEvent event) {
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
         selectedInventoryItemIndex += 1;
         game.enterCommand("inventory drop " + selectedInventoryItemIndex);
-
+        txtAreaOutput.setText(game.getCommandResponse());
         //Refreshing inventory
         inventory.clear();
         String[] inventoryStrings = game.getPlayerInventoryNames();
@@ -484,6 +486,7 @@ public class FXMLGameController implements Initializable {
     private void handlePickUpButtonEvent(ActionEvent event) {
         String selectedItem = lvItems.getSelectionModel().getSelectedItem();
         game.enterCommand("inventory pickup " + selectedItem);
+        txtAreaOutput.setText(game.getCommandResponse());
         //Refreshing inventory
         String[] inventoryStrings = game.getPlayerInventoryNames();
         for (String string : inventoryStrings) {
@@ -506,11 +509,21 @@ public class FXMLGameController implements Initializable {
     }
 
     @FXML
-    private void handleUseButtonEvent(ActionEvent event) {
+    private void handleInteractButtonEvent(ActionEvent event) {
     }
 
     @FXML
-    private void handleInteractButtonEvent(ActionEvent event) {
+    private void handleUseButtonEvent(ActionEvent event) {
+        int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
+        selectedInventoryItemIndex += 1;
+        game.enterCommand("inventory use " + selectedInventoryItemIndex);
+        txtAreaOutput.setText(game.getCommandResponse());
+        //Refreshing inventory
+        inventory.clear();
+        String[] inventoryStrings = game.getPlayerInventoryNames();
+        inventory.addAll(Arrays.asList(inventoryStrings));
+        lvInventory.setItems(inventory);
+        updateItemsList();
     }
 
 }
