@@ -291,7 +291,7 @@ public class FXMLGameController implements Initializable {
 
             System.out.println(differenceX + " " + differenceY);
 
-            if (differenceX <= 30 && differenceY <= 30) {
+            if (differenceX <= 45 && differenceY <= 45) {
                 game.enterCommand(directionCommands[i]);
                 updateRoom();
             }
@@ -303,16 +303,16 @@ public class FXMLGameController implements Initializable {
     private void updatePlayerLocation() {
         String[] lastWords = game.getCommandWords();
         if (lastWords[0].equals("south")) {
-            movePlayer(222, 0);
+            movePlayer(222, 8);
         }
         if (lastWords[0].equals("north")) {
-            movePlayer(222, 255);
+            movePlayer(170, 190);
         }
         if (lastWords[0].equals("west")) {
-            movePlayer(420, 116);
+            movePlayer(420, 110);
         }
         if (lastWords[0].equals("east")) {
-            movePlayer(0, 116);
+            movePlayer(40, 115);
         }
     }
 
