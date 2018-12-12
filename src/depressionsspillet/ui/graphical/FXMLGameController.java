@@ -89,6 +89,8 @@ public class FXMLGameController implements Initializable {
     private Rectangle north;
     @FXML
     private Rectangle south;
+    @FXML
+    private Button interactButton;
 
     //Attributes
     boolean running, goNorth, goSouth, goEast, goWest;
@@ -96,8 +98,6 @@ public class FXMLGameController implements Initializable {
     private static double W = 456, H = 285;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
-    @FXML
-    private Button interactButton;
     
 
     /**
@@ -120,8 +120,8 @@ public class FXMLGameController implements Initializable {
         directionObjects[3] = south;
 
         //Setting starting image
-        Image imageMagicalForest = new Image("newImages/start.jpg");
-        backgroundImageView.setImage(imageMagicalForest);
+        Image imageStart = new Image("newImages/start.jpg");
+        backgroundImageView.setImage(imageStart);
 
         //Setting attacks
         attacks.add("dab");
@@ -208,7 +208,7 @@ public class FXMLGameController implements Initializable {
     //If a key is held, make it's respective boolean value for being held, true.
 
     @FXML
-    private void handleKeyPressed(KeyEvent event) {
+    private void handleKeyPressed(KeyEvent event) throws IOException {
 
         switch (event.getCode()) {
             case W:
@@ -334,12 +334,11 @@ public class FXMLGameController implements Initializable {
     }
 
     //Update of items and NPC's to be added here
-    private void updateRoom() {
+    private void updateRoom() throws IOException {
         switch (game.getCurrentRoomName()) {
             case "magicForrest":
-                //Setting new image
-                Image image = new Image("newImages/magicforrest.jpg");
-                backgroundImageView.setImage(image);
+                Image image1 = new Image("newImages/magicforrest.jpg");
+                backgroundImageView.setImage(image1);            
                 break;
             case "vendor":
                 Image image2 = new Image("newImages/vendor.jpg");
@@ -394,7 +393,7 @@ public class FXMLGameController implements Initializable {
                 backgroundImageView.setImage(image14);
                 break;
             case "suprise":
-                Image image15 = new Image("newImages/surprise.jpg");
+                Image image15 = new Image("newImages/suprise.gif");
                 backgroundImageView.setImage(image15);
                 break;
             default:
@@ -405,7 +404,7 @@ public class FXMLGameController implements Initializable {
         updateNPCList();
         updatePlayerLocation();
     }
-
+    
     private void updateTxtArea() {
         txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
         txfFieldHappiness.setText("" + game.getCurrentHappiness());
@@ -441,32 +440,6 @@ public class FXMLGameController implements Initializable {
             lvNPC.setItems(emptyList);
         }
     }
-
-    
-     private void handleGoWestButtonEvent(ActionEvent event
-     ) {
-     game.enterCommand("go west");
-     updateRoom();
-     }
-
-     private void handleGoNorthButtonEvent(ActionEvent event
-     ) {
-     game.enterCommand("go north");
-     updateRoom();
-     }
-
-     private void handleGoEastButtonEvent(ActionEvent event
-     ) {
-     game.enterCommand("go east");
-     updateRoom();
-     }
-
-     private void handleGoSouthButtonEvent(ActionEvent event
-     ) {
-     game.enterCommand("go south");
-     updateRoom();
-     }
-     
     
     @FXML
     private void handleDropButtonEvent(ActionEvent event) {
