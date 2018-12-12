@@ -60,6 +60,14 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
         }
 
     }
+    
+    @Override
+    public String getName () {
+        if (getHealth ().isDead()) {
+            return super.getName () + " (dead)";
+        }
+        return super.getName();
+    }
 
     @Override
     public Health getHealth() {

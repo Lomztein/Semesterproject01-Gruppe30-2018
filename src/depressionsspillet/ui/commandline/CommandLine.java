@@ -64,6 +64,7 @@ public class CommandLine {
                     break;
 
                 case "DISENGAGE":
+                    printRoom (); // Update the "graphics" so that any changes from combat is known to the player.
                     break;
 
                 case "INTERACT":
