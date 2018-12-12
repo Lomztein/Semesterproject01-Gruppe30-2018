@@ -16,7 +16,7 @@ import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
-import depressionsspillet.worldofzuul.observables.Observer;
+import depressionsspillet.worldofzuul.observables.Observable;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +28,7 @@ public class Player extends Character implements Attacker, HasHealth {
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
     private final Health playerHealth;
     private int happiness = 2;
+    
 
     private final ArrayList<Item> inventory = new ArrayList<>();
 

@@ -8,11 +8,14 @@ package depressionsspillet.worldofzuul;
 import depressionsspillet.worldofzuul.characters.HostileNPC;
 import depressionsspillet.worldofzuul.characters.InteractableNPC;
 import depressionsspillet.worldofzuul.characters.NPC;
+import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
+import depressionsspillet.worldofzuul.interaction.InteractableObject;
 import depressionsspillet.worldofzuul.interaction.Interaction;
+import depressionsspillet.worldofzuul.observables.Observer;
 
 /**
  *
@@ -22,7 +25,6 @@ public class RoomList {
 
     //This class was made to combat the amount of bloat in the game-class. 
     //It contains all the rooms, the items and entities inside the rooms, and exits.
-
     static Room start, magicForrest, vendor, animals, thaiHooker, campfire, fridayBar, stripClub, kfc, shrek, allotment, movie, drugs, gate, boss, suprise;
 
     public static void listRooms() {
@@ -59,19 +61,21 @@ public class RoomList {
         magicForrest.setExit("south", campfire);
         magicForrest.setExit("east", vendor);
         magicForrest.setExit("west", thaiHooker);
-        
-        magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 4, 0));
 
+        magicForrest.addItem(new ConsumableItem("apple", "An apple of particularly moist texture.", 100, 4, 0));
 
         // Exits for vendor are declared.
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
         vendor.setHappiness(0);
-        
-        NPC Vendorboi = new InteractableNPC("Vendorboi", "The friendly purveyor of various liquid substances, that may or may not be of use", vendor, 
-                new Interaction ("Bargain", "Restores Health at the cost of Happiness", x -> {x.addHealth(100d - x.getHealth().getCurrentHealth()); x.addHappiness(-5);
-                    return "Your health is restored to 100";})
+
+        NPC Vendorboi = new InteractableNPC("Vendorboi", "The friendly purveyor of various liquid substances, that may or may not be of use", vendor,
+                new Interaction("Bargain", "Restores Health at the cost of Happiness", x -> {
+                    x.addHealth(100d - x.getHealth().getCurrentHealth());
+                    x.addHappiness(-5);
+                    return "Your health is restored to 100";
+                })
         );
         vendor.addEntityToRoom(Vendorboi);
 
@@ -86,56 +90,70 @@ public class RoomList {
         thaiHooker.setExit("east", magicForrest);
         thaiHooker.setExit("west", drugs);
         thaiHooker.setHappiness(15);
-        
+
         thaiHooker.addItem(new ConsumableItem("Lube", "Label says 'Dashing Strawberry flavor'. You feel curious.", 100, 3, 3));
 
         thaiHooker.addEntityToRoom(new InteractableNPC("Thai-Hooker", "A prostetute of questionable age and gender, yet you are still attracted to them.", thaiHooker,
                 new Interaction("Impregnate", "Give in to your carnal lust.", x -> {
                     x.addHappiness(20);
                     x.addAttack(new Attack(DamageType.FIRE, 10, "chlamydia", "a rash in unpleasent locations"));
-                        return "You engage in adultery with the hooker, recieving an itchy contagion.";}
-        )));
+                    return "You engage in adultery with the hooker, recieving an itchy contagion.";
+                }
+                )));
 
         campfire.setExit("north", magicForrest);
         campfire.setExit("south", gate);
         campfire.setExit("east", stripClub);
         campfire.setExit("west", fridayBar);
         campfire.setHappiness(15);
-        
+
         campfire.addEntityToRoom(new InteractableNPC("Dan", "A childhood buddy, always cheery and positive", campfire,
-            new Interaction ("Friendly-gesture", "Slap his ass", x -> {x.addHappiness(5);
-                return "Dan is surprised by the slap but laughs and tries to slap you back meanwhile he makes rude but friendlyminded remarks about your appearance and actions. +5 happiness";})
-        ));
-        
-        campfire.addEntityToRoom(new InteractableNPC("Mark", "A friend from school, smart, handsome and probably gay, but everloving by heart", campfire,
-            new Interaction ("Friendly-gesture", "Slap his ass", x -> {x.addHappiness(-5);
-                return "Mark is not amused by your blatant sexual discrimination - you recieve a light slap, but can sense Mark's deep disappointment. -5 happiness";}),
-            new Interaction ("Compliment", "Compliment Mark's eyebrows and his choice of fashion", x -> {x.addHappiness(5);
-                    return "Mark replies with a compliment about how you are polite and sweet and gives you a light pat on the shoulder. +5 happiness";})
-        ));
-        
-        campfire.addEntityToRoom(new InteractableNPC("Mia", "A childhood girl friend with whom you've never really been apart", campfire,
-            new Interaction ("Harass", "touch tiddies", x -> {x.addHappiness(1);
-                return "Mia is startled by this sudden sexual movement and retaliates with a decisive knock in your bollocks. +1 happiness cuz you got to touch dem tiddies";}),
-            new Interaction ("Question", "Ask why you were never together", x -> {x.addHappiness(10);
-                return "Mia explains that she never thought she were good enough for you, and besides it would be wierd to mess around with someone you've known almost since birth. +10 happiness";}),
-            new Interaction ("Propose", "Ask Mia if she wants to marry you", x -> {x.addHappiness(-10);
-                return "Your being thickskulled and too sudden and blunt has provoked an anxious refusal from Mia. She tells you to grow up and get over your desperation, as she looks away in resentment. -10 happiness";}) 
+                new Interaction("Friendly-gesture", "Slap his ass", x -> {
+                    x.addHappiness(5);
+                    return "Dan is surprised by the slap but laughs and tries to slap you back meanwhile he makes rude but friendlyminded remarks about your appearance and actions. +5 happiness";
+                })
         ));
 
-        
+        campfire.addEntityToRoom(new InteractableNPC("Mark", "A friend from school, smart, handsome and probably gay, but everloving by heart", campfire,
+                new Interaction("Friendly-gesture", "Slap his ass", x -> {
+                    x.addHappiness(-5);
+                    return "Mark is not amused by your blatant sexual discrimination - you recieve a light slap, but can sense Mark's deep disappointment. -5 happiness";
+                }),
+                new Interaction("Compliment", "Compliment Mark's eyebrows and his choice of fashion", x -> {
+                    x.addHappiness(5);
+                    return "Mark replies with a compliment about how you are polite and sweet and gives you a light pat on the shoulder. +5 happiness";
+                })
+        ));
+
+        campfire.addEntityToRoom(new InteractableNPC("Mia", "A childhood girl friend with whom you've never really been apart", campfire,
+                new Interaction("Harass", "touch tiddies", x -> {
+                    x.addHappiness(1);
+                    return "Mia is startled by this sudden sexual movement and retaliates with a decisive knock in your bollocks. +1 happiness cuz you got to touch dem tiddies";
+                }),
+                new Interaction("Question", "Ask why you were never together", x -> {
+                    x.addHappiness(10);
+                    return "Mia explains that she never thought she were good enough for you, and besides it would be wierd to mess around with someone you've known almost since birth. +10 happiness";
+                }),
+                new Interaction("Propose", "Ask Mia if she wants to marry you", x -> {
+                    x.addHappiness(-10);
+                    return "Your being thickskulled and too sudden and blunt has provoked an anxious refusal from Mia. She tells you to grow up and get over your desperation, as she looks away in resentment. -10 happiness";
+                })
+        ));
+
         fridayBar.setExit("north", thaiHooker);
         fridayBar.setExit("east", campfire);
         fridayBar.setHappiness(10);
-        
+
         fridayBar.addEntityToRoom(new InteractableNPC("Dennis", "Bartender", fridayBar,
-            new Interaction("Beer", "Sit down at the bar, greet the bartender and order a drink", 
-                    x -> {x.addHappiness(5); 
-                    x.addHealth(10);
-                        return "As you gulp down the cold beer and Dennis asks how you are feeling, you let out a bit of the feelings you've bottled up over the past few years. "
-                                + "It feels as though a burden has been lifted from your chest. +5 happiness";})
+                new Interaction("Beer", "Sit down at the bar, greet the bartender and order a drink",
+                        x -> {
+                            x.addHappiness(5);
+                            x.addHealth(10);
+                            return "As you gulp down the cold beer and Dennis asks how you are feeling, you let out a bit of the feelings you've bottled up over the past few years. "
+                            + "It feels as though a burden has been lifted from your chest. +5 happiness";
+                        })
         ));
-        
+
         fridayBar.addItem(new ConsumableItem("beer", "The nectar of God himself; The holiest of drinks.", 100, 5, 10));
         fridayBar.addItem(new ConsumableItem("abandoned-beer", "This is exactly what you need.", 100, 5, 0));
 
@@ -143,12 +161,12 @@ public class RoomList {
         stripClub.setExit("east", kfc);
         stripClub.setExit("west", campfire);
         stripClub.setHappiness(10);
-        
+
         stripClub.addEntityToRoom(new HostileNPC("Diamond", "Very skilled in barfights resulted from a long career as an exotic dancer. She dislikes you because you are broke.", stripClub, true, new Health(35),
-            new Attack(DamageType.BLUNT, 3, "Boob Bash", "smacks you with a hardened fake titty."),
-            new Attack(DamageType.FIRE, 10, "Molotov Cocktail", "grabbing a bottle from the bar, she lights in on fire and throws it at you."),
-            new Attack(DamageType.SLASH, 5, "Stiletto Stab", "using her pumps, she impales one of your limbs."),
-            new Attack(DamageType.MENTAL, 4, "Berate", "she ruthlessly yells slurs about your worthlessness.")
+                new Attack(DamageType.BLUNT, 3, "Boob Bash", "smacks you with a hardened fake titty."),
+                new Attack(DamageType.FIRE, 10, "Molotov Cocktail", "grabbing a bottle from the bar, she lights in on fire and throws it at you."),
+                new Attack(DamageType.SLASH, 5, "Stiletto Stab", "using her pumps, she impales one of your limbs."),
+                new Attack(DamageType.MENTAL, 4, "Berate", "she ruthlessly yells slurs about your worthlessness.")
         ));
 
         stripClub.addItem(new ConsumableItem("Money", "A bunch of one-dollar bills covered by strange fluids. Moist.", 10, 15, 25));
@@ -156,14 +174,15 @@ public class RoomList {
         kfc.setExit("east", shrek);
         kfc.setExit("west", stripClub);
         kfc.setHappiness(15);
-        
-        
+
         kfc.addEntityToRoom(new InteractableNPC("Katie", "Seems like one of those fast food employees who give people extra nuggets.", kfc,
-                new Interaction("Order something", "Place an order for whatever you feel like having", x -> {x.addHappiness(7);
+                new Interaction("Order something", "Place an order for whatever you feel like having", x -> {
+                    x.addHappiness(7);
                     return "The cashier happily guides you through the order and predicts exactly what you wanted as if she read your mind. "
-                            + "A bit creepy, but it makes you happy that someone would understand you so. +7 happiness";})
+                            + "A bit creepy, but it makes you happy that someone would understand you so. +7 happiness";
+                })
         ));
-        
+
         shrek.setExit("west", kfc);
 
         shrek.addEntityToRoom(new HostileNPC("Shrek", "Memelord Alpha-Omega", shrek, true, new Health(42),
@@ -177,48 +196,66 @@ public class RoomList {
         allotment.setExit("south", drugs);
         allotment.setExit("east", movie);
         allotment.setHappiness(10);
-        
-        allotment.addEntityToRoom(new InteractableNPC("Vader", "Darth Vader the Elderly - Passionate owner of a beautiful allotment", allotment, 
-                new Interaction ("Storytime", "Let Vader tell you about his succeses and failures in life.", x -> {x.addHappiness(5);
-                        return "As you listen to the tales of an old wise man, you feel an ember of purpose flicker inside. +20 happiness";}),
-                new Interaction ("Father?", "This question is not thoroughly thought through, and the answer may not please you.", x -> {x.addHappiness(-15);
-                        return "He responds with a stern and slightly disgusted refusal. This makes you a bit sad. -15 happiness";}),
-                new Interaction ("Flora", "Ask Vader to elaborate on the flora of his allotment", x -> {x.addHappiness(10);
-                        return "While guiding you around the garden he suddenly stumbles upon a particular plant which, as he explains, is tremendous as an ingredient in pastrymaking";})
-        ));
-        
-        allotment.addItem(new ConsumableItem("Plant", "A strange plant with distinctly shaped leaves. Something tells you this can be smoked.", 100, 0, 10));
 
+        allotment.addEntityToRoom(new InteractableNPC("Vader", "Darth Vader the Elderly - Passionate owner of a beautiful allotment", allotment,
+                new Interaction("Storytime", "Let Vader tell you about his succeses and failures in life.", x -> {
+                    x.addHappiness(5);
+                    return "As you listen to the tales of an old wise man, you feel an ember of purpose flicker inside. +20 happiness";
+                }),
+                new Interaction("Father?", "This question is not thoroughly thought through, and the answer may not please you.", x -> {
+                    x.addHappiness(-15);
+                    return "He responds with a stern and slightly disgusted refusal. This makes you a bit sad. -15 happiness";
+                }),
+                new Interaction("Flora", "Ask Vader to elaborate on the flora of his allotment", x -> {
+                    x.addHappiness(10);
+                    return "While guiding you around the garden he suddenly stumbles upon a particular plant which, as he explains, is tremendous as an ingredient in pastrymaking";
+                })
+        ));
+
+        allotment.addItem(new ConsumableItem("Plant", "A strange plant with distinctly shaped leaves. Something tells you this can be smoked.", 100, 0, 10));
 
         movie.setExit("south", thaiHooker);
         movie.setExit("west", allotment);
         movie.setHappiness(10);
-        
+
         movie.addEntityToRoom(new InteractableNPC("tv", "A big television seemingly for free use.", movie,
-            new Interaction("Watch", "You turn on the tv and apparently a movie is just starting.", x -> {
-                x.addHappiness(5); 
-                x.addHealth(5);
-                    return "After the movie is finished you feel rejuvenated as the movie was good and you had a chance to relax. +5 happiness, +5 health.";})
+                new Interaction("Watch", "You turn on the tv and apparently a movie is just starting.", x -> {
+                    x.addHappiness(5);
+                    x.addHealth(5);
+                    return "After the movie is finished you feel rejuvenated as the movie was good and you had a chance to relax. +5 happiness, +5 health.";
+                })
         ));
-        
+
         movie.addEntityToRoom(new ConsumableItem("Snack", "Buttered popcorn", 100, 5, 5));
         movie.addEntityToRoom(new ConsumableItem("Drink", "Seems to change in taste according the drink you're thinking about", 100, 5, 5));
-        
 
         drugs.setExit("north", allotment);
         drugs.setExit("east", thaiHooker);
-        
-        
+
+        drugs.addEntityToRoom(new InteractableObject("Line-of-coke", "An inviting line of cocain lying on a iredescent mirror surface.", new Interaction("dewit", "Do the line.", (Player x) -> {
+            x.addHappiness(-25); // The player is told that they first gain 100 and then lose 125, but in fact we just remove 25. #leekhacksaw.
+            return "You feel great, your happiness increases by +100. However an hour pass and you crash hard. -125 happiness";
+        })));
 
         gate.setExit("north", campfire);
-        gate.setExit("south", boss, false);
-        
+        gate.setExit("south", boss, true, "This door is locked by foul, eldritch magic. You must have at least 95 happiness to enter it.");
+
         gate.addEntityToRoom(new InteractableNPC("Gate", "Big, huge gate", gate,
-                new Interaction("Admire", "You look at the gate with awe and curiosity.", x -> {x.addHealth(1);
-                    return "As you stare at the gate for a good few minutes you feel a bit of strength return to your body. +1 health.";})
-        ));
-        
-        boss.setExit("south", suprise);
+                new Interaction("Admire", "You look at the gate with awe and curiosity.", x -> {
+                    x.addHealth(1);
+                    return "As you stare at the gate for a good few minutes you feel a bit of strength return to your body. +1 health.";
+                }),
+                new Interaction("Unlock", "Call upon the wholesome force within, as your force of will itself shall open this door.", x -> {
+                    if (x.getHappiness() > 95) {
+                        gate.setExit("south", boss);
+                        return "You feel a chill go down your spine, as the door creeks thunderously.";
+                    } else {
+                        return "You do not yet possess the strength within to enter. Begone!";
+                    }
+                }))
+        );
+
+        boss.setExit("south", suprise, true, "From behind you hear muffled screams, it fills you with untold dread and misery.");
 
         //A new NPC, the boss Erikthulhu, is created. 
         HostileNPC erikthulhu = new HostileNPC("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, true, new Health(666d).withResistances(
@@ -234,13 +271,12 @@ public class RoomList {
                 new Attack(DamageType.BLUNT, 10d, "Vigerous Punch", "an intense punch, using raw strength alone."),
                 new Attack(DamageType.MENTAL, 10d, "Insult", "an insult upon your appearance, talents and skills all wowen together in a beautiful euphony of wordsmithing.")
         );
+
+        erikthulhu.getHealth().onDeath.add(x -> boss.setExit("south", suprise));
+
         boss.addEntityToRoom(erikthulhu);
-        
-        
+
         //Items added to the different rooms:
-        
-        
-        
     }
 
 }

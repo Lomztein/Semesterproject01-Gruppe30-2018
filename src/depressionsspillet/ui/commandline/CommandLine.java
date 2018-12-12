@@ -45,7 +45,7 @@ public class CommandLine {
             //Without this, you wouldn't know which room you were standing in and so on. - This switch-case is supposed to handle all the CLI prints, whereas the switch-case in the game-class handles all the logic within.
             switch (last) {
                 case "GO":
-                    printRoom();
+                    go();
                     break;
 
                 case "HELP":
@@ -96,17 +96,20 @@ public class CommandLine {
         System.out.println("You walk away to cry in the corner. Spilmester Martin will not forget this.");
         System.out.println("Thank you for playing.  Good bye.");
     }
-
-    private void printRoom() {
+    
+    private void go () {
         //Checks the CommandWords array for values.
         if (game.getCommandWords()[0] == null) {
             System.out.println("Go? Go where..?");
             // If this happens, then exit out of this function using a return statement.
-            return;
         } else if (game.getPlayerTriedEnteringLockedDoor()) {
             System.out.println(game.getPlayerTriedEnteringLockedDoorResponse());
+        } else {
+            printRoom ();
         }
+    }
 
+    private void printRoom() {
         System.out.println(
                 "-------------------------\n"
                 + game.getCurrentRoomLongDesc());
@@ -335,7 +338,7 @@ public class CommandLine {
                 for (int i = 0; i < names.length; i++) {
                     System.out.println(names[i] + " - " + descriptions[i]);
                 }
-            } else {
+            } else { // If the request interactable doesn't exist.
                 System.out.println(game.getCommandWords()[1] + " isn't an option, you cannot do that. The Lolice are coming for you.");
             }
 

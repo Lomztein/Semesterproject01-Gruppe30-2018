@@ -7,6 +7,9 @@ package depressionsspillet.worldofzuul.characters;
 
 import depressionsspillet.worldofzuul.Entity;
 import depressionsspillet.worldofzuul.Room;
+import depressionsspillet.worldofzuul.observables.Event;
+import depressionsspillet.worldofzuul.observables.Observable;
+
 /**
  * @author Joachim
  */
@@ -14,6 +17,8 @@ public abstract class Character implements Entity {
 
     private final String name;
     private final String description;
+
+    public Observable onRoomChanged = new Observable();
 
     //private Inventory inventory;
     private Room currentRoom;
@@ -24,6 +29,7 @@ public abstract class Character implements Entity {
 
     public void setCurrentRoom(Room room) {
         this.currentRoom = room;
+        onRoomChanged.notifyObservables(new Event (this));
     }
 
     @Override
@@ -41,6 +47,6 @@ public abstract class Character implements Entity {
         this.description = description;
         this.currentRoom = currentRoom;
     }
-    
+
     //GGWP
 }

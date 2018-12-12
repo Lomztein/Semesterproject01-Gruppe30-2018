@@ -111,11 +111,7 @@ public class Game implements IGame {
         triedEnteringLockedRoomResponse = null;
         if (nextRoom != null) {
             if (nextRoom.isLocked()) {
-                if (player.getHappiness() < 99d) {
-                    triedEnteringLockedRoomResponse = "You quiver in fear at the sight of this mighty gate, as you lack the self-comfidence to enter. Return when you are happier.";
-                } else {
-                    player.setCurrentRoom(nextRoom.getRoom());
-                }
+                triedEnteringLockedRoomResponse = nextRoom.getLockedReason();
             } else {
                 player.setCurrentRoom(nextRoom.getRoom());
                 player.addHappiness(player.getCurrentRoom().getHappiness());
@@ -149,8 +145,6 @@ public class Game implements IGame {
                     }
 
                 }
-            } else {
-                lastCommandResponse = (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
             }
         }
     }

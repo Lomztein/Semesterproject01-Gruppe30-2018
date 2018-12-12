@@ -98,12 +98,15 @@ public class Room {
     }
 
     public void setExit(String direction, Room neighbor) {
-        setExit(direction, neighbor, false);
+        setExit(direction, neighbor, false, null);
     }
 
     // Wrapper function for exits.put, since exits is private.
-    public void setExit(String direction, Room neighbor, boolean locked) {
-        Door door = new Door(direction, neighbor, locked);
+    public void setExit(String direction, Room neighbor, boolean locked, String lockedReason) {
+        Door door = new Door(direction, neighbor, locked, lockedReason);
+        if (exits.containsKey(direction)) {
+            exits.remove(direction); // Remove it if it already exists, in order to reset it.
+        }
         exits.put(direction, door);
     }
 
