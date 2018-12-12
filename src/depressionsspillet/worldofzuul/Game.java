@@ -79,9 +79,9 @@ public class Game implements IGame {
                     disengage(command);
                     break;
                 case INTERACT:
-                    interact (command);
+                    interact(command);
                     break;
-                    
+
                 case INVENTORY:
                     inventory(command);
                     break;
@@ -130,7 +130,7 @@ public class Game implements IGame {
             Interactable[] interactables = player.getCurrentRoom().getEntities(Interactable.class);
             Interactable correct = null;
             for (Interactable i : interactables) {
-                if (i.getName().toLowerCase().equals(command.getSecondWord().toLowerCase())) {
+                if (i.getName().toUpperCase().equals(command.getSecondWord().toUpperCase())) {
                     correct = i;
                 }
             }
@@ -147,9 +147,9 @@ public class Game implements IGame {
                         lastCommandResponse = ("You have no idea how to " + command.getThirdWord() + " " + correct.getName());
                     }
 
-                } else {
-                    lastCommandResponse = (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
                 }
+            } else {
+                lastCommandResponse = (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
             }
         }
     }
@@ -168,7 +168,7 @@ public class Game implements IGame {
                 player.engage(toEngage);
                 lastCommandResponse = "You engage " + toEngage.getName() + " with spirit and vigor!";
             } else {
-                lastCommandResponse = "There is no " + command.hasSecondWord() + " that you can engage.";
+                lastCommandResponse = "There is no " + command.getSecondWord() + " that you can engage.";
             }
         } else {
             // TODO: Reimplement in CommandLine.java <------- 

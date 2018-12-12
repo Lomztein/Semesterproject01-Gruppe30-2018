@@ -142,13 +142,23 @@ public class CommandLine {
         String[] npcNames = game.getNPCNames();
         String[] npcDescriptions = game.getNPCDescriptions();
         if (npcNames.length != 0) {
-            System.out.println("The following NPCs are present: ");
+
+            String npcList = "";
+            int npcCount = 0;
+
             for (int i = 0; i < npcNames.length; i++) {
-                System.out.println(npcNames[i] + " - " + npcDescriptions[i]);
+                if (getInteractableIndex(game.getInteractableNames(), npcNames[i]) == -1) {
+                    npcCount++;
+                    npcList += (npcNames[i] + " - " + npcDescriptions[i]) + "\n";
+                }
             }
-        } else {
-            System.out.println("\nThere are no NPCs to interact with here.\n");
-        }
+            if (npcCount == 0) {
+                System.out.println("\nThere are no NPCs to ENGAGE with here.\n");
+            }else{
+                System.out.println ("The following NPC to ENGAGE in combat with are here.");
+                System.out.println (npcList);
+            }
+        }   
         System.out.println("Type HELP for help.\nYou can now go the following directions: \n" + singlify(game.getCurrentExits(), ",  "));
     }
 
@@ -308,16 +318,23 @@ public class CommandLine {
 
         } else if (game.getCommandWords()[1] == null) {
             int index = getInteractableIndex(game.getInteractableNames(), game.getCommandWords()[0]);
-            String interactable = game.getInteractableNames()[index];
 
-            String[] names = game.getInteractionNames()[index];
-            String[] descriptions = game.getInteractionDescriptions()[index];
+            if (index != -1) {
 
-            System.out.println("You have the option of the following interactions with " + interactable);
+                String interactable = game.getInteractableNames()[index];
 
-            for (int i = 0; i < names.length; i++) {
-                System.out.println(names[i] + " - " + descriptions[i]);
+                String[] names = game.getInteractionNames()[index];
+                String[] descriptions = game.getInteractionDescriptions()[index];
+
+                System.out.println("You have the option of the following interactions with " + interactable);
+
+                for (int i = 0; i < names.length; i++) {
+                    System.out.println(names[i] + " - " + descriptions[i]);
+                }
+            } else {
+                System.out.println(game.getCommandWords()[1] + " isn't an option, you cannot do that. The Lolice are coming for you.");
             }
+
         }
     }
 
