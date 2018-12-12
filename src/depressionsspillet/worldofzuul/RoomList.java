@@ -71,7 +71,7 @@ public class RoomList {
         
         NPC Vendorboi = new InteractableNPC("Vendorboi", "The friendly purveyor of various liquid substances, that may or may not be of use", vendor, 
                 new Interaction ("Bargain", "Restores Health at the cost of Happiness", x -> {x.addHealth(100d - x.getHealth().getCurrentHealth()); x.addHappiness(-5);
-                    return "Your health is restored to 100";})
+                    return "Your health is restored to 100 at the cost of 5 happiness.";})
         );
         vendor.addEntityToRoom(Vendorboi);
 

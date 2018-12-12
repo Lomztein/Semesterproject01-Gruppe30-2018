@@ -112,7 +112,7 @@ public class CommandLine {
 
         //The following is printing the room's items and NPC's to tell the user what they can do.
         //Adds the rooms happiness to yours and sets the room happiness to 0.
-        System.out.println("You feel your happiness rising to: " + game.getPlayerHealth() + "\n");
+        System.out.println("You feel your happiness rising to: " + game.getCurrentHappiness()+ "\n");
 
         //Printing items from array
         String[] itemNames = game.getItemNames();
