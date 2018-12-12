@@ -48,6 +48,7 @@ public class FXMLGameController implements Initializable {
     ObservableList<String> inventory = FXCollections.observableArrayList();
     ObservableList<String> NPCs = FXCollections.observableArrayList();
     ObservableList<String> items = FXCollections.observableArrayList();
+    ObservableList<String> attacks = FXCollections.observableArrayList();
     ObservableList<String> emptyList = FXCollections.observableArrayList();
 
     //FXML-attributes
@@ -64,11 +65,11 @@ public class FXMLGameController implements Initializable {
     @FXML
     private ListView<String> lvInventory;
     @FXML
+    private ListView<String> lvAttacks;
+    @FXML
     private Circle snotface;
     @FXML
     private AnchorPane gamePane;
-    @FXML
-    private Label selectedLabel;
     @FXML
     private Button attackButton;
     @FXML
@@ -92,6 +93,8 @@ public class FXMLGameController implements Initializable {
     private static double W = 456, H = 285;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
+    @FXML
+    private Button interactButton;
 
     /**
      * Initializes the controller class.
@@ -115,6 +118,11 @@ public class FXMLGameController implements Initializable {
         //Setting starting image
         Image imageMagicalForest = new Image("newImages\\start.jpg");
         backgroundImageView.setImage(imageMagicalForest);
+
+        //Setting attacks
+        attacks.add("dab");
+        attacks.add("manifesto");
+        lvAttacks.setItems(attacks);
 
         //Starting the game
         game.playGame();
@@ -191,179 +199,8 @@ public class FXMLGameController implements Initializable {
         }
     }
 
-    @FXML
-    protected void handleQuitButtonEvent(ActionEvent event) throws IOException {
-        Parent quitParent = FXMLLoader.load(getClass().getResource("FXML.fxml"));
-        Scene quitScene = new Scene(quitParent);
-
-        //Setting this scene to stage
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(quitScene);
-        window.show();
-    }
-
-    //Update of items and NPC's to be added here
-    private void updateRoom() {
-        switch (game.getCurrentRoomName()) {
-            case "magicForrest":
-                //Setting new image
-                Image image = new Image("newImages\\magicforrest.jpg");
-                backgroundImageView.setImage(image);
-                break;
-            case "vendor":
-                Image image2 = new Image("newImages\\vendor.jpg");
-                backgroundImageView.setImage(image2);
-                break;
-            case "animals":
-                Image image3 = new Image("newImages\\animals.jpg");
-                backgroundImageView.setImage(image3);
-                break;
-            case "thaiHooker":
-                Image image4 = new Image("newImages\\thaihooker.jpg");
-                backgroundImageView.setImage(image4);
-                break;
-            case "sleepover":
-                Image image5 = new Image("newImages\\sleepover.jpg");
-                backgroundImageView.setImage(image5);
-                break;
-            case "fridayBar":
-                Image image6 = new Image("newImages\\fridaybar.jpg");
-                backgroundImageView.setImage(image6);
-                break;
-            case "stripClub":
-                Image image7 = new Image("newImages\\stripclub.jpg");
-                backgroundImageView.setImage(image7);
-                break;
-            case "kfc":
-                Image image8 = new Image("newImages\\kfc.jpg");
-                backgroundImageView.setImage(image8);
-                break;
-            case "shrek":
-                Image image9 = new Image("newImages\\shrek.jpg");
-                backgroundImageView.setImage(image9);
-                break;
-            case "allotment":
-                Image image10 = new Image("newImages\\allotment.jpg");
-                backgroundImageView.setImage(image10);
-                break;
-            case "movie":
-                Image image11 = new Image("newImages\\movie.jpg");
-                backgroundImageView.setImage(image11);
-                break;
-            case "drugs":
-                Image image12 = new Image("newImages\\drugs.jpg");
-                backgroundImageView.setImage(image12);
-                break;
-            case "gate":
-                Image image13 = new Image("newImages\\gate.jpg");
-                backgroundImageView.setImage(image13);
-                break;
-            case "boss":
-                Image image14 = new Image("newImages\\boss.jpg");
-                backgroundImageView.setImage(image14);
-                break;
-            case "suprise":
-                Image image15 = new Image("newImages\\surprise.jpg");
-                backgroundImageView.setImage(image15);
-                break;
-            default:
-                txtAreaOutput.setText("You cannot go this way. Try another :)");
-        }
-        updateTxtArea();
-        updateItemsList();
-        updateNPCList();
-    }
-
-    private void updateTxtArea() {
-        txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises by: " + game.getRoomHappiness());
-        txfFieldHappiness.setText("" + game.getCurrentHappiness());
-    }
-
-    private void updateItemsList() {
-        items.clear();
-        String[] itemarray = game.getItemNames();
-        if (itemarray.length != 0) {
-
-            for (String string : itemarray) {
-                if (items.contains(string) == false) {
-                    items.add(string);
-                }
-            }
-            lvItems.setItems(items);
-        } else {
-            lvItems.setItems(emptyList);
-        }
-    }
-
-    private void updateNPCList() {
-        NPCs.clear();
-        String[] NPCarray = game.getNPCNames();
-        if (NPCarray.length != 0) {
-            for (String string : NPCarray) {
-                if (NPCs.contains(string) == false) {
-                    NPCs.add(string);
-                }
-            }
-            lvNPC.setItems(NPCs);
-        } else {
-            lvNPC.setItems(emptyList);
-        }
-    }
-
-    private void handleGoWestButtonEvent(ActionEvent event
-    ) {
-        game.enterCommand("go west");
-        updateRoom();
-    }
-
-    private void handleGoNorthButtonEvent(ActionEvent event
-    ) {
-        game.enterCommand("go north");
-        updateRoom();
-    }
-
-    private void handleGoEastButtonEvent(ActionEvent event
-    ) {
-        game.enterCommand("go east");
-        updateRoom();
-    }
-
-    private void handleGoSouthButtonEvent(ActionEvent event
-    ) {
-        game.enterCommand("go south");
-        updateRoom();
-    }
-
-    @FXML
-    private void handleDropButtonEvent(ActionEvent event) {
-        int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
-        selectedInventoryItemIndex += 1;
-        game.enterCommand("inventory drop " + selectedInventoryItemIndex);
-
-        //Refreshing inventory
-        inventory.clear();
-        String[] inventoryStrings = game.getPlayerInventoryNames();
-        inventory.addAll(Arrays.asList(inventoryStrings));
-        lvInventory.setItems(inventory);
-        updateItemsList();
-    }
-
-    @FXML
-    private void handlePickUpButtonEvent(ActionEvent event) {
-        String selectedItem = lvItems.getSelectionModel().getSelectedItem();
-        game.enterCommand("inventory pickup " + selectedItem);
-        //Refreshing inventory
-        String[] inventoryStrings = game.getPlayerInventoryNames();
-        for (String string : inventoryStrings) {
-            if (inventory.contains(string) == false) {
-                inventory.add(string);
-            }
-        }
-        lvInventory.setItems(inventory);
-        updateItemsList();
-    }
-
     //If a key is held, make it's respective boolean value for being held, true.
+
     @FXML
     private void handleKeyPressed(KeyEvent event) {
 
@@ -463,12 +300,213 @@ public class FXMLGameController implements Initializable {
 
     }
 
+    private void updatePlayerLocation() {
+        String[] lastWords = game.getCommandWords();
+        if (lastWords[0].equals("south")) {
+            movePlayer(222, 0);
+        }
+        if (lastWords[0].equals("north")) {
+            movePlayer(222, 255);
+        }
+        if (lastWords[0].equals("west")) {
+            movePlayer(420, 116);
+        }
+        if (lastWords[0].equals("east")) {
+            movePlayer(0, 116);
+        }
+    }
+
+    @FXML
+    protected void handleQuitButtonEvent(ActionEvent event) throws IOException {
+        Parent quitParent = FXMLLoader.load(getClass().getResource("FXML.fxml"));
+        Scene quitScene = new Scene(quitParent);
+
+        //Setting this scene to stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(quitScene);
+        window.show();
+    }
+
+    //Update of items and NPC's to be added here
+    private void updateRoom() {
+        switch (game.getCurrentRoomName()) {
+            case "magicForrest":
+                //Setting new image
+                Image image = new Image("newImages\\magicforrest.jpg");
+                backgroundImageView.setImage(image);
+                break;
+            case "vendor":
+                Image image2 = new Image("newImages\\vendor.jpg");
+                backgroundImageView.setImage(image2);
+                break;
+            case "animals":
+                Image image3 = new Image("newImages\\animals.jpg");
+                backgroundImageView.setImage(image3);
+                break;
+            case "thaiHooker":
+                Image image4 = new Image("newImages\\thaihooker.jpg");
+                backgroundImageView.setImage(image4);
+                break;
+            case "campfire":
+                Image image5 = new Image("newImages\\sleepover.jpg");
+                backgroundImageView.setImage(image5);
+                break;
+            case "fridayBar":
+                Image image6 = new Image("newImages\\fridaybar.jpg");
+                backgroundImageView.setImage(image6);
+                break;
+            case "stripClub":
+                Image image7 = new Image("newImages\\stripclub.jpg");
+                backgroundImageView.setImage(image7);
+                break;
+            case "kfc":
+                Image image8 = new Image("newImages\\kfc.jpg");
+                backgroundImageView.setImage(image8);
+                break;
+            case "shrek":
+                Image image9 = new Image("newImages\\shrek.jpg");
+                backgroundImageView.setImage(image9);
+                break;
+            case "allotment":
+                Image image10 = new Image("newImages\\allotment.jpg");
+                backgroundImageView.setImage(image10);
+                break;
+            case "movie":
+                Image image11 = new Image("newImages\\movie.jpg");
+                backgroundImageView.setImage(image11);
+                break;
+            case "drugs":
+                Image image12 = new Image("newImages\\drugs.jpg");
+                backgroundImageView.setImage(image12);
+                break;
+            case "gate":
+                Image image13 = new Image("newImages\\gate.jpg");
+                backgroundImageView.setImage(image13);
+                break;
+            case "boss":
+                Image image14 = new Image("newImages\\boss.jpg");
+                backgroundImageView.setImage(image14);
+                break;
+            case "suprise":
+                Image image15 = new Image("newImages\\surprise.jpg");
+                backgroundImageView.setImage(image15);
+                break;
+            default:
+                txtAreaOutput.setText("You cannot go this way. Try another :)");
+        }
+        updateTxtArea();
+        updateItemsList();
+        updateNPCList();
+        updatePlayerLocation();
+    }
+
+    private void updateTxtArea() {
+        txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises by: " + game.getRoomHappiness());
+        txfFieldHappiness.setText("" + game.getCurrentHappiness());
+    }
+
+    private void updateItemsList() {
+        items.clear();
+        String[] itemarray = game.getItemNames();
+        if (itemarray.length != 0) {
+
+            for (String string : itemarray) {
+                if (items.contains(string) == false) {
+                    items.add(string);
+                }
+            }
+            lvItems.setItems(items);
+        } else {
+            lvItems.setItems(emptyList);
+        }
+    }
+
+    private void updateNPCList() {
+        NPCs.clear();
+        String[] NPCarray = game.getNPCNames();
+        if (NPCarray.length != 0) {
+            for (String string : NPCarray) {
+                if (NPCs.contains(string) == false) {
+                    NPCs.add(string);
+                }
+            }
+            lvNPC.setItems(NPCs);
+        } else {
+            lvNPC.setItems(emptyList);
+        }
+    }
+
+    /*
+     private void handleGoWestButtonEvent(ActionEvent event
+     ) {
+     game.enterCommand("go west");
+     updateRoom();
+     }
+
+     private void handleGoNorthButtonEvent(ActionEvent event
+     ) {
+     game.enterCommand("go north");
+     updateRoom();
+     }
+
+     private void handleGoEastButtonEvent(ActionEvent event
+     ) {
+     game.enterCommand("go east");
+     updateRoom();
+     }
+
+     private void handleGoSouthButtonEvent(ActionEvent event
+     ) {
+     game.enterCommand("go south");
+     updateRoom();
+     }
+     */
+    
+    @FXML
+    private void handleDropButtonEvent(ActionEvent event) {
+        int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
+        selectedInventoryItemIndex += 1;
+        game.enterCommand("inventory drop " + selectedInventoryItemIndex);
+
+        //Refreshing inventory
+        inventory.clear();
+        String[] inventoryStrings = game.getPlayerInventoryNames();
+        inventory.addAll(Arrays.asList(inventoryStrings));
+        lvInventory.setItems(inventory);
+        updateItemsList();
+    }
+
+    @FXML
+    private void handlePickUpButtonEvent(ActionEvent event) {
+        String selectedItem = lvItems.getSelectionModel().getSelectedItem();
+        game.enterCommand("inventory pickup " + selectedItem);
+        //Refreshing inventory
+        String[] inventoryStrings = game.getPlayerInventoryNames();
+        for (String string : inventoryStrings) {
+            if (inventory.contains(string) == false) {
+                inventory.add(string);
+            }
+        }
+        lvInventory.setItems(inventory);
+        updateItemsList();
+    }
+
     @FXML
     private void handleAttackButtonEvent(ActionEvent event) {
+        String selectedNPC = lvNPC.getSelectionModel().getSelectedItem();
+        String selectedAttack = lvAttacks.getSelectionModel().getSelectedItem();
+        game.enterCommand("engage " + selectedNPC);
+        game.enterCommand("attack " + selectedAttack);
+        txtAreaOutput.setText("You attacked " + selectedNPC + " with a " + selectedAttack + "!\n" + selectedNPC + "now has " + game.getLastAttackedHealth() + " health left!");
+        game.enterCommand("disengage");
     }
 
     @FXML
     private void handleUseButtonEvent(ActionEvent event) {
+    }
+
+    @FXML
+    private void handleInteractButtonEvent(ActionEvent event) {
     }
 
 }

@@ -84,68 +84,20 @@
                         </Text>
                     </children>
                 </GridPane>
-                <GridPane prefWidth="651.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="163.66666158040366" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="118.22224934895837" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="454.0" minWidth="10.0" prefWidth="317.111083984375" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="454.0" minWidth="10.0" prefWidth="220.99995930989576" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <padding>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                    </padding>
-                    <children>
-                        <Label fx:id="selectedLabel" prefHeight="17.0" prefWidth="221.0" text="Character/entity Selected:" textAlignment="RIGHT" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-                        <HBox prefHeight="35.0" prefWidth="334.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                            <children>
-                                <Button fx:id="attackButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack">
-                                    <HBox.margin>
-                                        <Insets left="8.0" right="8.0" />
-                                    </HBox.margin>
-                                </Button>
-                            </children>
-                            <padding>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                            </GridPane.margin>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
-                            <GridPane.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                            </GridPane.margin>
-                            <padding>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                            </padding>
-                        </HBox>
-                        <VBox prefHeight="68.0" prefWidth="127.0" GridPane.rowIndex="1" GridPane.rowSpan="2">
-                            <GridPane.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
-                            <GridPane.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                            </GridPane.margin>
-                        </VBox>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                    </children>
-                </GridPane>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                <children>
                   <Label focusTraversable="false" text="NPCs:" textFill="RED" />
                   <ListView fx:id="lvNPC" focusTraversable="false" prefHeight="131.0" prefWidth="155.0" />
                   <Label focusTraversable="false" text="Items:" textFill="RED" />
                   <ListView fx:id="lvItems" focusTraversable="false" prefHeight="151.0" prefWidth="155.0" />
-                          <Button fx:id="pickUpButton" focusTraversable="false" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" textAlignment="CENTER" />
+                  <ListView fx:id="lvAttacks" prefHeight="200.0" prefWidth="200.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                                <Button fx:id="pickUpButton" focusTraversable="false" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" textAlignment="CENTER" />
+                                <Button fx:id="attackButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack" />
+                        <Button fx:id="interactButton" mnemonicParsing="false" onAction="#handleInteractButtonEvent" text="Interact" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -174,6 +126,11 @@
                   <Rectangle fx:id="south" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutX="222.0" layoutY="251.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
                </children>
             </AnchorPane>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Attacks:" textFill="RED" />
+               </children>
+            </VBox>
             </children>
         </GridPane>
     </children>
