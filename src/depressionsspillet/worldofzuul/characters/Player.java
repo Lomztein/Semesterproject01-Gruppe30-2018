@@ -47,13 +47,12 @@ public class Player extends Character implements Attacker, HasHealth {
                     playerResistances.add(new DamageResistance(type, "takes a massive %.2f damage due to their crippling insecurities being exposed.", 2d));
                 }
             }
-
         }
 
         getHealth().withResistances(playerResistances);
     }
-    
-    private Damage getLastAttack () {
+
+    private Damage getLastAttack() {
         if (engagedWith != null && engagedWith instanceof HasHealth) {
             return ((HasHealth) engagedWith).getHealth().getLastDamage();
         }
@@ -61,19 +60,19 @@ public class Player extends Character implements Attacker, HasHealth {
     }
 
     public double getLastAttackDamageValue() {
-        return getLastAttack ().getDamageValue();
+        return getLastAttack().getDamageValue();
     }
-    
-    public String getLastAttackName () {
-        return getLastAttack ().getAttack().getName();
+
+    public String getLastAttackName() {
+        return getLastAttack().getAttack().getName();
     }
-    
-    public String getLastAttackDescription () {
-        return getLastAttack ().getAttack ().getDescription ();
+
+    public String getLastAttackDescription() {
+        return getLastAttack().getAttack().getDescription();
     }
-    
-    public String getLastAttackType () {
-        return getLastAttack ().getDamageType().name();
+
+    public String getLastAttackType() {
+        return getLastAttack().getDamageType().name();
     }
 
     public String getLastAttackDamageResponse() {

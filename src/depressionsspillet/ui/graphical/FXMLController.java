@@ -42,31 +42,32 @@ public class FXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-               
-            try {
-            File introMusic = new File("intromusic.wav");                 
+
+        try {
+            File introMusic = new File("intromusic.wav");
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(introMusic);
             clip = AudioSystem.getClip();
             clip.open(audioIn);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
-            }catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
         }
     }
-    
+
     @FXML
     private void handlePlayButtonActionEvent(ActionEvent event) throws IOException {
         //stop intro music
         clip.stop();
-        
-         //New scene
+
+        //New scene
         Parent playParent = FXMLLoader.load(getClass().getResource("FXMLPreGame.fxml"));
         Scene playScene = new Scene(playParent);
-        
+
         //Setting this scene to stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(playScene);
         window.show();
         
+
     }
 
     @FXML
