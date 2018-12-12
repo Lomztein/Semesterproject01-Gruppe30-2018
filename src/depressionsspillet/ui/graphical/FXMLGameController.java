@@ -49,6 +49,7 @@ public class FXMLGameController implements Initializable {
     ObservableList<String> NPCs = FXCollections.observableArrayList();
     ObservableList<String> items = FXCollections.observableArrayList();
     ObservableList<String> attacks = FXCollections.observableArrayList();
+    ObservableList<String> interactions = FXCollections.observableArrayList();
     ObservableList<String> emptyList = FXCollections.observableArrayList();
 
     //FXML-attributes
@@ -66,6 +67,8 @@ public class FXMLGameController implements Initializable {
     private ListView<String> lvInventory;
     @FXML
     private ListView<String> lvAttacks;
+    @FXML
+    private ListView<String> lvInteractions;
     @FXML
     private Circle snotface;
     @FXML
@@ -95,6 +98,7 @@ public class FXMLGameController implements Initializable {
     Rectangle[] directionObjects = new Rectangle[4];
     @FXML
     private Button interactButton;
+    
 
     /**
      * Initializes the controller class.

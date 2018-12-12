@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -84,32 +83,21 @@
                         </Text>
                     </children>
                 </GridPane>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+            <VBox prefHeight="265.0" prefWidth="171.0" GridPane.rowIndex="1">
                <children>
-                  <Label focusTraversable="false" text="NPCs:" textFill="RED" />
+                  <Label focusTraversable="false" text=" NPCs:" textFill="RED" />
                   <ListView fx:id="lvNPC" focusTraversable="false" prefHeight="131.0" prefWidth="155.0" />
-                  <Label focusTraversable="false" text="Items:" textFill="RED" />
-                  <ListView fx:id="lvItems" focusTraversable="false" prefHeight="151.0" prefWidth="155.0" />
-                  <ListView fx:id="lvAttacks" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" />
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                                <Button fx:id="pickUpButton" focusTraversable="false" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" textAlignment="CENTER" />
-                                <Button fx:id="attackButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack" />
-                        <Button fx:id="interactButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleInteractButtonEvent" text="Interact" />
-                     </children>
-                  </HBox>
+                  <Label text=" Attacks:" textFill="RED" />
+                  <ListView fx:id="lvAttacks" focusTraversable="false" prefHeight="139.0" prefWidth="171.0" />
+                  <Label text=" Interactions:" textFill="RED" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
-                  <Label focusTraversable="false" text="Inventory:" textFill="#f90000" />
+                  <Label focusTraversable="false" text=" Inventory:" textFill="#f90000" />
                   <ListView fx:id="lvInventory" focusTraversable="false" prefHeight="268.0" prefWidth="170.0" />
-                  <Pane prefHeight="71.0" prefWidth="170.0">
-                     <children>
-                                <Button fx:id="useButton" focusTraversable="false" layoutX="41.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleUseButtonEvent" text="Use" />
-                                <Button fx:id="dropButton" focusTraversable="false" layoutX="93.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleDropButtonEvent" text="Drop" />
-                     </children>
-                  </Pane>
+                  <Label focusTraversable="false" text=" Items:" textFill="RED" />
+                  <ListView fx:id="lvItems" focusTraversable="false" prefHeight="290.0" prefWidth="172.0" />
                </children>
             </VBox>
             <AnchorPane focusTraversable="true" prefHeight="285.0" prefWidth="439.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -128,9 +116,22 @@
             </AnchorPane>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
                <children>
-                  <Label text="Attacks:" textFill="RED" />
+                  <ListView fx:id="lvInteractions" prefHeight="200.0" prefWidth="200.0" />
+                  <HBox prefHeight="35.0" prefWidth="171.0">
+                     <children>
+                                <Button fx:id="attackButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack" />
+                        <Button fx:id="interactButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleInteractButtonEvent" text="Interact" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                          <Button fx:id="pickUpButton" focusTraversable="false" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" textAlignment="CENTER" />
+                          <Button fx:id="useButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleUseButtonEvent" text="Use" />
+                          <Button fx:id="dropButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleDropButtonEvent" text="Drop" />
+               </children>
+            </HBox>
             </children>
         </GridPane>
     </children>
