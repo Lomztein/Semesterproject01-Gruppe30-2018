@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="depressionsspillet.ui.graphical.FXMLController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="depressionsspillet.ui.graphical.FXMLController">
    <children>
-      <ImageView nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="702.0" fitWidth="1205.0" nodeOrientation="INHERIT" pickOnBounds="true">
          <image>
             <Image url="@../../../images/mainMenuImage.png" />
          </image>
