@@ -218,7 +218,7 @@ public class Game implements IGame {
                 switch (command.getSecondWord()) {
                     case "drop":
                         if (command.hasThirdWord()) {
-                            player.dropItem(Integer.parseInt(command.getThirdWord()));
+                            lastCommandResponse = player.dropItem(Integer.parseInt(command.getThirdWord()));
                         } else {
                             lastCommandResponse = ("You attempt to drop nothing. You're worried if you looked stupid. \n\nYou did.\n");
                         }
@@ -536,5 +536,15 @@ public class Game implements IGame {
     @Override
     public String[] getInteractableDescriptions() {
         return player.getCurrentRoom().getEntityDescriptions(Interactable.class);
+    }
+
+    @Override
+    public int getHappinessIncrease() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getHealthIncrease() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
