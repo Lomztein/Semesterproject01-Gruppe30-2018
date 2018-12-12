@@ -537,14 +537,4 @@ public class Game implements IGame {
     public String[] getInteractableDescriptions() {
         return player.getCurrentRoom().getEntityDescriptions(Interactable.class);
     }
-
-    @Override
-    public int getHappinessIncrease() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getHealthIncrease() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
