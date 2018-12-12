@@ -93,7 +93,7 @@ public class FXMLGameController implements Initializable {
     //Attributes
     boolean running, goNorth, goSouth, goEast, goWest;
     //Find a way to make this dynamic
-    private static double W = 456, H = 285;
+    private static double W = 800, H = 600;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
     @FXML
@@ -309,7 +309,7 @@ public class FXMLGameController implements Initializable {
     private void updatePlayerLocation() {
         String[] lastWords = game.getCommandWords();
         if (lastWords[0].equals("south")) {
-            movePlayer(222, 8);
+            movePlayer(280, 8);
         }
         if (lastWords[0].equals("north")) {
             movePlayer(170, 190);
