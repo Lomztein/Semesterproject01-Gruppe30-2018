@@ -334,7 +334,7 @@ public class FXMLGameController implements Initializable {
     }
 
     //Update of items and NPC's to be added here
-    private void updateRoom() throws IOException {
+    private void updateRoom() {
         switch (game.getCurrentRoomName()) {
             case "magicForrest":
                 Image image1 = new Image("newImages/magicforrest.jpg");
