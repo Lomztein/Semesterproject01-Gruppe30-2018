@@ -90,12 +90,12 @@
                   <ListView fx:id="lvNPC" focusTraversable="false" prefHeight="131.0" prefWidth="155.0" />
                   <Label focusTraversable="false" text="Items:" textFill="RED" />
                   <ListView fx:id="lvItems" focusTraversable="false" prefHeight="151.0" prefWidth="155.0" />
-                  <ListView fx:id="lvAttacks" prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="lvAttacks" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                                 <Button fx:id="pickUpButton" focusTraversable="false" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" textAlignment="CENTER" />
                                 <Button fx:id="attackButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack" />
-                        <Button fx:id="interactButton" mnemonicParsing="false" onAction="#handleInteractButtonEvent" text="Interact" />
+                        <Button fx:id="interactButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleInteractButtonEvent" text="Interact" />
                      </children>
                   </HBox>
                </children>
