@@ -116,7 +116,7 @@ public class FXMLGameController implements Initializable {
         directionObjects[3] = south;
 
         //Setting starting image
-        Image imageMagicalForest = new Image("newImages\\start.jpg");
+        Image imageMagicalForest = new Image("newImages/start.jpg");
         backgroundImageView.setImage(imageMagicalForest);
 
         //Setting attacks
@@ -332,63 +332,63 @@ public class FXMLGameController implements Initializable {
         switch (game.getCurrentRoomName()) {
             case "magicForrest":
                 //Setting new image
-                Image image = new Image("newImages\\magicforrest.jpg");
+                Image image = new Image("newImages/magicforrest.jpg");
                 backgroundImageView.setImage(image);
                 break;
             case "vendor":
-                Image image2 = new Image("newImages\\vendor.jpg");
+                Image image2 = new Image("newImages/vendor.jpg");
                 backgroundImageView.setImage(image2);
                 break;
             case "animals":
-                Image image3 = new Image("newImages\\animals.jpg");
+                Image image3 = new Image("newImages/animals.jpg");
                 backgroundImageView.setImage(image3);
                 break;
             case "thaiHooker":
-                Image image4 = new Image("newImages\\thaihooker.jpg");
+                Image image4 = new Image("newImages/thaihooker.jpg");
                 backgroundImageView.setImage(image4);
                 break;
             case "campfire":
-                Image image5 = new Image("newImages\\sleepover.jpg");
+                Image image5 = new Image("newImages/sleepover.jpg");
                 backgroundImageView.setImage(image5);
                 break;
             case "fridayBar":
-                Image image6 = new Image("newImages\\fridaybar.jpg");
+                Image image6 = new Image("newImages/fridaybar.jpg");
                 backgroundImageView.setImage(image6);
                 break;
             case "stripClub":
-                Image image7 = new Image("newImages\\stripclub.jpg");
+                Image image7 = new Image("newImages/stripclub.jpg");
                 backgroundImageView.setImage(image7);
                 break;
             case "kfc":
-                Image image8 = new Image("newImages\\kfc.jpg");
+                Image image8 = new Image("newImages/kfc.jpg");
                 backgroundImageView.setImage(image8);
                 break;
             case "shrek":
-                Image image9 = new Image("newImages\\shrek.jpg");
+                Image image9 = new Image("newImages/shrek.jpg");
                 backgroundImageView.setImage(image9);
                 break;
             case "allotment":
-                Image image10 = new Image("newImages\\allotment.jpg");
+                Image image10 = new Image("newImages/allotment.jpg");
                 backgroundImageView.setImage(image10);
                 break;
             case "movie":
-                Image image11 = new Image("newImages\\movie.jpg");
+                Image image11 = new Image("newImages/movie.jpg");
                 backgroundImageView.setImage(image11);
                 break;
             case "drugs":
-                Image image12 = new Image("newImages\\drugs.jpg");
+                Image image12 = new Image("newImages/drugs.jpg");
                 backgroundImageView.setImage(image12);
                 break;
             case "gate":
-                Image image13 = new Image("newImages\\gate.jpg");
+                Image image13 = new Image("newImages/gate.jpg");
                 backgroundImageView.setImage(image13);
                 break;
             case "boss":
-                Image image14 = new Image("newImages\\boss.jpg");
+                Image image14 = new Image("newImages/boss.jpg");
                 backgroundImageView.setImage(image14);
                 break;
             case "suprise":
-                Image image15 = new Image("newImages\\surprise.jpg");
+                Image image15 = new Image("newImages/surprise.jpg");
                 backgroundImageView.setImage(image15);
                 break;
             default:
