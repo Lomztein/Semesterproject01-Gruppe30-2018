@@ -57,7 +57,12 @@
                       </Text>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Text fill="#ff0202" strokeType="OUTSIDE" strokeWidth="0.0" text="    Health:" wrappingWidth="179.84789276123047">
+                        <Text fill="#ff0202" strokeType="OUTSIDE" strokeWidth="0.0" text="    Health:" wrappingWidth="110.51458740234375">
+                           <font>
+                              <Font name="Blackadder ITC" size="25.0" />
+                           </font>
+                        </Text>
+                        <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                            <font>
                               <Font name="Blackadder ITC" size="25.0" />
                            </font>
@@ -75,6 +80,12 @@
                       </Text>
                   <AnchorPane prefHeight="30.0" prefWidth="75.0" />
                   <Text fx:id="txtFieldHealth" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+                  <AnchorPane prefHeight="30.0" prefWidth="55.0" />
+                  <Text fx:id="txtFieldName" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" wrappingWidth="248.23333644866943">
                      <font>
                         <Font size="19.0" />
                      </font>
