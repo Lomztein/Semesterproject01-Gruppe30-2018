@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul.combat;
 
 import depressionsspillet.worldofzuul.observables.Event;
@@ -11,18 +6,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- *
- * @author Lomztein
- */
 public class Health {
 
     private double currentHealth;
     private double maxHealth;
+    private boolean deadFlag;
 
     private final List<DamageResistance> resistances = new ArrayList<>();
 
     public final Observable<DamagedEvent> onTakeDamage = new Observable();
+    public final Observable<DamagedEvent> onDeath = new Observable();
     public final Observable onHealthChanged = new Observable();
 
     public final List<Damage> damageTaken = new ArrayList<>();
@@ -61,7 +54,7 @@ public class Health {
 
     public void changeHealth(double value) {
         currentHealth += value;
-        onHealthChanged.notifyObservables(new Event (this));
+        onHealthChanged.notifyObservables(new Event(this));
     }
 
     public double getMaxHealth() {
@@ -80,13 +73,13 @@ public class Health {
         return currentHealth <= 0;
     }
 
-    private DamageResistance getResistanceForType(DamageType damageType) {
+    public DamageResistance getResistanceForType(DamageType damageType) {
         for (DamageResistance resistance : resistances) {
             if (resistance.getDamageType() == DamageType.ANY || resistance.getDamageType() == damageType) {
                 return resistance;
             }
         }
-        return null;
+        return DamageResistance.NULL_RESISTANCE;
     }
 
     public void takeDamage(Damage damage) {
@@ -97,14 +90,20 @@ public class Health {
 
         damageTaken.add(damage);
         changeHealth(-damageValue);
-        onTakeDamage.notifyObservables(new DamagedEvent (this, damage, resistance, damageValue));
+        onTakeDamage.notifyObservables(new DamagedEvent(this, damage, resistance, damageValue));
+
+        if (!deadFlag && isDead()) {
+            onDeath.notifyObservables(new DamagedEvent(this, damage, resistance, damageValue));
+        }
+        deadFlag = isDead();
     }
 
     public Damage getLastDamage() {
         if (damageTaken.size() > 0) {
             return damageTaken.get(damageTaken.size() - 1);
         } else {
-            return null;
+            return Damage.NULL_DAMAGE;
+
         }
     }
 

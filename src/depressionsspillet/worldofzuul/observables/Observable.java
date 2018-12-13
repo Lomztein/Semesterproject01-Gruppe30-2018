@@ -1,17 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul.observables;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Lomztein
- * @param <T>
- */
 public class Observable<T extends Event> {
     
     private final ArrayList<Observer<T>> observers = new ArrayList<>();
@@ -22,6 +12,14 @@ public class Observable<T extends Event> {
     
     public void remove (Observer<T> observer) {
         observers.remove (observer);
+    }
+    
+    public void remove (int index) {
+        observers.remove(index);
+    }
+    
+    public void clear () {
+        observers.clear();
     }
     
     public void notifyObservables (T event) {

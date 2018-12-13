@@ -1,27 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul.combat;
 
 import depressionsspillet.worldofzuul.Named;
 
-/**
- *
- * @author Lomztein
- */
 public class Attack {
+    
+    public static Attack NULL_ATTACK = new Attack (DamageType.ANY, 0, "null", "null");
     
     private final DamageType damageType;
     private final double damageValue;
     private final String name;
     private final String description;
     
-    public void attack (Attacker attacker, Damagable damagable) {
-        System.out.println (attacker.getName() + " attacks " + damagable.getName() + " using " + getName () + " - " + getDescription () + ", doing " + damageType.name() + " damage.");
-        Damage damage = new Damage (attacker, damagable, damageType, damageValue);
+    public Damage attack (Attacker attacker, Damagable damagable) {
+        Damage damage = new Damage (attacker, damagable, this);
         damage.doDamage();
+        return damage;
     }
     
     public Attack (DamageType damageType, double damageValue, String name, String description) {
@@ -37,6 +30,14 @@ public class Attack {
     
     public String getDescription () {
         return description;
+    }
+    
+    public DamageType getDamageType () {
+        return damageType;
+    }
+    
+    public double getDamageValue () {
+        return damageValue;
     }
     
 }

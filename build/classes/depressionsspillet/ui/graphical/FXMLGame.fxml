@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="gamePane" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="depressionsspillet.ui.graphical.FXMLGameController">
+    <children>
+        <TextArea fx:id="txtAreaOutput" editable="false" focusTraversable="false" layoutX="17.0" layoutY="575.0" prefHeight="100.0" prefWidth="1164.0">
+            <font>
+                <Font name="Bookman Old Style" size="11.0" />
+            </font>
+            <padding>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            </padding>
+        </TextArea>
+        <GridPane layoutX="133.0" layoutY="33.0" prefHeight="60.0" prefWidth="1113.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="1.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="523.0" minWidth="10.0" prefWidth="523.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="99.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                      <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness:" textAlignment="CENTER" wrappingWidth="123.14080834388733">
+                          <font>
+                              <Font name="Blackadder ITC" size="25.0" />
+                          </font>
+                      </Text>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text fill="#ff0202" strokeType="OUTSIDE" strokeWidth="0.0" text="    Health:" wrappingWidth="137.51458740234375">
+                           <font>
+                              <Font name="Blackadder ITC" size="25.0" />
+                           </font>
+                        </Text>
+                        <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                           <font>
+                              <Font name="Blackadder ITC" size="25.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                      <Text fx:id="txtFieldHappiness" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" textAlignment="CENTER" wrappingWidth="57.99998554587364">
+                          <font>
+                              <Font size="19.0" />
+                          </font>
+                      </Text>
+                  <AnchorPane prefHeight="30.0" prefWidth="75.0" />
+                  <AnchorPane prefHeight="28.0" prefWidth="132.0">
+                     <children>
+                        <Text fx:id="txtFieldHealth" fill="RED" layoutX="16.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="---">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Text>
+                     </children></AnchorPane>
+                  <Text fx:id="txtFieldName" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" wrappingWidth="222.23333644866943">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
+            </children>
+        </GridPane>
+        <HBox layoutX="963.0" layoutY="542.0" prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <Button fx:id="pickUpButton" focusTraversable="false" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" textAlignment="CENTER" />
+                <Button fx:id="useButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleUseButtonEvent" text="Use" />
+                <Button fx:id="dropButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleDropButtonEvent" text="Drop" />
+            </children>
+        </HBox>
+        <ListView fx:id="lvAttacks" focusTraversable="false" layoutX="11.0" layoutY="366.0" prefHeight="139.0" prefWidth="182.0" />
+        <ListView fx:id="lvInteractions" focusTraversable="false" layoutX="10.0" layoutY="214.0" prefHeight="132.0" prefWidth="185.0" />
+        <HBox layoutX="24.0" layoutY="516.0" prefHeight="35.0" prefWidth="171.0">
+            <children>
+                <Button fx:id="attackButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack" />
+                <Button fx:id="interactButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleInteractButtonEvent" text="Interact" />
+            </children>
+        </HBox>
+        <ListView fx:id="lvItems" focusTraversable="false" layoutX="1008.0" layoutY="328.0" onMouseClicked="#handleItemsMouseEvent" prefHeight="194.0" prefWidth="172.0" />
+        <Label focusTraversable="false" layoutX="1029.0" layoutY="303.0" text=" Items:" textFill="RED" />
+        <ListView fx:id="lvInventory" focusTraversable="false" layoutX="1012.0" layoutY="132.0" onMouseClicked="#handleInventoryMouseEvent" prefHeight="171.0" prefWidth="170.0" />
+        <Label focusTraversable="false" layoutX="1029.0" layoutY="105.0" text=" Inventory:" textFill="#f90000" />
+        <Label focusTraversable="false" layoutX="17.0" layoutY="44.0" prefHeight="37.0" prefWidth="134.0" text="Interactable/attackable:" textFill="RED" />
+        <Label layoutX="35.0" layoutY="350.0" text=" Attacks:" textFill="RED" />
+        <Label layoutX="24.0" layoutY="196.0" text=" Interactions:" textFill="RED" />
+        <ListView fx:id="lvNPC" focusTraversable="false" layoutX="6.0" layoutY="81.0" onMouseClicked="#handleNPCListViewMouseEvent" prefHeight="115.0" prefWidth="193.0" />
+        <AnchorPane focusTraversable="true" layoutX="208.0" layoutY="90.0" prefHeight="442.0" prefWidth="800.0">
+            <children>
+                <ImageView fx:id="backgroundImageView" fitHeight="424.0" fitWidth="788.0" layoutX="1.0" pickOnBounds="true" />
+                <Circle fx:id="snotface" fill="DODGERBLUE" layoutX="400.0" layoutY="233.0" radius="20.0" strokeType="INSIDE">
+                    <effect>
+                        <DropShadow color="#000000b5" height="0.24" offsetY="10.0" radius="25.927499999999998" width="65.47" />
+                    </effect>
+                </Circle>
+                <Rectangle fx:id="east" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutX="769.0" layoutY="180.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
+                <Rectangle fx:id="west" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutX="5.0" layoutY="180.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
+                <Rectangle fx:id="north" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutX="388.0" layoutY="-12.0" opacity="0.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
+                <Rectangle fx:id="south" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutX="388.0" layoutY="389.0" opacity="0.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
+            <ImageView fx:id="secretIV" fitHeight="67.0" fitWidth="148.0" layoutX="348.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+        </AnchorPane>
+          <Button focusTraversable="false" layoutX="1107.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleQuitButtonEvent" text="Quit" />
+          <Button focusTraversable="false" layoutX="1150.0" layoutY="90.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="51.0" onAction="#handleHelpButtonEvent" text="Help" />
+      <Button fx:id="secretButton" focusTraversable="false" layoutX="1174.0" layoutY="674.0" mnemonicParsing="false" onAction="#handleSecretButton" opacity="0.0" prefHeight="25.0" prefWidth="23.0" text="DIE INFIDEL" />
+    </children>
+</AnchorPane>

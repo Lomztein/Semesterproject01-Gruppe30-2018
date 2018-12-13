@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul.characters;
 
 import depressionsspillet.worldofzuul.combat.Damagable;
@@ -11,16 +6,11 @@ import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.Attacker;
-import depressionsspillet.worldofzuul.combat.DamagedEvent;
 import depressionsspillet.worldofzuul.combat.HasHealth;
 import depressionsspillet.worldofzuul.combat.Health;
 import depressionsspillet.worldofzuul.observables.Event;
 import java.util.Random;
 
-/**
- *
- * @author Lomztein
- */
 public class HostileNPC extends NPC implements HasHealth, Attacker {
 
     private final Health health;
@@ -34,7 +24,6 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
         this.retaliate = retaliate;
         health.onTakeDamage.add(e
                 -> {
-            System.out.println(String.format (this.getName() + " " + e.getResistance().getResponse(), e.getDamageTaken()));
             if (!health.isDead() && retaliate) {
                 if (e.getDamage().getAttacker() instanceof Damagable) {
                     attack((Damagable) e.getDamage().getAttacker());
@@ -48,9 +37,9 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
         return availableAttacks[random.nextInt(availableAttacks.length)];
     }
 
-    public void attack(Damagable damagable) {
+    public Damage attack(Damagable damagable) {
         Attack random = getRandomAttack();
-        random.attack(this, damagable);
+        return random.attack(this, damagable);
     }
 
     public void onTakeDamage(Event event) {
@@ -59,10 +48,16 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
             if (lastTaken.getAttacker() instanceof Damagable) {
                 attack((Damagable) lastTaken.getAttacker());
             }
-        } else {
-            System.out.println(getName() + " they would retaliate with glee, but they've already been murdered in cold blood.");
         }
 
+    }
+    
+    @Override
+    public String getName () {
+        if (getHealth ().isDead()) {
+            return super.getName () + " (dead)";
+        }
+        return super.getName();
     }
 
     @Override
@@ -71,13 +66,13 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
     }
 
     @Override
-    public Interaction[] getInteractions() {
-        return new Interaction[]{};
+    public Attack[] getAttacks() {
+        return availableAttacks;
     }
 
     @Override
-    public Attack[] getAttacks() {
-        return availableAttacks;
+    public boolean isHostile() {
+        return true;
     }
 
 }

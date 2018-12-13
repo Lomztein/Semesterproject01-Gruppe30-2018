@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul.interaction;
 
 import depressionsspillet.worldofzuul.characters.Player;
 
-/**
- *
- * @author Lomztein
- */
 public class Interaction {
     
     private final String name;
     private final String description;
     
+    private boolean interacted = false;
     private final Action action;
     
     public Interaction (String name, String description, Action action) {
@@ -32,8 +24,12 @@ public class Interaction {
         return this.description;
     }
 
-    public void execute (Player player) {
-        action.execute (player);
+    public String execute (Player player) {
+        if (interacted) {
+            return "You've already done this.";
+        }
+        interacted = true;
+        return action.execute (player);
     }
     
 }

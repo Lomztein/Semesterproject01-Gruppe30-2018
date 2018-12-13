@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="depressionsspillet.ui.graphical.FXMLPreGameController">
+   <children>
+      <TextField layoutX="498.0" layoutY="247.0" />
+      <Label layoutX="507.0" layoutY="225.0" text="Desired name:" />
+      <Label layoutX="478.0" layoutY="304.0" text="Desired character type:" />
+      <GridPane layoutX="478.0" layoutY="326.0" prefHeight="75.0" prefWidth="173.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <RadioButton mnemonicParsing="false" text="Warrior">
+               <toggleGroup>
+                  <ToggleGroup fx:id="whatever" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Berzerker" toggleGroup="$whatever" GridPane.columnIndex="1" />
+            <RadioButton mnemonicParsing="false" text="Monk" toggleGroup="$whatever" GridPane.rowIndex="1" />
+            <RadioButton mnemonicParsing="false" text="Wizard" toggleGroup="$whatever" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <RadioButton mnemonicParsing="false" text="Orc" toggleGroup="$whatever" GridPane.rowIndex="2" />
+            <RadioButton mnemonicParsing="false" text="Depressling" toggleGroup="$whatever" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <Button fx:id="startButton" layoutX="469.0" layoutY="433.0" mnemonicParsing="false" onAction="#handleStartButtonEvent" prefHeight="25.0" prefWidth="198.0" text="Start adventure &gt;&gt;&gt;" />
+   </children>
+</AnchorPane>
