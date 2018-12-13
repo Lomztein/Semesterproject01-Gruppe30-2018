@@ -498,12 +498,5 @@ public class FXMLGameController implements Initializable {
         txtAreaOutput.setText(desc);
     }
 
-    @FXML
-    private void handleInventoryMouseEvent(MouseEvent event) {
-    }
-
-    @FXML
-    private void handleNPCListViewMouseEvent(MouseEvent event) {
-    }
-
+   
 }
