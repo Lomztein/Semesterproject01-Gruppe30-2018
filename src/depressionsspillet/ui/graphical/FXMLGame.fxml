@@ -36,18 +36,11 @@
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button focusTraversable="false" mnemonicParsing="false" text="Help" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                    <GridPane.margin>
-                        <Insets bottom="8.0" right="8.0" />
-                    </GridPane.margin>
-                </Button>
-                <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleQuitButtonEvent" text="Quit" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-                    <GridPane.margin>
-                        <Insets right="8.0" top="8.0" />
-                    </GridPane.margin>
-                </Button>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
                       <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness:" textAlignment="CENTER" wrappingWidth="101.14080834388733">
@@ -71,7 +64,7 @@
                   </HBox>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                       <Text fx:id="txtFieldHappiness" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" textAlignment="CENTER" wrappingWidth="57.99998554587364">
                           <font>
@@ -131,5 +124,7 @@
                 <Rectangle fx:id="south" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutX="388.0" layoutY="389.0" opacity="0.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
             </children>
         </AnchorPane>
+          <Button focusTraversable="false" layoutX="1107.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleQuitButtonEvent" text="Quit" />
+          <Button focusTraversable="false" layoutX="1150.0" layoutY="90.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="51.0" text="Help" />
     </children>
 </AnchorPane>

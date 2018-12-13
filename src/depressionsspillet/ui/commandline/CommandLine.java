@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.ui.commandline;
 
 import depressionsspillet.worldofzuul.CommandWord;
@@ -10,10 +5,6 @@ import depressionsspillet.worldofzuul.Game;
 import depressionsspillet.worldofzuul.IGame;
 import java.util.Scanner;
 
-/**
- *
- * @author Lomztein
- */
 public class CommandLine {
 
     private IGame game;

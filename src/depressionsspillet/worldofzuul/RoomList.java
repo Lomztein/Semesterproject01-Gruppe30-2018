@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul;
 
 import depressionsspillet.worldofzuul.characters.HostileNPC;
@@ -17,10 +12,6 @@ import depressionsspillet.worldofzuul.interaction.InteractableObject;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.observables.Observer;
 
-/**
- *
- * @author Ryge
- */
 public class RoomList {
 
     //This class was made to combat the amount of bloat in the game-class. 
@@ -30,22 +21,22 @@ public class RoomList {
     public static void listRooms() {
 
         // The individual room variables are populated with their appropiate Room objects.
-        start = new Room("Spilmester Martin:\nHaha, what an ugly name, and btw the listed character types were all sold out, so you got a pathetic blue dot.\nNow please walk south using WASD to move, and defeat Erikthulu. Remember you must first acquire enough happiness\n from the world, before you can enter through the gate in the south!", "start");
+        start = new Room("Spilmester Martin:\nHaha, what an ugly name, and btw the listed character types were all sold out, so you got a pathetic smurf.\nNow please you must defeat Erikthulu. Walk around using WASD and SPACE to enter a new room. \nRemember you must acquire enough happiness from the world, before you can win against Erikthulu!", "start");
         magicForrest = new Room("You are now in the magic forest, who knows what will happen.", "magicForrest");
-        vendor = new Room("You have visited the blackboard vendor, a replacement of blackboard is currently in the works, in the meantime however, \n please feel free to browse the vendor's wares.", "vendor");
-        animals = new Room("You go deeper into the forest and find yourself in a completely white room filled with puppies and kittens.", "animals");
-        thaiHooker = new Room("A beuatiful asian woman approaches you and asks what you are doing tonight. She seems interresting but a beautiful woman \n has never approached you before... Could it be a trap?", "thaiHooker");
+        vendor = new Room("You have visited the blackboard vendor, a replacement of blackboard is currently in the works, in the meantime however, please feel free to browse the vendor's wares.", "vendor");
+        animals = new Room("You go deeper into the forest and find yourself in a completely white room filled with puppies and kittens. \n and just as you start to relax you see a big dangerous direwolf standing in the middle", "animals");
+        thaiHooker = new Room("A beuatiful asian woman approaches you and asks what you are doing tonight. \nShe seems interresting but a beautiful woman has never approached you before... Could it be a trap?", "thaiHooker");
         campfire = new Room("As you walk through the forest an opening suddenly appears. Here you find three of your best friends, sitting around a campfire, waiting for you...", "campfire");
-        fridayBar = new Room("Wuhuu it is friday on SDU and you suddenly feel your spirite soaring and you feel like getting smashed and so you do... You feel \n great.", "fridayBar");
-        stripClub = new Room("As you continued through the forrest you notices a couple of flikering light as you move closer you see a sign saying: \n 'Gentleman's club. Free tonight' You enter, look around, start smiling slyly and have a great time. Your mum would be disappointed", "stripClub");
-        kfc = new Room("Suddenly in your path you see a familiar red sign with tree white letters. It reads: KFC, and you are overjoyed. You enter and when \n you tell the cashier about your amazing \n journey. She decides to give you free food for your trip and warns you about continuing \n east becuase a dangerous and mysterious creature lurks in the swamp.", "kfc");
-        shrek = new Room("You defied the warnings of the nice KFC lady and walked onwards to the east. The forest soon ends and a dank swamp emerges. \n Carefully you explore the area and come across \n a small wooden shack. As you are about to enter, a rumbling voice appears behinds you \n ' ' After turning around you realise you have entered the domain of the one and only Shrek. In an adrenaline induced panic you try \n to escape, but you are easily caught, and as you are dragged inside the raggedy shack, Shreks whispers softly 'it's all ogre now'. The rest of this encounter is best described as a deep scar on your soul, and should never again be spoken off.", "shrek");
-        allotment = new Room("As you continue walking the forest gets brighter as more and more light slips through the treetops. Flowers start to appear and as \n you follow them you find a small cosycabin. When you are just about to knock on the door to ask for directions, when you \n a familiar eerie sound. *heavy forced inhaling* *heavy forced exhaling* you decide to scout out the house for inhabitants, before \n trying to enter. Walking around to the backyard, you spot a figure dressed in black armor, wearing a black mask and cape,  \n holding a watering can. It is the retired Darth Vader!", "allotment");
+        fridayBar = new Room("Wuhuu it is friday at Nedenunder and you suddenly feel your spirite soaring and you feel like getting smashed and so you do... You feel great.", "fridayBar");
+        stripClub = new Room("As you continued through the forrest you notices a couple of flikering light as you move closer you see a sign saying: 'Gentleman's club. Free tonight' \nYou enter, look around, start smiling slyly and have a great time. Your mum would be disappointed", "stripClub");
+        kfc = new Room("Suddenly in your path you see a familiar red sign: KFC, and you are overjoyed. \nYou go nearer and when you tell the cashier about your amazing journey. \nShe decides to give you free food for your trip and warns you about continuing east becuase a dangerous and mysterious creature lurks in the swamp.", "kfc");
+        shrek = new Room("You defied the warnings of the nice KFC lady and walked onwards to the east. The forest soon ends and a dank swamp emerges. As you go nearer, a rumbling voice appears behinds you 'This is my swamp!'. \nAfter turning around you realise you have entered the domain of the one and only Shrek. \nIn an adrenaline induced panic you try to escape, but you are easily caught, and as you are dragged inside the swamp, Shreks whispers softly 'it's all ogre now'. \nThe rest of this encounter is best described as a deep scar on your soul, and should never again be spoken off.", "shrek");
+        allotment = new Room("As you continue walking the forest gets brighter as more and more light slips through the treetops. \nFlowers start to appear and as you follow them you find a small cosycabin. You are just about to knock on the door to ask for directions, when you hear a familiar eerie sound. \n*heavy forced inhaling* *heavy forced exhaling* \nyou decide to scout out the house for inhabitants, before trying to enter. \nWalking around to the backyard, you spot a figure dressed in black armor, wearing a black mask and cape, holding a watering can. It is the retired Darth Vader!", "allotment");
         movie = new Room("You discover a place in the forest with a large TV, comfortable chairs and snacks ready for you to get cozy and immerse yourself in a good movie.", "movie");
-        drugs = new Room("In a twisted turn of events, you stumble upon a bald russian man selling some sort of homemade white powder. You assume this is heroin, \n and it is verified by the man with a deep, emotionless 'Da. Krokodil'. You feel slightly eerie and disturbed. ", "drugs");
-        gate = new Room("This is a big impenetrable, unavoidable, indomitable, completely daunting and locked gate. You will need some kind of key to get through.", "gate");
-        boss = new Room("bossbattle", "boss");
-        suprise = new Room("In a heroic and almost impossible turn of events you have defeated the despicable Erikthulu/Martin and entered through the last door, \n behind which all your friends have been watching your valiant fight with eagerness and solemn pride.  \n They all congratulate you on completeing such a feat of strength and cheer you name all the while continually mentioning how proud \n of you the are, in addition to how much they value your friendship", "suprise");
+        drugs = new Room("In a twisted turn of events, you stumble upon a bald russian man selling some sort of homemade white powder. \nYou assume this is heroin and it is verified by the man with a deep, emotionless 'Da. Krokodil'. You feel slightly eerie and disturbed. ", "drugs");
+        gate = new Room("This is a big impenetrable, unavoidable, indomitable, completely daunting and locked gate. Could Erikthulu be behind this gate? \n You think back at what Spilmester Martin told you 'Remember you must acquire enough happiness from the world, before you can win against Erikthulu!'.", "gate");
+        boss = new Room("You go through the big gate and find an opening. \n Suddenly you are surrounded big a thick mist and in the middle of the opening you see to your horror the dangerous Erikthulu.", "boss");
+        suprise = new Room("In a heroic and almost impossible turn of events you have defeated the despicable Erikthulu!.\n You find that all your friends have been watching your valiant fight with eagerness and solemn pride.  \n They all congratulate you on completeing such a feat of strength and cheer you name all the while continually mentioning how proud of you the are, in addition to how much they value your friendship", "suprise");
 
         // Exits for are declared.
         start.setExit("south", magicForrest);
@@ -161,7 +152,7 @@ public class RoomList {
         stripClub.setExit("west", campfire);
         stripClub.setHappiness(10);
 
-        stripClub.addEntityToRoom(new HostileNPC("Diamond", "Very skilled in barfights resulted from a long career as an exotic dancer. She dislikes you because you are broke.", stripClub, true, new Health(35),
+        stripClub.addEntityToRoom(new HostileNPC("Destiny", "Very skilled in barfights resulted from a long career as an exotic dancer. She dislikes you because you are broke.", stripClub, true, new Health(35),
                 new Attack(DamageType.BLUNT, 3, "Boob Bash", "smacks you with a hardened fake titty."),
                 new Attack(DamageType.FIRE, 10, "Molotov Cocktail", "grabbing a bottle from the bar, she lights in on fire and throws it at you."),
                 new Attack(DamageType.SLASH, 5, "Stiletto Stab", "using her pumps, she impales one of your limbs."),
