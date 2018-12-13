@@ -84,7 +84,7 @@ public class FXMLGameController implements Initializable {
     private Button interactButton;
     @FXML
     private Text txtFieldHealth;
-     @FXML
+    @FXML
     private Text txtFieldName;
 
     //Attributes
@@ -93,8 +93,6 @@ public class FXMLGameController implements Initializable {
     private static double W = 800, H = 600;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
-   
- 
 
     /**
      * Initializes the controller class.
@@ -128,9 +126,7 @@ public class FXMLGameController implements Initializable {
         backgroundImageView.setImage(imageStart);
 
         //Setting attacks
-        attacks.add("dab");
-        attacks.add("manifesto");
-        attacks.add("punch");
+        updateAttackList();
         lvAttacks.setItems(attacks);
 
         // Set NPC list view to observe the NPC list
@@ -357,12 +353,12 @@ public class FXMLGameController implements Initializable {
         window.setScene(quitScene);
         window.show();
     }
-    
+
     private void updateRoom() {
         System.out.println("images/" + game.getCurrentRoomName() + ".jpg"); // Needed to make sure the files and rooms names are syncronized.
         Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
-        
+
         interactions.clear();
         updateTxtArea();
         updateItemList();
@@ -403,27 +399,25 @@ public class FXMLGameController implements Initializable {
     }
 
     //Removes all current NPCs and updates them based on the current room.
-    
     private void updateNPCList() {
         NPCs.clear();
         String[] npcNames = game.getNPCNames();
         String[] interactableNames = game.getInteractableNames();
-        
+
         boolean[] isHostile = game.isNPCHostile();
-        
-        for (int i = 0; i < interactableNames.length; i++) {
-            NPCs.add(interactableNames[i]);
+
+        for (int j = 0; j < npcNames.length; j++) {
+            NPCs.add(npcNames[j] + (isHostile[j] ? " (hostile)" : ""));
         }
-        for (int j = 0; j < npcNames.length; j++){
-            if(isHostile[j]){
-                NPCs.add(npcNames[j]);
+
+        for (int i = 0; i < interactableNames.length; i++) {
+            if (!NPCs.contains(interactableNames[i])) { // NPC's already added shouldn't occur twice.
+                NPCs.add(interactableNames[i]);
             }
         }
-            lvNPC.setItems(NPCs);
-        }
-    
-    
-    
+
+        lvNPC.setItems(NPCs);
+    }
 
     //Drops an item from the inventory observable-list, to rhe rooms' list.
     @FXML
@@ -527,7 +521,7 @@ public class FXMLGameController implements Initializable {
     //
     @FXML
     private void handleInteractButtonEvent(ActionEvent event) {
-        game.enterCommand("interact " + lvInteractions.getSelectionModel().getSelectedItem());
+        game.enterCommand("interact " + lvNPC.getSelectionModel().getSelectedItem() + " " + lvInteractions.getSelectionModel().getSelectedItem());
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
         txtAreaOutput.setText(game.getCommandResponse());
@@ -575,13 +569,24 @@ public class FXMLGameController implements Initializable {
 
     private void updateInteractions() {
         interactions.clear();
-        int interactableIndex = lvNPC.getSelectionModel().getSelectedIndex();
+        int interactableIndex = getInteractableIndex (game.getInteractableNames(), lvNPC.getSelectionModel ().getSelectedItem());
         String[][] npcInteractions = game.getInteractionNames();
-        for (String interaction : npcInteractions[interactableIndex]){
-                interactions.add(interaction);
+        for (String interaction : npcInteractions[interactableIndex]) {
+            interactions.add(interaction);
         }
 
         lvInteractions.setItems(interactions);
+    }
+
+    private int getInteractableIndex(String[] interactables, String interactable) {
+        String[] names = game.getInteractableNames();
+        for (int i = 0; i < names.length; i++) {
+            String name = names[i];
+            if (name.toUpperCase().equals(interactable.toUpperCase())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }
