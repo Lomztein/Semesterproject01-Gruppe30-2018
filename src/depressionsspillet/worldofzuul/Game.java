@@ -79,9 +79,9 @@ public class Game implements IGame {
                     disengage(command);
                     break;
                 case INTERACT:
-                    interact (command);
+                    interact(command);
                     break;
-                    
+
                 case INVENTORY:
                     inventory(command);
                     break;
