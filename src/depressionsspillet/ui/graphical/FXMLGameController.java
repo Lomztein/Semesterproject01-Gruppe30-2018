@@ -122,7 +122,7 @@ public class FXMLGameController implements Initializable {
         directionObjects[3] = south;
 
         //Setting starting image
-        Image imageStart = new Image("newImages/start.jpg");
+        Image imageStart = new Image("images/start.jpg");
         backgroundImageView.setImage(imageStart);
 
         //Setting attacks
@@ -343,7 +343,7 @@ public class FXMLGameController implements Initializable {
 
     //Update of items and NPCs to be added here
     private void updateRoom() {
-        Image image = new Image("Images/" + game.getCurrentRoomName() + ".jpg");
+        Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
         updateTxtArea();
         updateItemsList();
