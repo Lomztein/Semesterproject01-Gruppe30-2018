@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="gamePane" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="depressionsspillet.ui.graphical.FXMLGameController">
+<AnchorPane fx:id="gamePane" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleKeyPressed" onKeyReleased="#handleKeyReleased" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="depressionsspillet.ui.graphical.FXMLGameController">
     <children>
         <GridPane alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0">
             <columnConstraints>
@@ -63,12 +63,12 @@
                                 <Insets bottom="8.0" />
                             </GridPane.margin>
                         </Text>
-                        <Button focusTraversable="false" mnemonicParsing="false" text="Help" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleHelpButtonEvent" text="Help" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                             <GridPane.margin>
                                 <Insets bottom="8.0" right="8.0" />
                             </GridPane.margin>
                         </Button>
-                        <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleQuitButtonEvent" text="Quit" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                        <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleQuitButtonEvent" prefHeight="31.0" prefWidth="51.0" text="Quit" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                             <GridPane.margin>
                                 <Insets right="8.0" top="8.0" />
                             </GridPane.margin>

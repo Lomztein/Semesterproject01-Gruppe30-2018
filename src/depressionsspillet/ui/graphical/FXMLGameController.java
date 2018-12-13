@@ -526,4 +526,12 @@ public class FXMLGameController implements Initializable {
         updateItemsList();
     }
 
+    @FXML
+    private void handleHelpButtonEvent(ActionEvent event) {
+        txtAreaOutput.setText("You really are useless aren't you? "
+                + "\nUse W/A/S/D to move about and SPACEBAR to enter into another room. Hold down SHIFT to run. "
+                + "\nUse the buttons on either side of the room to interact with the world. "
+                + "\nTry not to get killed.");
+    }
+
 }
