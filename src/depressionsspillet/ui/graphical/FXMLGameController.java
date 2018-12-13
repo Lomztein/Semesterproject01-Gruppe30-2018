@@ -103,7 +103,6 @@ public class FXMLGameController implements Initializable {
     Rectangle[] directionObjects = new Rectangle[4];
     @FXML
     private Text txtFieldName;
- 
 
     /**
      * Initializes the controller class.
@@ -143,10 +142,10 @@ public class FXMLGameController implements Initializable {
         // Set NPC list view to observe the NPC list
         updateNPCList();
         lvNPC.setItems(NPCs);
-        
+
         // Set item list view to observe the item list.
-        updateItemList ();
-        lvItems.setItems (items);
+        updateItemList();
+        lvItems.setItems(items);
 
         //Starting the game
         game.playGame();
@@ -311,6 +310,7 @@ public class FXMLGameController implements Initializable {
 
         //The for-loop determines if we are close enough to a gate to move through it. If we are, call the respective command.
         for (int i = 0; i < 4; i++) {
+
             double differenceX = Math.abs(getPlayerX() - directionObjects[i].getLayoutX());
             double differenceY = Math.abs(getPlayerY() - directionObjects[i].getLayoutY());
 
@@ -323,7 +323,7 @@ public class FXMLGameController implements Initializable {
                 String checker = game.getCurrentRoomName();
                 game.enterCommand(directionCommands[i]);
                 String pChecker = game.getCurrentRoomName();
-                if (pChecker != checker) {
+                if (!pChecker.equals(checker)) {
                     updateRoom();
                     return;
                 }
@@ -383,17 +383,14 @@ public class FXMLGameController implements Initializable {
         txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
         txfFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
-        if(game.getCurrentHappiness() < 50 ){
+        if (game.getCurrentHappiness() < 50) {
             txtFieldName.setText("Taber Smølf");
-        }
-        else if(50 < game.getCurrentHappiness() && 100>game.getCurrentHappiness()){
+        } else if (50 < game.getCurrentHappiness() && 100 > game.getCurrentHappiness()) {
             txtFieldName.setText("Smølf");
-        }
-        else if(game.getCurrentHappiness() == 100){
+        } else if (game.getCurrentHappiness() == 100) {
             txtFieldName.setText("Warrior Smølf");
         }
-            
-        
+
     }
 
     // Resets and updates the list of attacks to reflect any new additions.
@@ -411,13 +408,16 @@ public class FXMLGameController implements Initializable {
             items.add(string);
         }
     }
-    
-    //Removes all current NPCs and updates them based on the current room.
 
+    //Removes all current NPCs and updates them based on the current room.
     private void updateNPCList() {
         NPCs.clear();
-        for (String string : game.getNPCNames()) {
-            NPCs.add(string);
+        
+        String[] npcNames = game.getNPCNames();
+        boolean[] isHostile = game.isNPCHostile();
+        
+        for (int i = 0; i < npcNames.length; i++) {
+            NPCs.add(npcNames[i] + (isHostile[i] ? " (hostile)" : ""));
         }
     }
 
@@ -460,11 +460,49 @@ public class FXMLGameController implements Initializable {
         String selectedNPC = lvNPC.getSelectionModel().getSelectedItem();
         String selectedAttack = lvAttacks.getSelectionModel().getSelectedItem();
         game.enterCommand("engage " + selectedNPC);
-        game.enterCommand("attack " + selectedAttack);
-        txtAreaOutput.setText("You attacked " + selectedNPC + " with a " + selectedAttack + "!\n" + selectedNPC + "now has " + game.getLastAttackedHealth() + " health left!");
+
+        if (game.getEngagedName() != null) {
+
+            game.enterCommand("attack " + selectedAttack);
+
+            String attackString = getAttackString(
+                    game.getPlayerName(),
+                    game.getEngagedName(),
+                    game.getLastAttackName(),
+                    game.getLastAttackDescription(),
+                    game.getLastAttackResponse(),
+                    game.getLastAttackType(),
+                    game.getLastAttackDamage(),
+                    game.getLastAttackedHealth()
+            );
+
+            String retaliationString = getAttackString(
+                    game.getEngagedName(),
+                    game.getPlayerName(),
+                    game.getRetaliationAttackName(),
+                    game.getRetaliationAttackDescription(),
+                    game.getRetaliationAttackResponse(),
+                    game.getRetaliationAttackType(),
+                    game.getRetaliationAttackDamage(),
+                    game.getPlayerHealth()
+            );
+
+            txtAreaOutput.setText(attackString + retaliationString);
+        }else {
+            txtAreaOutput.setText ("You lash out against the air, it takes great offense.");
+        }
+
         game.enterCommand("disengage");
 
         updateNPCList();
+    }
+
+    private String getAttackString(String attacker, String reciever, String name, String description, String response, String type, double value, double remaining) {
+        String result = "";
+        result += (String.format(attacker + " attacks " + reciever + " with " + name + ", " + description + " doing " + type + " damage.", value)) + "\n";
+        result += (String.format(reciever + " " + response, value)) + "\n";
+        result += (reciever + " has " + remaining + " health left .") + "\n";
+        return result;
     }
 
     //

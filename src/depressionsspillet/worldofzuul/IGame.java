@@ -34,6 +34,7 @@ public interface IGame {
     String[] getItemDescriptions();
     String[] getNPCNames();
     String[] getNPCDescriptions();
+    boolean[] isNPCHostile ();
 
     int getRoomHappiness();
     // ROOM STUFFINGS END

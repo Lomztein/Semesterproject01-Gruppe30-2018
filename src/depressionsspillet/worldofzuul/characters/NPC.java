@@ -10,9 +10,12 @@ import depressionsspillet.worldofzuul.Room;
 /**
  * @author Joachim
  */
-public class NPC extends Character {
+public abstract class NPC extends Character {
 
     public NPC (String name, String desc, Room startingRoom) {
         super (name, desc, startingRoom);
     }
+    
+    public abstract boolean isHostile ();
+    
 }

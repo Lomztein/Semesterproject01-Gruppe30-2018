@@ -47,6 +47,6 @@ public abstract class Character implements Entity {
         this.description = description;
         this.currentRoom = currentRoom;
     }
-
+    
     //GGWP
 }

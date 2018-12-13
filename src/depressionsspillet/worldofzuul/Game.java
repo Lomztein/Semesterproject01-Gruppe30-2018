@@ -189,10 +189,7 @@ public class Game implements IGame {
     //Disengages the player with the NPC, if he is engaged.
     private void disengage() {
         if (player.isEngaged()) {
-            lastCommandResponse = "You accidentally poop yourself a little before disengaging " + player.getEngaged().getName() + " before running to a safe distance.";
             player.disengage();
-        } else {
-            lastCommandResponse = "You aren't currently engaged in combat.";
         }
     }
 
@@ -563,5 +560,10 @@ public class Game implements IGame {
     @Override
     public boolean isPlayerDead() {
         return player.getHealth().isDead();
+    }
+
+    @Override
+    public boolean[] isNPCHostile() {
+        return player.getCurrentRoom ().getHostileFlags();
     }
 }
