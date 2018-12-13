@@ -120,6 +120,7 @@ public class Game implements IGame {
                 player.setCurrentRoom(nextRoom.getRoom());
                 player.addHappiness(player.getCurrentRoom().getHappiness());
                 player.getCurrentRoom().setHappiness(0);
+
             }
         }
     }

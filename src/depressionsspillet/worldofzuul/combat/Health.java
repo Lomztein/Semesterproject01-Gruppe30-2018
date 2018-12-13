@@ -103,6 +103,7 @@ public class Health {
             return damageTaken.get(damageTaken.size() - 1);
         } else {
             return Damage.NULL_DAMAGE;
+
         }
     }
 
