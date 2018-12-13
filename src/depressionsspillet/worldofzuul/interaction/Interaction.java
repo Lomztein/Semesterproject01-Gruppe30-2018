@@ -7,6 +7,7 @@ public class Interaction {
     private final String name;
     private final String description;
     
+    private boolean interacted = false;
     private final Action action;
     
     public Interaction (String name, String description, Action action) {
@@ -24,6 +25,10 @@ public class Interaction {
     }
 
     public String execute (Player player) {
+        if (interacted) {
+            return "You've already done this.";
+        }
+        interacted = true;
         return action.execute (player);
     }
     

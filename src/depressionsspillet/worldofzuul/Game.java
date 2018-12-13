@@ -379,11 +379,6 @@ public class Game implements IGame {
     }
 
     @Override
-    public void playGame() {
-        createRooms();
-    }
-
-    @Override
     public int getRoomHappiness() {
         return player.getCurrentRoom().getHappiness();
     }

@@ -142,7 +142,6 @@ public class FXMLGameController implements Initializable {
         lvItems.setItems(items);
 
         //Starting the game
-        game.playGame();
         txtAreaOutput.setText(game.getCurrentRoomLongDesc());
 
         //Here comes the logic for handling the movement of the player.
@@ -314,21 +313,16 @@ public class FXMLGameController implements Initializable {
             if (differenceX <= 45 && differenceY <= 45) {
 
                 //Checks whether the room is the same before and after the method being called, to make sure the player isn't moved if the room hasn't changed.
-                String checker = game.getCurrentRoomName();
                 game.enterCommand(directionCommands[i]);
-                System.out.println(directionCommands[i]);
-                System.out.println("I typed go south");
-                String pChecker = game.getCurrentRoomName();
-                System.out.println(game.getCommandResponse());
-                if (!pChecker.equals(checker)) {
+
+                if (game.getPlayerTriedEnteringLockedDoor()) {
+                    txtAreaOutput.setText(game.getPlayerTriedEnteringLockedDoorResponse());
+                } else {
                     updateRoom();
-                    return;
                 }
-                return;
             }
         }
         //Perhaps add a timer to prevent the player from spamming the shit out of the button.
-
     }
 
     //Moves the player to the opposite side of the room
@@ -368,11 +362,13 @@ public class FXMLGameController implements Initializable {
         System.out.println("images/" + game.getCurrentRoomName() + ".jpg"); // Needed to make sure the files and rooms names are syncronized.
         Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
+        
+        interactions.clear();
         updateTxtArea();
         updateItemList();
         updateNPCList();
         updatePlayerLocation();
-        lvInteractions.setItems(emptyList);
+        updateInteractions();
     }
 
     //Updates the text-area to have the current output printed.
@@ -410,12 +406,11 @@ public class FXMLGameController implements Initializable {
     private void updateNPCList() {
         NPCs.clear();
         
-        String[] interactableNames = game.getInteractableNames();
-        String[] NPCnames = game.getNPCNames();
+        String[] npcNames = game.getNPCNames();
         boolean[] isHostile = game.isNPCHostile();
         
-        for(String interactableName : interactableNames){
-            NPCs.add(interactableName);
+        for (int i = 0; i < npcNames.length; i++) {
+            NPCs.add(npcNames[i] + (isHostile[i] ? " (hostile)" : ""));
         }
         for (int i = 0; i < NPCnames.length; i++) {
             if (isHostile[i]){
@@ -470,31 +465,46 @@ public class FXMLGameController implements Initializable {
 
             game.enterCommand("attack " + selectedAttack);
 
-            String attackString = getAttackString(
-                    game.getPlayerName(),
-                    game.getEngagedName(),
-                    game.getLastAttackName(),
-                    game.getLastAttackDescription(),
-                    game.getLastAttackResponse(),
-                    game.getLastAttackType(),
-                    game.getLastAttackDamage(),
-                    game.getLastAttackedHealth()
-            );
+            String attackString = "Your attack failed. Just like you did.\n";
+            String retaliationString = game.getEngagedName() + " just takes it.";
 
-            String retaliationString = getAttackString(
-                    game.getEngagedName(),
-                    game.getPlayerName(),
-                    game.getRetaliationAttackName(),
-                    game.getRetaliationAttackDescription(),
-                    game.getRetaliationAttackResponse(),
-                    game.getRetaliationAttackType(),
-                    game.getRetaliationAttackDamage(),
-                    game.getPlayerHealth()
-            );
+            if (game.getLastAttackDidHit()) {
+                attackString = getAttackString(
+                        game.getPlayerName(),
+                        game.getEngagedName(),
+                        game.getLastAttackName(),
+                        game.getLastAttackDescription(),
+                        game.getLastAttackResponse(),
+                        game.getLastAttackType(),
+                        game.getLastAttackDamage(),
+                        game.getLastAttackedHealth()
+                );
+            }
+
+            if (game.getLastAttackHadRetaliation()) {
+                retaliationString = getAttackString(
+                        game.getEngagedName(),
+                        game.getPlayerName(),
+                        game.getRetaliationAttackName(),
+                        game.getRetaliationAttackDescription(),
+                        game.getRetaliationAttackResponse(),
+                        game.getRetaliationAttackType(),
+                        game.getRetaliationAttackDamage(),
+                        game.getPlayerHealth()
+                );
+            } else if (game.getLastAttackedHealth() <= 0) {
+                retaliationString += " " + game.getEngagedName() + " is dead. You're a murderer now.";
+            }
 
             txtAreaOutput.setText(attackString + retaliationString);
-        }else {
-            txtAreaOutput.setText ("You lash out against the air, it takes great offense.");
+        } else {
+
+            if (selectedAttack.toUpperCase().equals("DAB")) {
+                txtAreaOutput.setText("You dab fruitlessly at nothing, as faint yeeting flows through the forest trees.");
+            } else {
+                txtAreaOutput.setText("You attack the air with " + selectedAttack + ". It takes great offence, but nothing otherwise happens.");
+            }
+
         }
 
         game.enterCommand("disengage");
@@ -513,17 +523,16 @@ public class FXMLGameController implements Initializable {
     //
     @FXML
     private void handleInteractButtonEvent(ActionEvent event) {
-        game.enterCommand("interact " + lvNPC.getSelectionModel().getSelectedItem() + " " + lvInteractions.getSelectionModel().getSelectedItem());
+        game.enterCommand("interact " + lvInteractions.getSelectionModel().getSelectedItem());
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
         txtAreaOutput.setText(game.getCommandResponse());
+        updateAttackList();
     }
 
     //Calls the use-method on the item selected in the inventorys' observable-list. 
     @FXML
-    private void handleUseButtonEvent(ActionEvent event
-    ) {
-
+    private void handleUseButtonEvent(ActionEvent event) {
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
         selectedInventoryItemIndex += 1;
         game.enterCommand("inventory use " + selectedInventoryItemIndex);
@@ -545,27 +554,29 @@ public class FXMLGameController implements Initializable {
     }
 
     @FXML
-    private void handleItemsMouseEvent(MouseEvent event
-    ) {
+    private void handleItemsMouseEvent(MouseEvent event) {
         String desc = lvItems.getSelectionModel().getSelectedItem();
         txtAreaOutput.setText(desc);
     }
 
     @FXML
-    private void handleInventoryMouseEvent(MouseEvent event
-    ) {
+    private void handleInventoryMouseEvent(MouseEvent event) {
     }
 
     //Prinitng interactions for chosen NPC in listview
     @FXML
     private void handleNPCListViewMouseEvent(MouseEvent event) {
+
+    }
+
+    private void updateInteractions() {
         interactions.clear();
-        String[][] interactionNames = game.getInteractionNames();
-        for (String[] interactionName : interactionNames){
-            for (String name : interactionName){
-                interactions.add(name);
-            }
+        int interactableIndex = lvNPC.getSelectionModel().getSelectedIndex();
+        String[][] npcInteractions = game.getInteractionNames();
+        for (String interaction : npcInteractions[interactableIndex]){
+                interactions.add(interaction);
         }
+
         lvInteractions.setItems(interactions);
     }
 

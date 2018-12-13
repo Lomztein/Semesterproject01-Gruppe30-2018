@@ -1,8 +1,6 @@
 package depressionsspillet.worldofzuul;
 
 public interface IGame {
-    //To start the game we need the rooms created
-    void playGame();
     
     // COMMAND STUFFINGS
     boolean enterCommand(String input);
