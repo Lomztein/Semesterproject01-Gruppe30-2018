@@ -27,8 +27,8 @@ public class Player extends Character implements Attacker, HasHealth {
     private Damagable engagedWith;
     private final ArrayList<Attack> availableAttacks = new ArrayList<>();
     private final Health playerHealth;
-    private int happiness = 2;
-    
+    private int happiness = 0;
+
     private final ArrayList<Item> inventory = new ArrayList<>();
 
     public Player(String name, String description, Room startingRoom) {

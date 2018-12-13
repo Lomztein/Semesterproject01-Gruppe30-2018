@@ -240,7 +240,7 @@ public class Game implements IGame {
                 switch (command.getSecondWord()) {
                     case "drop":
                         if (command.hasThirdWord()) {
-                            player.dropItem(Integer.parseInt(command.getThirdWord()));
+                            lastCommandResponse = player.dropItem(Integer.parseInt(command.getThirdWord()));
                         } else {
                             lastCommandResponse = ("You attempt to drop nothing. You're worried if you looked stupid. \n\nYou did.\n");
                         }

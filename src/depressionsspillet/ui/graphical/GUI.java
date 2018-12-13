@@ -5,13 +5,11 @@
  */
 package depressionsspillet.ui.graphical;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
@@ -27,14 +25,13 @@ public class GUI extends Application {
     private static final double W = 456, H = 285;
 
     //To access the methods in the FXML-controller, this dank-ass workaround had to be implemented.
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGame.fxml"));
-    FXMLGameController control;
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML.fxml"));
+    FXMLController control;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         //THIS NEEDS TO BE REVERTED TO JUST START THE MAIN MENU INSTEAD
-        
         primaryStage.setTitle("Depressionsspillet!");
 
         //Loading the FXML-document as root, and then getting the controller from it.
@@ -44,7 +41,6 @@ public class GUI extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
-        primaryStage.setMaximized(true);
 
     }
 

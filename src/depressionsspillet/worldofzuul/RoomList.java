@@ -30,7 +30,7 @@ public class RoomList {
     public static void listRooms() {
 
         // The individual room variables are populated with their appropiate Room objects.
-        start = new Room("You leave Spilmester Martin, and enter the huge magical forest, with trees seemingly extending into the skies.", "start");
+        start = new Room("Spilmester Martin:\nHaha, what an ugly name, and btw the listed character types were all sold out, so you got a pathetic blue dot.\nNow please walk south using WASD to move, and defeat Erikthulu. Remember you must first acquire enough happiness\n from the world, before you can enter through the gate in the south!", "start");
         magicForrest = new Room("You are now in the magic forest, who knows what will happen.", "magicForrest");
         vendor = new Room("You have visited the blackboard vendor, a replacement of blackboard is currently in the works, in the meantime however, \n please feel free to browse the vendor's wares.", "vendor");
         animals = new Room("You go deeper into the forest and find yourself in a completely white room filled with puppies and kittens.", "animals");
@@ -231,6 +231,13 @@ public class RoomList {
 
         drugs.setExit("north", allotment);
         drugs.setExit("east", thaiHooker);
+        
+        drugs.addEntityToRoom(new HostileNPC("Bigol'boi", "A mean looking fellow who seemingly wants to nick your stuff. You are having none of this and decides to fight him", drugs, true, new Health(50),
+            new Attack(DamageType.BLUNT, 5, "Clobber", "bludgeons you on the head with an improvised mace."),
+            new Attack(DamageType.FIRE, 7, "Ignite", "douses you with gasoline and flicks a lit match at you."),
+            new Attack(DamageType.MENTAL, 8, "Flash", "rips off his trenchcoat and exposes himself"),
+            new Attack(DamageType.SLASH, 4, "Stab", "flails his pocketknife around uncontrollably")
+        ));
 
         drugs.addEntityToRoom(new InteractableObject("Line-of-coke", "An inviting line of cocain lying on a iredescent mirror surface.", new Interaction("dewit", "Do the line.", (Player x) -> {
             x.addHappiness(-25); // The player is told that they first gain 100 and then lose 125, but in fact we just remove 25. #leekhacksaw.
