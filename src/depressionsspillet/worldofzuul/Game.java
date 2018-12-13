@@ -70,15 +70,19 @@ public class Game implements IGame {
                 case GO:
                     goRoom(command);
                     break;
+                    
                 case ATTACK:
                     attack(command);
                     break;
+                    
                 case ENGAGE:
                     engage(command);
                     break;
+                    
                 case DISENGAGE:
                     disengage();
                     break;
+                    
                 case INTERACT:
                     interact(command);
                     break;
@@ -86,9 +90,11 @@ public class Game implements IGame {
                 case INVENTORY:
                     inventory(command);
                     break;
+                    
                 case NO:
                     no(command);
                     break;
+                    
                 default:
                     break;
             }
@@ -552,5 +558,10 @@ public class Game implements IGame {
     @Override
     public String[] getInteractableDescriptions() {
         return player.getCurrentRoom().getEntityDescriptions(Interactable.class);
+    }
+
+    @Override
+    public boolean isPlayerDead() {
+        return player.getHealth().isDead();
     }
 }

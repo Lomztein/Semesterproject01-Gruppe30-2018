@@ -176,7 +176,7 @@ public class RoomList {
         kfc.setHappiness(15);
 
         kfc.addEntityToRoom(new InteractableNPC("Katie", "Seems like one of those fast food employees who give people extra nuggets.", kfc,
-                new Interaction("Order something", "Place an order for whatever you feel like having", x -> {
+                new Interaction("Order", "Place an order for whatever you feel like having", x -> {
                     x.addHappiness(7);
                     return "The cashier happily guides you through the order and predicts exactly what you wanted as if she read your mind. "
                             + "A bit creepy, but it makes you happy that someone would understand you so. +7 happiness";
@@ -240,7 +240,7 @@ public class RoomList {
         gate.setExit("north", campfire);
         gate.setExit("south", boss, true, "This door is locked by foul, eldritch magic. You must have at least 95 happiness to enter it.");
 
-        gate.addEntityToRoom(new InteractableNPC("Gate", "Big, huge gate", gate,
+        gate.addEntityToRoom(new InteractableObject("Gate", "A massive gate of untold size, yet you feel within a potiential to open it.",
                 new Interaction("Admire", "You look at the gate with awe and curiosity.", x -> {
                     x.addHealth(1);
                     return "As you stare at the gate for a good few minutes you feel a bit of strength return to your body. +1 health.";

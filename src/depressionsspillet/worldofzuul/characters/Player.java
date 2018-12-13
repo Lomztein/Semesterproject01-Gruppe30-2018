@@ -29,7 +29,6 @@ public class Player extends Character implements Attacker, HasHealth {
     private final Health playerHealth;
     private int happiness = 2;
     
-
     private final ArrayList<Item> inventory = new ArrayList<>();
 
     public Player(String name, String description, Room startingRoom) {
