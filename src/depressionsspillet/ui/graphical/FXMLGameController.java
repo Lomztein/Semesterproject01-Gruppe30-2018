@@ -510,6 +510,7 @@ public class FXMLGameController implements Initializable {
     private void handleInteractButtonEvent(ActionEvent event) {
         game.enterCommand("interact " + lvNPC.getSelectionModel().getSelectedItem() + " " + lvInteractions.getSelectionModel().getSelectedItem());
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
+        txtFieldHealth.setText("" + game.getPlayerHealth());
         txtAreaOutput.setText(game.getCommandResponse());
     }
 
