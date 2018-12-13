@@ -343,7 +343,7 @@ public class FXMLGameController implements Initializable {
 
     //Update of items and NPCs to be added here
     private void updateRoom() {
-        Image image = new Image("newImages/" + game.getCurrentRoomName() + ".jpg");
+        Image image = new Image("Images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
         updateTxtArea();
         updateItemsList();
