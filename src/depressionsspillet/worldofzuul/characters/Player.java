@@ -26,9 +26,14 @@ public class Player extends Character implements Attacker, HasHealth {
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
         playerHealth = new Health(69);
+
+        generatePlayerResistances();
+
+        addAttack(new Attack(DamageType.DAB, 5, "dab", "a profound dab"));
+        addAttack(new Attack(DamageType.BLUNT, 20, "punch", "a rather weak, yet beautifully spirited punch"));
     }
 
-    public void generatePlayerResistances() {
+    private void generatePlayerResistances() {
         ArrayList<DamageResistance> playerResistances = new ArrayList<>();
         for (DamageType type : DamageType.values()) {
             if (type != DamageType.ANY) {
@@ -53,7 +58,11 @@ public class Player extends Character implements Attacker, HasHealth {
     }
 
     public double getLastAttackDamageValue() {
-        return getLastAttack().getDamageValue();
+        if (getEngagedAsHasHealth() == null) {
+            return getLastAttack().getDamageValue();
+        } else {
+            return getLastAttack().getDamageValue() * getEngagedAsHasHealth().getHealth().getResistanceForType(getLastAttack().getDamageType()).getMultiplier();
+        }
     }
 
     public String getLastAttackName() {

@@ -7,6 +7,7 @@ import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.combat.Attack;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
+import depressionsspillet.worldofzuul.combat.DamagedEvent;
 import depressionsspillet.worldofzuul.combat.Health;
 import depressionsspillet.worldofzuul.interaction.InteractableObject;
 import depressionsspillet.worldofzuul.interaction.Interaction;
@@ -66,12 +67,15 @@ public class RoomList {
         // You know the drill by now.
         animals.setExit("west", vendor);
         animals.setHappiness(15);
-        
-        HostileNPC direwolf = new HostileNPC("Direwolf", "A big wolf looking menacingly at you, yet you cannot tell the nature of its desire.", animals, true, new Health(20),
+
+        HostileNPC direwolf = new HostileNPC("Direwolf", "A big wolf looking menacingly at you, yet you cannot tell the nature of its desire.", animals, true, new Health(20).withResistances(new DamageResistance(DamageType.DAB, "is a wild, ferocious animal, it does not care for your unchallenged dankocity.", 0f)),
                 new Attack(DamageType.SLASH, 5, "Claw slash", "a violent slash of the wolfs claws."),
                 new Attack(DamageType.MENTAL, 2, "Loud bark", "a frightening bark. Though scary, it doesn't do much."),
                 new Attack(DamageType.BLUNT, 1, "Headbutt", "a vicious headbutt, however it is in fact more adorable than scary.")
         );
+        direwolf.getHealth().onDeath.add(x -> {
+            ((Player) x.getDamage().getAttacker()).addAttack(new Attack(DamageType.SLASH, 25, "golden-sowrd", "a blood-covered golden sword found in the abdominal cavity of a wolf."));
+        });
 
         animals.addEntityToRoom(direwolf);
 
@@ -139,6 +143,7 @@ public class RoomList {
                         x -> {
                             x.addHappiness(5);
                             x.addHealth(10);
+                            x.addAttack(new Attack(DamageType.MENTAL, 5, "alcohol-barf", "while abhorrantly disgusting, it does not really hurt all that much, except for the pride of course."));
                             return "As you gulp down the cold beer and Dennis asks how you are feeling, you let out a bit of the feelings you've bottled up over the past few years. "
                             + "It feels as though a burden has been lifted from your chest. +5 happiness";
                         })
@@ -152,12 +157,16 @@ public class RoomList {
         stripClub.setExit("west", campfire);
         stripClub.setHappiness(10);
 
-        stripClub.addEntityToRoom(new HostileNPC("Destiny", "Very skilled in barfights resulted from a long career as an exotic dancer. She dislikes you because you are broke.", stripClub, true, new Health(35),
+        HostileNPC destiny = new HostileNPC("Destiny", "Very skilled in barfights resulted from a long career as an exotic dancer. She dislikes you because you are broke.", stripClub, true, new Health(35).withResistances(new DamageResistance(DamageType.BLUNT, "'s massive rock-hard tits takes the blunt of the force, reducing her damage taken to %.2f damage.", .5)),
                 new Attack(DamageType.BLUNT, 3, "Boob Bash", "smacks you with a hardened fake titty."),
                 new Attack(DamageType.FIRE, 10, "Molotov Cocktail", "grabbing a bottle from the bar, she lights in on fire and throws it at you."),
                 new Attack(DamageType.SLASH, 5, "Stiletto Stab", "using her pumps, she impales one of your limbs."),
-                new Attack(DamageType.MENTAL, 4, "Berate", "she ruthlessly yells slurs about your worthlessness.")
-        ));
+                new Attack(DamageType.MENTAL, 4, "Berate", "she ruthlessly yells slurs about your worthlessness."));
+        stripClub.addEntityToRoom(destiny);
+
+        destiny.getHealth().onDeath.add(x
+                -> stripClub.addItem(new ConsumableItem("Mystery-meat", "Some meat of strange and unknown origins, tastes mildly like pig.", 100, 20, -5))
+        );
 
         stripClub.addItem(new ConsumableItem("Money", "A bunch of one-dollar bills covered by strange fluids. Moist.", 10, 15, 25));
 
@@ -175,13 +184,20 @@ public class RoomList {
 
         shrek.setExit("west", kfc);
 
-        shrek.addEntityToRoom(new HostileNPC("Shrek", "Memelord Alpha-Omega", shrek, true, new Health(42),
+        HostileNPC shrekNPC = new HostileNPC("Shrek", "Memelord Alpha-Omega", shrek, true, new Health(42).withResistances(new DamageResistance(DamageType.FIRE, "'s outer layer roasts, caramelizing the sugars within and doing an increased %.2", 1.5f)),
                 new Attack(DamageType.DAB, 5, "Shrek'd", "a complete shrek."),
                 new Attack(DamageType.BLUNT, 10, "Fat rip", "a different form of blunt damage, causing you to pass out for five hours. Any damage done is due to hunger."),
                 new Attack(DamageType.FIRE, 8, "Onions", "the multiple layers of his soul."),
                 new Attack(DamageType.MENTAL, 20, "Love", "his love."),
                 new Attack(DamageType.MENTAL, 20, "Life", "his life.")
-        ));
+        );
+
+        shrek.addEntityToRoom(shrekNPC);
+
+        shrekNPC.getHealth().onDeath.add(x -> {
+            ((Player) x.getDamage().getAttacker()).addAttack(new Attack(DamageType.BLUNT, 25, "onion", "thrown at the eyes for maximum crytitude."));
+            ((Player) x.getDamage().getAttacker()).addAttack(new Attack(DamageType.WATER, 25, "swampwater", "teeming with microscopic life, yet smells like death."));
+        });
 
         allotment.setExit("south", drugs);
         allotment.setExit("east", movie);
@@ -221,13 +237,19 @@ public class RoomList {
 
         drugs.setExit("north", allotment);
         drugs.setExit("east", thaiHooker);
-        
-        drugs.addEntityToRoom(new HostileNPC("Bigol'boi", "A mean looking fellow who seemingly wants to nick your stuff. You are having none of this and decides to fight him", drugs, true, new Health(50),
-            new Attack(DamageType.BLUNT, 5, "Clobber", "bludgeoning you on the head with an improvised mace."),
-            new Attack(DamageType.FIRE, 7, "Ignite", "dousing you with gasoline and flicking a lit match at you."),
-            new Attack(DamageType.MENTAL, 8, "Flash", "ripping off his trenchcoat and exposing himself"),
-            new Attack(DamageType.SLASH, 4, "Stab", "flailing his pocketknife around uncontrollably")
-        ));
+
+        HostileNPC bigolboi = new HostileNPC("Bigol'boi", "A mean looking fellow who seemingly wants to nick your stuff. You are having none of this and decides to fight him", drugs, true, new Health(50),
+                new Attack(DamageType.BLUNT, 5, "Clobber", "bludgeoning you on the head with an improvised mace."),
+                new Attack(DamageType.FIRE, 7, "Ignite", "dousing you with gasoline and flicking a lit match at you."),
+                new Attack(DamageType.MENTAL, 8, "Flash", "ripping off his trenchcoat and exposing himself"),
+                new Attack(DamageType.SLASH, 4, "Stab", "flailing his pocketknife around uncontrollably")
+        );
+
+        drugs.addEntityToRoom(bigolboi);
+
+        bigolboi.getHealth().onDeath.add(x -> {
+            drugs.addItem(new ConsumableItem("vitamin-d", "Low vitamin-D can lead to depression, treat yourself some pulverized sunlight!", 100, 15, 35));
+        });
 
         drugs.addEntityToRoom(new InteractableObject("Line-of-coke", "An inviting line of cocain lying on a iredescent mirror surface.", new Interaction("dewit", "Do the line.", (Player x) -> {
             x.addHappiness(-25); // The player is told that they first gain 100 and then lose 125, but in fact we just remove 25. #leekhacksaw.
@@ -259,7 +281,7 @@ public class RoomList {
                 new DamageResistance[]{
                     new DamageResistance(DamageType.BLUNT, "is impervious to blunt force trauma, he is simply too great.", 0),
                     new DamageResistance(DamageType.SLASH, "has too thick skin to penetrate, your slash simply glances off with a small papercut-like wound left, doing %.2f damage.", 0.1),
-                    new DamageResistance(DamageType.DAB, "doesn't care. You cannot merely dab upon all your problems. Please actually try to solve your problems.", 0),
+                    new DamageResistance(DamageType.DAB, "cannot handle your pure dank memery and suffers a hefty stroke, doing an impressive %.2f damage.", 10),
                     new DamageResistance(DamageType.MENTAL, "is distraught by your comfidence and self-worth, and so he takes an impressive %.2f damage.", 2),}),
                 new Attack(DamageType.DAB, 10d, "Intense Dab", "your own tactics against you. You cannot keep fighting yourself like this."),
                 new Attack(DamageType.FIRE, 15d, "Firebreath", "a massive storm of fire. Bricks will be shat."),
@@ -269,7 +291,11 @@ public class RoomList {
                 new Attack(DamageType.MENTAL, 10d, "Insult", "an insult upon your appearance, talents and skills all wowen together in a beautiful euphony of wordsmithing.")
         );
 
-        erikthulhu.getHealth().onDeath.add(x -> boss.setExit("south", suprise));
+        erikthulhu.getHealth().onDeath.add(x -> {
+            ((Player) x.getDamage().getAttacker()).addAttack(new Attack(DamageType.MENTAL, 2500, "perfect-grade", "the physical result of this entire adventure."));
+        });
+
+        erikthulhu.getHealth().onDeath.add(x -> boss.unlockExit("south"));
 
         boss.addEntityToRoom(erikthulhu);
 

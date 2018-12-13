@@ -126,16 +126,16 @@ public class FXMLGameController implements Initializable {
         backgroundImageView.setImage(imageStart);
 
         //Setting attacks
-        updateAttackList();
         lvAttacks.setItems(attacks);
 
         // Set NPC list view to observe the NPC list
-        updateNPCList();
         lvNPC.setItems(NPCs);
 
         // Set item list view to observe the item list.
-        updateItemList();
         lvItems.setItems(items);
+
+        // Set interactions list view to observe interaction list.
+        lvInteractions.setItems(interactions);
 
         //Starting the game
         txtAreaOutput.setText(game.getCurrentRoomLongDesc());
@@ -309,12 +309,17 @@ public class FXMLGameController implements Initializable {
             if (differenceX <= 45 && differenceY <= 45) {
 
                 //Checks whether the room is the same before and after the method being called, to make sure the player isn't moved if the room hasn't changed.
+                String prev = game.getCurrentRoomName();
                 game.enterCommand(directionCommands[i]);
+                String post = game.getCurrentRoomName();
 
                 if (game.getPlayerTriedEnteringLockedDoor()) {
                     txtAreaOutput.setText(game.getPlayerTriedEnteringLockedDoorResponse());
                 } else {
-                    updateRoom();
+                    if (!prev.equals(post)) {
+                        updateRoom();
+                        updateInformation();
+                    }
                 }
             }
         }
@@ -355,21 +360,20 @@ public class FXMLGameController implements Initializable {
     }
 
     private void updateRoom() {
-        System.out.println("images/" + game.getCurrentRoomName() + ".jpg"); // Needed to make sure the files and rooms names are syncronized.
+        updatePlayerLocation();
         Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
-
-        interactions.clear();
-        updateTxtArea();
-        updateItemList();
-        updateNPCList();
-        updatePlayerLocation();
-        updateInteractions();
+        txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
     }
 
-    //Updates the text-area to have the current output printed.
-    private void updateTxtArea() {
-        txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
+    private void updateInformation() {
+        updateItemList();
+        updateNPCList();
+        updatePlayerStats();
+        updateAttackList();
+    }
+
+    private void updatePlayerStats() {
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
         if (game.getCurrentHappiness() < 50) {
@@ -379,7 +383,6 @@ public class FXMLGameController implements Initializable {
         } else if (game.getCurrentHappiness() >= 100) {
             txtFieldName.setText("Warrior Smurf");
         }
-
     }
 
     // Resets and updates the list of attacks to reflect any new additions.
@@ -506,8 +509,7 @@ public class FXMLGameController implements Initializable {
         }
 
         game.enterCommand("disengage");
-
-        updateNPCList();
+        updateInformation();
     }
 
     private String getAttackString(String attacker, String reciever, String name, String description, String response, String type, double value, double remaining) {
@@ -525,7 +527,7 @@ public class FXMLGameController implements Initializable {
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
         txtAreaOutput.setText(game.getCommandResponse());
-        updateAttackList();
+        updateInformation();
     }
 
     //Calls the use-method on the item selected in the inventorys' observable-list. 
@@ -541,7 +543,7 @@ public class FXMLGameController implements Initializable {
         String[] inventoryStrings = game.getPlayerInventoryNames();
         inventory.addAll(Arrays.asList(inventoryStrings));
         lvInventory.setItems(inventory);
-        updateItemList();
+        updateInformation();
     }
 
     private void handleHelpButtonEvent(ActionEvent event) {
@@ -569,13 +571,14 @@ public class FXMLGameController implements Initializable {
 
     private void updateInteractions() {
         interactions.clear();
-        int interactableIndex = getInteractableIndex (game.getInteractableNames(), lvNPC.getSelectionModel ().getSelectedItem());
-        String[][] npcInteractions = game.getInteractionNames();
-        for (String interaction : npcInteractions[interactableIndex]) {
-            interactions.add(interaction);
-        }
+        int interactableIndex = getInteractableIndex(game.getInteractableNames(), lvNPC.getSelectionModel().getSelectedItem());
 
-        lvInteractions.setItems(interactions);
+        if (interactableIndex != -1) {
+            String[][] npcInteractions = game.getInteractionNames();
+            for (String interaction : npcInteractions[interactableIndex]) {
+                interactions.add(interaction);
+            }
+        }
     }
 
     private int getInteractableIndex(String[] interactables, String interactable) {

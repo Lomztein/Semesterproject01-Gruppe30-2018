@@ -36,8 +36,6 @@ public class Game implements IGame {
         // The attributes are populated with their appropiate data.
         createRooms();
         player = new Player("Janus the Magic Midget", "A fucking loser amirite", RoomList.start);
-        player.addAttack(new Attack(DamageType.DAB, 5, "dab", "a profound dab"));
-        player.addAttack(new Attack(DamageType.BLUNT, 20, "punch", "a rather weak, yet beautifully spirited punch"));
         parser = new Parser();
     }
 
@@ -70,19 +68,19 @@ public class Game implements IGame {
                 case GO:
                     goRoom(command);
                     break;
-                    
+
                 case ATTACK:
                     attack(command);
                     break;
-                    
+
                 case ENGAGE:
                     engage(command);
                     break;
-                    
+
                 case DISENGAGE:
                     disengage();
                     break;
-                    
+
                 case INTERACT:
                     interact(command);
                     break;
@@ -90,11 +88,11 @@ public class Game implements IGame {
                 case INVENTORY:
                     inventory(command);
                     break;
-                    
+
                 case NO:
                     no(command);
                     break;
-                    
+
                 default:
                     break;
             }
@@ -207,12 +205,12 @@ public class Game implements IGame {
                 // If the current engaged is the same as the last who did damage, and it isn't dead - Then it retaliated.
                 // This depends on the knowledge that the player is only ever engaged in combat with one entity at a time.
                 // Alternatively, a record of all attacks from different entities and whether or not they were retaliations and to what, would be needed to be kept.
-                if (player.getEngaged() == player.getHealth().getLastDamage().getAttacker() && 
-                        (player.getEngagedAsHasHealth() != null && !player.getEngagedAsHasHealth().getHealth().isDead())) {
-                    
+                if (player.getEngaged() == player.getHealth().getLastDamage().getAttacker()
+                        && (player.getEngagedAsHasHealth() != null && !player.getEngagedAsHasHealth().getHealth().isDead())) {
+
                     lastAttackHadRetaliation = true;
                 }
-                
+
                 // Disengaging in the middle of a command means breaking the connection between the interface and the engaged item, before the interface has a chance to get the data.
                 // Instead we chose to half-ass it and decided that we can just keep punching dead engageables for all eternity, if we so desired.
                 /*if (player.getEngagedAsHasHealth() != null) {
@@ -440,11 +438,12 @@ public class Game implements IGame {
 
     @Override
     public double getRetaliationAttackDamage() {
-        return player.getHealth().getLastDamage().getDamageValue();
+        return player.getHealth().getLastDamage().getDamageValue() * player.getHealth ().getResistanceForType(player.getHealth().getLastDamage().getDamageType()).getMultiplier();
     }
 
     @Override
     public String getRetaliationAttackResponse() {
+        System.out.println(player.getHealth().getResistanceForType(player.getHealth().getLastDamage().getDamageType()).getResponse());
         return player.getHealth().getResistanceForType(player.getHealth().getLastDamage().getDamageType()).getResponse();
     }
 
@@ -559,6 +558,6 @@ public class Game implements IGame {
 
     @Override
     public boolean[] isNPCHostile() {
-        return player.getCurrentRoom ().getHostileFlags();
+        return player.getCurrentRoom().getHostileFlags();
     }
 }
