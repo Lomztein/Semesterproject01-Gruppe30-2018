@@ -316,7 +316,10 @@ public class FXMLGameController implements Initializable {
                 //Checks whether the room is the same before and after the method being called, to make sure the player isn't moved if the room hasn't changed.
                 String checker = game.getCurrentRoomName();
                 game.enterCommand(directionCommands[i]);
+                System.out.println(directionCommands[i]);
+                System.out.println("I typed go south");
                 String pChecker = game.getCurrentRoomName();
+                System.out.println(game.getCommandResponse());
                 if (!pChecker.equals(checker)) {
                     updateRoom();
                     return;
@@ -381,7 +384,7 @@ public class FXMLGameController implements Initializable {
             txtFieldName.setText("Loser Smurf");
         } else if (50 < game.getCurrentHappiness() && 100 > game.getCurrentHappiness()) {
             txtFieldName.setText("Smurf");
-        } else if (game.getCurrentHappiness() == 100) {
+        } else if (game.getCurrentHappiness() >= 100) {
             txtFieldName.setText("Warrior Smurf");
         }
 
@@ -407,13 +410,21 @@ public class FXMLGameController implements Initializable {
     private void updateNPCList() {
         NPCs.clear();
         
-        String[] npcNames = game.getNPCNames();
+        String[] interactableNames = game.getInteractableNames();
+        String[] NPCnames = game.getNPCNames();
         boolean[] isHostile = game.isNPCHostile();
         
-        for (int i = 0; i < npcNames.length; i++) {
-            NPCs.add(npcNames[i] + (isHostile[i] ? " (hostile)" : ""));
+        for(String interactableName : interactableNames){
+            NPCs.add(interactableName);
+        }
+        for (int i = 0; i < NPCnames.length; i++) {
+            if (isHostile[i]){
+            NPCs.add(NPCnames[i] + " (hostile)");
+        }
+            lvNPC.setItems(NPCs);
         }
     }
+    
 
     //Drops an item from the inventory observable-list, to rhe rooms' list.
     @FXML

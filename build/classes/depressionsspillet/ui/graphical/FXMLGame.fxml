@@ -106,7 +106,7 @@
         <Label focusTraversable="false" layoutX="1029.0" layoutY="303.0" text=" Items:" textFill="RED" />
         <ListView fx:id="lvInventory" focusTraversable="false" layoutX="1012.0" layoutY="132.0" onMouseClicked="#handleInventoryMouseEvent" prefHeight="171.0" prefWidth="170.0" />
         <Label focusTraversable="false" layoutX="1029.0" layoutY="105.0" text=" Inventory:" textFill="#f90000" />
-        <Label focusTraversable="false" layoutX="40.0" layoutY="26.0" prefHeight="37.0" prefWidth="35.0" text=" NPCs:" textFill="RED" />
+        <Label focusTraversable="false" layoutX="17.0" layoutY="44.0" prefHeight="37.0" prefWidth="134.0" text="Interactable/attackable:" textFill="RED" />
         <Label layoutX="35.0" layoutY="350.0" text=" Attacks:" textFill="RED" />
         <Label layoutX="24.0" layoutY="196.0" text=" Interactions:" textFill="RED" />
         <ListView fx:id="lvNPC" focusTraversable="false" layoutX="6.0" layoutY="81.0" onMouseClicked="#handleNPCListViewMouseEvent" prefHeight="115.0" prefWidth="193.0" />
