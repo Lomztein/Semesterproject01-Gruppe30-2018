@@ -27,6 +27,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -342,70 +343,8 @@ public class FXMLGameController implements Initializable {
 
     //Update of items and NPCs to be added here
     private void updateRoom() {
-        switch (game.getCurrentRoomName()) {
-            case "magicForrest":
-                Image image1 = new Image("newImages/magicforrest.jpg");
-                backgroundImageView.setImage(image1);
-                break;
-            case "vendor":
-                Image image2 = new Image("newImages/vendor.jpg");
-                backgroundImageView.setImage(image2);
-                break;
-            case "animals":
-                Image image3 = new Image("newImages/animals.jpg");
-                backgroundImageView.setImage(image3);
-                break;
-            case "thaiHooker":
-                Image image4 = new Image("newImages/thaihooker.jpg");
-                backgroundImageView.setImage(image4);
-                break;
-            case "campfire":
-                Image image5 = new Image("newImages/sleepover.jpg");
-                backgroundImageView.setImage(image5);
-                break;
-            case "fridayBar":
-                Image image6 = new Image("newImages/fridaybar.jpg");
-                backgroundImageView.setImage(image6);
-                break;
-            case "stripClub":
-                Image image7 = new Image("newImages/stripclub.jpg");
-                backgroundImageView.setImage(image7);
-                break;
-            case "kfc":
-                Image image8 = new Image("newImages/kfc.jpg");
-                backgroundImageView.setImage(image8);
-                break;
-            case "shrek":
-                Image image9 = new Image("newImages/shrek.jpg");
-                backgroundImageView.setImage(image9);
-                break;
-            case "allotment":
-                Image image10 = new Image("newImages/allotment.jpg");
-                backgroundImageView.setImage(image10);
-                break;
-            case "movie":
-                Image image11 = new Image("newImages/movie.jpg");
-                backgroundImageView.setImage(image11);
-                break;
-            case "drugs":
-                Image image12 = new Image("newImages/drugs.jpg");
-                backgroundImageView.setImage(image12);
-                break;
-            case "gate":
-                Image image13 = new Image("newImages/gate.jpg");
-                backgroundImageView.setImage(image13);
-                break;
-            case "boss":
-                Image image14 = new Image("newImages/boss.jpg");
-                backgroundImageView.setImage(image14);
-                break;
-            case "suprise":
-                Image image15 = new Image("newImages/suprise.gif");
-                backgroundImageView.setImage(image15);
-                break;
-            default:
-                txtAreaOutput.setText("You cannot go this way. Try another.");
-        }
+        Image image = new Image("newImages/" + game.getCurrentRoomName() + ".jpg");
+        backgroundImageView.setImage(image);
         updateTxtArea();
         updateItemsList();
         updateNPCList();
@@ -472,13 +411,11 @@ public class FXMLGameController implements Initializable {
         String selectedItem = lvItems.getSelectionModel().getSelectedItem();
         game.enterCommand("inventory pickup " + selectedItem);
         txtAreaOutput.setText(game.getCommandResponse());
+
         //Refreshing inventory
+        inventory.clear();
         String[] inventoryStrings = game.getPlayerInventoryNames();
-        for (String string : inventoryStrings) {
-            if (inventory.contains(string) == false) {
-                inventory.add(string);
-            }
-        }
+        inventory.addAll(Arrays.asList(inventoryStrings));
         lvInventory.setItems(inventory);
         updateItemsList();
     }
@@ -515,6 +452,20 @@ public class FXMLGameController implements Initializable {
         inventory.addAll(Arrays.asList(inventoryStrings));
         lvInventory.setItems(inventory);
         updateItemsList();
+    }
+
+    @FXML
+    private void handleItemsMouseEvent(MouseEvent event) {
+        String desc = lvItems.getSelectionModel().getSelectedItem();
+        txtAreaOutput.setText(desc);
+    }
+
+    @FXML
+    private void handleInventoryMouseEvent(MouseEvent event) {
+    }
+
+    @FXML
+    private void handleNPCListViewMouseEvent(MouseEvent event) {
     }
 
 }
