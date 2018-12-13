@@ -131,10 +131,17 @@ public class FXMLGameController implements Initializable {
         Image imageStart = new Image("images/start.jpg");
         backgroundImageView.setImage(imageStart);
 
-        //Setting attacks
-        attacks.add("dab");
-        attacks.add("manifesto");
+        // Set attack list view to observe the attack list.
+        updateAttackList();
         lvAttacks.setItems(attacks);
+
+        // Set NPC list view to observe the NPC list
+        updateNPCList();
+        lvNPC.setItems(NPCs);
+        
+        // Set item list view to observe the item list.
+        updateItemList ();
+        lvItems.setItems (items);
 
         //Starting the game
         game.playGame();
@@ -357,6 +364,7 @@ public class FXMLGameController implements Initializable {
 
     //Update of items and NPCs to be added here
     private void updateRoom() {
+        System.out.println("images/" + game.getCurrentRoomName() + ".jpg"); // Needed to make sure the files and rooms names are syncronized.
         Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
         updateTxtArea();
@@ -371,42 +379,35 @@ public class FXMLGameController implements Initializable {
         txfFieldHappiness.setText("" + game.getCurrentHappiness());
     }
 
-    //Removes all current items, and updates it based on the current room.
-    private void updateItemsList() {
-        items.clear();
-        String[] itemarray = game.getItemNames();
-        if (itemarray.length != 0) {
-
-            for (String string : itemarray) {
-                if (items.contains(string) == false) {
-                    items.add(string);
-                }
-            }
-            lvItems.setItems(items);
-        } else {
-            lvItems.setItems(emptyList);
+    // Resets and updates the list of attacks to reflect any new additions.
+    private void updateAttackList() {
+        attacks.clear();
+        for (String attack : game.getAvailableAttackNames()) {
+            attacks.add(attack);
         }
     }
 
+    //Removes all current items, and updates it based on the current room.
+    private void updateItemList() {
+        items.clear();
+        for (String string : game.getItemNames()) {
+            items.add(string);
+        }
+    }
+    
     //Removes all current NPCs and updates them based on the current room.
+
     private void updateNPCList() {
         NPCs.clear();
-        String[] NPCarray = game.getNPCNames();
-        if (NPCarray.length != 0) {
-            for (String string : NPCarray) {
-                if (NPCs.contains(string) == false) {
-                    NPCs.add(string);
-                }
-            }
-            lvNPC.setItems(NPCs);
-        } else {
-            lvNPC.setItems(emptyList);
+        for (String string : game.getNPCNames()) {
+            NPCs.add(string);
         }
     }
 
     //Drops an item from the inventory observable-list, to rhe rooms' list.
     @FXML
-    private void handleDropButtonEvent(ActionEvent event) {
+    private void handleDropButtonEvent(ActionEvent event
+    ) {
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
         selectedInventoryItemIndex += 1;
         game.enterCommand("inventory drop " + selectedInventoryItemIndex);
@@ -421,7 +422,8 @@ public class FXMLGameController implements Initializable {
 
     //Picks an item up from the selected observable list, and puts it in the player's inventory.
     @FXML
-    private void handlePickUpButtonEvent(ActionEvent event) {
+    private void handlePickUpButtonEvent(ActionEvent event
+    ) {
         String selectedItem = lvItems.getSelectionModel().getSelectedItem();
         game.enterCommand("inventory pickup " + selectedItem);
         txtAreaOutput.setText(game.getCommandResponse());
@@ -436,24 +438,29 @@ public class FXMLGameController implements Initializable {
 
     //Attacks the selected NPC. Currently attacks with NULL, and doesn't really work for shit.
     @FXML
-    private void handleAttackButtonEvent(ActionEvent event) {
+    private void handleAttackButtonEvent(ActionEvent event
+    ) {
         String selectedNPC = lvNPC.getSelectionModel().getSelectedItem();
         String selectedAttack = lvAttacks.getSelectionModel().getSelectedItem();
         game.enterCommand("engage " + selectedNPC);
         game.enterCommand("attack " + selectedAttack);
         txtAreaOutput.setText("You attacked " + selectedNPC + " with a " + selectedAttack + "!\n" + selectedNPC + "now has " + game.getLastAttackedHealth() + " health left!");
         game.enterCommand("disengage");
+
+        updateNPCList();
     }
 
     //
     @FXML
-    private void handleInteractButtonEvent(ActionEvent event) {
+    private void handleInteractButtonEvent(ActionEvent event
+    ) {
         //TODO 
     }
 
     //Calls the use-method on the item selected in the inventorys' observable-list. 
     @FXML
-    private void handleUseButtonEvent(ActionEvent event) {
+    private void handleUseButtonEvent(ActionEvent event
+    ) {
 
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
         selectedInventoryItemIndex += 1;
@@ -469,7 +476,8 @@ public class FXMLGameController implements Initializable {
     }
 
     @FXML
-    private void handleHelpButtonEvent(ActionEvent event) {
+    private void handleHelpButtonEvent(ActionEvent event
+    ) {
         txtAreaOutput.setText("You really are useless aren't you? "
                 + "\nUse W/A/S/D to move about and SPACEBAR to enter into another room. Hold down SHIFT to run. "
                 + "\nUse the buttons on either side of the room to interact with the world. "
@@ -477,17 +485,20 @@ public class FXMLGameController implements Initializable {
     }
 
     @FXML
-    private void handleItemsMouseEvent(MouseEvent event) {
+    private void handleItemsMouseEvent(MouseEvent event
+    ) {
         String desc = lvItems.getSelectionModel().getSelectedItem();
         txtAreaOutput.setText(desc);
     }
 
     @FXML
-    private void handleInventoryMouseEvent(MouseEvent event) {
+    private void handleInventoryMouseEvent(MouseEvent event
+    ) {
     }
 
     @FXML
-    private void handleNPCListViewMouseEvent(MouseEvent event) {
+    private void handleNPCListViewMouseEvent(MouseEvent event
+    ) {
     }
 
 }
