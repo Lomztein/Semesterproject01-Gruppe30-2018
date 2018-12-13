@@ -61,7 +61,7 @@ public class RoomList {
         vendor.setExit("south", stripClub);
         vendor.setExit("east", animals);
         vendor.setExit("west", magicForrest);
-        vendor.setHappiness(0);
+        vendor.setHappiness(5);
 
         NPC Vendorboi = new InteractableNPC("Vendorboi", "The friendly purveyor of various liquid substances, that may or may not be of use", vendor,
                 new Interaction("Bargain", "Restores Health at the cost of Happiness", x -> {
