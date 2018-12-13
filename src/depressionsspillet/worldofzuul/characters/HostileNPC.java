@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul.characters;
 
 import depressionsspillet.worldofzuul.combat.Damagable;
@@ -16,10 +11,6 @@ import depressionsspillet.worldofzuul.combat.Health;
 import depressionsspillet.worldofzuul.observables.Event;
 import java.util.Random;
 
-/**
- *
- * @author Lomztein
- */
 public class HostileNPC extends NPC implements HasHealth, Attacker {
 
     private final Health health;

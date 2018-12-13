@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.ui.graphical;
 
 import depressionsspillet.worldofzuul.Game;
@@ -35,11 +30,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Joachim
- */
 public class FXMLGameController implements Initializable {
 
     //Interface creation

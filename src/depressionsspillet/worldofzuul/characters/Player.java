@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul.characters;
 
 import depressionsspillet.worldofzuul.combat.HasHealth;
@@ -19,9 +14,6 @@ import depressionsspillet.worldofzuul.combat.Health;
 import depressionsspillet.worldofzuul.observables.Observable;
 import java.util.ArrayList;
 
-/**
- * @author Joachim
- */
 public class Player extends Character implements Attacker, HasHealth {
 
     private Damagable engagedWith;
