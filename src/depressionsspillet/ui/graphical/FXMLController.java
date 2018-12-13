@@ -56,7 +56,6 @@ public class FXMLController implements Initializable {
     @FXML
     private void handlePlayButtonActionEvent(ActionEvent event) throws IOException {
         //stop intro music
-        clip.stop();
 
         //New scene
         Parent playParent = FXMLLoader.load(getClass().getResource("FXMLPreGame.fxml"));
