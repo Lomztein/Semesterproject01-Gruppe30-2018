@@ -43,6 +43,7 @@ public interface IGame {
     String getPlayerDescription ();
     
     double getPlayerHealth();
+    boolean isPlayerDead ();
     int getCurrentHappiness();
     
     String[] getPlayerInventoryNames ();

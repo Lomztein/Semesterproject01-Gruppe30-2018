@@ -45,7 +45,7 @@ public class CommandLine {
             //Without this, you wouldn't know which room you were standing in and so on. - This switch-case is supposed to handle all the CLI prints, whereas the switch-case in the game-class handles all the logic within.
             switch (last) {
                 case "GO":
-                    printRoom();
+                    go();
                     break;
 
                 case "HELP":
@@ -64,6 +64,7 @@ public class CommandLine {
                     break;
 
                 case "DISENGAGE":
+                    printRoom(); // Update the "graphics" so that any changes from combat is known to the player.
                     break;
 
                 case "INTERACT":
@@ -89,23 +90,40 @@ public class CommandLine {
             if (game.getCommandResponse() != null) {
                 System.out.println(game.getCommandResponse());
             }
+
+            if (game.isPlayerDead()) {
+                break;
+            }
         }
 
         //The quitting-response.
+        System.out.println ("You have proven yourself unable to beat Erikthulhu, and so he will consume this world.");
+        System.out.println("The depression has beaten you, and now you fall into endless dispair");
         System.out.println("You walk away to cry in the corner. Spilmester Martin will not forget this.");
         System.out.println("Thank you for playing.  Good bye.");
     }
 
-    private void printRoom() {
+    private void go() {
         //Checks the CommandWords array for values.
         if (game.getCommandWords()[0] == null) {
             System.out.println("Go? Go where..?");
             // If this happens, then exit out of this function using a return statement.
-            return;
+
         } else if (game.getPlayerTriedEnteringLockedDoor()) {
             System.out.println(game.getPlayerTriedEnteringLockedDoorResponse());
+        } else {
+            if (game.getCurrentRoomName() == "victory") {
+                System.out.println(game.getCurrentRoomLongDesc());
+                System.out.println("You have defeated the mighty Erikthulhu and bested your depression.");
+                System.out.println("You are victorous. Congratulations with this meaningless achievement.");
+            } else {
+                printRoom(); // 
+            }
         }
 
+    }
+
+    private void printRoom() {
         System.out.println(
                 "-------------------------\n"
                 + game.getCurrentRoomLongDesc());
@@ -142,12 +160,22 @@ public class CommandLine {
         String[] npcNames = game.getNPCNames();
         String[] npcDescriptions = game.getNPCDescriptions();
         if (npcNames.length != 0) {
-            System.out.println("The following NPCs are present: ");
+
+            String npcList = "";
+            int npcCount = 0;
+
             for (int i = 0; i < npcNames.length; i++) {
-                System.out.println(npcNames[i] + " - " + npcDescriptions[i]);
+                if (getInteractableIndex(game.getInteractableNames(), npcNames[i]) == -1) {
+                    npcCount++;
+                    npcList += (npcNames[i] + " - " + npcDescriptions[i]) + "\n";
+                }
             }
-        } else {
-            System.out.println("\nThere are no NPCs to interact with here.\n");
+            if (npcCount == 0) {
+                System.out.println("\nThere are no NPCs to ENGAGE with here.\n");
+            } else {
+                System.out.println("The following NPC to ENGAGE in combat with are here.");
+                System.out.println(npcList);
+            }
         }
         System.out.println("Type HELP for help.\nYou can now go the following directions: \n" + singlify(game.getCurrentExits(), ",  "));
     }
@@ -207,20 +235,24 @@ public class CommandLine {
     }
 
     private void attack() {
-        if (game.getCommandWords()[0] == null) {
+
+        if (game.getEngagedName() == null) {
+            System.out.println("You currently aren't engaged with anything. Please stop assaulting the air.");
+        } else if (game.getCommandWords()[0] == null) {
             System.out.println("You have the option of the following attacks: ");
             String[] names = game.getAvailableAttackNames();
             String[] descriptions = game.getAvailableAttackDescriptions();
             for (int i = 0; i < names.length; i++) {
                 System.out.println(names[i] + " - " + descriptions[i]);
             }
-        } else if (game.getCommandWords()[0] != null) {
+        } else {
             // An attack was performed.
 
             String attacker;
             String reciever;
             String name;
             String description;
+            String response;
             String type;
             double value;
             double remaining;
@@ -231,12 +263,13 @@ public class CommandLine {
                 reciever = game.getEngagedName();
                 name = game.getLastAttackName();
                 description = game.getLastAttackDescription();
+                response = game.getLastAttackResponse();
                 type = game.getLastAttackType();
 
                 value = game.getLastAttackDamage();
                 remaining = game.getLastAttackedHealth();
 
-                displayAttack(attacker, reciever, name, description, type, value, remaining);
+                displayAttack(attacker, reciever, name, description, response, type, value, remaining);
 
             } else {
                 boolean attackExisted = false;
@@ -259,17 +292,18 @@ public class CommandLine {
                 reciever = "The player";
                 name = game.getRetaliationAttackName();
                 description = game.getRetaliationAttackDescription();
+                response = game.getRetaliationAttackResponse();
                 type = game.getRetaliationAttackType();
 
                 value = game.getRetaliationAttackDamage();
                 remaining = game.getPlayerHealth();
 
-                displayAttack(attacker, reciever, name, description, type, value, remaining);
+                displayAttack(attacker, reciever, name, description, response, type, value, remaining);
 
             } else {
                 System.out.print(game.getEngagedName() + " doesn't respond. ");
                 if (game.getLastAttackedHealth() <= 0) {
-                    System.out.println(game.getEngagedName() + " is dead.");
+                    System.out.println(game.getEngagedName() + " is dead. You might want to DISENGAGE.");
                 } else {
                     System.out.println(" You might not be worth its time.");
                 }
@@ -277,8 +311,9 @@ public class CommandLine {
         }
     }
 
-    private void displayAttack(String attacker, String reciever, String name, String description, String type, double value, double remaining) {
-        System.out.println(String.format(attacker + " attacks " + reciever + " with " + description + " doing " + value + " " + type + " damage.", value));
+    private void displayAttack(String attacker, String reciever, String name, String description, String response, String type, double value, double remaining) {
+        System.out.println(String.format(attacker + " attacks " + reciever + " with " + name + ", " + description + " doing " + type + " damage.", value));
+        System.out.println(String.format(reciever + " " + response, value));
         System.out.println(reciever + " has " + remaining + " health left .");
     }
 
@@ -307,17 +342,26 @@ public class CommandLine {
             }
 
         } else if (game.getCommandWords()[1] == null) {
+
             int index = getInteractableIndex(game.getInteractableNames(), game.getCommandWords()[0]);
-            String interactable = game.getInteractableNames()[index];
 
-            String[] names = game.getInteractionNames()[index];
-            String[] descriptions = game.getInteractionDescriptions()[index];
+            if (index != -1) {
 
-            System.out.println("You have the option of the following interactions with " + interactable);
+                String interactable = game.getInteractableNames()[index];
 
-            for (int i = 0; i < names.length; i++) {
-                System.out.println(names[i] + " - " + descriptions[i]);
+                String[] names = game.getInteractionNames()[index];
+                String[] descriptions = game.getInteractionDescriptions()[index];
+
+                System.out.println("You have the option of the following interactions with " + interactable);
+
+                for (int i = 0; i < names.length; i++) {
+                    System.out.println(names[i] + " - " + descriptions[i]);
+                }
+
+            } else { // If the request interactable doesn't exist.
+                System.out.println(game.getCommandWords()[0] + " Either doesn't exist, or you cannot interact with it.");
             }
+
         }
     }
 

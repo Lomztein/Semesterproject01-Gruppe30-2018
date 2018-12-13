@@ -19,10 +19,12 @@ public class Health {
 
     private double currentHealth;
     private double maxHealth;
+    private boolean deadFlag;
 
     private final List<DamageResistance> resistances = new ArrayList<>();
 
     public final Observable<DamagedEvent> onTakeDamage = new Observable();
+    public final Observable<DamagedEvent> onDeath = new Observable();
     public final Observable onHealthChanged = new Observable();
 
     public final List<Damage> damageTaken = new ArrayList<>();
@@ -61,7 +63,7 @@ public class Health {
 
     public void changeHealth(double value) {
         currentHealth += value;
-        onHealthChanged.notifyObservables(new Event (this));
+        onHealthChanged.notifyObservables(new Event(this));
     }
 
     public double getMaxHealth() {
@@ -97,7 +99,12 @@ public class Health {
 
         damageTaken.add(damage);
         changeHealth(-damageValue);
-        onTakeDamage.notifyObservables(new DamagedEvent (this, damage, resistance, damageValue));
+        onTakeDamage.notifyObservables(new DamagedEvent(this, damage, resistance, damageValue));
+
+        if (!deadFlag && isDead()) {
+            onDeath.notifyObservables(new DamagedEvent(this, damage, resistance, damageValue));
+        }
+        deadFlag = isDead();
     }
 
     public Damage getLastDamage() {

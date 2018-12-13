@@ -46,9 +46,9 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
         return availableAttacks[random.nextInt(availableAttacks.length)];
     }
 
-    public void attack(Damagable damagable) {
+    public Damage attack(Damagable damagable) {
         Attack random = getRandomAttack();
-        random.attack(this, damagable);
+        return random.attack(this, damagable);
     }
 
     public void onTakeDamage(Event event) {
@@ -59,6 +59,14 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
             }
         }
 
+    }
+    
+    @Override
+    public String getName () {
+        if (getHealth ().isDead()) {
+            return super.getName () + " (dead)";
+        }
+        return super.getName();
     }
 
     @Override

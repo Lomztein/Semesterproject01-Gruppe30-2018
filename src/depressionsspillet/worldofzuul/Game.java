@@ -1,6 +1,7 @@
 package depressionsspillet.worldofzuul;
 
 import static depressionsspillet.worldofzuul.RoomList.*;
+import depressionsspillet.worldofzuul.characters.HostileNPC;
 import depressionsspillet.worldofzuul.characters.NPC;
 import depressionsspillet.worldofzuul.characters.Player;
 import depressionsspillet.worldofzuul.combat.Attack;
@@ -69,15 +70,19 @@ public class Game implements IGame {
                 case GO:
                     goRoom(command);
                     break;
+                    
                 case ATTACK:
                     attack(command);
                     break;
+                    
                 case ENGAGE:
                     engage(command);
                     break;
+                    
                 case DISENGAGE:
-                    disengage(command);
+                    disengage();
                     break;
+                    
                 case INTERACT:
                     interact(command);
                     break;
@@ -85,9 +90,11 @@ public class Game implements IGame {
                 case INVENTORY:
                     inventory(command);
                     break;
+                    
                 case NO:
                     no(command);
                     break;
+                    
                 default:
                     break;
             }
@@ -110,11 +117,7 @@ public class Game implements IGame {
         triedEnteringLockedRoomResponse = null;
         if (nextRoom != null) {
             if (nextRoom.isLocked()) {
-                if (player.getHappiness() < 99d) {
-                    triedEnteringLockedRoomResponse = "You quiver in fear at the sight of this mighty gate, as you lack the self-comfidence to enter. Return when you are happier.";
-                } else {
-                    player.setCurrentRoom(nextRoom.getRoom());
-                }
+                triedEnteringLockedRoomResponse = nextRoom.getLockedReason();
             } else {
                 player.setCurrentRoom(nextRoom.getRoom());
                 player.addHappiness(player.getCurrentRoom().getHappiness());
@@ -130,7 +133,7 @@ public class Game implements IGame {
             Interactable[] interactables = player.getCurrentRoom().getEntities(Interactable.class);
             Interactable correct = null;
             for (Interactable i : interactables) {
-                if (i.getName().toLowerCase().equals(command.getSecondWord().toLowerCase())) {
+                if (i.getName().toUpperCase().equals(command.getSecondWord().toUpperCase())) {
                     correct = i;
                 }
             }
@@ -147,8 +150,6 @@ public class Game implements IGame {
                         lastCommandResponse = ("You have no idea how to " + command.getThirdWord() + " " + correct.getName());
                     }
 
-                } else {
-                    lastCommandResponse = (command.getSecondWord() + " doesn't exists, therefore you cannot interact with it. If this issue persists, you might need medical assistance.");
                 }
             }
         }
@@ -165,10 +166,19 @@ public class Game implements IGame {
         if (command.hasSecondWord()) {
             Damagable toEngage = player.getCurrentRoom().getEntity(Damagable.class, command.getSecondWord());
             if (toEngage != null) {
+
                 player.engage(toEngage);
                 lastCommandResponse = "You engage " + toEngage.getName() + " with spirit and vigor!";
+
+                if (player.getEngagedAsHasHealth() != null) {
+                    if (player.getEngagedAsHasHealth().getHealth().isDead()) {
+                        disengage();
+                        lastCommandResponse = toEngage.getName() + " is dead. There is no reason to engage it.";
+                    }
+                }
+
             } else {
-                lastCommandResponse = "There is no " + command.hasSecondWord() + " that you can engage.";
+                lastCommandResponse = "There is no " + command.getSecondWord() + " that you can engage.";
             }
         } else {
             // TODO: Reimplement in CommandLine.java <------- 
@@ -177,7 +187,7 @@ public class Game implements IGame {
     }
 
     //Disengages the player with the NPC, if he is engaged.
-    private void disengage(Command command) {
+    private void disengage() {
         if (player.isEngaged()) {
             lastCommandResponse = "You accidentally poop yourself a little before disengaging " + player.getEngaged().getName() + " before running to a safe distance.";
             player.disengage();
@@ -197,13 +207,25 @@ public class Game implements IGame {
                 player.attackEngaged(playerAttack);
                 lastAttackDidHit = true;
 
-                if (player.getEngaged() == player.getHealth().getLastDamage().getAttacker()) {
+                // If the current engaged is the same as the last who did damage, and it isn't dead - Then it retaliated.
+                // This depends on the knowledge that the player is only ever engaged in combat with one entity at a time.
+                // Alternatively, a record of all attacks from different entities and whether or not they were retaliations and to what, would be needed to be kept.
+                if (player.getEngaged() == player.getHealth().getLastDamage().getAttacker() && 
+                        (player.getEngagedAsHasHealth() != null && !player.getEngagedAsHasHealth().getHealth().isDead())) {
+                    
                     lastAttackHadRetaliation = true;
                 }
+                
+                // Disengaging in the middle of a command means breaking the connection between the interface and the engaged item, before the interface has a chance to get the data.
+                // Instead we chose to half-ass it and decided that we can just keep punching dead engageables for all eternity, if we so desired.
+                /*if (player.getEngagedAsHasHealth() != null) {
+                    if (player.getEngagedAsHasHealth ().getHealth().isDead()) {
+                        player.disengage();
+                    }
+                }*/
             } else {
                 lastCommandResponse = ("You don't have the ability to attack using " + command.getSecondWord());
             }
-        } else {
         }
     }
 
@@ -447,7 +469,7 @@ public class Game implements IGame {
     @Override
     public String getEngagedName() {
         if (player.getEngaged() == null) {
-            return "nothing";
+            return null;
         }
         return player.getEngaged().getName();
     }
@@ -536,5 +558,10 @@ public class Game implements IGame {
     @Override
     public String[] getInteractableDescriptions() {
         return player.getCurrentRoom().getEntityDescriptions(Interactable.class);
+    }
+
+    @Override
+    public boolean isPlayerDead() {
+        return player.getHealth().isDead();
     }
 }

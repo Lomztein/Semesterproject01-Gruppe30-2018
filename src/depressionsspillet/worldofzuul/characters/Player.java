@@ -16,6 +16,7 @@ import depressionsspillet.worldofzuul.combat.Damage;
 import depressionsspillet.worldofzuul.combat.DamageResistance;
 import depressionsspillet.worldofzuul.combat.DamageType;
 import depressionsspillet.worldofzuul.combat.Health;
+import depressionsspillet.worldofzuul.observables.Observable;
 import java.util.ArrayList;
 
 /**
@@ -32,7 +33,7 @@ public class Player extends Character implements Attacker, HasHealth {
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
-        playerHealth = new Health(1);
+        playerHealth = new Health(100);
     }
 
     public void generatePlayerResistances() {
@@ -73,6 +74,13 @@ public class Player extends Character implements Attacker, HasHealth {
 
     public String getLastAttackType() {
         return getLastAttack().getDamageType().name();
+    }
+
+    public HasHealth getEngagedAsHasHealth() {
+        if (engagedWith != null && engagedWith instanceof HasHealth) {
+            return (HasHealth) engagedWith;
+        }
+        return null;
     }
 
     public String getLastAttackDamageResponse() {
