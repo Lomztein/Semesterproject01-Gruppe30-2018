@@ -114,6 +114,10 @@ public class CommandLine {
         }
 
     }
+    
+    private void printStatus () {
+        System.out.println ("You now have " +  game.getPlayerHealth() + " health and " + game.getPlayerHealth ());
+    }
 
     private void printRoom() {
         System.out.println(
@@ -122,7 +126,7 @@ public class CommandLine {
 
         //The following is printing the room's items and NPC's to tell the user what they can do.
         //Adds the rooms happiness to yours and sets the room happiness to 0.
-        System.out.println("You feel your happiness rising to: " + game.getCurrentHappiness()+ "\n");
+        printStatus ();
 
         //Printing items from array
         String[] itemNames = game.getItemNames();
@@ -321,6 +325,10 @@ public class CommandLine {
                 System.out.println(i + " - " + names[i] + " - " + descriptions[i]);
             }
         }*/
+        
+        if (game.getCommandWords()[1] != null && game.getCommandWords()[1].toUpperCase().equals("USE")) {
+            printStatus ();
+        }
     }
 
     private void interact() {
@@ -357,6 +365,8 @@ public class CommandLine {
             }
 
         }
+        
+        printStatus ();
     }
 
     private int getInteractableIndex(String[] interactables, String interactable) {

@@ -128,7 +128,7 @@
             </children>
         </AnchorPane>
           <Button focusTraversable="false" layoutX="1107.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleQuitButtonEvent" text="Quit" />
-          <Button focusTraversable="false" layoutX="1150.0" layoutY="90.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="51.0" text="Help" />
+          <Button focusTraversable="false" layoutX="1150.0" layoutY="90.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="51.0" onAction="#handleHelpButtonEvent" text="Help" />
       <Button fx:id="secretButton" focusTraversable="false" layoutX="1174.0" layoutY="674.0" mnemonicParsing="false" onAction="#handleSecretButton" opacity="0.0" prefHeight="25.0" prefWidth="23.0" text="DIE INFIDEL" />
     </children>
 </AnchorPane>

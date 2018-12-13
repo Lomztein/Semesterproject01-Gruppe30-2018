@@ -74,7 +74,7 @@ public class RoomList {
                 new Attack(DamageType.BLUNT, 1, "Headbutt", "a vicious headbutt, however it is in fact more adorable than scary.")
         );
         direwolf.getHealth().onDeath.add(x -> {
-            ((Player) x.getDamage().getAttacker()).addAttack(new Attack(DamageType.SLASH, 25, "golden-sowrd", "a blood-covered golden sword found in the abdominal cavity of a wolf."));
+            ((Player) x.getDamage().getAttacker()).addAttack(new Attack(DamageType.SLASH, 25, "golden-sword", "a blood-covered golden sword found in the abdominal cavity of a wolf."));
         });
 
         animals.addEntityToRoom(direwolf);

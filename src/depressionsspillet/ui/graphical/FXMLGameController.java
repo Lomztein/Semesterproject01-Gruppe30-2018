@@ -563,6 +563,7 @@ public class FXMLGameController implements Initializable {
         updateInformation();
     }
 
+    @FXML
     private void handleHelpButtonEvent(ActionEvent event) {
         txtAreaOutput.setText("You really are useless aren't you? "
                 + "\nUse W/A/S/D to move about and SPACEBAR to enter into another room. Hold down SHIFT to run. "
