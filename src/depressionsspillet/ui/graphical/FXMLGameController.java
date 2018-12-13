@@ -108,7 +108,7 @@ public class FXMLGameController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Image img = new Image("images/redAppleImage.jpg");
+        Image img = new Image("images/character.png");
         snotface.setFill(new ImagePattern(img));
 
         //Gets the boundaries of the background image to determine how far X and Y the player can move.
