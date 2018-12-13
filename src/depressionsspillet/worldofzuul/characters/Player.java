@@ -33,7 +33,7 @@ public class Player extends Character implements Attacker, HasHealth {
 
     public Player(String name, String description, Room startingRoom) {
         super(name, description, startingRoom);
-        playerHealth = new Health(100);
+        playerHealth = new Health(69);
     }
 
     public void generatePlayerResistances() {

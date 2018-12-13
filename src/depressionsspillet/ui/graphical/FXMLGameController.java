@@ -59,7 +59,7 @@ public class FXMLGameController implements Initializable {
     @FXML
     private TextArea txtAreaOutput;
     @FXML
-    private Text txfFieldHappiness;
+    private Text txtFieldHappiness;
     @FXML
     private ListView<String> lvNPC;
     @FXML
@@ -139,6 +139,7 @@ public class FXMLGameController implements Initializable {
         //Setting attacks
         attacks.add("dab");
         attacks.add("manifesto");
+        attacks.add("punch");
         lvAttacks.setItems(attacks);
 
         //Starting the game
@@ -373,7 +374,7 @@ public class FXMLGameController implements Initializable {
     //Updates the text-area to have the current output printed.
     private void updateTxtArea() {
         txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
-        txfFieldHappiness.setText("" + game.getCurrentHappiness());
+        txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
         if(game.getCurrentHappiness() < 50 ){
             txtFieldName.setText("Taber Smølf");
@@ -465,7 +466,9 @@ public class FXMLGameController implements Initializable {
     //
     @FXML
     private void handleInteractButtonEvent(ActionEvent event) {
-        //TODO 
+        game.enterCommand("interact " + lvNPC.getSelectionModel().getSelectedItem() + " " + lvInteractions.getSelectionModel().getSelectedItem());
+        txtFieldHappiness.setText("" + game.getCurrentHappiness());
+        txtAreaOutput.setText(game.getCommandResponse());
     }
 
     //Calls the use-method on the item selected in the inventorys' observable-list. 
@@ -498,5 +501,20 @@ public class FXMLGameController implements Initializable {
         txtAreaOutput.setText(desc);
     }
 
-   
+    @FXML
+    private void handleInventoryMouseEvent(MouseEvent event) {
+    }
+
+    @FXML
+    private void handleNPCListViewMouseEvent(MouseEvent event) {
+        interactions.clear();
+        String[][] interactionNames = game.getInteractionNames();
+        for (String[] interactionName : interactionNames){
+            for (String name : interactionName){
+                interactions.add(name);
+            }
+        }
+        lvInteractions.setItems(interactions);
+    }
+
 }

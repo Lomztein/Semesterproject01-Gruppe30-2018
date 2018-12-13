@@ -73,7 +73,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                      <Text fx:id="txfFieldHappiness" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" textAlignment="CENTER" wrappingWidth="57.99998554587364">
+                      <Text fx:id="txtFieldHappiness" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" textAlignment="CENTER" wrappingWidth="57.99998554587364">
                           <font>
                               <Font size="19.0" />
                           </font>
