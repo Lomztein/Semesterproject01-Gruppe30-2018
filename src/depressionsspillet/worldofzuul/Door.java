@@ -1,9 +1,5 @@
 package depressionsspillet.worldofzuul;
 
-/**
- *
- * @author emiliekarlsson
- */
 public class Door {
     
     private boolean locked;

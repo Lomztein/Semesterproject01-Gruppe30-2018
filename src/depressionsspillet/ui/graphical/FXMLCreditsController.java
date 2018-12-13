@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.ui.graphical;
 
 import java.net.URL;
@@ -18,11 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Joachim
- */
 public class FXMLCreditsController implements Initializable {
     @FXML
     private GridPane gridPaneCredits;

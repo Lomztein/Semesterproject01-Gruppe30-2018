@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul.combat;
 
 import depressionsspillet.worldofzuul.Named;
 
-/**
- *
- * @author Lomztein
- */
 public class Attack {
     
     public static Attack NULL_ATTACK = new Attack (DamageType.ANY, 0, "null", "null");

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.ui.graphical;
 
 import depressionsspillet.worldofzuul.Game;
@@ -35,11 +30,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Joachim
- */
 public class FXMLGameController implements Initializable {
 
     //Interface creation
@@ -139,8 +129,17 @@ public class FXMLGameController implements Initializable {
 
         //Setting attacks
         attacks.add("dab");
+        attacks.add("manifesto");
         attacks.add("punch");
         lvAttacks.setItems(attacks);
+
+        // Set NPC list view to observe the NPC list
+        updateNPCList();
+        lvNPC.setItems(NPCs);
+
+        // Set item list view to observe the item list.
+        updateItemList();
+        lvItems.setItems(items);
 
         //Starting the game
         game.playGame();
@@ -305,6 +304,7 @@ public class FXMLGameController implements Initializable {
 
         //The for-loop determines if we are close enough to a gate to move through it. If we are, call the respective command.
         for (int i = 0; i < 4; i++) {
+
             double differenceX = Math.abs(getPlayerX() - directionObjects[i].getLayoutX());
             double differenceY = Math.abs(getPlayerY() - directionObjects[i].getLayoutY());
 
@@ -317,7 +317,7 @@ public class FXMLGameController implements Initializable {
                 String checker = game.getCurrentRoomName();
                 game.enterCommand(directionCommands[i]);
                 String pChecker = game.getCurrentRoomName();
-                if (pChecker != checker) {
+                if (!pChecker.equals(checker)) {
                     updateRoom();
                     return;
                 }
@@ -362,10 +362,11 @@ public class FXMLGameController implements Initializable {
     }
     
     private void updateRoom() {
+        System.out.println("images/" + game.getCurrentRoomName() + ".jpg"); // Needed to make sure the files and rooms names are syncronized.
         Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
         updateTxtArea();
-        updateItemsList();
+        updateItemList();
         updateNPCList();
         updatePlayerLocation();
         lvInteractions.setItems(emptyList);
@@ -376,55 +377,49 @@ public class FXMLGameController implements Initializable {
         txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
-        if(game.getCurrentHappiness() < 50 ){
+        if (game.getCurrentHappiness() < 50) {
             txtFieldName.setText("Taber Smølf");
-        }
-        else if(50 < game.getCurrentHappiness() && 100>game.getCurrentHappiness()){
+        } else if (50 < game.getCurrentHappiness() && 100 > game.getCurrentHappiness()) {
             txtFieldName.setText("Smølf");
         }
-        else if(game.getCurrentHappiness() >=100){
+        else if(game.getCurrentHappiness() == 100){
             txtFieldName.setText("Warrior Smølf");
         }
-            
-        
+
+    }
+
+    // Resets and updates the list of attacks to reflect any new additions.
+    private void updateAttackList() {
+        attacks.clear();
+        for (String attack : game.getAvailableAttackNames()) {
+            attacks.add(attack);
+        }
     }
 
     //Removes all current items, and updates it based on the current room.
-    private void updateItemsList() {
+    private void updateItemList() {
         items.clear();
-        String[] itemarray = game.getItemNames();
-        if (itemarray.length != 0) {
-
-            for (String string : itemarray) {
-                if (items.contains(string) == false) {
-                    items.add(string);
-                }
-            }
-            lvItems.setItems(items);
-        } else {
-            lvItems.setItems(emptyList);
+        for (String string : game.getItemNames()) {
+            items.add(string);
         }
     }
 
     //Removes all current NPCs and updates them based on the current room.
     private void updateNPCList() {
         NPCs.clear();
-        String[] NPCarray = game.getNPCNames();
-        if (NPCarray.length != 0) {
-            for (String string : NPCarray) {
-                if (NPCs.contains(string) == false) {
-                    NPCs.add(string);
-                }
-            }
-            lvNPC.setItems(NPCs);
-        } else {
-            lvNPC.setItems(emptyList);
+        
+        String[] npcNames = game.getNPCNames();
+        boolean[] isHostile = game.isNPCHostile();
+        
+        for (int i = 0; i < npcNames.length; i++) {
+            NPCs.add(npcNames[i] + (isHostile[i] ? " (hostile)" : ""));
         }
     }
 
     //Drops an item from the inventory observable-list, to rhe rooms' list.
     @FXML
-    private void handleDropButtonEvent(ActionEvent event) {
+    private void handleDropButtonEvent(ActionEvent event
+    ) {
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
         selectedInventoryItemIndex += 1;
         game.enterCommand("inventory drop " + selectedInventoryItemIndex);
@@ -434,12 +429,13 @@ public class FXMLGameController implements Initializable {
         String[] inventoryStrings = game.getPlayerInventoryNames();
         inventory.addAll(Arrays.asList(inventoryStrings));
         lvInventory.setItems(inventory);
-        updateItemsList();
+        updateItemList();
     }
 
     //Picks an item up from the selected observable list, and puts it in the player's inventory.
     @FXML
-    private void handlePickUpButtonEvent(ActionEvent event) {
+    private void handlePickUpButtonEvent(ActionEvent event
+    ) {
         String selectedItem = lvItems.getSelectionModel().getSelectedItem();
         game.enterCommand("inventory pickup " + selectedItem);
         txtAreaOutput.setText(game.getCommandResponse());
@@ -449,18 +445,59 @@ public class FXMLGameController implements Initializable {
         String[] inventoryStrings = game.getPlayerInventoryNames();
         inventory.addAll(Arrays.asList(inventoryStrings));
         lvInventory.setItems(inventory);
-        updateItemsList();
+        updateItemList();
     }
 
     //Attacks the selected NPC. Currently attacks with NULL, and doesn't really work for shit.
     @FXML
-    private void handleAttackButtonEvent(ActionEvent event) {
+    private void handleAttackButtonEvent(ActionEvent event
+    ) {
         String selectedNPC = lvNPC.getSelectionModel().getSelectedItem();
         String selectedAttack = lvAttacks.getSelectionModel().getSelectedItem();
         game.enterCommand("engage " + selectedNPC);
-        game.enterCommand("attack " + selectedAttack);
-        txtAreaOutput.setText("You attacked " + selectedNPC + " with a " + selectedAttack + "!\n" + selectedNPC + "now has " + game.getLastAttackedHealth() + " health left!");
+
+        if (game.getEngagedName() != null) {
+
+            game.enterCommand("attack " + selectedAttack);
+
+            String attackString = getAttackString(
+                    game.getPlayerName(),
+                    game.getEngagedName(),
+                    game.getLastAttackName(),
+                    game.getLastAttackDescription(),
+                    game.getLastAttackResponse(),
+                    game.getLastAttackType(),
+                    game.getLastAttackDamage(),
+                    game.getLastAttackedHealth()
+            );
+
+            String retaliationString = getAttackString(
+                    game.getEngagedName(),
+                    game.getPlayerName(),
+                    game.getRetaliationAttackName(),
+                    game.getRetaliationAttackDescription(),
+                    game.getRetaliationAttackResponse(),
+                    game.getRetaliationAttackType(),
+                    game.getRetaliationAttackDamage(),
+                    game.getPlayerHealth()
+            );
+
+            txtAreaOutput.setText(attackString + retaliationString);
+        }else {
+            txtAreaOutput.setText ("You lash out against the air, it takes great offense.");
+        }
+
         game.enterCommand("disengage");
+
+        updateNPCList();
+    }
+
+    private String getAttackString(String attacker, String reciever, String name, String description, String response, String type, double value, double remaining) {
+        String result = "";
+        result += (String.format(attacker + " attacks " + reciever + " with " + name + ", " + description + " doing " + type + " damage.", value)) + "\n";
+        result += (String.format(reciever + " " + response, value)) + "\n";
+        result += (reciever + " has " + remaining + " health left .") + "\n";
+        return result;
     }
 
     //
@@ -474,7 +511,8 @@ public class FXMLGameController implements Initializable {
 
     //Calls the use-method on the item selected in the inventorys' observable-list. 
     @FXML
-    private void handleUseButtonEvent(ActionEvent event) {
+    private void handleUseButtonEvent(ActionEvent event
+    ) {
 
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
         selectedInventoryItemIndex += 1;
@@ -486,7 +524,7 @@ public class FXMLGameController implements Initializable {
         String[] inventoryStrings = game.getPlayerInventoryNames();
         inventory.addAll(Arrays.asList(inventoryStrings));
         lvInventory.setItems(inventory);
-        updateItemsList();
+        updateItemList();
     }
 
     private void handleHelpButtonEvent(ActionEvent event) {
@@ -497,13 +535,15 @@ public class FXMLGameController implements Initializable {
     }
 
     @FXML
-    private void handleItemsMouseEvent(MouseEvent event) {
+    private void handleItemsMouseEvent(MouseEvent event
+    ) {
         String desc = lvItems.getSelectionModel().getSelectedItem();
         txtAreaOutput.setText(desc);
     }
 
     @FXML
-    private void handleInventoryMouseEvent(MouseEvent event) {
+    private void handleInventoryMouseEvent(MouseEvent event
+    ) {
     }
 
     @FXML

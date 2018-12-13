@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul;
 
-/**
- *
- * @author Lomztein
- */
 public interface IGame {
     //To start the game we need the rooms created
     void playGame();
@@ -34,6 +25,7 @@ public interface IGame {
     String[] getItemDescriptions();
     String[] getNPCNames();
     String[] getNPCDescriptions();
+    boolean[] isNPCHostile ();
 
     int getRoomHappiness();
     // ROOM STUFFINGS END

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.ui.graphical;
 
 import java.io.IOException;
@@ -19,11 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Joachim
- */
 public class FXMLPreGameController implements Initializable {
     @FXML
     private ToggleGroup whatever;

@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul.characters;
 
 import depressionsspillet.worldofzuul.interaction.Interactable;
 import depressionsspillet.worldofzuul.Room;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 
-/**
- * @author Joachim
- */
 public class InteractableNPC extends NPC implements Interactable {
     
     private Interaction[] interactions;
@@ -29,6 +21,11 @@ public class InteractableNPC extends NPC implements Interactable {
     @Override
     public String toString () {
         return this.getName ();
+    }
+
+    @Override
+    public boolean isHostile() {
+        return false;
     }
 
 }
