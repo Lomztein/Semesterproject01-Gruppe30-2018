@@ -412,10 +412,10 @@ public class FXMLGameController implements Initializable {
     //Removes all current NPCs and updates them based on the current room.
     private void updateNPCList() {
         NPCs.clear();
-        
+
         String[] npcNames = game.getNPCNames();
         boolean[] isHostile = game.isNPCHostile();
-        
+
         for (int i = 0; i < npcNames.length; i++) {
             NPCs.add(npcNames[i] + (isHostile[i] ? " (hostile)" : ""));
         }
@@ -465,31 +465,46 @@ public class FXMLGameController implements Initializable {
 
             game.enterCommand("attack " + selectedAttack);
 
-            String attackString = getAttackString(
-                    game.getPlayerName(),
-                    game.getEngagedName(),
-                    game.getLastAttackName(),
-                    game.getLastAttackDescription(),
-                    game.getLastAttackResponse(),
-                    game.getLastAttackType(),
-                    game.getLastAttackDamage(),
-                    game.getLastAttackedHealth()
-            );
+            String attackString = "Your attack failed. Just like you did.\n";
+            String retaliationString = game.getEngagedName() + " just takes it.";
 
-            String retaliationString = getAttackString(
-                    game.getEngagedName(),
-                    game.getPlayerName(),
-                    game.getRetaliationAttackName(),
-                    game.getRetaliationAttackDescription(),
-                    game.getRetaliationAttackResponse(),
-                    game.getRetaliationAttackType(),
-                    game.getRetaliationAttackDamage(),
-                    game.getPlayerHealth()
-            );
+            if (game.getLastAttackDidHit()) {
+                attackString = getAttackString(
+                        game.getPlayerName(),
+                        game.getEngagedName(),
+                        game.getLastAttackName(),
+                        game.getLastAttackDescription(),
+                        game.getLastAttackResponse(),
+                        game.getLastAttackType(),
+                        game.getLastAttackDamage(),
+                        game.getLastAttackedHealth()
+                );
+            }
+
+            if (game.getLastAttackHadRetaliation()) {
+                retaliationString = getAttackString(
+                        game.getEngagedName(),
+                        game.getPlayerName(),
+                        game.getRetaliationAttackName(),
+                        game.getRetaliationAttackDescription(),
+                        game.getRetaliationAttackResponse(),
+                        game.getRetaliationAttackType(),
+                        game.getRetaliationAttackDamage(),
+                        game.getPlayerHealth()
+                );
+            }else if (game.getLastAttackedHealth() <= 0) {
+                retaliationString += " " + game.getEngagedName () + " is dead. You're a murderer now.";
+            }
 
             txtAreaOutput.setText(attackString + retaliationString);
-        }else {
-            txtAreaOutput.setText ("You lash out against the air, it takes great offense.");
+        } else {
+            
+            if (selectedAttack.toUpperCase().equals("DAB")) {
+                txtAreaOutput.setText("You dab fruitlessly at nothing, as faint YEETing flows through the forest trees.");
+            }else {
+                txtAreaOutput.setText("You attack the air with " + selectedAttack + ". It takes great offence, but nothing otherwise happens.");
+            }
+            
         }
 
         game.enterCommand("disengage");
@@ -555,8 +570,8 @@ public class FXMLGameController implements Initializable {
     private void handleNPCListViewMouseEvent(MouseEvent event) {
         interactions.clear();
         String[][] interactionNames = game.getInteractionNames();
-        for (String[] interactionName : interactionNames){
-            for (String name : interactionName){
+        for (String[] interactionName : interactionNames) {
+            for (String name : interactionName) {
                 interactions.add(name);
             }
         }
