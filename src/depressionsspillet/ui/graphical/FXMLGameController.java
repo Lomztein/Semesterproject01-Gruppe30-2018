@@ -29,6 +29,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -107,7 +108,10 @@ public class FXMLGameController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Image img = new Image("images/redAppleImage.jpg");
+        snotface.setFill(new ImagePattern(img));
 
+        //Gets the boundaries of the background image to determine how far X and Y the player can move.
         W = backgroundImageView.getFitWidth();
         H = backgroundImageView.getFitHeight();
 
@@ -297,10 +301,18 @@ public class FXMLGameController implements Initializable {
             double differenceY = Math.abs(getPlayerY() - directionObjects[i].getLayoutY());
 
             System.out.println(differenceX + " " + differenceY);
-
+            
+            //Determines whether the player is close enough to a 'door' to move through it
             if (differenceX <= 45 && differenceY <= 45) {
+                
+                //Checks whether the room is the same before and after the method being called, to make sure the player isn't moved if the room hasn't changed.
+                String checker = game.getCurrentRoomName();
                 game.enterCommand(directionCommands[i]);
-                updateRoom();
+                String pChecker = game.getCurrentRoomName();
+                if (pChecker != checker) {
+                    updateRoom();
+                    return;
+                }
                 return;
             }
         }
