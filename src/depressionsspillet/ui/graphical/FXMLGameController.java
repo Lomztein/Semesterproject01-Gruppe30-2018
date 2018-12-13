@@ -93,6 +93,10 @@ public class FXMLGameController implements Initializable {
     private static double W = 800, H = 600;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
+    @FXML
+    private Button secretButton;
+    @FXML
+    private ImageView secretIV;
 
     /**
      * Initializes the controller class.
@@ -322,6 +326,7 @@ public class FXMLGameController implements Initializable {
                     if (!prev.equals(post)) {
                         updateRoom();
                         updateInformation();
+                        return;
                     }
                 }
             }
@@ -362,6 +367,7 @@ public class FXMLGameController implements Initializable {
         window.show();
     }
 
+    //Updates player location, resets the background image, and sets it to the one belonging to the room you are in
     private void updateRoom() {
         updatePlayerLocation();
         Image image = null;
@@ -375,6 +381,7 @@ public class FXMLGameController implements Initializable {
         txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
     }
 
+    //Updates all the on-screen information
     private void updateInformation() {
         updateItemList();
         updateNPCList();
@@ -382,6 +389,7 @@ public class FXMLGameController implements Initializable {
         updateAttackList();
     }
 
+    //Updates the statistics belonging to the player, and also his name, based on his happiness
     private void updatePlayerStats() {
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
@@ -529,7 +537,7 @@ public class FXMLGameController implements Initializable {
         return result;
     }
 
-    //
+    //Handles the interact-button based on what you have selected in the interactable-observablelist
     @FXML
     private void handleInteractButtonEvent(ActionEvent event) {
         game.enterCommand("interact " + lvNPC.getSelectionModel().getSelectedItem() + " " + lvInteractions.getSelectionModel().getSelectedItem());
@@ -578,6 +586,7 @@ public class FXMLGameController implements Initializable {
         updateInteractions();
     }
 
+    //Handles what is shown in the observable list based on which character or interactable you have selected
     private void updateInteractions() {
         interactions.clear();
         int interactableIndex = getInteractableIndex(game.getInteractableNames(), lvNPC.getSelectionModel().getSelectedItem());
@@ -590,6 +599,7 @@ public class FXMLGameController implements Initializable {
         }
     }
 
+    //Gets the index of the array in which the interactions are placed.
     private int getInteractableIndex(String[] interactables, String interactable) {
         String[] names = game.getInteractableNames();
         for (int i = 0; i < names.length; i++) {
@@ -599,6 +609,24 @@ public class FXMLGameController implements Initializable {
             }
         }
         return -1;
+    }
+
+    //You're a nosy little bastard, huh? I'm not telling you what it does.
+    @FXML
+    private void handleSecretButton(ActionEvent event) {
+        secretAction();
+    }
+
+    //The secret button of secrets. Hit me if you dare.
+    private void secretAction() {
+
+        game.enterCommand("no me");
+        Image secretGIF = new Image("images/character.gif");
+        secretIV.setImage(secretGIF);
+        secretIV.relocate(getPlayerX() - (secretIV.getLayoutBounds().getWidth() / 2), getPlayerY() - (secretIV.getLayoutBounds().getHeight() / 2));
+        snotface.opacityProperty().setValue(0);
+        txtAreaOutput.setText(game.getCommandResponse());
+
     }
 
 }
