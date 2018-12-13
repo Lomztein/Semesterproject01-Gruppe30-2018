@@ -545,6 +545,7 @@ public class FXMLGameController implements Initializable {
     ) {
     }
 
+    //Prinitng interactions for chosen NPC in listview
     @FXML
     private void handleNPCListViewMouseEvent(MouseEvent event) {
         interactions.clear();
