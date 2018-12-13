@@ -84,6 +84,8 @@ public class FXMLGameController implements Initializable {
     private Button interactButton;
     @FXML
     private Text txtFieldHealth;
+     @FXML
+    private Text txtFieldName;
 
     //Attributes
     boolean running, goNorth, goSouth, goEast, goWest;
@@ -91,8 +93,8 @@ public class FXMLGameController implements Initializable {
     private static double W = 800, H = 600;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
-    @FXML
-    private Text txtFieldName;
+   
+ 
 
     /**
      * Initializes the controller class.
@@ -125,8 +127,10 @@ public class FXMLGameController implements Initializable {
         Image imageStart = new Image("images/start.jpg");
         backgroundImageView.setImage(imageStart);
 
-        // Set attack list view to observe the attack list.
-        updateAttackList();
+        //Setting attacks
+        attacks.add("dab");
+        attacks.add("manifesto");
+        attacks.add("punch");
         lvAttacks.setItems(attacks);
 
         // Set NPC list view to observe the NPC list
@@ -353,12 +357,13 @@ public class FXMLGameController implements Initializable {
         window.setScene(quitScene);
         window.show();
     }
-
-    //Update of items and NPCs to be added here
+    
     private void updateRoom() {
         System.out.println("images/" + game.getCurrentRoomName() + ".jpg"); // Needed to make sure the files and rooms names are syncronized.
         Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
+        
+        interactions.clear();
         updateTxtArea();
         updateItemList();
         updateNPCList();
@@ -372,11 +377,11 @@ public class FXMLGameController implements Initializable {
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
         if (game.getCurrentHappiness() < 50) {
-            txtFieldName.setText("Taber Smølf");
+            txtFieldName.setText("Loser Smurf");
         } else if (50 < game.getCurrentHappiness() && 100 > game.getCurrentHappiness()) {
-            txtFieldName.setText("Smølf");
+            txtFieldName.setText("Smurf");
         } else if (game.getCurrentHappiness() == 100) {
-            txtFieldName.setText("Warrior Smølf");
+            txtFieldName.setText("Warrior Smurf");
         }
 
     }
@@ -520,9 +525,7 @@ public class FXMLGameController implements Initializable {
 
     //Calls the use-method on the item selected in the inventorys' observable-list. 
     @FXML
-    private void handleUseButtonEvent(ActionEvent event
-    ) {
-
+    private void handleUseButtonEvent(ActionEvent event) {
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
         selectedInventoryItemIndex += 1;
         game.enterCommand("inventory use " + selectedInventoryItemIndex);
@@ -544,17 +547,16 @@ public class FXMLGameController implements Initializable {
     }
 
     @FXML
-    private void handleItemsMouseEvent(MouseEvent event
-    ) {
+    private void handleItemsMouseEvent(MouseEvent event) {
         String desc = lvItems.getSelectionModel().getSelectedItem();
         txtAreaOutput.setText(desc);
     }
 
     @FXML
-    private void handleInventoryMouseEvent(MouseEvent event
-    ) {
+    private void handleInventoryMouseEvent(MouseEvent event) {
     }
 
+    //Prinitng interactions for chosen NPC in listview
     @FXML
     private void handleNPCListViewMouseEvent(MouseEvent event) {
 
@@ -562,14 +564,10 @@ public class FXMLGameController implements Initializable {
 
     private void updateInteractions() {
         interactions.clear();
-
-        String[] interactables = game.getInteractableNames();
-        String[][] interactionNames = game.getInteractionNames();
-
-        for (int i = 0; i < interactables.length; i++) {
-            for (int j = 0; j < interactionNames[i].length; j++) {
-                interactions.add(interactables[i] + " " + interactionNames[i][j]);
-            }
+        int interactableIndex = lvNPC.getSelectionModel().getSelectedIndex();
+        String[][] npcInteractions = game.getInteractionNames();
+        for (String interaction : npcInteractions[interactableIndex]){
+                interactions.add(interaction);
         }
 
         lvInteractions.setItems(interactions);

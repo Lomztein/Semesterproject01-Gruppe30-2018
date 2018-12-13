@@ -61,6 +61,9 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void handleCreditsButtonActionEvent(ActionEvent event) throws Exception {
+        //Stop musik
+        clip.stop();
+
         //New scene
         Parent creditsParent = FXMLLoader.load(getClass().getResource("FXMLCredits.fxml"));
         Scene creditsScene = new Scene(creditsParent);
