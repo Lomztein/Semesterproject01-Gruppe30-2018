@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package depressionsspillet.worldofzuul;
 
 import depressionsspillet.worldofzuul.characters.HostileNPC;
@@ -17,10 +12,6 @@ import depressionsspillet.worldofzuul.interaction.InteractableObject;
 import depressionsspillet.worldofzuul.interaction.Interaction;
 import depressionsspillet.worldofzuul.observables.Observer;
 
-/**
- *
- * @author Ryge
- */
 public class RoomList {
 
     //This class was made to combat the amount of bloat in the game-class. 
