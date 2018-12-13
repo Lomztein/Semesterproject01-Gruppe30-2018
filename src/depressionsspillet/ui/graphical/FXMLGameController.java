@@ -403,22 +403,26 @@ public class FXMLGameController implements Initializable {
     }
 
     //Removes all current NPCs and updates them based on the current room.
+    
     private void updateNPCList() {
         NPCs.clear();
-        
         String[] npcNames = game.getNPCNames();
+        String[] interactableNames = game.getInteractableNames();
+        
         boolean[] isHostile = game.isNPCHostile();
         
-        for (int i = 0; i < npcNames.length; i++) {
-            NPCs.add(npcNames[i] + (isHostile[i] ? " (hostile)" : ""));
+        for (int i = 0; i < interactableNames.length; i++) {
+            NPCs.add(interactableNames[i]);
         }
-        for (int i = 0; i < NPCnames.length; i++) {
-            if (isHostile[i]){
-            NPCs.add(NPCnames[i] + " (hostile)");
+        for (int j = 0; j < npcNames.length; j++){
+            if(isHostile[j]){
+                NPCs.add(npcNames[j]);
+            }
         }
             lvNPC.setItems(NPCs);
         }
-    }
+    
+    
     
 
     //Drops an item from the inventory observable-list, to rhe rooms' list.
