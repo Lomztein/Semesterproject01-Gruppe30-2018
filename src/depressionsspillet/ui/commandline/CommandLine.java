@@ -112,7 +112,7 @@ public class CommandLine {
         } else if (game.getPlayerTriedEnteringLockedDoor()) {
             System.out.println(game.getPlayerTriedEnteringLockedDoorResponse());
         } else {
-            if (game.getCurrentRoomName() == "victory") {
+            if (game.getCurrentRoomName() == "suprise") {
                 System.out.println(game.getCurrentRoomLongDesc());
                 System.out.println("You have defeated the mighty Erikthulhu and bested your depression.");
                 System.out.println("You are victorous. Congratulations with this meaningless achievement.");

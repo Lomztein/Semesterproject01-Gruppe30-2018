@@ -111,8 +111,10 @@ public class FXMLGameController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Image img = new Image("images/redAppleImage.jpg");
-        snotface.setFill(new ImagePattern(img));
+
+        //Sets the character-image
+        Image charImg = new Image("images/character.png");
+        snotface.setFill(new ImagePattern(charImg));
 
         //Gets the boundaries of the background image to determine how far X and Y the player can move.
         W = backgroundImageView.getFitWidth();
@@ -152,23 +154,23 @@ public class FXMLGameController implements Initializable {
                 int dx = 0, dy = 0;
                 if (goNorth) {
                     System.out.println("up");
-                    dy -= 1;
+                    dy -= 2;
                 }
                 if (goSouth) {
                     System.out.println("down");
-                    dy += 1;
+                    dy += 2;
                 }
                 if (goEast) {
                     System.out.println("right");
-                    dx += 1;
+                    dx += 2;
                 }
                 if (goWest) {
                     System.out.println("left");
-                    dx -= 1;
+                    dx -= 2;
                 }
                 if (running) {
-                    dx *= 3;
-                    dy *= 3;
+                    dx *= 2;
+                    dy *= 2;
                 }
                 //We call the movePlayerBy-method every frame
                 movePlayerBy(dx, dy);
@@ -304,10 +306,10 @@ public class FXMLGameController implements Initializable {
             double differenceY = Math.abs(getPlayerY() - directionObjects[i].getLayoutY());
 
             System.out.println(differenceX + " " + differenceY);
-            
+
             //Determines whether the player is close enough to a 'door' to move through it
             if (differenceX <= 45 && differenceY <= 45) {
-                
+
                 //Checks whether the room is the same before and after the method being called, to make sure the player isn't moved if the room hasn't changed.
                 String checker = game.getCurrentRoomName();
                 game.enterCommand(directionCommands[i]);
@@ -331,11 +333,11 @@ public class FXMLGameController implements Initializable {
             System.out.println("south");
         }
         if (lastWords[0].equals("north")) {
-            movePlayer(getPlayerX(), H - 20);
+            movePlayer(getPlayerX(), H - getPlayerLocalY());
             System.out.println("north");
         }
         if (lastWords[0].equals("west")) {
-            movePlayer(W - 20, getPlayerY());
+            movePlayer(W - getPlayerLocalX(), getPlayerY());
             System.out.println("west");
         }
         if (lastWords[0].equals("east")) {

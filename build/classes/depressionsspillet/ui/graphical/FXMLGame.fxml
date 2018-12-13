@@ -109,9 +109,9 @@
         <AnchorPane focusTraversable="true" layoutX="208.0" layoutY="90.0" prefHeight="442.0" prefWidth="800.0">
             <children>
                 <ImageView fx:id="backgroundImageView" fitHeight="424.0" fitWidth="788.0" layoutX="1.0" pickOnBounds="true" />
-                <Circle fx:id="snotface" fill="DODGERBLUE" layoutX="400.0" layoutY="233.0" radius="10.0" stroke="BLACK" strokeType="INSIDE">
+                <Circle fx:id="snotface" fill="DODGERBLUE" layoutX="400.0" layoutY="233.0" radius="30.0" strokeType="INSIDE">
                     <effect>
-                        <DropShadow color="#000000b5" height="0.24" offsetY="10.0" radius="15.927499999999998" width="65.47" />
+                        <DropShadow color="#000000b5" height="0.24" offsetY="10.0" radius="25.927499999999998" width="65.47" />
                     </effect>
                 </Circle>
                 <Rectangle fx:id="east" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutX="769.0" layoutY="180.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
