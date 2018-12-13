@@ -374,11 +374,11 @@ public class FXMLGameController implements Initializable {
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
         if (game.getCurrentHappiness() < 50) {
-            txtFieldName.setText("Taber Smølf");
+            txtFieldName.setText("Loser Smurf");
         } else if (50 < game.getCurrentHappiness() && 100 > game.getCurrentHappiness()) {
-            txtFieldName.setText("Smølf");
+            txtFieldName.setText("Smurf");
         } else if (game.getCurrentHappiness() == 100) {
-            txtFieldName.setText("Warrior Smølf");
+            txtFieldName.setText("Warrior Smurf");
         }
 
     }
