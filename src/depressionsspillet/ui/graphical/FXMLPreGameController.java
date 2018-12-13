@@ -37,7 +37,6 @@ public class FXMLPreGameController implements Initializable {
         //Setting this scene to stage
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(playScene);
-        window.setMaximized(true);
         window.show();
     }
     }
