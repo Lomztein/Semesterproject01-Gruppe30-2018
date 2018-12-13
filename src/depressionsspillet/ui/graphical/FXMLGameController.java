@@ -92,6 +92,8 @@ public class FXMLGameController implements Initializable {
     private Rectangle south;
     @FXML
     private Button interactButton;
+    @FXML
+    private Text txtFieldHealth;
 
     //Attributes
     boolean running, goNorth, goSouth, goEast, goWest;
@@ -99,6 +101,7 @@ public class FXMLGameController implements Initializable {
     private static double W = 800, H = 600;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
+ 
 
     /**
      * Initializes the controller class.
@@ -367,6 +370,7 @@ public class FXMLGameController implements Initializable {
     private void updateTxtArea() {
         txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
         txfFieldHappiness.setText("" + game.getCurrentHappiness());
+        txtFieldHealth.setText("" + game.getPlayerHealth());
     }
 
     //Removes all current items, and updates it based on the current room.
@@ -466,7 +470,6 @@ public class FXMLGameController implements Initializable {
         updateItemsList();
     }
 
-    @FXML
     private void handleHelpButtonEvent(ActionEvent event) {
         txtAreaOutput.setText("You really are useless aren't you? "
                 + "\nUse W/A/S/D to move about and SPACEBAR to enter into another room. Hold down SHIFT to run. "

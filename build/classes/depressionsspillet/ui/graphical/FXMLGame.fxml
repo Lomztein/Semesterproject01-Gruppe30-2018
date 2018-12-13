@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -39,14 +38,6 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Text fx:id="txfFieldHappiness" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" textAlignment="CENTER" wrappingWidth="57.99998554587364" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                    <font>
-                        <Font size="19.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets bottom="8.0" />
-                    </GridPane.margin>
-                </Text>
                 <Button focusTraversable="false" mnemonicParsing="false" text="Help" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                     <GridPane.margin>
                         <Insets bottom="8.0" right="8.0" />
@@ -57,17 +48,41 @@
                         <Insets right="8.0" top="8.0" />
                     </GridPane.margin>
                 </Button>
-                <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness:" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                    <font>
-                        <Font name="Blackadder ITC" size="25.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets top="8.0" />
-                    </GridPane.margin>
-                </Text>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                      <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness:" textAlignment="CENTER" wrappingWidth="101.14080834388733">
+                          <font>
+                              <Font name="Blackadder ITC" size="25.0" />
+                          </font>
+                      </Text>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text fill="#ff0202" strokeType="OUTSIDE" strokeWidth="0.0" text="    Health:" wrappingWidth="179.84789276123047">
+                           <font>
+                              <Font name="Blackadder ITC" size="25.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                      <Text fx:id="txfFieldHappiness" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" textAlignment="CENTER" wrappingWidth="57.99998554587364">
+                          <font>
+                              <Font size="19.0" />
+                          </font>
+                      </Text>
+                  <AnchorPane prefHeight="30.0" prefWidth="75.0" />
+                  <Text fx:id="txtFieldHealth" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
             </children>
         </GridPane>
-        <VBox layoutX="354.0" layoutY="288.0" prefHeight="200.0" prefWidth="100.0" />
         <HBox layoutX="963.0" layoutY="542.0" prefHeight="100.0" prefWidth="200.0">
             <children>
                 <Button fx:id="pickUpButton" focusTraversable="false" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" textAlignment="CENTER" />
