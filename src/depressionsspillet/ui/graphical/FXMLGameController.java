@@ -94,6 +94,8 @@ public class FXMLGameController implements Initializable {
     private Button interactButton;
     @FXML
     private Text txtFieldHealth;
+     @FXML
+    private Text txtFieldName;
 
     //Attributes
     boolean running, goNorth, goSouth, goEast, goWest;
@@ -101,8 +103,7 @@ public class FXMLGameController implements Initializable {
     private static double W = 800, H = 600;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
-    @FXML
-    private Text txtFieldName;
+   
  
 
     /**
@@ -138,7 +139,6 @@ public class FXMLGameController implements Initializable {
 
         //Setting attacks
         attacks.add("dab");
-        attacks.add("manifesto");
         attacks.add("punch");
         lvAttacks.setItems(attacks);
 
@@ -360,8 +360,7 @@ public class FXMLGameController implements Initializable {
         window.setScene(quitScene);
         window.show();
     }
-
-    //Update of items and NPCs to be added here
+    
     private void updateRoom() {
         Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
@@ -369,6 +368,7 @@ public class FXMLGameController implements Initializable {
         updateItemsList();
         updateNPCList();
         updatePlayerLocation();
+        lvInteractions.setItems(emptyList);
     }
 
     //Updates the text-area to have the current output printed.
@@ -382,7 +382,7 @@ public class FXMLGameController implements Initializable {
         else if(50 < game.getCurrentHappiness() && 100>game.getCurrentHappiness()){
             txtFieldName.setText("Smølf");
         }
-        else if(game.getCurrentHappiness() == 100){
+        else if(game.getCurrentHappiness() >=100){
             txtFieldName.setText("Warrior Smølf");
         }
             
