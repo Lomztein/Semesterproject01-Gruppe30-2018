@@ -138,7 +138,7 @@ public class RoomList {
         fridayBar.setExit("east", campfire);
         fridayBar.setHappiness(10);
 
-        fridayBar.addEntityToRoom(new InteractableNPC("Dennis", "Bartender", fridayBar,
+        fridayBar.addEntityToRoom(new InteractableNPC("Dennis", "Someone you've come to consider a close friend these past few years.", fridayBar,
                 new Interaction("Beer", "Sit down at the bar, greet the bartender and order a drink",
                         x -> {
                             x.addHappiness(5);
@@ -232,8 +232,8 @@ public class RoomList {
                 })
         ));
 
-        movie.addEntityToRoom(new ConsumableItem("Snack", "Buttered popcorn", 100, 5, 5));
-        movie.addEntityToRoom(new ConsumableItem("Drink", "Seems to change in taste according the drink you're thinking about", 100, 5, 5));
+        movie.addEntityToRoom(new ConsumableItem("Snack", "Popcorn with a desturbing yet delicious amount of butter added.", 100, 5, 5));
+        movie.addEntityToRoom(new ConsumableItem("Drink", "Seems to change in taste according the drink you're thinking about.", 100, 5, 5));
 
         drugs.setExit("north", allotment);
         drugs.setExit("east", thaiHooker);
@@ -259,7 +259,7 @@ public class RoomList {
         gate.setExit("north", campfire);
         gate.setExit("south", boss, true, "This door is locked by foul, eldritch magic. You must have at least 95 happiness to enter it.");
 
-        gate.addEntityToRoom(new InteractableObject("Gate", "A massive gate of untold size, yet you feel within a potiential to open it.",
+        gate.addEntityToRoom(new InteractableObject("Gate", "A massive locked gate of untold size, yet you feel within a potiential to open it.",
                 new Interaction("Admire", "You look at the gate with awe and curiosity.", x -> {
                     x.addHealth(1);
                     return "As you stare at the gate for a good few minutes you feel a bit of strength return to your body. +1 health.";

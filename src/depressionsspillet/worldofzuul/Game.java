@@ -35,7 +35,7 @@ public class Game implements IGame {
     public Game() {
         // The attributes are populated with their appropiate data.
         createRooms();
-        player = new Player("Janus the Magic Midget", "A fucking loser amirite", RoomList.start);
+        player = new Player("Smurf", "A fucking loser amirite", RoomList.start);
         parser = new Parser();
     }
 

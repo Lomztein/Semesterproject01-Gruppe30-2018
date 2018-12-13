@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +44,8 @@ public class FXMLGameController implements Initializable {
     ObservableList<String> attacks = FXCollections.observableArrayList();
     ObservableList<String> interactions = FXCollections.observableArrayList();
     ObservableList<String> emptyList = FXCollections.observableArrayList();
+
+    private int NPCsInList;
 
     //FXML-attributes
     @FXML
@@ -294,7 +298,9 @@ public class FXMLGameController implements Initializable {
     //Moves the player to the given X-Y coordinate.
     private void movePlayer(double X, double Y) {
         //System.out.println("Moved player to" + X + ", " + Y);
-        snotface.relocate(X, Y);
+        if (!game.isPlayerDead()) {
+            snotface.relocate(X, Y);
+        }
     }
 
     //Moves the player to another room based on how close they are to it. 
@@ -358,6 +364,10 @@ public class FXMLGameController implements Initializable {
     //Selects the quit-screen FXML document and sets the scene to that one.
     @FXML
     protected void handleQuitButtonEvent(ActionEvent event) throws IOException {
+        quitGame(event);
+    }
+
+    private void quitGame(ActionEvent event) throws IOException {
         Parent quitParent = FXMLLoader.load(getClass().getResource("FXML.fxml"));
         Scene quitScene = new Scene(quitParent);
 
@@ -394,11 +404,11 @@ public class FXMLGameController implements Initializable {
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
         if (game.getCurrentHappiness() < 50) {
-            txtFieldName.setText("Loser Smurf");
+            txtFieldName.setText("Loser " + game.getPlayerName());
         } else if (50 < game.getCurrentHappiness() && 100 > game.getCurrentHappiness()) {
-            txtFieldName.setText("Smurf");
+            txtFieldName.setText(game.getPlayerName());
         } else if (game.getCurrentHappiness() >= 100) {
-            txtFieldName.setText("Warrior Smurf");
+            txtFieldName.setText("Warrior " + game.getPlayerName());
         }
     }
 
@@ -426,8 +436,10 @@ public class FXMLGameController implements Initializable {
 
         boolean[] isHostile = game.isNPCHostile();
 
+        NPCsInList = 0;
         for (int j = 0; j < npcNames.length; j++) {
             NPCs.add(npcNames[j] + (isHostile[j] ? " (hostile)" : ""));
+            NPCsInList++;
         }
 
         for (int i = 0; i < interactableNames.length; i++) {
@@ -527,6 +539,18 @@ public class FXMLGameController implements Initializable {
 
         game.enterCommand("disengage");
         updateInformation();
+
+        try {
+            checkDeath(event); // Apparently the event is needed to change scene, and I can't be bothered to look for better solutions right now. Please forgive.
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLGameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void checkDeath(ActionEvent event) throws IOException {
+        if (game.isPlayerDead()) {
+            txtAreaOutput.setText(txtAreaOutput.getText() + "\nIt appears you've run out of lifejuice. Congratulations, you're a failure");
+        }
     }
 
     private String getAttackString(String attacker, String reciever, String name, String description, String response, String type, double value, double remaining) {
@@ -573,28 +597,67 @@ public class FXMLGameController implements Initializable {
 
     @FXML
     private void handleItemsMouseEvent(MouseEvent event) {
-        String desc = lvItems.getSelectionModel().getSelectedItem();
-        txtAreaOutput.setText(desc);
+        int index = lvItems.getSelectionModel().getSelectedIndex();
+        String description = game.getItemDescriptions()[index];
+        txtAreaOutput.setText(description);
     }
 
     @FXML
     private void handleInventoryMouseEvent(MouseEvent event) {
+        int index = lvInventory.getSelectionModel().getSelectedIndex();
+        String description = game.getPlayerInventoryDescriptions()[index];
+        txtAreaOutput.setText(description);
+    }
+
+    @FXML
+    private void handleAttackListViewMouseEvent(MouseEvent event) {
+        int index = lvAttacks.getSelectionModel().getSelectedIndex();
+        String description = game.getAvailableAttackDescriptions()[index];
+        txtAreaOutput.setText(description);
+    }
+
+    @FXML
+    private void handleInteractionsListViewMouseEvent(MouseEvent event) {
+        System.out.println(selectedInteractable);
+        if (selectedInteractable != -1) {
+            int index = lvInteractions.getSelectionModel().getSelectedIndex();
+            String description = game.getInteractionDescriptions()[selectedInteractable][index];
+            txtAreaOutput.setText(description);
+        }
     }
 
     //Prinitng interactions for chosen NPC in listview
     @FXML
     private void handleNPCListViewMouseEvent(MouseEvent event) {
+
+        int index = lvNPC.getSelectionModel().getSelectedIndex();
+        boolean isNPC = index < game.getNPCNames().length;
+
+        String description = null;
+        if (isNPC) {
+            if (index > -1) { // Seems as if missing a specific slot yet still hitting the box calls this, so just to make stop exceptions from happening.
+                description = game.getNPCDescriptions()[index];
+            }
+        } else {
+            index -= NPCsInList;
+            description = game.getInteractableDescriptions()[index];
+        }
+
+        txtAreaOutput.setText(description);
+
         updateInteractions();
     }
 
     //Handles what is shown in the observable list based on which character or interactable you have selected
+    private int selectedInteractable = -1;
+
     private void updateInteractions() {
         interactions.clear();
-        int interactableIndex = getInteractableIndex(game.getInteractableNames(), lvNPC.getSelectionModel().getSelectedItem());
+        selectedInteractable = getInteractableIndex(game.getInteractableNames(), lvNPC.getSelectionModel().getSelectedItem());
 
-        if (interactableIndex != -1) {
+        if (selectedInteractable != -1) {
             String[][] npcInteractions = game.getInteractionNames();
-            for (String interaction : npcInteractions[interactableIndex]) {
+            for (String interaction : npcInteractions[selectedInteractable]) {
                 interactions.add(interaction);
             }
         }
