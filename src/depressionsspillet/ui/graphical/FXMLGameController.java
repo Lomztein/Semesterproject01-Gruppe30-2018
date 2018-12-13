@@ -372,6 +372,8 @@ public class FXMLGameController implements Initializable {
         System.out.println("images/" + game.getCurrentRoomName() + ".jpg"); // Needed to make sure the files and rooms names are syncronized.
         Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
+        
+        interactions.clear();
         updateTxtArea();
         updateItemList();
         updateNPCList();
@@ -516,9 +518,7 @@ public class FXMLGameController implements Initializable {
 
     //Calls the use-method on the item selected in the inventorys' observable-list. 
     @FXML
-    private void handleUseButtonEvent(ActionEvent event
-    ) {
-
+    private void handleUseButtonEvent(ActionEvent event) {
         int selectedInventoryItemIndex = lvInventory.getSelectionModel().getSelectedIndex();
         selectedInventoryItemIndex += 1;
         game.enterCommand("inventory use " + selectedInventoryItemIndex);
@@ -540,25 +540,22 @@ public class FXMLGameController implements Initializable {
     }
 
     @FXML
-    private void handleItemsMouseEvent(MouseEvent event
-    ) {
+    private void handleItemsMouseEvent(MouseEvent event) {
         String desc = lvItems.getSelectionModel().getSelectedItem();
         txtAreaOutput.setText(desc);
     }
 
     @FXML
-    private void handleInventoryMouseEvent(MouseEvent event
-    ) {
+    private void handleInventoryMouseEvent(MouseEvent event) {
     }
 
     @FXML
     private void handleNPCListViewMouseEvent(MouseEvent event) {
         interactions.clear();
-        String[][] interactionNames = game.getInteractionNames();
-        for (String[] interactionName : interactionNames){
-            for (String name : interactionName){
-                interactions.add(name);
-            }
+        int interactableIndex = lvNPC.getSelectionModel().getSelectedIndex();
+        String[][] npcInteractions = game.getInteractionNames();
+        for (String interaction : npcInteractions[interactableIndex]){
+                interactions.add(interaction);
         }
         lvInteractions.setItems(interactions);
     }
