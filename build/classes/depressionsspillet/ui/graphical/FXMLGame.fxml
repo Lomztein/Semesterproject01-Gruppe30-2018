@@ -46,25 +46,95 @@
                     <GridPane.margin>
                         <Insets bottom="8.0" />
                     </GridPane.margin>
-                </Text>
-                <Button focusTraversable="false" mnemonicParsing="false" text="Help" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                    <GridPane.margin>
-                        <Insets bottom="8.0" right="8.0" />
-                    </GridPane.margin>
-                </Button>
-                <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleQuitButtonEvent" text="Quit" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-                    <GridPane.margin>
-                        <Insets right="8.0" top="8.0" />
-                    </GridPane.margin>
-                </Button>
-                <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness:" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                    <font>
-                        <Font name="Blackadder ITC" size="25.0" />
-                    </font>
-                    <GridPane.margin>
-                        <Insets top="8.0" />
-                    </GridPane.margin>
-                </Text>
+                </TextArea>
+                <GridPane GridPane.columnSpan="3">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="457.0" minWidth="10.0" prefWidth="434.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="99.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Text fx:id="txfFieldHappiness" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="---" textAlignment="CENTER" wrappingWidth="57.99998554587364" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                            <font>
+                                <Font size="19.0" />
+                            </font>
+                            <GridPane.margin>
+                                <Insets bottom="8.0" />
+                            </GridPane.margin>
+                        </Text>
+                        <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleHelpButtonEvent" text="Help" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="8.0" right="8.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleQuitButtonEvent" prefHeight="31.0" prefWidth="51.0" text="Quit" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets right="8.0" top="8.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <Text fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness:" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <font>
+                                <Font name="Blackadder ITC" size="25.0" />
+                            </font>
+                            <GridPane.margin>
+                                <Insets top="8.0" />
+                            </GridPane.margin>
+                        </Text>
+                    </children>
+                </GridPane>
+            <VBox prefHeight="265.0" prefWidth="171.0" GridPane.rowIndex="1">
+               <children>
+                  <Label focusTraversable="false" text=" NPCs:" textFill="RED" />
+                  <ListView fx:id="lvNPC" focusTraversable="false" prefHeight="131.0" prefWidth="155.0" />
+                  <Label text=" Attacks:" textFill="RED" />
+                  <ListView fx:id="lvAttacks" focusTraversable="false" prefHeight="139.0" prefWidth="171.0" />
+                  <Label text=" Interactions:" textFill="RED" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <Label focusTraversable="false" text=" Inventory:" textFill="#f90000" />
+                  <ListView fx:id="lvInventory" focusTraversable="false" prefHeight="268.0" prefWidth="170.0" />
+                  <Label focusTraversable="false" text=" Items:" textFill="RED" />
+                  <ListView fx:id="lvItems" focusTraversable="false" prefHeight="290.0" prefWidth="172.0" />
+               </children>
+            </VBox>
+            <AnchorPane focusTraversable="true" prefHeight="285.0" prefWidth="439.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                      <ImageView fx:id="backgroundImageView" fitHeight="285.0" fitWidth="456.0" pickOnBounds="true" preserveRatio="true" />
+                  <Circle fx:id="snotface" fill="DODGERBLUE" layoutX="228.0" layoutY="143.0" radius="10.0" stroke="BLACK" strokeType="INSIDE">
+                     <effect>
+                        <DropShadow color="#000000b5" height="0.24" offsetY="10.0" radius="15.927499999999998" width="65.47" />
+                     </effect>
+                  </Circle>
+                  <Rectangle fx:id="east" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutX="442.0" layoutY="116.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
+                  <Rectangle fx:id="west" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutY="116.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
+                  <Rectangle fx:id="north" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutX="222.0" layoutY="-20.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
+                  <Rectangle fx:id="south" arcHeight="5.0" arcWidth="5.0" fill="#5e4501" height="53.0" layoutX="222.0" layoutY="251.0" rotate="90.0" stroke="BLACK" strokeType="INSIDE" width="13.0" />
+               </children>
+            </AnchorPane>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+               <children>
+                  <ListView fx:id="lvInteractions" prefHeight="200.0" prefWidth="200.0" />
+                  <HBox prefHeight="35.0" prefWidth="171.0">
+                     <children>
+                                <Button fx:id="attackButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack" />
+                        <Button fx:id="interactButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleInteractButtonEvent" text="Interact" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                          <Button fx:id="pickUpButton" focusTraversable="false" mnemonicParsing="false" onAction="#handlePickUpButtonEvent" text="Pick up" textAlignment="CENTER" />
+                          <Button fx:id="useButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleUseButtonEvent" text="Use" />
+                          <Button fx:id="dropButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleDropButtonEvent" text="Drop" />
+               </children>
+            </HBox>
             </children>
         </GridPane>
         <VBox layoutX="354.0" layoutY="288.0" prefHeight="200.0" prefWidth="100.0" />
