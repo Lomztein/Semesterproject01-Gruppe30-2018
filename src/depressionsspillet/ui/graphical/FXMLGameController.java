@@ -84,6 +84,8 @@ public class FXMLGameController implements Initializable {
     private Button interactButton;
     @FXML
     private Text txtFieldHealth;
+     @FXML
+    private Text txtFieldName;
 
     //Attributes
     boolean running, goNorth, goSouth, goEast, goWest;
@@ -91,8 +93,8 @@ public class FXMLGameController implements Initializable {
     private static double W = 800, H = 600;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
-    @FXML
-    private Text txtFieldName;
+   
+ 
 
     /**
      * Initializes the controller class.
@@ -125,8 +127,10 @@ public class FXMLGameController implements Initializable {
         Image imageStart = new Image("images/start.jpg");
         backgroundImageView.setImage(imageStart);
 
-        // Set attack list view to observe the attack list.
-        updateAttackList();
+        //Setting attacks
+        attacks.add("dab");
+        attacks.add("manifesto");
+        attacks.add("punch");
         lvAttacks.setItems(attacks);
 
         // Set NPC list view to observe the NPC list
@@ -356,8 +360,7 @@ public class FXMLGameController implements Initializable {
         window.setScene(quitScene);
         window.show();
     }
-
-    //Update of items and NPCs to be added here
+    
     private void updateRoom() {
         System.out.println("images/" + game.getCurrentRoomName() + ".jpg"); // Needed to make sure the files and rooms names are syncronized.
         Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
@@ -366,6 +369,7 @@ public class FXMLGameController implements Initializable {
         updateItemList();
         updateNPCList();
         updatePlayerLocation();
+        lvInteractions.setItems(emptyList);
     }
 
     //Updates the text-area to have the current output printed.
@@ -541,6 +545,7 @@ public class FXMLGameController implements Initializable {
     ) {
     }
 
+    //Prinitng interactions for chosen NPC in listview
     @FXML
     private void handleNPCListViewMouseEvent(MouseEvent event) {
         interactions.clear();
