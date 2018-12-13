@@ -244,7 +244,7 @@ public class RoomList {
                 }),
                 new Interaction("Unlock", "Call upon the wholesome force within, as your force of will itself shall open this door.", x -> {
                     if (x.getHappiness() > 95) {
-                        gate.setExit("south", boss);
+                        gate.unlockExit("south");
                         return "You feel a chill go down your spine, as the door creeks thunderously.";
                     } else {
                         return "You do not yet possess the strength within to enter. Begone!";
@@ -252,7 +252,7 @@ public class RoomList {
                 }))
         );
 
-        boss.setExit("south", suprise, true, "From behind you hear muffled screams, it fills you with untold dread and misery.");
+        boss.setExit("south", suprise, true, "The way is blocked by Erikthulhus life force, yet from behind you hear muffled screams, it fills you with untold dread and misery.");
 
         //A new NPC, the boss Erikthulhu, is created. 
         HostileNPC erikthulhu = new HostileNPC("Erikthulhu", "Your final opponent. The physical manifistation of your depression, and the evil it brings to your life.", boss, true, new Health(666d).withResistances(
@@ -264,8 +264,8 @@ public class RoomList {
                 new Attack(DamageType.DAB, 10d, "Intense Dab", "your own tactics against you. You cannot keep fighting yourself like this."),
                 new Attack(DamageType.FIRE, 15d, "Firebreath", "a massive storm of fire. Bricks will be shat."),
                 new Attack(DamageType.SUNONASTICK, 0, "Sun on a Stick", "arguably the most useful of all weapons."),
-                new Attack(DamageType.WATER, 2d, "Water Gun", "a soft, rather refreshing spray of water originating from a toy gun."),
-                new Attack(DamageType.BLUNT, 10d, "Vigerous Punch", "an intense punch, using raw strength alone."),
+                new Attack(DamageType.WATER, 2d, "Water Gun", "a soft, glistering, rather refreshing spray of water originating from a toy gun."),
+                new Attack(DamageType.BLUNT, 10d, "Vigerous Punch", "an intense punch of eldritch might."),
                 new Attack(DamageType.MENTAL, 10d, "Insult", "an insult upon your appearance, talents and skills all wowen together in a beautiful euphony of wordsmithing.")
         );
 

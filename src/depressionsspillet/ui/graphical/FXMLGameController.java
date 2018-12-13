@@ -138,7 +138,6 @@ public class FXMLGameController implements Initializable {
         lvItems.setItems(items);
 
         //Starting the game
-        game.playGame();
         txtAreaOutput.setText(game.getCurrentRoomLongDesc());
 
         //Here comes the logic for handling the movement of the player.
@@ -310,18 +309,16 @@ public class FXMLGameController implements Initializable {
             if (differenceX <= 45 && differenceY <= 45) {
 
                 //Checks whether the room is the same before and after the method being called, to make sure the player isn't moved if the room hasn't changed.
-                String checker = game.getCurrentRoomName();
                 game.enterCommand(directionCommands[i]);
-                String pChecker = game.getCurrentRoomName();
-                if (!pChecker.equals(checker)) {
+
+                if (game.getPlayerTriedEnteringLockedDoor()) {
+                    txtAreaOutput.setText(game.getPlayerTriedEnteringLockedDoorResponse());
+                } else {
                     updateRoom();
-                    return;
                 }
-                return;
             }
         }
         //Perhaps add a timer to prevent the player from spamming the shit out of the button.
-
     }
 
     //Moves the player to the opposite side of the room
@@ -366,6 +363,7 @@ public class FXMLGameController implements Initializable {
         updateItemList();
         updateNPCList();
         updatePlayerLocation();
+        updateInteractions();
     }
 
     //Updates the text-area to have the current output printed.
@@ -482,19 +480,19 @@ public class FXMLGameController implements Initializable {
                         game.getRetaliationAttackDamage(),
                         game.getPlayerHealth()
                 );
-            }else if (game.getLastAttackedHealth() <= 0) {
-                retaliationString += " " + game.getEngagedName () + " is dead. You're a murderer now.";
+            } else if (game.getLastAttackedHealth() <= 0) {
+                retaliationString += " " + game.getEngagedName() + " is dead. You're a murderer now.";
             }
 
             txtAreaOutput.setText(attackString + retaliationString);
         } else {
-            
+
             if (selectedAttack.toUpperCase().equals("DAB")) {
-                txtAreaOutput.setText("You dab fruitlessly at nothing, as faint YEETing flows through the forest trees.");
-            }else {
+                txtAreaOutput.setText("You dab fruitlessly at nothing, as faint yeeting flows through the forest trees.");
+            } else {
                 txtAreaOutput.setText("You attack the air with " + selectedAttack + ". It takes great offence, but nothing otherwise happens.");
             }
-            
+
         }
 
         game.enterCommand("disengage");
@@ -513,10 +511,11 @@ public class FXMLGameController implements Initializable {
     //
     @FXML
     private void handleInteractButtonEvent(ActionEvent event) {
-        game.enterCommand("interact " + lvNPC.getSelectionModel().getSelectedItem() + " " + lvInteractions.getSelectionModel().getSelectedItem());
+        game.enterCommand("interact " + lvInteractions.getSelectionModel().getSelectedItem());
         txtFieldHappiness.setText("" + game.getCurrentHappiness());
         txtFieldHealth.setText("" + game.getPlayerHealth());
         txtAreaOutput.setText(game.getCommandResponse());
+        updateAttackList();
     }
 
     //Calls the use-method on the item selected in the inventorys' observable-list. 
@@ -558,13 +557,21 @@ public class FXMLGameController implements Initializable {
 
     @FXML
     private void handleNPCListViewMouseEvent(MouseEvent event) {
+
+    }
+
+    private void updateInteractions() {
         interactions.clear();
+
+        String[] interactables = game.getInteractableNames();
         String[][] interactionNames = game.getInteractionNames();
-        for (String[] interactionName : interactionNames) {
-            for (String name : interactionName) {
-                interactions.add(name);
+
+        for (int i = 0; i < interactables.length; i++) {
+            for (int j = 0; j < interactionNames[i].length; j++) {
+                interactions.add(interactables[i] + " " + interactionNames[i][j]);
             }
         }
+
         lvInteractions.setItems(interactions);
     }
 

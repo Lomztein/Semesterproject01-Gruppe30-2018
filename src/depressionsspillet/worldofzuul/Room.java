@@ -108,6 +108,10 @@ public class Room {
         }
         exits.put(direction, door);
     }
+    
+    public void unlockExit (String direction) {
+        exits.get(direction).setLocked(false);
+    }
 
     public String getShortDescription() {
         return name;
