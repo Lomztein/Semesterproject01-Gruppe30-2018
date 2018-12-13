@@ -139,6 +139,7 @@ public class FXMLGameController implements Initializable {
 
         //Starting the game
         txtAreaOutput.setText(game.getCurrentRoomLongDesc());
+        updateInformation();
 
         //Here comes the logic for handling the movement of the player.
         //This is an animation-timer. It runs the code within the method 'handle', every frame the timer is active, until it is stopped. 
@@ -150,19 +151,19 @@ public class FXMLGameController implements Initializable {
             public void handle(long now) {
                 int dx = 0, dy = 0;
                 if (goNorth) {
-                    System.out.println("up");
+                    //System.out.println("up");
                     dy -= 2;
                 }
                 if (goSouth) {
-                    System.out.println("down");
+                    //System.out.println("down");
                     dy += 2;
                 }
                 if (goEast) {
-                    System.out.println("right");
+                    //System.out.println("right");
                     dx += 2;
                 }
                 if (goWest) {
-                    System.out.println("left");
+                    //System.out.println("left");
                     dx -= 2;
                 }
                 if (running) {
@@ -288,7 +289,7 @@ public class FXMLGameController implements Initializable {
 
     //Moves the player to the given X-Y coordinate.
     private void movePlayer(double X, double Y) {
-        System.out.println("Moved player to" + X + ", " + Y);
+        //System.out.println("Moved player to" + X + ", " + Y);
         snotface.relocate(X, Y);
     }
 
@@ -313,6 +314,8 @@ public class FXMLGameController implements Initializable {
                 game.enterCommand(directionCommands[i]);
                 String post = game.getCurrentRoomName();
 
+                System.out.println(post);
+
                 if (game.getPlayerTriedEnteringLockedDoor()) {
                     txtAreaOutput.setText(game.getPlayerTriedEnteringLockedDoorResponse());
                 } else {
@@ -331,19 +334,19 @@ public class FXMLGameController implements Initializable {
         String[] lastWords = game.getCommandWords();
         if (lastWords[0].equals("south")) {
             movePlayer(getPlayerX(), 0);
-            System.out.println("south");
+            //System.out.println("south");
         }
         if (lastWords[0].equals("north")) {
             movePlayer(getPlayerX(), H - getPlayerLocalY());
-            System.out.println("north");
+            //System.out.println("north");
         }
         if (lastWords[0].equals("west")) {
             movePlayer(W - getPlayerLocalX(), getPlayerY());
-            System.out.println("west");
+            //System.out.println("west");
         }
         if (lastWords[0].equals("east")) {
             movePlayer(0, getPlayerY());
-            System.out.println("east");
+            //System.out.println("east");
         }
     }
 
@@ -361,7 +364,13 @@ public class FXMLGameController implements Initializable {
 
     private void updateRoom() {
         updatePlayerLocation();
-        Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
+        Image image = null;
+        if (game.getCurrentRoomName() == "suprise") { // Special case for "surprise" room.
+            image = new Image("images/" + game.getCurrentRoomName() + ".gif");
+        } else {
+            image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
+        }
+
         backgroundImageView.setImage(image);
         txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
     }
