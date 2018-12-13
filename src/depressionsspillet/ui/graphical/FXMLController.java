@@ -44,7 +44,7 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         try {
-            File introMusic = new File("intromusic.wav");
+            File introMusic = new File("music.wav");
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(introMusic);
             clip = AudioSystem.getClip();
             clip.open(audioIn);

@@ -92,6 +92,8 @@ public class FXMLGameController implements Initializable {
     private Rectangle south;
     @FXML
     private Button interactButton;
+    @FXML
+    private Text txtFieldHealth;
 
     //Attributes
     boolean running, goNorth, goSouth, goEast, goWest;
@@ -99,6 +101,9 @@ public class FXMLGameController implements Initializable {
     private static double W = 800, H = 600;
     String[] directionCommands = new String[4];
     Rectangle[] directionObjects = new Rectangle[4];
+    @FXML
+    private Text txtFieldName;
+ 
 
     /**
      * Initializes the controller class.
@@ -377,6 +382,18 @@ public class FXMLGameController implements Initializable {
     private void updateTxtArea() {
         txtAreaOutput.setText(game.getCurrentRoomLongDesc() + "\nYour happiness rises to: " + game.getCurrentHappiness());
         txfFieldHappiness.setText("" + game.getCurrentHappiness());
+        txtFieldHealth.setText("" + game.getPlayerHealth());
+        if(game.getCurrentHappiness() < 50 ){
+            txtFieldName.setText("Taber Smølf");
+        }
+        else if(50 < game.getCurrentHappiness() && 100>game.getCurrentHappiness()){
+            txtFieldName.setText("Smølf");
+        }
+        else if(game.getCurrentHappiness() == 100){
+            txtFieldName.setText("Warrior Smølf");
+        }
+            
+        
     }
 
     // Resets and updates the list of attacks to reflect any new additions.
@@ -475,9 +492,7 @@ public class FXMLGameController implements Initializable {
         updateItemList();
     }
 
-    @FXML
-    private void handleHelpButtonEvent(ActionEvent event
-    ) {
+    private void handleHelpButtonEvent(ActionEvent event) {
         txtAreaOutput.setText("You really are useless aren't you? "
                 + "\nUse W/A/S/D to move about and SPACEBAR to enter into another room. Hold down SHIFT to run. "
                 + "\nUse the buttons on either side of the room to interact with the world. "
