@@ -152,7 +152,7 @@ public class RoomList {
         stripClub.setExit("west", campfire);
         stripClub.setHappiness(10);
 
-        stripClub.addEntityToRoom(new HostileNPC("Diamond", "Very skilled in barfights resulted from a long career as an exotic dancer. She dislikes you because you are broke.", stripClub, true, new Health(35),
+        stripClub.addEntityToRoom(new HostileNPC("Destiny", "Very skilled in barfights resulted from a long career as an exotic dancer. She dislikes you because you are broke.", stripClub, true, new Health(35),
                 new Attack(DamageType.BLUNT, 3, "Boob Bash", "smacks you with a hardened fake titty."),
                 new Attack(DamageType.FIRE, 10, "Molotov Cocktail", "grabbing a bottle from the bar, she lights in on fire and throws it at you."),
                 new Attack(DamageType.SLASH, 5, "Stiletto Stab", "using her pumps, she impales one of your limbs."),
