@@ -368,7 +368,7 @@ public class FXMLGameController implements Initializable {
         Image image = new Image("images/" + game.getCurrentRoomName() + ".jpg");
         backgroundImageView.setImage(image);
         updateTxtArea();
-        updateItemsList();
+        updateItemList();
         updateNPCList();
         updatePlayerLocation();
     }
@@ -417,7 +417,7 @@ public class FXMLGameController implements Initializable {
         String[] inventoryStrings = game.getPlayerInventoryNames();
         inventory.addAll(Arrays.asList(inventoryStrings));
         lvInventory.setItems(inventory);
-        updateItemsList();
+        updateItemList();
     }
 
     //Picks an item up from the selected observable list, and puts it in the player's inventory.
@@ -433,7 +433,7 @@ public class FXMLGameController implements Initializable {
         String[] inventoryStrings = game.getPlayerInventoryNames();
         inventory.addAll(Arrays.asList(inventoryStrings));
         lvInventory.setItems(inventory);
-        updateItemsList();
+        updateItemList();
     }
 
     //Attacks the selected NPC. Currently attacks with NULL, and doesn't really work for shit.
@@ -472,7 +472,7 @@ public class FXMLGameController implements Initializable {
         String[] inventoryStrings = game.getPlayerInventoryNames();
         inventory.addAll(Arrays.asList(inventoryStrings));
         lvInventory.setItems(inventory);
-        updateItemsList();
+        updateItemList();
     }
 
     @FXML
