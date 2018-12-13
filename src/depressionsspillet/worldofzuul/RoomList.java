@@ -41,13 +41,6 @@ public class RoomList {
         // Exits for are declared.
         start.setExit("south", magicForrest);
 
-        HostileNPC direwolf = new HostileNPC("Direwolf", "A big wolf looking menacingly at you, yet you cannot tell the nature of its desire.", animals, true, new Health(20),
-                new Attack(DamageType.SLASH, 5, "Claw slash", "a violent slash of the wolfs claws."),
-                new Attack(DamageType.MENTAL, 2, "Loud bark", "a frightening bark. Though scary, it doesn't do much."),
-                new Attack(DamageType.BLUNT, 1, "Headbutt", "a vicious headbutt, however it is in fact more adorable than scary.")
-        );
-        magicForrest.addEntityToRoom(direwolf);
-
         // Exits for magicForrest are declared.
         magicForrest.setExit("south", campfire);
         magicForrest.setExit("east", vendor);
@@ -73,6 +66,12 @@ public class RoomList {
         // You know the drill by now.
         animals.setExit("west", vendor);
         animals.setHappiness(15);
+        
+        HostileNPC direwolf = new HostileNPC("Direwolf", "A big wolf looking menacingly at you, yet you cannot tell the nature of its desire.", animals, true, new Health(20),
+                new Attack(DamageType.SLASH, 5, "Claw slash", "a violent slash of the wolfs claws."),
+                new Attack(DamageType.MENTAL, 2, "Loud bark", "a frightening bark. Though scary, it doesn't do much."),
+                new Attack(DamageType.BLUNT, 1, "Headbutt", "a vicious headbutt, however it is in fact more adorable than scary.")
+        );
 
         animals.addEntityToRoom(direwolf);
 

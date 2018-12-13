@@ -23,4 +23,9 @@ public class InteractableNPC extends NPC implements Interactable {
         return this.getName ();
     }
 
+    @Override
+    public boolean isHostile() {
+        return false;
+    }
+
 }

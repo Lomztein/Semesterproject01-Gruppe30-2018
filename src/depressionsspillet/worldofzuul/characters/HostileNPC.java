@@ -70,4 +70,9 @@ public class HostileNPC extends NPC implements HasHealth, Attacker {
         return availableAttacks;
     }
 
+    @Override
+    public boolean isHostile() {
+        return true;
+    }
+
 }

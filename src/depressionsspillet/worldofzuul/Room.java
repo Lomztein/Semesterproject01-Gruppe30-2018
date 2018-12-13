@@ -1,9 +1,8 @@
 package depressionsspillet.worldofzuul;
 
-import depressionsspillet.worldofzuul.interaction.Interactable;
+import depressionsspillet.worldofzuul.characters.NPC;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.stream.Collectors;
@@ -197,6 +196,15 @@ public class Room {
             result[i] = doors[i].isLocked();
         }
         return result;
+    }
+    
+    public boolean[] getHostileFlags () {
+        NPC[] entities = getEntities (NPC.class);
+        boolean[] isHostile = new boolean[entities.length];
+        for (int i = 0; i < entities.length; i++) {
+            isHostile[i] = entities[i].isHostile();
+        }
+        return isHostile;
     }
 
     public Door getExit(String direction) {

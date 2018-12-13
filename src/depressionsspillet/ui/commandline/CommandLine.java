@@ -56,6 +56,7 @@ public class CommandLine {
 
                 case "DISENGAGE":
                     printRoom(); // Update the "graphics" so that any changes from combat is known to the player.
+                    disengage ();
                     break;
 
                 case "INTERACT":
@@ -150,6 +151,7 @@ public class CommandLine {
         //Printing NPCs from array
         String[] npcNames = game.getNPCNames();
         String[] npcDescriptions = game.getNPCDescriptions();
+        boolean[] isHostile = game.isNPCHostile();
         if (npcNames.length != 0) {
 
             String npcList = "";
@@ -158,7 +160,7 @@ public class CommandLine {
             for (int i = 0; i < npcNames.length; i++) {
                 if (getInteractableIndex(game.getInteractableNames(), npcNames[i]) == -1) {
                     npcCount++;
-                    npcList += (npcNames[i] + " - " + npcDescriptions[i]) + "\n";
+                    npcList += (npcNames[i] + (isHostile[i] ? " (hostile)" : "") + " - " + npcDescriptions[i]) + "\n";
                 }
             }
             if (npcCount == 0) {
@@ -309,7 +311,8 @@ public class CommandLine {
     }
 
     private void inventory() {
-        if (game.getCommandWords()[0] == null) {
+        // This is handled by Game using lastCommandResponse, and we can't decide whether or not to limit usage of lastCommandResponse or avoid doing extra, arguably unneccesary work at this point in development.
+        /*if (game.getCommandWords()[0] == null) {
             System.out.println("You are carrying the following: ");
             String[] names = game.getPlayerInventoryNames();
             String[] descriptions = game.getPlayerInventoryDescriptions();
@@ -317,7 +320,7 @@ public class CommandLine {
             for (int i = 0; i < names.length; i++) {
                 System.out.println(i + " - " + names[i] + " - " + descriptions[i]);
             }
-        }
+        }*/
     }
 
     private void interact() {
@@ -365,6 +368,10 @@ public class CommandLine {
             }
         }
         return -1;
+    }
+
+    private void disengage() {
+        System.out.println ("You politely disengage from any combat you might have entered.");
     }
 
 }
