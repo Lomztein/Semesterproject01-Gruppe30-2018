@@ -96,8 +96,8 @@
                 <Button fx:id="dropButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleDropButtonEvent" text="Drop" />
             </children>
         </HBox>
-        <ListView fx:id="lvAttacks" focusTraversable="false" layoutX="11.0" layoutY="366.0" prefHeight="139.0" prefWidth="182.0" />
-        <ListView fx:id="lvInteractions" focusTraversable="false" layoutX="10.0" layoutY="214.0" prefHeight="132.0" prefWidth="185.0" />
+        <ListView fx:id="lvAttacks" focusTraversable="false" layoutX="11.0" layoutY="366.0" prefHeight="139.0" prefWidth="182.0" onMouseClicked="#handleAttackListViewMouseEvent" />
+        <ListView fx:id="lvInteractions" focusTraversable="false" layoutX="10.0" layoutY="214.0" prefHeight="132.0" prefWidth="185.0" onMouseClicked="#handleInteractionsListViewMouseEvent" />
         <HBox layoutX="24.0" layoutY="516.0" prefHeight="35.0" prefWidth="171.0">
             <children>
                 <Button fx:id="attackButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleAttackButtonEvent" text="Attack" />
